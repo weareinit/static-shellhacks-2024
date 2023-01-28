@@ -1,12 +1,19 @@
 const express = require('express')
+const config = require('./config/config')
 const cors = require('cors')
 const router = require('./routes/v1')
 const httpStatus = require('http-status')
+const morgan = require('./config/morgan')
 const ApiError = require('./errors/ApiError')
 const { errorConverter, errorHandler } = require('./errors/error')
 
 
 const app = express()
+
+if(config.env !== 'test'){
+  app.use(morgan.errorHandler);
+  app.use(morgan.successHandler);
+}
 
 // Parse Json request body 
 app.use(express.json())
