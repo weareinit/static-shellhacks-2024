@@ -1,9 +1,19 @@
 # Galactus
 
 
-### Getting Started
+## Getting Started
 
-In main directory create an environment folder before running:
+Create an environment file before running:
 ```bash
 echo "PORT=3000" >> .env
+```
+
+Install the dependencies:
+```bash
+npm install
+```
+
+Development:
+```bash
+npm run dev
 ```
