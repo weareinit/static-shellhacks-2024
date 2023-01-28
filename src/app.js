@@ -19,9 +19,4 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
 })
 
-// Abstract server start and database connection to another file
-app.listen(3000, () => {
-  console.log("listening on port 3000")
-})
-
 module.exports = app
