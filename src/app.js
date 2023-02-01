@@ -1,28 +1,23 @@
-const express = require('express')
-const config = require('./config/config')
-const cors = require('cors')
-const router = require('./routes/v1')
-const httpStatus = require('http-status')
-const morgan = require('./config/morgan')
-const helmet = require('helmet')
-const xssClean = require('xss-clean')
-const ApiError = require('./errors/ApiError')
-const { errorConverter, errorHandler } = require('./errors/error')
-const rateLimiter = require('./middleware/ratelimiter')
+import express from 'express'
+import { config } from './config/config.js'
+import cors from 'cors'
+import { router } from './routes/v1/index.js'
+import httpStatus from 'http-status'
+import { morganHandlers } from './config/morgan.js'
+import helmet from 'helmet'
+import ApiError from './errors/ApiError.js'
+import { errorConverter, errorHandler } from './errors/error.js'
+import { rateLimiter } from './middleware/ratelimiter.js'
 
-
-const app = express()
+export const app = express()
 
 if(config.env !== 'test'){
-  app.use(morgan.errorHandler);
-  app.use(morgan.successHandler);
+  app.use(morganHandlers.successHandler);
+  app.use(morganHandlers.errorHandler);
 }
 
 // Secure http headers
 app.use(helmet())
-
-// Santize input data
-app.use(xssClean())
 
 // Parse Json request body 
 app.use(express.json())
@@ -48,6 +43,3 @@ app.use((req, res, next) => {
 // Convert errors to ApiError and handle 
 app.use(errorConverter)
 app.use(errorHandler)
-
-
-module.exports = app
