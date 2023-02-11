@@ -3,9 +3,14 @@
 
 ## Getting Started
 
-Create an environment file before running:
+Create an environment file before running with these values:
 ```bash
-echo "PORT=3000" >> .env
+PORT=
+DATABASE_URL=
+AUTH_0_SECRET=
+BASE_URL=
+CLIENT_ID=
+ISSUER_BASE_URL=
 ```
 
 Install the dependencies:

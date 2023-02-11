@@ -12,6 +12,10 @@ const envSchema = Joi.object().keys({
   NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
   PORT: Joi.number().default(3000),
   DATABASE_URL: Joi.string().required(),
+  AUTH_0_SECRET: Joi.string().required(),
+  BASE_URL: Joi.string().required(),
+  CLIENT_ID: Joi.string().required(),
+  ISSUER_BASE_URL: Joi.string().required(),
   // JWT? ...
   // SMTP ...
   // ORM ...
@@ -27,6 +31,10 @@ if(error) {
 export const config = {
   env: envVariables.NODE_ENV,
   port: envVariables.PORT,
+  auth_0_secret: envVariables.AUTH_0_SECRET,
+  baseURL: envVariables.BASE_URL,
+  clientID: envVariables.CLIENT_ID,
+  issuerBaseUrl: envVariables.ISSUER_BASE_URL,
   // SMTP ...
   // ORM ...
 }

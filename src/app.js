@@ -8,6 +8,17 @@ import helmet from 'helmet'
 import ApiError from './errors/ApiError.js'
 import { errorConverter, errorHandler } from './errors/error.js'
 import { rateLimiter } from './middleware/ratelimiter.js'
+import { auth } from 'express-openid-connect'
+
+const authConfig = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: config.auth_0_secret,
+  baseURL: config.baseURL,
+  clientID: config.clientID,
+  issuerBaseURL: config.issuerBaseUrl,
+}
+
 
 export const app = express()
 
@@ -32,6 +43,8 @@ app.use(express.urlencoded({ extended: true}));
 if(config.env === 'production'){
   app.use('/v1', rateLimiter);
 }
+
+app.use(auth(authConfig))
 
 // v1 api routes
 app.use('/v1', router)
