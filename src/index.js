@@ -1,11 +1,15 @@
 import { app } from './app.js'
 import { config } from './config/config.js'
 import { logger } from './config/logger.js'
+import { PrismaClient } from '@prisma/client'
 
-// Load Database and upon successful connection, Start server
+// Load Database connection - Will throw error here if unable to connect.
+export const prisma = new PrismaClient()
+
+// Load server
 const server = app.listen(config.port, () => {
-  logger.info(`Listening on port ${config.port}`);
-})
+    logger.info(`Listening on port ${config.port}`);
+  })
 
 const exitHandler = () => {
   if(server) {
@@ -33,5 +37,3 @@ process.on('SIGTERM', () => {
     server.close();
   }
 })
-
-
