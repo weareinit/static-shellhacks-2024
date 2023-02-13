@@ -19,7 +19,6 @@ const authConfig = {
   issuerBaseURL: config.issuerBaseUrl,
 }
 
-
 export const app = express()
 
 if(config.env !== 'test'){
@@ -40,14 +39,14 @@ app.use(express.urlencoded({ extended: true}));
 // app.use(cors)
 // app.options('*', cors())
 
-if(config.env === 'production'){
-  app.use('/v1', rateLimiter);
-}
-
 app.use(auth(authConfig))
 
-// v1 api routes
-app.use('/v1', router)
+if(config.env === 'production'){
+  app.use('/', rateLimiter);
+}
+
+// api routes
+app.use('/', router)
 
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
