@@ -27,7 +27,9 @@ if(config.env !== 'test'){
 }
 
 // Secure http headers
-app.use(helmet())
+app.use(helmet({
+  contentSecurityPolicy: false,
+}))
 
 // Parse Json request body 
 app.use(express.json())
@@ -36,8 +38,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 
 // Enable cors 
-// app.use(cors)
-// app.options('*', cors())
+app.use(cors())
+app.options('*', cors())
 
 app.use(auth(authConfig))
 

@@ -13,3 +13,8 @@ router.get('/profile', (req, res, next) => {
   res.send(JSON.stringify(req.oidc.user));
 })
 
+router.get('/testing', (req, res, next) => {
+  res.sendFile('/Users/sagepages/Desktop/Projects/Galactus/backend/src/routes/v1/test.html')
+})
+
+
