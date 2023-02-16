@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,7 +22,6 @@ model Events {
 
 model Hacker_Applications {
   hacker_id            Int      @id @default(autoincrement())
-  event                Events   @relation(fields: [event_id], references: [event_id])
   event_id             Int
   first_name           String   @db.VarChar(50)
   last_name            String   @db.VarChar(50)
@@ -43,10 +39,11 @@ model Hacker_Applications {
   linkedin             String   @db.VarChar(75)
   level_of_study       String   @db.VarChar(15)
   interest_response    String   @db.VarChar(2500)
-  acceptance_status    Boolean  @db.Boolean
-  email_message_status Boolean  @db.Boolean
+  acceptance_status    Boolean?
+  email_message_status Boolean?
   developer_role       String   @db.VarChar(150)
-  check_in_status      Boolean  @db.Boolean
+  check_in_status      Boolean
+  event                Events   @relation(fields: [event_id], references: [event_id])
 
   @@map("hacker_applications")
 }
