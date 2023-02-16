@@ -27,9 +27,23 @@ if(config.env !== 'test'){
 }
 
 // Secure http headers
-app.use(helmet({
-  contentSecurityPolicy: false,
-}))
+app.use(
+  helmet({
+    hsts: {
+      maxAge: 31536000,
+    },
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        "default-src": ["'none'"],
+        "frame-ancestors": ["'none'"],
+      },
+    },
+    frameguard: {
+      action: "deny",
+    },
+  })
+);
 
 // Parse Json request body 
 app.use(express.json())
@@ -39,7 +53,13 @@ app.use(express.urlencoded({ extended: true}));
 
 // Enable cors 
 app.use(cors())
-app.options('*', cors())
+
+// Final cors setup
+// app.use(cors({
+//   origin: config.clientOriginUrl,
+//   allowedHeaders: ["Authorization", "Content-Type"],
+//   maxAge: 86400,
+// }));
 
 app.use(auth(authConfig))
 
