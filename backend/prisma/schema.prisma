@@ -18,8 +18,6 @@ model Events {
   end_date            DateTime              @db.Date
   start_time          DateTime              @db.Timestamptz(3)
   end_time            DateTime              @db.Timestamptz(3)
-  event_url           String?               @db.VarChar(100)
-  open                Boolean               @db.Boolean
   Hacker_Applications Hacker_Applications[]
 
   @@map("events")
