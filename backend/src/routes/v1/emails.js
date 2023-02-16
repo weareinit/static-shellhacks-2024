@@ -11,6 +11,59 @@ export const router = express.Router();
 //       I think it would be best if we could do one click accept/decline and send the appropriate email for it.
 
 router.get(
+  "/events/:event_id/applicants/emailed",
+  async (req, res, next) => {
+    const event_id_param = parseInt(req.params.event_id);
+
+    if (isNaN(event_id_param)) {
+      // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
+      res.sendStatus(404);
+    } else {
+      const getAnyApplicantsThatHaveBeenEmailed =
+        await prisma.hacker_Applications.findMany({
+          where: {
+            event_id: event_id_param,
+            email_message_status: true,
+          },
+        });
+      if (getAnyApplicantsThatHaveBeenEmailed == null) {
+        // FIX - Different status code when no results are found
+        res.sendStatus(404);
+      } else {
+        res.send(getAnyApplicantsThatHaveBeenEmailed);
+      }
+    }
+  }
+);
+
+router.get(
+  "/events/:event_id/applicants/not-emailed",
+  async (req, res, next) => {
+    const event_id_param = parseInt(req.params.event_id);
+
+    if (isNaN(event_id_param)) {
+      // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
+      res.sendStatus(404);
+    } else {
+      const getAnyApplicantsThatHaveNotBeenEmailed =
+        await prisma.hacker_Applications.findMany({
+          where: {
+            event_id: event_id_param,
+            email_message_status: false,
+          },
+        });
+      if (getAnyApplicantsThatHaveNotBeenEmailed == null) {
+        // FIX - Different status code when no results are found
+        res.sendStatus(404);
+      } else {
+        res.send(getAnyApplicantsThatHaveNotBeenEmailed);
+      }
+    }
+  }
+);
+
+
+router.get(
   "/events/:event_id/applicants/accepted/emailed",
   async (req, res, next) => {
     const event_id_param = parseInt(req.params.event_id);
@@ -105,7 +158,7 @@ router.get(
         await prisma.hacker_Applications.findMany({
           where: {
             event_id: event_id_param,
-            acceptance_status: true,
+            acceptance_status: false,
             email_message_status: false,
           },
         });
