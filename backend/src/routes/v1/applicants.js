@@ -1,6 +1,6 @@
 import express from "express";
 import { prisma } from "../../index.js";
-import { isParamInApplicantFilters } from "../../models/filters.js";
+import { sanitizeAndPrepareParameters } from "../../models/filters.js";
 export const router = express.Router();
 
 router.get("/events/:event_id/applicants", async (req, res, next) => {
@@ -10,7 +10,7 @@ router.get("/events/:event_id/applicants", async (req, res, next) => {
 
     if (isNaN(event_id_param)) {
       // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-      res.sendStatus(404);
+      res.sendStatus(400);
     } else {
       const getApplicants = await prisma.hacker_Applications.findMany({
         where: {
@@ -19,7 +19,7 @@ router.get("/events/:event_id/applicants", async (req, res, next) => {
       });
       if (getApplicants == null) {
         // FIX - Different status code when no results are found
-        res.sendStatus(404);
+        res.sendStatus(204);
       } else {
         res.send(getApplicants);
       }
@@ -30,34 +30,64 @@ router.get("/events/:event_id/applicants", async (req, res, next) => {
   }
 });
 
+// By URL Query param ->?application_status='<param>'
 router.get("/events/:event_id/applicants", async (req, res, next) => {
   if (req.query.application_status !== "") {
-    // applicants?application_status='<param>'
     const application_status_param = req.query.application_status;
     const event_id_param = parseInt(req.params.event_id);
 
-    if (
-      isNaN(event_id_param) ||
-      !isParamInApplicantFilters(application_status_param)
-    ) {
+    const resultantFilters = sanitizeAndPrepareParameters(
+      application_status_param
+    );
+
+    if (isNaN(event_id_param) || resultantFilters.length === 0) {
       // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-      res.sendStatus(404);
+      res.sendStatus(400);
     } else {
       const getFilteredApplicants = await prisma.hacker_Applications.findMany({
         where: {
           event_id: event_id_param,
-          application_status: application_status_param,
+          OR: resultantFilters,
         },
       });
       if (getFilteredApplicants == null) {
         // FIX - Different status code when no results are found
-        res.sendStatus(404);
+        res.sendStatus(204);
       } else {
         res.send(getFilteredApplicants);
       }
     }
   } else {
     // FIX - Different status code when missing or incorrect query param
-    res.sendStatus(404);
+    res.sendStatus(400);
+  }
+});
+
+router.get("/events/:event_id/applicants/totals", async (req, res, next) => {
+  const event_id_param = parseInt(req.params.event_id);
+
+  if (isNaN(event_id_param)) {
+    // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
+    res.sendStatus(400);
+  } else {
+    const getTotalApplicantsGroupedByApplicationStatus =
+      await prisma.hacker_Applications.groupBy({
+        by: ["application_status"],
+        where: { event_id: event_id_param },
+        _count: { hacker_id: true },
+      });
+
+    if (getTotalApplicantsGroupedByApplicationStatus == null) {
+      // FIX - Different status code when no results are found
+      res.sendStatus(204);
+    } else {
+
+      // Reformat object names for better client use
+      let result = getTotalApplicantsGroupedByApplicationStatus.map(obj => ({
+        application_status: obj.application_status, total: obj._count.hacker_id
+      }))
+
+      res.send(result);
+    }
   }
 });
