@@ -8,16 +8,6 @@ import helmet from 'helmet'
 import ApiError from './errors/ApiError.js'
 import { errorConverter, errorHandler } from './errors/error.js'
 import { rateLimiter } from './middleware/ratelimiter.js'
-import { auth } from 'express-openid-connect'
-
-const authConfig = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: config.auth_0_secret,
-  baseURL: config.baseURL,
-  clientID: config.clientID,
-  issuerBaseURL: config.issuerBaseUrl,
-}
 
 export const app = express()
 
@@ -61,14 +51,12 @@ app.use(cors())
 //   maxAge: 86400,
 // }));
 
-app.use(auth(authConfig))
-
 if(config.env === 'production'){
-  app.use('/', rateLimiter);
+  app.use('/api/v1', rateLimiter);
 }
 
-// api routes
-app.use('/', router)
+// api routes 
+app.use('/api/v1', router)
 
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))

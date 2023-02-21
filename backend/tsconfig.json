@@ -12,6 +12,9 @@
       "*": ["node_modules/*"]
     }
   },
+  "ts-node": {
+    "esm": true
+  },
   "include": ["src/**/*"]
 }
 

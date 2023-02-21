@@ -12,6 +12,10 @@ const envSchema = Joi.object().keys({
   NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
   PORT: Joi.number().default(3000),
   DATABASE_URL: Joi.string().required(),
+  AWS_ACCESS_KEY_ID: Joi.string().required(),
+  AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+  AWS_REGION: Joi.string().required(),
+  AWS_BUCKET_NAME: Joi.string().required(),
   // JWT? ...
   // SMTP ...
   // ORM ...
@@ -27,6 +31,10 @@ if(error) {
 export const config = {
   env: envVariables.NODE_ENV,
   port: envVariables.PORT,
+  aws_access_key_id: envVariables.AWS_ACCESS_KEY_ID,
+  aws_secret_access_key: envVariables.AWS_SECRET_ACCESS_KEY,
+  aws_region: envVariables.aws_region,
+  aws_bucket_name: envVariables.AWS_BUCKET_NAME,
   // SMTP ...
   // ORM ...
 }
