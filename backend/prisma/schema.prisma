@@ -39,7 +39,7 @@ model Hacker_Applications {
   linkedin             String?                 @db.VarChar(75)
   level_of_study       String                  @db.VarChar(15)
   interest_response    String                  @db.VarChar(2500)
-  application_status   application_status_enums
+  application_status   application_status_enums @default(pending)
   email_message_status Boolean
   developer_role       String                  @db.VarChar(150)
   check_in_status      Boolean                 @default(false)
