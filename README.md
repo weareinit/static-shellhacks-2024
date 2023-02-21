@@ -1,19 +1,4 @@
-# Galactus
+# Shellhacks 2023
 
-
-## Getting Started
-
-Create an environment file before running:
-```bash
-echo "PORT=3000" >> .env
-```
-
-Install the dependencies:
-```bash
-npm install
-```
-
-Development:
-```bash
-npm run dev
-```
+# [Backend](https://github.com/weareinit/Galactus/backend)
+# [Shellhacks](https://github.com/weareinit/Galactus/shellhacks)
