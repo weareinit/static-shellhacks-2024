@@ -17,7 +17,23 @@ if(config.env !== 'test'){
 }
 
 // Secure http headers
-app.use(helmet())
+app.use(
+  helmet({
+    hsts: {
+      maxAge: 31536000,
+    },
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        "default-src": ["'none'"],
+        "frame-ancestors": ["'none'"],
+      },
+    },
+    frameguard: {
+      action: "deny",
+    },
+  })
+);
 
 // Parse Json request body 
 app.use(express.json())
@@ -26,15 +42,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 
 // Enable cors 
-// app.use(cors)
-// app.options('*', cors())
+app.use(cors())
+
+// Final cors setup
+// app.use(cors({
+//   origin: config.clientOriginUrl,
+//   allowedHeaders: ["Authorization", "Content-Type"],
+//   maxAge: 86400,
+// }));
 
 if(config.env === 'production'){
-  app.use('/v1', rateLimiter);
+  app.use('/api/v1', rateLimiter);
 }
 
-// v1 api routes
-app.use('/v1', router)
+// api routes 
+app.use('/api/v1', router)
 
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
