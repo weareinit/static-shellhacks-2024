@@ -2,25 +2,15 @@ import { app } from './app.js'
 import { config } from './config/config.js'
 import { logger } from './config/logger.js'
 import { PrismaClient } from '@prisma/client'
-import pkg from 'aws-sdk'
+import {S3Client} from '@aws-sdk/client-s3'
 
 
 // Load Database connection - Will throw error here if unable to connect.
 export const prisma = new PrismaClient()
 
-const AWS = pkg;
-
-AWS.config.getCredentials(function(err) {
-  if (err) console.log(err.stack);
-  // credentials not loaded
-  else {
-    console.log("Access key found. Credentials loaded!");
-  }
-});
-
-AWS.config.update({region: config.aws_region})
-
-export const s3 = new AWS.S3();
+// Create S3 client
+// FIX - Find some way to make sure this can be caught if there was an error
+export const s3Client = new S3Client()
 
 // Load server
 const server = app.listen(config.port, () => {
