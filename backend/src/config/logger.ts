@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { config } from './config.js'
+import { config } from './config'
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -12,9 +12,10 @@ export const logger = winston.createLogger({
   level: config.env === 'development' ? 'debug' : 'info',
   format: winston.format.combine(
     enumerateErrorFormat(),
+    winston.format.timestamp(),
     config.env === 'development' ? winston.format.colorize() : winston.format.uncolorize(),
     winston.format.splat(),
-    winston.format.printf(({ level, message }) => `${level}: ${message}`)
+    winston.format.printf(({timestamp, level, message }) => `[${timestamp}] ${level}: ${message}`)
   ),
   transports: [
     new winston.transports.Console({

@@ -1,6 +1,6 @@
 import { application_status_enums } from "@prisma/client";
 
-export const applicant_filters = new Set(Object.keys(application_status_enums))
+export const applicantFilters = new Set(Object.keys(application_status_enums))
 
 // Other potential query parameters
 // export const developer_filters = new Set()
@@ -9,21 +9,21 @@ export const applicant_filters = new Set(Object.keys(application_status_enums))
 // export const race_filters = new Set()
 // export const email_message_status_filters = new Set()
 
-export function isParamInApplicantFilters(param){
-  return applicant_filters.has(param)
+export function isParamInApplicantFilters(param: string){
+  return applicantFilters.has(param)
 }
 
-export function sanitizeAndPrepareParameters(params){
-  let resultantFilters = [] 
-  // If params is an array 
+export function sanitizeAndPrepareParameters(params: string | string[]){
+  const resultantFilters: object[] = []
+  // If params is an array
   if(Array.isArray(params)){
-    for(let i = 0; i < params.length; i++){
-      if(isParamInApplicantFilters(params[i])){
-        resultantFilters.push({application_status: params[i]})
-      } 
+    for(const param of params){
+      if(isParamInApplicantFilters(param)){
+        resultantFilters.push({application_status: param})
+      }
     }
   }
-  // If params is just a value
+  // If params is just string
   else{
     if(isParamInApplicantFilters(params)){
       resultantFilters.push({application_status: params})
