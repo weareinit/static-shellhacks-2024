@@ -15,13 +15,13 @@ services:
     volumes:
       - ./backend/src:/backend/src
     env_file:
-      - ./.env
+      - ./backend.env
   shellhacks:
     build:
       context: ./shellhacks
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     env_file:
-      - ./.env
+      - ./frontend.env
     volumes:
       - ./shellhacks/src:/shellhacks/src
