@@ -8,4 +8,4 @@ WORKDIR /shellhacks
 
 RUN ["npm", "install"]
 
-CMD ["npm", "run", "dev"]
+CMD ["./deploy.sh"]

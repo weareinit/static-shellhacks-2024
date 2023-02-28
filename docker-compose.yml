@@ -25,3 +25,7 @@ services:
       - ./frontend.env
     volumes:
       - ./shellhacks/src:/shellhacks/src
+    command:
+      - npm
+      - run
+      - dev

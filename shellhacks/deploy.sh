@@ -1,0 +1,2 @@
+next build
+next start
