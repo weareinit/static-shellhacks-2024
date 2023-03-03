@@ -54,7 +54,9 @@ app.use(cors())
 if(config.env === 'production'){
   app.use('/api/v1', rateLimiter);
 }
-
+app.get('/', (req: Request, res: Response) => {
+  return res.status(200).json({message: 'Hello World'})
+})
 // api routes
 app.use('/api/v1', router)
 

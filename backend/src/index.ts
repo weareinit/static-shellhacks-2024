@@ -13,7 +13,8 @@ export const prisma = new PrismaClient()
 export const s3Client = new S3Client({})
 
 // Load server
-const server = app.listen(config.port, () => {
+
+export const server = app.listen(config.port, () => {
     logger.info(`Listening on port ${config.port}`);
   })
 
