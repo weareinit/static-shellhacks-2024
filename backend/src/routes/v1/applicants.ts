@@ -3,6 +3,8 @@ import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../index";
 import { sanitizeAndPrepareParameters } from "../../filters/filters";
 import { Hacker_Applications } from "@prisma/client";
+import { TestApplicantStruct } from "../../models/test_applicant";
+
 
 export const router = express.Router();
 
@@ -111,3 +113,50 @@ router.get(
     }
   }
 );
+
+//Add Applicants when they register
+router.post(
+  "/events/:eventId/applicants",
+  async (req: Request, res: Response) => {
+
+    const eventIdParam: number = parseInt(req.params.eventId, 10);
+    // const { event_id, 
+    //         first_name, 
+    //         last_name, 
+    //         email, 
+    //         discord, 
+    //         gender, 
+    //         ethnicity, 
+    //         phone_number} = req.body;
+    if (isNaN(eventIdParam)) {
+      // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
+      res.sendStatus(400);
+    } else {
+      const applicant = await prisma.hacker_Applications.create({
+        data: {
+          event_id: 1,
+          first_name: 'Giancarlo',
+          last_name: 'Padron',
+          email: 'pipi@mail.com',
+          discord: 'vibes#0044',
+          gender: 'M',
+          ethnicity: 'Hispanic',
+          phone_number: '9999999999',
+          race: 'white',
+          dob: new Date(2023,1,1),
+          major: 'comp sci',
+          school: 'fiu',
+          resume_path: 'giancarlopadron.pdf',
+          github: null,
+          linkedin: null,
+          level_of_study: 'Junior',
+          interest_response: 'Placeholder',
+          email_message_status: true,
+          developer_role: "Top G",
+        }
+      })
+      
+      res.send("applicant sent")
+    }
+
+  });
