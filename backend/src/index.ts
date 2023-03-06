@@ -1,8 +1,8 @@
-import { app } from './app.js'
-import { config } from './config/config.js'
-import { logger } from './config/logger.js'
+import { app } from './app'
+import { config } from './config/config'
+import { logger } from './config/logger'
 import { PrismaClient } from '@prisma/client'
-import {S3Client} from '@aws-sdk/client-s3'
+import { S3Client } from '@aws-sdk/client-s3'
 
 
 // Load Database connection - Will throw error here if unable to connect.
@@ -10,10 +10,11 @@ export const prisma = new PrismaClient()
 
 // Create S3 client
 // FIX - Find some way to make sure this can be caught if there was an error
-export const s3Client = new S3Client()
+export const s3Client = new S3Client({})
 
 // Load server
-const server = app.listen(config.port, () => {
+
+export const server = app.listen(config.port, () => {
     logger.info(`Listening on port ${config.port}`);
   })
 
@@ -29,7 +30,7 @@ const exitHandler = () => {
   }
 };
 
-const unexpectedErrorHandler = (error) => {
+const unexpectedErrorHandler = (error: Error) => {
   logger.error(error);
   exitHandler();
 }

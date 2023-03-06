@@ -1,13 +1,13 @@
-import express from 'express'
-import { config } from './config/config.js'
+import express, { NextFunction, Request, Response } from 'express'
+import { config } from './config/config'
 import cors from 'cors'
-import { router } from './routes/v1/index.js'
+import { router } from './routes/v1/index'
 import httpStatus from 'http-status'
-import { morganHandlers } from './config/morgan.js'
+import { morganHandlers } from './config/morgan'
 import helmet from 'helmet'
-import ApiError from './errors/ApiError.js'
-import { errorConverter, errorHandler } from './errors/error.js'
-import { rateLimiter } from './middleware/ratelimiter.js'
+import ApiError from './errors/ApiError'
+import { errorConverter, errorHandler } from './errors/error'
+import { rateLimiter } from './middleware/ratelimiter'
 
 export const app = express()
 
@@ -35,13 +35,13 @@ app.use(
   })
 );
 
-// Parse Json request body 
+// Parse Json request body
 app.use(express.json())
 
 // Parse urlencoded request body
 app.use(express.urlencoded({ extended: true}));
 
-// Enable cors 
+// Enable cors
 app.use(cors())
 
 // Final cors setup
@@ -54,14 +54,16 @@ app.use(cors())
 if(config.env === 'production'){
   app.use('/api/v1', rateLimiter);
 }
-
-// api routes 
+app.get('/', (req: Request, res: Response) => {
+  return res.status(200).json({message: 'Hello World'})
+})
+// api routes
 app.use('/api/v1', router)
 
-app.use((req, res, next) => {
+app.use((_ : Request, __: Response, next: NextFunction) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
 })
 
-// Convert errors to ApiError and handle 
+// Convert errors to ApiError and handle
 app.use(errorConverter)
 app.use(errorHandler)
