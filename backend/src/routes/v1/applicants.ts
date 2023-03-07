@@ -7,10 +7,13 @@ import { dal } from "../../dal/dal";
 export const router = express.Router();
 
 router.get(
-  "/events/:eventId/applicants",
+  "/events/:eventId?/applicants",
   async (req: Request, res: Response, next: NextFunction) => {
     // Check for query params
     if (Object.keys(req.query).length < 1) {
+      if (!req.params) {
+        res.sendStatus(404);
+      }
       const eventIdParam: number = parseInt(req.params.eventId, 10);
 
       if (isNaN(eventIdParam) || eventIdParam < 1) {
@@ -35,9 +38,12 @@ router.get(
 
 // By URL Query param ->?application_status='<param>'
 router.get(
-  "/events/:eventId/applicants",
+  "/events/:eventId?/applicants",
   async (req: Request, res: Response) => {
     if (req.query.application_status !== "") {
+      if (!req.params) {
+        res.sendStatus(404);
+      }
       const applicationStatusParam: string | string[] = req.query
         .application_status as string | string[];
       const eventIdParam: number = parseInt(req.params.eventId, 10);
@@ -70,8 +76,13 @@ router.get(
 );
 
 router.get(
-  "/events/:eventId/applicants/application_status/totals",
+  "/events/:eventId?/applicants/application_status/totals",
   async (req: Request, res: Response) => {
+
+    if (!req.params) {
+      res.sendStatus(404);
+    }
+
     const eventIdParam: number = parseInt(req.params.eventId, 10);
 
     if (isNaN(eventIdParam)) {
