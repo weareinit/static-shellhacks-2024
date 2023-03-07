@@ -1,10 +1,7 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import { prisma } from "../../index";
 import { sanitizeAndPrepareParameters } from "../../filters/filters";
 import { Hacker_Applications } from "@prisma/client";
-import { TestApplicantStruct } from "../../models/test_applicant";
-
 
 export const router = express.Router();
 
@@ -15,21 +12,17 @@ router.get(
     if (Object.keys(req.query).length < 1) {
       const eventIdParam: number = parseInt(req.params.eventId, 10);
 
-      if (isNaN(eventIdParam)) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-        res.sendStatus(400);
+      if (isNaN(eventIdParam) || eventIdParam < 1) {
+        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
+        res.sendStatus(404);
       } else {
-        const getApplicants: Hacker_Applications[] =
-          await prisma.hacker_Applications.findMany({
-            where: {
-              event_id: eventIdParam,
-            },
-          });
-        if (getApplicants == null || getApplicants.length < 1) {
+        const applicants: Hacker_Applications[] =
+          await dal.applicants.getApplicantsByEventId(eventIdParam);
+        if (applicants.length < 1) {
           // FIX - Different status code when no results are found
           res.sendStatus(204);
         } else {
-          res.send(getApplicants);
+          res.send(applicants);
         }
       }
       // If there are any query params, go to the GET route that handles them.
@@ -52,63 +45,47 @@ router.get(
         applicationStatusParam
       );
 
-      if (isNaN(eventIdParam) || resultantFilters.length === 0) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-        res.sendStatus(400);
+      if (isNaN(eventIdParam) || resultantFilters.length < 1) {
+        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
+        res.sendStatus(404);
       } else {
-        const getFilteredApplicants: Hacker_Applications[] =
-          await prisma.hacker_Applications.findMany({
-            where: {
-              event_id: eventIdParam,
-              OR: resultantFilters,
-            },
-          });
-        if (getFilteredApplicants == null || getFilteredApplicants.length < 1) {
+        const filteredApplicants =
+          await dal.applicants.getApplicantsByEventIdAndFilteredByApplicationStatus(
+            eventIdParam,
+            resultantFilters
+          );
+        if (filteredApplicants.length < 1) {
           // FIX - Different status code when no results are found
           res.sendStatus(204);
         } else {
-          res.send(getFilteredApplicants);
+          res.send(filteredApplicants);
         }
       }
     } else {
       // FIX - Different status code when missing or incorrect query param
-      res.sendStatus(400);
+      res.sendStatus(404);
     }
   }
 );
 
 router.get(
-  "/events/:eventId/applicants/totals",
+  "/events/:eventId/applicants/application_status/totals",
   async (req: Request, res: Response) => {
     const eventIdParam: number = parseInt(req.params.eventId, 10);
 
     if (isNaN(eventIdParam)) {
-      // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-      res.sendStatus(400);
+      // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
+      res.sendStatus(404);
     } else {
-      const getTotalApplicantsGroupedByApplicationStatus =
-        await prisma.hacker_Applications.groupBy({
-          by: ["application_status"],
-          where: { event_id: eventIdParam},
-          _count: { hacker_id: true },
-        });
-
-      if (
-        getTotalApplicantsGroupedByApplicationStatus == null ||
-        getTotalApplicantsGroupedByApplicationStatus.length < 1
-      ) {
+      const totalNumberOfApplicantsGroupedByApplicationStatus: object =
+        await dal.applicants.getTotalNumberOfApplicantsGroupedByApplicationStatus(
+          eventIdParam
+        );
+      if (totalNumberOfApplicantsGroupedByApplicationStatus == null) {
         // FIX - Different status code when no results are found
         res.sendStatus(204);
       } else {
-        // Reformat object names for better client use
-        const result = getTotalApplicantsGroupedByApplicationStatus.map(
-          (obj) => ({
-            application_status: obj.application_status,
-            total: obj._count.hacker_id,
-          })
-        );
-
-        res.send(result);
+        res.send(totalNumberOfApplicantsGroupedByApplicationStatus);
       }
     }
   }

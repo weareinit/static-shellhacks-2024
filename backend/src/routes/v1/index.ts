@@ -27,8 +27,3 @@ const defaultRoutes = [
 defaultRoutes.forEach((route) => {
   router.use(route.route);
 });
-
-router.get("/", (_: Request, res: Response, __: NextFunction) => {
-  res.send("Home page");
-});
-
