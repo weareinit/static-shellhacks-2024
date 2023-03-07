@@ -5,3 +5,7 @@ export interface BucketParams {
   Body?: Buffer,
   ContentType?: string,
 }
+
+export interface SignedUrl {
+  url: string
+}

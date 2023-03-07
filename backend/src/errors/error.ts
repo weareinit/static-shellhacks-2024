@@ -36,16 +36,29 @@ export const errorHandler = (err: any, _: Request, res: Response) => {
   res.status(statusCode).send(response);
 };
 
-export class S3UploadError extends Error {
+export class S3FileUploadError extends Error {
   constructor(message: string){
     super(message);
     this.name = "S3UploadError"
   }
 }
 
-export class S3RetrievalError extends Error {
+export class S3FileRetrievalError extends Error {
   constructor(message: string){
     super(message);
     this.name = "S3RetrievalError"
+  }
+}
+
+export class S3FileNotFoundError extends Error {
+  constructor(message: string){
+    super(message);
+    this.name = "S3FileNotFoundError"
+  }
+}
+export class S3FileDeletionError extends Error {
+  constructor(message: string){
+    super(message);
+    this.name = "S3FileDeletionError"
   }
 }
