@@ -51,6 +51,7 @@ router.get(
   }
 );
 
+// FIX
 router.delete(
   "/resumes/:fileName?",
   async (req: Request, res: Response, _: NextFunction) => {
