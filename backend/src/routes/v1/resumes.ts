@@ -9,7 +9,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // FIX ~ what should this return to notify the client that a successful upload/deletion occured?
-
 router.post(
   "/resumes",
   upload.single("resume"),
