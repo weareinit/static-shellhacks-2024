@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - NODE_ENV=development
+    command:
+      - npm
+      - run
+      - dev
+    volumes:
+      - ./backend/src:/backend/src
+    env_file:
+      - ./.env
