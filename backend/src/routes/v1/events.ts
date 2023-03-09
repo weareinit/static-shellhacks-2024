@@ -17,7 +17,7 @@ router.get("/events", async (_ : Request, res: Response, __ : NextFunction) => {
 router.get("/events/:eventId?", async (req: Request, res: Response, _: NextFunction) => {
 
   if(!req.params){
-    res.sendStatus(404)
+    res.sendStatus(400)
   }
 
   const eventIdParam = parseInt(req.params.eventId, 10);

@@ -12,7 +12,7 @@ router.get(
     // Check for query params
     if (Object.keys(req.query).length < 1) {
       if (!req.params) {
-        res.sendStatus(404);
+        res.sendStatus(400);
       }
       const eventIdParam: number = parseInt(req.params.eventId, 10);
 
@@ -42,7 +42,7 @@ router.get(
   async (req: Request, res: Response) => {
     if (req.query.application_status !== "") {
       if (!req.params) {
-        res.sendStatus(404);
+        res.sendStatus(400);
       }
       const applicationStatusParam: string | string[] = req.query
         .application_status as string | string[];
@@ -80,7 +80,7 @@ router.get(
   async (req: Request, res: Response) => {
 
     if (!req.params) {
-      res.sendStatus(404);
+      res.sendStatus(400);
     }
 
     const eventIdParam: number = parseInt(req.params.eventId, 10);

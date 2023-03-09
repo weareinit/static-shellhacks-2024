@@ -35,7 +35,7 @@ router.get(
   "/resumes/:fileName?",
   async (req: Request, res: Response, _: NextFunction) => {
     if (!req.params) {
-      res.sendStatus(404);
+      res.sendStatus(400);
     }
     try {
       const URL: SignedUrl = await retrieveFromS3(req.params.fileName);
@@ -55,7 +55,7 @@ router.delete(
   "/resumes/:fileName?",
   async (req: Request, res: Response, _: NextFunction) => {
     if (!req.params) {
-      res.sendStatus(404);
+      res.sendStatus(400);
     }
     try {
       await deleteFromS3(req.params.fileName);
