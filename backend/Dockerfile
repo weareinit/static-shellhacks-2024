@@ -1,15 +1,37 @@
-FROM node:14
-
-RUN ["mkdir", "backend"]
+FROM node:19.4-alpine AS base
 
 WORKDIR /backend
 
-COPY . /backend
+COPY package*.json ./
 
-EXPOSE ${PORT}
+FROM base as dev
 
-RUN ["npm", "install"]
+ENV NODE_ENV development
 
-RUN ["npm", "install", "nodemon", "-g"]
+RUN --mount=type=cache,target=/backend/.npm \
+    npm set cache /backend/.npm && \
+    npm install
+
+COPY . .
+
+RUN npx prisma generate
+
+CMD ["npm", "run", "dev"]
+
+FROM base as production
+
+ENV NODE_ENV production
+
+RUN --mount=type=cache,target=/backend/.npm \
+    npm set cache /backend/.npm && \
+    npm ci --only=production
+
+USER node
+
+COPY --chown=node:node ./src/ .
+
+RUN npx prisma generate
+
+EXPOSE $PORT
 
 CMD ["npm", "start"]
