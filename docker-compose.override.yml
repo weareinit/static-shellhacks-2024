@@ -1,17 +1,11 @@
-version: "3.9"
 services:
+  shellhacks:
+    build:
+      target: dev
+    volumes:
+      - ./shellhacks/src:/shellhacks/src
   backend:
     build:
-      context: ./backend
-    ports:
-      - ${PORT}:${PORT}
-    environment:
-      - NODE_ENV=development
-    command:
-      - npm
-      - run
-      - dev
+      target: dev
     volumes:
       - ./backend/src:/backend/src
-    env_file:
-      - ./.env

@@ -7,9 +7,10 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     env_file:
       - ./.env
-    volumes:
-      - ./shellhacks/src:/shellhacks/src
-    command:
-      - npm
-      - run
-      - dev
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - ./.env
