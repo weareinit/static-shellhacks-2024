@@ -1,4 +1,4 @@
-export interface TestApplicantStruct {
+export interface newHackerApplication {
       event_id: number,
       first_name: string,
       last_name: string,

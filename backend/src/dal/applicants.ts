@@ -1,6 +1,6 @@
 import { application_status_enums, Hacker_Applications } from "@prisma/client";
-import { TestApplicantStruct } from "../models/test_applicant";
 import { prisma } from "../index";
+import { newHackerApplication } from "../interfaces/newHackerApplication";
 
 export async function getApplicantsByEventId(
   eventId: number
@@ -48,9 +48,8 @@ export async function getTotalNumberOfApplicantsGroupedByApplicationStatus(event
   return statusCounts;
 }
 
-export async function insertHackerApplication(hacker_applications: TestApplicantStruct, eventId: number): Promise<Hacker_Applications> {
-  const savedApplicant: Hacker_Applications = await prisma.hacker_Applications.create({
-    data: {
+export async function insertHackerApplication(hacker_applications: newHackerApplication, eventId: number): Promise<Hacker_Applications> {
+  const data = {
       event_id: eventId,
       first_name: hacker_applications.first_name,
       last_name: hacker_applications.last_name,
@@ -69,8 +68,10 @@ export async function insertHackerApplication(hacker_applications: TestApplicant
       level_of_study: hacker_applications.level_of_study,
       interest_response: hacker_applications.interest_response,
       email_message_status: hacker_applications.email_message_status,
-      developer_role: hacker_applications.developer_role,
-    },
+      developer_role: hacker_applications.developer_role
+  }
+  const savedApplicant: Hacker_Applications = await prisma.hacker_Applications.create({
+    data,
   });
 
   return savedApplicant;

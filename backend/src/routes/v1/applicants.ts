@@ -3,32 +3,32 @@ import { Request, Response, NextFunction } from "express";
 import { sanitizeAndPrepareParameters } from "../../filters/filters";
 import { Hacker_Applications } from "@prisma/client";
 import { dal } from "../../dal/dal";
-import { TestApplicantStruct } from "../../models/test_applicant";
+import { newHackerApplication } from "../../interfaces/newHackerApplication";
 
 export const router = express.Router();
 
-// const mockApplicants: TestApplicantStruct =
-//   {
-//       event_id: 1,
-//       first_name: 'Giancarlo',
-//       last_name: 'Padron',
-//       email: 'pipi@mail.com',
-//       discord: 'vibes#0044',
-//       gender: 'M',
-//       ethnicity: 'Hispanic',
-//       phone_number: '9999999999',
-//       race: 'white',
-//       dob: new Date(2023,1,1),
-//       major: 'comp sci',
-//       school: 'fiu',
-//       resume_path: 'giancarlopadron.pdf',
-//       github: null,
-//       linkedin: null,
-//       level_of_study: 'Junior',
-//       interest_response: 'Placeholder',
-//       email_message_status: true,
-//       developer_role: "Top G",
-//   };
+const newHackerApplicant: newHackerApplication =
+  {
+      event_id: 1,
+      first_name: 'Giancarlo',
+      last_name: 'Padron',
+      email: 'pipi@mail.com',
+      discord: 'vibes#0044',
+      gender: 'M',
+      ethnicity: 'Hispanic',
+      phone_number: '9999999999',
+      race: 'white',
+      dob: new Date(2023,1,1),
+      major: 'comp sci',
+      school: 'fiu',
+      resume_path: 'giancarlopadron.pdf',
+      github: null,
+      linkedin: null,
+      level_of_study: 'Junior',
+      interest_response: 'Placeholder',
+      email_message_status: true,
+      developer_role: "Top G",
+  };
 
 router.get(
   "/events/:eventId/applicants",
