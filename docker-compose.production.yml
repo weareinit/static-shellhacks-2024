@@ -1,0 +1,18 @@
+services:
+  backend:
+    networks:
+      - services_network
+  shellhacks:
+    networks:
+      - services_network
+  nginx:
+    networks:
+      - services_network
+      - host_network
+
+networks:
+  host_network:
+    driver: bridge
+  services_network:
+    driver: bridge
+    internal: true
