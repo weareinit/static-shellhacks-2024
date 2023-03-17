@@ -218,15 +218,15 @@ describe("POST /applicants", () => {
   });
 
   describe('POST /events/:eventId/applicants', () => {
-    test('should create a new applicant for the event', async () => {
+    test('Valid Request - Return 200', async () => {
       const response = await request(server).post(
         "/api/v1/events/1/applicants"
       );
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(201);
       expect(dal.applicants.insertHackerApplication).toHaveBeenCalled();
     });
   });
 
   //Introduce more test cases
-  
+
 });
