@@ -60,7 +60,7 @@ export async function insertHackerApplication(hacker_applications: newHackerAppl
       ethnicity: hacker_applications.ethnicity,
       phone_number: hacker_applications.phone_number,
       race: hacker_applications.race,
-      dob: new Date(2023,1,1),
+      dob: hacker_applications.dob,
       major: hacker_applications.major,
       school: hacker_applications.school,
       resume_path: hacker_applications.resume_path,

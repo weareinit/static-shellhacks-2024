@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { sanitizeAndPrepareParameters } from "../../filters/filters";
 import { Hacker_Applications } from "@prisma/client";
 import { dal } from "../../dal/dal";
+import { logger } from "../../config/logger";
 
 export const router = express.Router();
 
@@ -100,11 +101,12 @@ router.post(
     if (isNaN(eventIdParam)) {
       res.sendStatus(400);
     } else {
-      const createApplicant: object =
+      const newApplicant: object =
         await dal.applicants.insertHackerApplication(
           req.body
         );
+        logger.info(newApplicant)
+        res.sendStatus(201)
       }
-      res.sendStatus(201)
     }
 );

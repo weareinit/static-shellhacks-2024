@@ -4,6 +4,8 @@ import { server } from "../../src";
 import { dal } from "../../src/dal/dal";
 import { newHackerApplication } from "../../src/interfaces/newHackerApplication";
 
+// Applicant Objects
+
 const mockApplicants = [
   {
     hacker_id: 1,
@@ -228,5 +230,9 @@ describe("POST /applicants", () => {
   });
 
   //Introduce more test cases
+
+  //Test Case (Invalid Parameter)
+
+  //Test Case (Empty Object)
 
 });
