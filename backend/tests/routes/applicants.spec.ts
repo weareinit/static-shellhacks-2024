@@ -204,7 +204,7 @@ describe("GET /applicants?application_status=", () => {
   });
 });
 
-describe("POST /applicants?application_status=", () => {
+describe("POST /applicants", () => {
   beforeAll(() => {
     dal.applicants.insertHackerApplication = jest
       .fn()
