@@ -9,3 +9,12 @@ services:
       target: dev
     volumes:
       - ./backend/src:/backend/src
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    depends_on:
+      - shellhacks
+      - backend
+    ports:
+      - 80:80
