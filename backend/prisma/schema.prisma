@@ -51,7 +51,7 @@ model Hacker_Applications {
 enum application_status_enums {
   pending
   accepted
-  declined
+  staged
   confirmed
   withdrawn
 }

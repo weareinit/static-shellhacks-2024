@@ -48,9 +48,9 @@ export async function getTotalNumberOfApplicantsGroupedByApplicationStatus(event
   return statusCounts;
 }
 
-export async function insertHackerApplication(hacker_applications: newHackerApplication, eventId: number): Promise<Hacker_Applications> {
+export async function insertHackerApplication(hacker_applications: newHackerApplication): Promise<Hacker_Applications> {
   const data = {
-      event_id: eventId,
+      event_id: hacker_applications.event_id,
       first_name: hacker_applications.first_name,
       last_name: hacker_applications.last_name,
       email: hacker_applications.email,
@@ -71,7 +71,7 @@ export async function insertHackerApplication(hacker_applications: newHackerAppl
       developer_role: hacker_applications.developer_role
   }
   const savedApplicant: Hacker_Applications = await prisma.hacker_Applications.create({
-    data,
+    data
   });
 
   return savedApplicant;

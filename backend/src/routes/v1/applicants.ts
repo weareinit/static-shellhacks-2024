@@ -127,8 +127,7 @@ router.post(
     } else {
       const createApplicant: object =
         await dal.applicants.insertHackerApplication(
-          req.body,
-          eventIdParam
+          req.body
         );
         console.log(createApplicant)
       }

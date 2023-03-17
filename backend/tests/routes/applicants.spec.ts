@@ -1,6 +1,8 @@
+import { describe } from "node:test";
 import request from "supertest";
 import { server } from "../../src";
 import { dal } from "../../src/dal/dal";
+import { newHackerApplication } from "../../src/interfaces/newHackerApplication";
 
 const mockApplicants = [
   {
@@ -28,6 +30,29 @@ const mockApplicants = [
     check_in_status: false,
   },
 ];
+
+const mockNewApplicants: newHackerApplication =
+    {
+      event_id: 1,
+      first_name: 'Giancarlo',
+      last_name: 'Padron',
+      email: 'pipi@mail.com',
+      discord: 'vibes#0044',
+      gender: 'M',
+      ethnicity: 'Hispanic',
+      phone_number: '9999999999',
+      race: 'white',
+      dob: new Date(2023,1,1),
+      major: 'comp sci',
+      school: 'fiu',
+      resume_path: 'giancarlopadron.pdf',
+      github: null,
+      linkedin: null,
+      level_of_study: 'Junior',
+      interest_response: 'Placeholder',
+      email_message_status: true,
+      developer_role: "Top G",
+    };
 
 describe("applicants.spec.ts", () => {
   beforeAll(() => {
@@ -177,4 +202,24 @@ describe("GET /applicants?application_status=", () => {
       expect(response.status).toBe(404);
     });
   });
+});
+
+describe("POST /applicants?application_status=", () => {
+  beforeAll(() => {
+    dal.applicants.insertHackerApplication = jest
+      .fn()
+      .mockReturnValue(mockApplicants);
+  });
+
+  describe('POST /events/:eventId/applicants', () => {
+    test('should create a new applicant for the event', async () => {
+      const response = await request(server).post(
+        "/api/v1/events/1/applicants"
+      );
+      expect(response.status).toBe(200);
+      expect(dal.applicants.insertHackerApplication).toHaveBeenCalled();
+    });
+  });
+
+  //Introduce more test cases
 });
