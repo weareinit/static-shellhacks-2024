@@ -54,6 +54,8 @@ const mockNewApplicants: newHackerApplication =
       developer_role: "Top G",
     };
 
+//Get Applicants by Event ID (Tests)
+
 describe("applicants.spec.ts", () => {
   beforeAll(() => {
     dal.applicants.getApplicantsByEventId = jest
@@ -108,6 +110,8 @@ describe("applicants.spec.ts", () => {
     });
   });
 });
+
+//Get Applicant by Application Status (Tests)
 
 describe("GET /applicants?application_status=", () => {
   beforeAll(() => {
@@ -204,6 +208,8 @@ describe("GET /applicants?application_status=", () => {
   });
 });
 
+//Create New Applicant (Tests)
+
 describe("POST /applicants", () => {
   beforeAll(() => {
     dal.applicants.insertHackerApplication = jest
@@ -222,4 +228,5 @@ describe("POST /applicants", () => {
   });
 
   //Introduce more test cases
+  
 });
