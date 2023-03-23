@@ -99,6 +99,8 @@ router.get(
 router.post(
   "/events/:eventId/applicants",
   async (req: Request, res: Response) => {
+
+    //Define required or necessary variables for request.
     const requestSchema = joi.object().keys({
       event_id: joi.number().required(),
       first_name: joi.string().required(),
@@ -124,21 +126,20 @@ router.post(
     const eventIdParam: number = parseInt(req.params.eventId, 10);
     if (isNaN(eventIdParam))
       res.sendStatus(400);
-    if (requestSchema.validate(req.body).error != null){
+    
+    //Compares req.body and schema to validate all applicant variables.
+    else if (requestSchema.validate(req.body).error != null){
       console.log(requestSchema.validate(req.body).error)
       res.sendStatus(400);
     }
+
+    //If all is good, will create applicant
     else {
-      try {
       const newApplicant: newHackerApplication =
         await dal.applicants.insertHackerApplication(
           req.body
         );
-        logger.info(newApplicant)
         res.send(req.body).status(200)
-      } catch(exception) {
-        res.send({error: exception}).status(500)
-      }
     }
   }
 );

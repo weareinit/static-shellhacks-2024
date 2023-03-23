@@ -75,7 +75,5 @@ export async function insertHackerApplication(hacker_applications: newHackerAppl
     data
   });
 
-  console.log(newCreatedUser)
-
   return newCreatedUser;
 }

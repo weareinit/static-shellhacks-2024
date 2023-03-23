@@ -232,17 +232,22 @@ describe("GET /applicants?application_status=", () => {
 
 });
 
-describe("/POST ", () => {
-  
-  test("/events/:eventId/applicants", async () => {
-    const response = await request(server).post("/api/v1/events/1/applicants").send(mockNewApplicants);
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockNewApplicants)
-  })
+//Add Applicant POST Request Tests
 
-  test("/events/:eventId/applicants", async () => {
+describe("/POST ", () => {
+  describe('/events/:eventId/applicants', () => {
+    test("Valid Request - Applicant Created - Return 200", async () => {
+      const response = await request(server).post("/api/v1/events/1/applicants").send(mockNewApplicants);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockNewApplicants)
+  });
+});
+
+  describe('/events/:eventId/applicants', () => {
+  test("Invalid Request - Incorrect or Missing Variable - Return 400", async () => {
     const response = await request(server).post("/api/v1/events/1/applicants").send(mockWrongApplicants)
     expect(response.status).toBe(400);
   })
+});
 
-})
+});
