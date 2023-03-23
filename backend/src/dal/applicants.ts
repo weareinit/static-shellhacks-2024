@@ -71,9 +71,11 @@ export async function insertHackerApplication(hacker_applications: newHackerAppl
       email_message_status: hacker_applications.email_message_status,
       developer_role: hacker_applications.developer_role
   }
-  const savedApplicant: Hacker_Applications = await prisma.hacker_Applications.create({
+  const newCreatedUser: Hacker_Applications = await prisma.hacker_Applications.create({
     data
   });
 
-  return savedApplicant;
+  console.log(newCreatedUser)
+
+  return newCreatedUser;
 }

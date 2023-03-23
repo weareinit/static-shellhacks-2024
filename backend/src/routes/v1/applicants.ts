@@ -4,6 +4,8 @@ import { sanitizeAndPrepareParameters } from "../../filters/filters";
 import { Hacker_Applications } from "@prisma/client";
 import { dal } from "../../dal/dal";
 import { logger } from "../../config/logger";
+import { newHackerApplication } from "../../interfaces/newHackerApplication";
+import joi from "joi";
 
 export const router = express.Router();
 
@@ -97,16 +99,46 @@ router.get(
 router.post(
   "/events/:eventId/applicants",
   async (req: Request, res: Response) => {
+    const requestSchema = joi.object().keys({
+      event_id: joi.number().required(),
+      first_name: joi.string().required(),
+      last_name: joi.string().required(),
+      email: joi.string().required(),
+      discord: joi.string().required(),
+      gender: joi.string().required(),
+      ethnicity: joi.string().required(),
+      phone_number: joi.string().required(),
+      race: joi.string().required(),
+      dob: joi.date().required(),
+      major: joi.string().required(),
+      school: joi.string().required(),
+      resume_path: joi.string().required(),
+      github: joi.string(),
+      linkedin: joi.string(),
+      level_of_study: joi.string().required(),
+      interest_response: joi.string().required(),
+      email_message_status: joi.boolean().required(),
+      developer_role: joi.string().required()
+  })
+
     const eventIdParam: number = parseInt(req.params.eventId, 10);
-    if (isNaN(eventIdParam)) {
+    if (isNaN(eventIdParam))
       res.sendStatus(400);
-    } else {
-      const newApplicant: object =
+    if (requestSchema.validate(req.body).error != null){
+      console.log(requestSchema.validate(req.body).error)
+      res.sendStatus(400);
+    }
+    else {
+      try {
+      const newApplicant: newHackerApplication =
         await dal.applicants.insertHackerApplication(
           req.body
         );
         logger.info(newApplicant)
-        res.sendStatus(201)
+        res.send(req.body).status(200)
+      } catch(exception) {
+        res.send({error: exception}).status(500)
       }
     }
+  }
 );
