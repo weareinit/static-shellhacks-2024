@@ -51,7 +51,7 @@ export async function getTotalNumberOfApplicantsGroupedByApplicationStatus(event
 
 export async function insertHackerApplication(hacker_applications: newHackerApplication): Promise<Hacker_Applications> {
   const data = {
-      event_id: config.event_id,
+      event_id: hacker_applications.event_id,
       first_name: hacker_applications.first_name,
       last_name: hacker_applications.last_name,
       email: hacker_applications.email,

@@ -101,7 +101,7 @@ router.post(
   async (req: Request, res: Response) => {
 
     //Define required or necessary variables for request.
-    const requestSchema = joi.object().keys({
+    const newApplicantSchema = joi.object().keys({
       event_id: joi.number().required(),
       first_name: joi.string().required(),
       last_name: joi.string().required(),
@@ -128,8 +128,8 @@ router.post(
       res.sendStatus(400);
     
     //Compares req.body and schema to validate all applicant variables.
-    else if (requestSchema.validate(req.body).error != null){
-      console.log(requestSchema.validate(req.body).error)
+    else if (newApplicantSchema.validate(req.body).error != null){
+      console.log(newApplicantSchema.validate(req.body).error)
       res.sendStatus(400);
     }
 
