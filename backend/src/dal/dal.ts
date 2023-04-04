@@ -2,6 +2,7 @@ import {
   getApplicantsByEventId,
   getApplicantsByEventIdAndFilteredByApplicationStatus,
   getTotalNumberOfApplicantsGroupedByApplicationStatus,
+  insertHackerApplication,
 } from "./applicants";
 import { getEvent, getAllEvents } from "./events";
 
@@ -10,6 +11,7 @@ export const dal = {
     getApplicantsByEventId,
     getApplicantsByEventIdAndFilteredByApplicationStatus,
     getTotalNumberOfApplicantsGroupedByApplicationStatus,
+    insertHackerApplication,
   },
   events: {
     getEvent,

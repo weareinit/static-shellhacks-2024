@@ -1,3 +1,4 @@
+
 FROM node:19.4-alpine AS base
 
 WORKDIR /backend
@@ -33,5 +34,6 @@ COPY --chown=node:node ./src/ .
 RUN npx prisma generate
 
 EXPOSE $PORT
+
 
 CMD ["npm", "start"]
