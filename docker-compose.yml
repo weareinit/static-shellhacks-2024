@@ -1,19 +1,25 @@
 version: "3.9"
 services:
+  shellhacks:
+    build:
+      context: ./shellhacks
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    env_file:
+      - ./.env
   backend:
     build:
       context: ./backend
     ports:
       - ${PORT}:${PORT}
-      - ${NODEMON_PORT}:${NODEMON_PORT}
-    environment:
-      - NODE_ENV=development
-    command:
-      - nodemon
-      - --inspect=0.0.0.0:9229
-      - src/index.js
-    volumes:
-      - ./backend/src:/backend/src
-      - ./backend/node_modules:/backend/node_modules
     env_file:
       - ./.env
+  nginx:
+    image: nginx:latest
+    volumes:
+      - "./conf.d/my_conf.conf:/etc/nginx/nginx.conf"
+    depends_on:
+      - shellhacks
+      - backend
+    ports:
+      - 80:80
