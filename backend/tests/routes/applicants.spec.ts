@@ -33,7 +33,7 @@ const mockApplicants = [
   },
 ];
 
-const mockNewApplicants =
+const mockNewApplicant =
     {
       event_id: 1,
       first_name: 'Laura',
@@ -235,11 +235,19 @@ describe("GET /applicants?application_status=", () => {
 //Add Applicant POST Request Tests
 
 describe("/POST ", () => {
+
+  beforeAll(() => {
+      dal.applicants.insertHackerApplication = jest
+        .fn()
+        .mockReturnValue(mockNewApplicant);
+    });
+
   describe('/events/:eventId/applicants', () => {
     test("Valid Request - Applicant Created - Return 200", async () => {
-      const response = await request(server).post("/api/v1/events/1/applicants").send(mockNewApplicants);
+      const response = await request(server).post("/api/v1/events/1/applicants").send(mockNewApplicant);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(mockNewApplicants)
+      expect(dal.applicants.insertHackerApplication).toHaveBeenCalledWith(mockNewApplicant)
+      expect(response.body).toEqual(mockNewApplicant)
   });
 });
 
