@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/weareinit/Galactus/issues"
   },
+  "_moduleAliases": {
+    "@src": "src/"
+  },
   "homepage": "https://github.com/weareinit/Galactus#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.276.0",
@@ -32,9 +35,11 @@
     "helmet": "^6.0.1",
     "http-status": "^1.6.2",
     "joi": "^17.7.0",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

@@ -1,38 +1,39 @@
-import { Events } from "@prisma/client";
-import express, { NextFunction, Request, Response } from "express";
-import { dal } from "../../dal/dal";
-export const router = express.Router();
+import { Events } from "@prisma/client"
+import express, { NextFunction, Request, Response } from "express"
+import { z } from "zod"
+import { prisma } from "@src/index"
+import { logger } from "@config/logger"
 
+export const router = express.Router()
 
-router.get("/events", async (_ : Request, res: Response, __ : NextFunction) => {
-  const events: Events[] = await dal.events.getAllEvents()
-  if (events.length < 1) {
-    // FIX - Different status code when no results are found
-    res.sendStatus(204);
-  } else {
-    res.send(events);
+router.get("/events", async (_: Request, res: Response, __: NextFunction) => {
+  try {
+    const events: Events[] = await prisma.events.findMany()
+    res.send(events).status(200)
+  } catch (e) {
+    res.sendStatus(500)
   }
-});
+})
 
-router.get("/events/:eventId?", async (req: Request, res: Response, _: NextFunction) => {
+router.get("/events/:eventId", async (req: Request, res: Response, _: NextFunction) => {
+  const eventIdSchema = z.string().transform(Number)
 
-  if(!req.params){
-    res.sendStatus(400)
-  }
+  try {
+    const eventId = eventIdSchema.parse(req.params.eventId)
 
-  const eventIdParam = parseInt(req.params.eventId, 10);
+    const event: Events | null = await prisma.events.findUnique({
+      where: {
+        event_id: eventId,
+      },
+    })
 
-  if (isNaN(eventIdParam) || eventIdParam < 1) {
-    // FIX - Come up with a better way to validate user input for request params - i.e. ":event_id"
-    res.sendStatus(404);
-  } else {
-
-    const uniqueEvent: Events = await dal.events.getEvent(eventIdParam);
-    if (uniqueEvent == null) {
-      // FIX - Different status code when no results are found
-      res.sendStatus(204);
+    res.send(event).status(200)
+  } catch (e) {
+    if (e instanceof z.ZodError) {
+      res.sendStatus(400)
     } else {
-      res.send(uniqueEvent);
+      logger.error(e)
+      res.sendStatus(500)
     }
   }
-});
+})

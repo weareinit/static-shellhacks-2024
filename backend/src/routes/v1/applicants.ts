@@ -1,104 +1,92 @@
-import express from "express";
-import { Request, Response, NextFunction } from "express";
-import { sanitizeAndPrepareParameters } from "../../filters/filters";
-import { Hacker_Applications } from "@prisma/client";
-import { dal } from "../../dal/dal";
+import express from "express"
+import { Request, Response, NextFunction } from "express"
+import { z } from "zod"
+import { prisma } from "@src/index"
+import { application_status_enums, Hacker_Applications, Prisma } from "@prisma/client"
+import { logger } from "@config/logger"
 
-export const router = express.Router();
+export const router = express.Router()
 
-router.get(
-  "/events/:eventId?/applicants",
-  async (req: Request, res: Response, next: NextFunction) => {
-    // Check for query params
-    if (Object.keys(req.query).length < 1) {
-      if (!req.params) {
-        res.sendStatus(400);
-      }
-      const eventIdParam: number = parseInt(req.params.eventId, 10);
+router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  //Validate request params
+  try {
+    const eventIdSchema = z.object({ eventId: z.string().nonempty().transform(Number) })
+    const { eventId } = eventIdSchema.parse(req.params)
 
-      if (isNaN(eventIdParam) || eventIdParam < 1) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-        res.sendStatus(404);
-      } else {
-        const applicants: Hacker_Applications[] =
-          await dal.applicants.getApplicantsByEventId(eventIdParam);
-        if (applicants.length < 1) {
-          // FIX - Different status code when no results are found
-          res.sendStatus(204);
-        } else {
-          res.send(applicants);
-        }
-      }
-      // If there are any query params, go to the GET route that handles them.
-    } else {
-      next();
-    }
+    const applicants: Hacker_Applications[] = await prisma.hacker_Applications.findMany({
+      where: {
+        event_id: eventId,
+      },
+    })
+
+    res.status(200).send(applicants)
+  } catch (e) {
+    if (e instanceof z.ZodError) res.sendStatus(400)
+    logger.error(e)
+    res.sendStatus(500)
   }
-);
+})
 
-// By URL Query param ->?application_status='<param>'
-router.get(
-  "/events/:eventId?/applicants",
-  async (req: Request, res: Response) => {
-    if (req.query.application_status !== "") {
-      if (!req.params) {
-        res.sendStatus(400);
-      }
-      const applicationStatusParam: string | string[] = req.query
-        .application_status as string | string[];
-      const eventIdParam: number = parseInt(req.params.eventId, 10);
+router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const newApplicantSchema = z.object({
+      event_id: z.number(),
+      first_name: z.string().nonempty(),
+      last_name: z.string().nonempty(),
+      email: z.string().email(),
+      discord: z.string().nonempty(), //TODO: add some regex parsing
+      gender: z.string().nonempty(),
+      ethnicity: z.string().nonempty(),
+      race: z.string().nonempty(),
+      phone_number: z.string().nonempty(),
+      dob: z.date(),
+      major: z.string(),
+      school: z.string(),
+      resume_path: z.string().url(), //is this how we want to do this?
+      github: z.string()?.url(),
+      linkedin: z.string()?.url(),
+      level_of_study: z.string(),
+      interest_response: z.string(),
+      email_message_status: z.boolean(),
+      developer_role: z.string(),
+    })
 
-      const resultantFilters: object[] = sanitizeAndPrepareParameters(
-        applicationStatusParam
-      );
+    const validatedApplicant = newApplicantSchema.parse(req.body)
 
-      if (isNaN(eventIdParam) || resultantFilters.length < 1) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-        res.sendStatus(404);
-      } else {
-        const filteredApplicants =
-          await dal.applicants.getApplicantsByEventIdAndFilteredByApplicationStatus(
-            eventIdParam,
-            resultantFilters
-          );
-        if (filteredApplicants.length < 1) {
-          // FIX - Different status code when no results are found
-          res.sendStatus(204);
-        } else {
-          res.send(filteredApplicants);
-        }
-      }
-    } else {
-      // FIX - Different status code when missing or incorrect query param
-      res.sendStatus(404);
+    const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
+      ...validatedApplicant,
+      application_status: application_status_enums.pending,
+      check_in_status: false,
     }
+    const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+    res.send(applicant).status(200)
+  } catch (e) {
+    if (e instanceof z.ZodError) res.sendStatus(400)
+    logger.error(e)
+    res.sendStatus(500)
   }
-);
+})
 
-router.get(
-  "/events/:eventId?/applicants/application_status/totals",
-  async (req: Request, res: Response) => {
+// The URL query param takes a filter of type ApplicantFilter
+router.get("/events/:eventId/applicants", async (req: Request, res: Response) => {
+  try {
+    const applicantFilterSchema = z.object({
+      eventId: z.string().nonempty().transform(Number),
+      filter: z.object({ status: z.string().refine((i: string) => i in application_status_enums) }),
+    })
+    const { eventId, filter } = applicantFilterSchema.parse({ eventId: req.params.eventId, filter: req.query.filter })
 
-    if (!req.params) {
-      res.sendStatus(400);
-    }
+    const filteredApplicants = await prisma.hacker_Applications.findMany({
+      where: {
+        event_id: eventId,
+        ...filter,
+      },
+    })
 
-    const eventIdParam: number = parseInt(req.params.eventId, 10);
-
-    if (isNaN(eventIdParam)) {
-      // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-      res.sendStatus(404);
-    } else {
-      const totalNumberOfApplicantsGroupedByApplicationStatus: object =
-        await dal.applicants.getTotalNumberOfApplicantsGroupedByApplicationStatus(
-          eventIdParam
-        );
-      if (totalNumberOfApplicantsGroupedByApplicationStatus == null) {
-        // FIX - Different status code when no results are found
-        res.sendStatus(204);
-      } else {
-        res.send(totalNumberOfApplicantsGroupedByApplicationStatus);
-      }
-    }
+    res.send(filteredApplicants).status(200)
+  } catch (e) {
+    if (e instanceof z.ZodError) res.sendStatus(400)
+    logger.error(e)
+    res.sendStatus(500)
   }
-);
+})

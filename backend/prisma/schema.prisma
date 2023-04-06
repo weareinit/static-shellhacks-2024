@@ -27,7 +27,7 @@ model Hacker_Applications {
   last_name            String                   @db.VarChar(50)
   email                String                   @db.VarChar(60)
   discord              String                   @db.VarChar(50)
-  gender               String                   @db.VarChar(1)
+  gender               String                   @db.VarChar(50)
   ethnicity            String                   @db.VarChar(50)
   phone_number         String                   @db.VarChar(20)
   race                 String                   @db.VarChar(50)
@@ -39,7 +39,7 @@ model Hacker_Applications {
   linkedin             String?                  @db.VarChar(75)
   level_of_study       String                   @db.VarChar(15)
   interest_response    String                   @db.VarChar(2500)
-  application_status   application_status_enums @default(pending)
+  application_status   application_status_enums @default(registered)
   email_message_status Boolean
   developer_role       String                   @db.VarChar(150)
   check_in_status      Boolean                  @default(false)
@@ -49,9 +49,9 @@ model Hacker_Applications {
 }
 
 enum application_status_enums {
-  pending
+  registered
+  in_wave
   accepted
-  declined
   confirmed
   withdrawn
 }
