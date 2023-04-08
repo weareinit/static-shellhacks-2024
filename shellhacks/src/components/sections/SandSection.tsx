@@ -8,7 +8,6 @@ import BeachChairCollection from "../BeachChairCollection";
 function SandSection() {
   return (
     <section className="grid justify-center items-center align-middle min-h-[70vh] relative">
-      <GrassLine />
       <BeachChairCollection />
       <article className="grid justify-center justify-items-center z-10">
         <Image
