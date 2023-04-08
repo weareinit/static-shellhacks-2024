@@ -2,10 +2,12 @@ import React from "react";
 
 import Image from "next/image";
 
-interface BeachChairPropsType {
+export interface BeachChairPropsType {
   color: "blue" | "red" | "yellow" | "green";
-  x: number;
-  y: number;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
 }
 
 const CHAIR_COLORS = {
@@ -17,13 +19,15 @@ const CHAIR_COLORS = {
 
 const CHAIR_SIZE = 50;
 
-function BeachChair({ color, x, y }: BeachChairPropsType) {
+function BeachChair({ color, top, left, right, bottom }: BeachChairPropsType) {
   return (
     <div
       className="absolute"
       style={{
-        top: `${y}px`,
-        left: `${x}px`,
+        top: `${top}px`,
+        left: `${left}px`,
+        right: `${right}px`,
+        bottom: `${bottom}px`,
       }}
     >
       <Image
