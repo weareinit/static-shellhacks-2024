@@ -16,7 +16,7 @@ export async function uploadToS3(fileName: string, fileBuffer: Buffer, contentTy
     const response: PutObjectCommandOutput = await s3Client.send(new PutObjectCommand(params))
     return response
   } catch (error) {
-    // throw new S3FileUploadError(`Error uploading object to S3 bucket: ${error.message}`)
+    throw Error(`Error uploading object to S3 bucket`)
   }
 }
 
@@ -26,7 +26,7 @@ export async function doesFileExistInS3(fileName: string) {
     const headObjectCmd: HeadObjectCommand = new HeadObjectCommand(params)
     await s3Client.send(headObjectCmd)
   } catch (error) {
-    // throw new S3FileNotFoundError(`File not found in S3 bucket: ${error.message}`)
+    throw Error(`File not found in S3 bucket`)
   }
 }
 
@@ -45,7 +45,7 @@ export async function retrieveFromS3(fileName: string) {
 
     // If an error occured
   } catch (error) {
-    // throw new S3FileNotFoundError(`File does not exist on S3 bucket: ${error.message}`)
+    throw new Error(`File does not exist on S3 bucket`)
   }
 }
 
@@ -57,6 +57,6 @@ export async function deleteFromS3(fileName: string) {
     const command: DeleteObjectCommand = new DeleteObjectCommand(params)
     await s3Client.send(command)
   } catch (error) {
-    // throw new S3FileNotFoundError(`File does not exist on S3 bucket: ${error.message}`)
+    throw Error(`File does not exist on S3 bucket`)
   }
 }

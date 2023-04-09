@@ -5,6 +5,9 @@ import { router } from "./routes/v1/index"
 import httpStatus from "http-status"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
+import { logger } from "@config/logger"
+import { RecordWithTtl } from "dns"
+import z from "zod"
 
 export const app = express()
 
@@ -54,3 +57,9 @@ app.get("/", (req: Request, res: Response) => {
 
 // api routes
 app.use("/api/v1", router)
+
+router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  logger.error(err.message)
+  if (err instanceof z.ZodError) res.status(400).send({ message: err.issues })
+  next(err)
+})

@@ -20,9 +20,7 @@ router.put("/:hackerId/addToWave", async (req: Request, res: Response, next: Nex
 
     res.sendStatus(200)
   } catch (e) {
-    if (e instanceof z.ZodError) res.sendStatus(400)
-    logger.error(e)
-    res.sendStatus(500)
+    next(e)
   }
 })
 
@@ -35,7 +33,6 @@ router.post("/acceptWave", async (req: Request, res: Response, next: NextFunctio
 
     res.sendStatus(200)
   } catch (e) {
-    logger.error(e)
-    res.sendStatus(500)
+    next(e)
   }
 })

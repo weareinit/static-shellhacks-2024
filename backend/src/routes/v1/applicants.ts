@@ -21,9 +21,7 @@ router.get("/events/:eventId/applicants", async (req: Request, res: Response, ne
 
     res.status(200).send(applicants)
   } catch (e) {
-    if (e instanceof z.ZodError) res.sendStatus(400)
-    logger.error(e)
-    res.sendStatus(500)
+    next(e)
   }
 })
 
@@ -55,20 +53,18 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
       ...validatedApplicant,
-      application_status: application_status_enums.pending,
+      application_status: application_status_enums.registered,
       check_in_status: false,
     }
     const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
     res.send(applicant).status(200)
   } catch (e) {
-    if (e instanceof z.ZodError) res.sendStatus(400)
-    logger.error(e)
-    res.sendStatus(500)
+    next(e)
   }
 })
 
 // The URL query param takes a filter of type ApplicantFilter
-router.get("/events/:eventId/applicants", async (req: Request, res: Response) => {
+router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const applicantFilterSchema = z.object({
       eventId: z.string().nonempty().transform(Number),
@@ -85,8 +81,6 @@ router.get("/events/:eventId/applicants", async (req: Request, res: Response) =>
 
     res.send(filteredApplicants).status(200)
   } catch (e) {
-    if (e instanceof z.ZodError) res.sendStatus(400)
-    logger.error(e)
-    res.sendStatus(500)
+    next(e)
   }
 })

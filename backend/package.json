@@ -21,7 +21,8 @@
     "url": "https://github.com/weareinit/Galactus/issues"
   },
   "_moduleAliases": {
-    "@src": "src/"
+    "@src": "src/",
+    "@config": "src/config/"
   },
   "homepage": "https://github.com/weareinit/Galactus#readme",
   "dependencies": {

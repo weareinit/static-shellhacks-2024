@@ -2,20 +2,19 @@ import { Events } from "@prisma/client"
 import express, { NextFunction, Request, Response } from "express"
 import { z } from "zod"
 import { prisma } from "@src/index"
-import { logger } from "@config/logger"
 
 export const router = express.Router()
 
-router.get("/events", async (_: Request, res: Response, __: NextFunction) => {
+router.get("/events", async (_: Request, res: Response, next: NextFunction) => {
   try {
     const events: Events[] = await prisma.events.findMany()
     res.send(events).status(200)
   } catch (e) {
-    res.sendStatus(500)
+    next(e)
   }
 })
 
-router.get("/events/:eventId", async (req: Request, res: Response, _: NextFunction) => {
+router.get("/events/:eventId", async (req: Request, res: Response, next: NextFunction) => {
   const eventIdSchema = z.string().transform(Number)
 
   try {
@@ -29,11 +28,6 @@ router.get("/events/:eventId", async (req: Request, res: Response, _: NextFuncti
 
     res.send(event).status(200)
   } catch (e) {
-    if (e instanceof z.ZodError) {
-      res.sendStatus(400)
-    } else {
-      logger.error(e)
-      res.sendStatus(500)
-    }
+    next(e)
   }
 })
