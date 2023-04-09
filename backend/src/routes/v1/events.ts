@@ -15,7 +15,7 @@ router.get("/events", async (_: Request, res: Response, next: NextFunction) => {
 })
 
 router.get("/events/:eventId", async (req: Request, res: Response, next: NextFunction) => {
-  const eventIdSchema = z.string().transform(Number)
+  const eventIdSchema = z.string().regex(/^\d+$/).transform(Number)
 
   try {
     const eventId = eventIdSchema.parse(req.params.eventId)

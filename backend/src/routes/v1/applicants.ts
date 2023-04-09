@@ -10,7 +10,7 @@ export const router = express.Router()
 router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   //Validate request params
   try {
-    const eventIdSchema = z.object({ eventId: z.string().nonempty().transform(Number) })
+    const eventIdSchema = z.object({ eventId: z.string().nonempty().regex(/^\d+$/).transform(Number) })
     const { eventId } = eventIdSchema.parse(req.params)
 
     const applicants: Hacker_Applications[] = await prisma.hacker_Applications.findMany({
@@ -67,7 +67,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const applicantFilterSchema = z.object({
-      eventId: z.string().nonempty().transform(Number),
+      eventId: z.string().nonempty().regex(/^\d+$/).transform(Number),
       filter: z.object({ status: z.string().refine((i: string) => i in application_status_enums) }),
     })
     const { eventId, filter } = applicantFilterSchema.parse({ eventId: req.params.eventId, filter: req.query.filter })

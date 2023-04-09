@@ -3,14 +3,13 @@ import { Request, Response, NextFunction } from "express"
 import { application_status_enums } from "@prisma/client"
 import { prisma } from "@src/index"
 import { z } from "zod"
-import { logger } from "@config/logger"
 
 export const router = express.Router()
 
 router.put("/:hackerId/addToWave", async (req: Request, res: Response, next: NextFunction) => {
   // Handle validation of the request body
   try {
-    const requestSchema = z.object({ hackerId: z.number() })
+    const requestSchema = z.object({ hackerId: z.string().regex(/^\d+$/).transform(Number) })
     const { hackerId } = requestSchema.parse(req.params)
 
     await prisma.hacker_Applications.update({
