@@ -1,6 +1,10 @@
+import { describe } from "node:test";
 import request from "supertest";
 import { server } from "../../src";
 import { dal } from "../../src/dal/dal";
+import { newHackerApplication } from "../../src/interfaces/newHackerApplication";
+
+// Applicant Objects
 
 const mockApplicants = [
   {
@@ -28,6 +32,51 @@ const mockApplicants = [
     check_in_status: false,
   },
 ];
+
+const mockNewApplicant =
+    {
+      event_id: 1,
+      first_name: 'Laura',
+      last_name: 'DAVALOS',
+      email: 'pipi@mail.com',
+      discord: 'vibes#0044',
+      gender: 'M',
+      ethnicity: 'Hispanic',
+      phone_number: '9999999999',
+      race: 'white',
+      dob: new Date().toISOString(),
+      major: 'comp sci',
+      school: 'fiu',
+      resume_path: 'giancarlopadron.pdf',
+      github: "null",
+      linkedin: "null",
+      level_of_study: 'Junior',
+      interest_response: 'Placeholder',
+      email_message_status: true,
+      developer_role: "Top G",
+    };
+
+    const mockWrongApplicants =
+    {
+      last_name: 'Padron',
+      email: 'pipi@mail.com',
+      discord: 'vibes#0044',
+      gender: 'M',
+      ethnicity: 'Hispanic',
+      phone_number: '9999999999',
+      race: 'white',
+      dob: new Date().toISOString(),
+      major: 'comp sci',
+      school: 'fiu',
+      resume_path: 'giancarlopadron.pdf',
+      github: "null",
+      linkedin: "null",
+      level_of_study: 'Junior',
+      interest_response: 'Placeholder',
+      email_message_status: true,
+      developer_role: "Top G",
+    };
+//Get Applicants by Event ID (Tests)
 
 describe("applicants.spec.ts", () => {
   beforeAll(() => {
@@ -83,6 +132,8 @@ describe("applicants.spec.ts", () => {
     });
   });
 });
+
+//Get Applicant by Application Status (Tests)
 
 describe("GET /applicants?application_status=", () => {
   beforeAll(() => {
@@ -177,4 +228,34 @@ describe("GET /applicants?application_status=", () => {
       expect(response.status).toBe(404);
     });
   });
+
+
+});
+
+//Add Applicant POST Request Tests
+
+describe("/POST ", () => {
+
+  beforeAll(() => {
+      dal.applicants.insertHackerApplication = jest
+        .fn()
+        .mockReturnValue(mockNewApplicant);
+    });
+
+  describe('/events/:eventId/applicants', () => {
+    test("Valid Request - Applicant Created - Return 200", async () => {
+      const response = await request(server).post("/api/v1/events/1/applicants").send(mockNewApplicant);
+      expect(response.status).toBe(200);
+      expect(dal.applicants.insertHackerApplication).toHaveBeenCalledWith(mockNewApplicant)
+      expect(response.body).toEqual(mockNewApplicant)
+  });
+});
+
+  describe('/events/:eventId/applicants', () => {
+  test("Invalid Request - Incorrect or Missing Variable - Return 400", async () => {
+    const response = await request(server).post("/api/v1/events/1/applicants").send(mockWrongApplicants)
+    expect(response.status).toBe(400);
+  })
+});
+
 });

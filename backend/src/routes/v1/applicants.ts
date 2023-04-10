@@ -63,7 +63,6 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
   }
 })
 
-// The URL query param takes a filter of type ApplicantFilter
 router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const applicantFilterSchema = z.object({
