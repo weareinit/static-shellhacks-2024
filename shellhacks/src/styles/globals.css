@@ -8,7 +8,6 @@
 
 .tile-background {
   background-size: var(--bg-tile-size) var(--bg-tile-size);
-  @apply bg-repeat-round;
 }
 
 .bg-sand {
@@ -24,6 +23,16 @@
 .bg-water {
   background-image: url("/assets/water_rotated.gif");
   @apply tile-background;
+}
+
+@media (min-width: 768px) { 
+  .bg-shore-line {
+    background-image: url("/assets/shore_line.gif");
+  }
+
+  .bg-water {
+    background-image: url("/assets/water.gif");
+  }
 }
 
 .bg-grass-tile {
