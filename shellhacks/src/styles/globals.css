@@ -28,6 +28,7 @@
 @media (min-width: 768px) { 
   .bg-shore-line {
     background-image: url("/assets/shore_line.gif");
+    max-width: 60px;
   }
 
   .bg-water {
