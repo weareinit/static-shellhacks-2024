@@ -2,11 +2,12 @@ import React from "react"
 
 function GrassLine() {
   return (
-    <div className="relative">
-      <div className="bg-grass-tile w-screen h-10" />
-      <div className="bg-grass w-screen h-10 absolute top-3" />
-      <div className="bg-grass w-screen h-10 absolute top-4 right-3" />
-    </div>
+    <section className="col-span-1 hidden md:block h-full">
+      <div className="bg-grass-tile bg-right bg-repeat-y h-full relative right-0">
+        <div className="bg-grass bg-right relative bg-repeat-y h-full top-0 right-5" />
+        <div className="bg-grass bg-center bg-repeat-y h-full " />
+      </div>
+    </section>
   )
 }
 export default GrassLine

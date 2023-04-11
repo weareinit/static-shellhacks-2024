@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --bg-tile-size: 40px;
+  --bg-tile-size: 60px;
 }
 
 .tile-background {
@@ -36,11 +36,11 @@
 }
 
 .bg-grass-tile {
-  background-image: url("/assets/grass_tile_rotated.png");
+  background-image: url("/assets/grass_tile.png");
   @apply tile-background;
 }
 
 .bg-grass {
-  background-image: url("/assets/grass_rotated.png");
+  background-image: url("/assets/grass.png");
   @apply tile-background;
 }

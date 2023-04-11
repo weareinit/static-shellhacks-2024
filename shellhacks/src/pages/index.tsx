@@ -6,10 +6,10 @@ import GrassLine from "@/components/GrassLine"
 
 export default function Home() {
   return (
-    <main className="bg-sand h-screen">
-      <GrassLine />
-      <SandSection />
+    <main className="bg-sand h-screen grid grid-cols-1 md:grid-cols-9">
       <ShorelineSection />
+      <SandSection />
+      <GrassLine />
     </main>
   )
 }
