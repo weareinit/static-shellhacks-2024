@@ -15,6 +15,9 @@ module.exports = {
       white: "#FFF",
     },
     extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
       rotate: {
         270: "270deg",
       },
