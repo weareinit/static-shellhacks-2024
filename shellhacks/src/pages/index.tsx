@@ -1,35 +1,15 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
+import Button from "@/components/Button"
+import SandSection from "@/components/sections/SandSection"
+import ShorelineSection from "@/components/sections/ShorelineSection"
+import Image from "next/image"
+import GrassLine from "@/components/GrassLine"
 
 export default function Home() {
-  const { user, error, isLoading } = useUser();
-
-  if (isLoading) return <div> Loading ... </div>;
-  if (error) return <div> {error.message} </div>;
-
-  if (user) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div>
-          Welcome {user.name}!
-          <br />
-          Your email: {user.email}
-          <br />
-          <a style={{backgroundColor: 'blue'}}href="/api/auth/logout">Logout</a>
-          <br />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <a style={{ backgroundColor: "grey" }} href="/api/auth/login">
-      Login
-    </a>
-  );
+    <main className="bg-sand h-screen grid grid-cols-1 md:grid-cols-9">
+      <ShorelineSection />
+      <SandSection />
+      <GrassLine />
+    </main>
+  )
 }

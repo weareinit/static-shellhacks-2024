@@ -1,0 +1,28 @@
+import React from "react";
+import Image from "next/image";
+
+import Button from "../Button";
+import GrassLine from "../GrassLine";
+import BeachChairCollection from "../BeachChairCollection";
+
+function SandSection() {
+  return (
+    <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
+      {/* <BeachChairCollection /> */}
+      <article className="grid justify-center justify-items-center z-10">
+        <Image
+          src="/assets/shellhacks_logo.gif"
+          alt="ShellHacks2023"
+          width={400}
+          height={150}
+        />
+        <h2 className="text-blue text-center font-inter">
+          {"Florida's Largest Hackathon"}
+        </h2>
+        <Button text="Join the Waitlist!" className=" mt-3" />
+      </article>
+    </section>
+  );
+}
+
+export default SandSection;
