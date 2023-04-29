@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface ButtonProps {
   text: string;
   className?: string;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  children?: React.ReactNode;
 }
 
-function Button({ text, className }: ButtonProps) {
+function Button({ children, text, className, onClick }: ButtonProps) {
   return (
-    <button
-      onClick={(event) => {
-        event.preventDefault();
-        window.open("https://airtable.com/shrkEhas1KhZ1XpFv");
-      }}
-      className={`bg-blue text-white text-center px-4 py-1 rounded-full max-w-[16em] font-inter ${className}`}
-    >
-      {text}
-    </button>
+    <>
+      <button
+        onClick={onClick}
+        className={`bg-blue text-white text-center px-4 py-1 rounded-full max-w-[16em] font-inter ${className}`}
+      >
+        {text}
+      </button>
+      {children}
+    </>
   );
 }
 
