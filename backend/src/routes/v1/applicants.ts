@@ -7,28 +7,10 @@ import { logger } from "@config/logger"
 
 export const router = express.Router()
 
-router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
-  //Validate request params
-  try {
-    const eventIdSchema = z.object({ eventId: z.string().nonempty().regex(/^\d+$/).transform(Number) })
-    const { eventId } = eventIdSchema.parse(req.params)
-
-    const applicants: Hacker_Applications[] = await prisma.hacker_Applications.findMany({
-      where: {
-        event_id: eventId,
-      },
-    })
-
-    res.status(200).send(applicants)
-  } catch (e) {
-    next(e)
-  }
-})
-
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const newApplicantSchema = z.object({
-      event_id: z.number(),
+      event_id: z.string().regex(/^\d+$/).transform(Number),
       first_name: z.string().nonempty(),
       last_name: z.string().nonempty(),
       email: z.string().email(),
@@ -49,7 +31,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
       developer_role: z.string(),
     })
 
-    const validatedApplicant = newApplicantSchema.parse(req.body)
+    const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
       ...validatedApplicant,
@@ -65,16 +47,16 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 
 router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const applicantFilterSchema = z.object({
-      eventId: z.string().nonempty().regex(/^\d+$/).transform(Number),
-      filter: z.object({ status: z.string().refine((i: string) => i in application_status_enums) }),
+    const filtersSchema = z.object({
+      event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
+      application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+      school: z.string().optional(),
     })
-    const { eventId, filter } = applicantFilterSchema.parse({ eventId: req.params.eventId, filter: req.query.filter })
+    const filters = filtersSchema.parse({ event_id: req.params.eventId, ...req.query })
 
     const filteredApplicants = await prisma.hacker_Applications.findMany({
       where: {
-        event_id: eventId,
-        ...filter,
+        ...filters,
       },
     })
 
