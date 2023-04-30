@@ -46,9 +46,11 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 })
 
 router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  //NOTE: Admin route
   try {
     const filtersSchema = z.object({
       event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
+      hacker_id: z.number().optional(),
       application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
       school: z.string().optional(),
     })
@@ -61,6 +63,27 @@ router.get("/events/:eventId/applicants", async (req: Request, res: Response, ne
     })
 
     res.send(filteredApplicants).status(200)
+  } catch (e) {
+    next(e)
+  }
+})
+
+router.put("events/:eventId/applicants/:hackerId/applicationStatus", async (req: Request, res: Response, next: NextFunction) => {
+  //NOTE: Admin route
+  try {
+    const requestSchema = z.object({
+      event_id: z.string().regex(/^\d+$/).transform(Number),
+      hacker_id: z.number(),
+      application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
+    })
+    const { hacker_id, application_status } = requestSchema.parse({ event_id: req.params.eventId, hacker_id: req.params.hackerId, ...req.body })
+
+    const updatedApplicant = await prisma.hacker_Applications.update({
+      where: { hacker_id },
+      data: { application_status },
+    })
+
+    res.send(updatedApplicant).status(200)
   } catch (e) {
     next(e)
   }
