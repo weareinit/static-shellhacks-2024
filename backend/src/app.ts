@@ -5,9 +5,9 @@ import { router } from "./routes/v1/index"
 import httpStatus from "http-status"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
-import { logger } from "@config/logger"
+import { errorHandler } from "./middleware/errors"
 import { RecordWithTtl } from "dns"
-import z from "zod"
+import { auth, requiredScopes } from "express-oauth2-jwt-bearer"
 
 export const app = express()
 
@@ -30,6 +30,12 @@ app.use(
     },
   })
 )
+
+const validateToken = auth({
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+  tokenSigningAlg: "RS256",
+})
 
 // Parse Json request body
 app.use(express.json())
@@ -55,11 +61,6 @@ app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Hello World" })
 })
 
-// api routes
-app.use("/api/v1", router)
+app.use("/api/v1", validateToken, router)
 
-router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  logger.error(err.message)
-  if (err instanceof z.ZodError) res.status(400).send({ message: err.issues })
-  next(err)
-})
+app.use(errorHandler)

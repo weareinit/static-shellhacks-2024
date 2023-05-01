@@ -1,4 +1,5 @@
 import express from "express"
+import { requiredScopes } from "express-oauth2-jwt-bearer"
 import { router as EventsRouter } from "./events"
 import { router as ApplicantsRouter } from "./applicants"
 import { router as EmailsRouter } from "./emails"
@@ -16,5 +17,5 @@ routes.map((route) => {
 })
 
 adminRoutes.map((route) => {
-  router.use("/admin", route) //eventually make these authenticated
+  router.use("/admin", requiredScopes("roles:admin"), route)
 })
