@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express"
-import { SignedUrl } from "@src/interfaces/s3"
 import { generateSignedResumeUploadUrl, generateSignedResumeUrl } from "@src/utils/aws"
 import { z } from "zod"
 import crypto from "crypto"

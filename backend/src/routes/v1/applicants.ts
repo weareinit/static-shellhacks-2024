@@ -2,9 +2,8 @@ import express from "express"
 import { Request, Response, NextFunction } from "express"
 import { z } from "zod"
 import { prisma } from "@src/index"
-import { application_status_enums, Hacker_Applications, Prisma } from "@prisma/client"
+import { application_status_enums, Prisma } from "@prisma/client"
 import { requiredScopes } from "express-oauth2-jwt-bearer"
-import { logger } from "@config/logger"
 
 export const router = express.Router()
 
@@ -69,27 +68,23 @@ router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"),
   }
 })
 
-router.put(
-  "events/:eventId/applicants/applicationStatus",
-  requiredScopes("access:admin-routes"),
-  async (req: Request, res: Response, next: NextFunction) => {
-    //NOTE: Admin route to update the app status of a hacker (add to wave, remove from wave, accept wave, etc.)
-    try {
-      const requestSchema = z.object({
-        event_id: z.string().regex(/^\d+$/).transform(Number),
-        hacker_id: z.string().regex(/^\d+$/).transform(Number),
-        application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
-      })
-      const { hacker_id, application_status } = requestSchema.parse({ event_id: req.params.eventId, hacker_id: req.query.hackerId, ...req.body })
+router.put("events/:eventId/applicants/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+  //NOTE: Admin route to update the app status of a hacker (add to wave, remove from wave, accept wave, etc.)
+  try {
+    const requestSchema = z.object({
+      event_id: z.string().regex(/^\d+$/).transform(Number),
+      hacker_id: z.string().regex(/^\d+$/).transform(Number),
+      application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
+    })
+    const { hacker_id, application_status } = requestSchema.parse({ event_id: req.params.eventId, hacker_id: req.query.hackerId, ...req.body })
 
-      const updatedApplicant = await prisma.hacker_Applications.update({
-        where: { hacker_id },
-        data: { application_status },
-      })
+    const updatedApplicant = await prisma.hacker_Applications.update({
+      where: { hacker_id },
+      data: { application_status },
+    })
 
-      res.send(updatedApplicant).status(200)
-    } catch (e) {
-      next(e)
-    }
+    res.send(updatedApplicant).status(200)
+  } catch (e) {
+    next(e)
   }
-)
+})

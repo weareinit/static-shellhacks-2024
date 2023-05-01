@@ -2,11 +2,9 @@ import "module-alias/register"
 import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import { router } from "./routes/v1/index"
-import httpStatus from "http-status"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
 import { errorHandler } from "./middleware/errors"
-import { RecordWithTtl } from "dns"
 import { auth, requiredScopes } from "express-oauth2-jwt-bearer"
 
 export const app = express()

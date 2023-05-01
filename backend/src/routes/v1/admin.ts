@@ -2,7 +2,6 @@ import express from "express"
 import { Request, Response, NextFunction } from "express"
 import { application_status_enums } from "@prisma/client"
 import { prisma } from "@src/index"
-import { z } from "zod"
 
 export const router = express.Router()
 
