@@ -1,42 +1,40 @@
 import express, { NextFunction, Request, Response } from "express"
-import multer from "multer"
 import { SignedUrl } from "@src/interfaces/s3"
-import { deleteFromS3, retrieveFromS3, uploadToS3 } from "@src/dal/aws"
+import { generateSignedResumeUploadUrl, generateSignedResumeUrl } from "@src/utils/aws"
 import { z } from "zod"
+import crypto from "crypto"
 
 export const router = express.Router()
-const storage = multer.memoryStorage()
-const upload = multer({ storage })
 
-const resumeSchema = z.object({ fileName: z.string().nonempty() })
-
-router.post("/resumes", upload.single("resume"), async (req: Request, res: Response, next: NextFunction) => {
+router.post("/resumes", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await uploadToS3(req.file!.originalname, req.file!.buffer, req.file!.mimetype)
-    res.sendStatus(200)
+    const resumeId = crypto.randomBytes(16).toString("hex") //generate random resume names
+    const url: string = await generateSignedResumeUploadUrl(resumeId)
+    res.status(200).send({ resumeId, url })
   } catch (error) {
     next(error)
   }
 })
 
-router.get("/resumes/:fileName?", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/resumes/:resumeId?", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { fileName } = resumeSchema.parse(req.params)
+    const resumeIdSchema = z.string().nonempty()
+    const resumeId = resumeIdSchema.parse(req.params.resumeId)
 
-    const URL: SignedUrl = await retrieveFromS3(fileName)
-    res.status(200).send(URL)
+    const url: string = await generateSignedResumeUrl(resumeId)
+    res.status(200).send(url)
   } catch (error) {
     next(error)
   }
 })
 
-router.delete("/resumes/:fileName?", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { fileName } = resumeSchema.parse(req.params)
+// router.delete("/resumes/:fileName?", async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const { fileName } = resumeSchema.parse(req.params)
 
-    await deleteFromS3(fileName)
-    res.sendStatus(200)
-  } catch (error) {
-    next(error)
-  }
-})
+//     await deleteFromS3(fileName)
+//     res.sendStatus(200)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
