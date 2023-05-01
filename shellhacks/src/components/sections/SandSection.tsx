@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
+import RegisterModal from "../registration/RegisterModal";
+import Image from "next/image";
 import Button from "../Button";
-import GrassLine from "../GrassLine";
-import BeachChairCollection from "../BeachChairCollection";
-import Modal from "../Modal";
 
 function SandSection() {
   const [showModal, setShowModal] = useState(false);
-  const modal = (
-    <Modal>
-      <h1>Hello World!</h1>
-    </Modal>
-  );
 
   return (
     <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
@@ -28,16 +21,23 @@ function SandSection() {
           {"Florida's Largest Hackathon"}
         </h2>
         <Button
-          text="Join the Waitlist!"
           className=""
           onClick={(e) => {
             e.preventDefault();
             setShowModal((prev) => !prev);
           }}
         >
-          {showModal && modal}
+          <h2>Register Now!</h2>
         </Button>
       </article>
+      {showModal && (
+        <RegisterModal
+          toClose={(event) => {
+            event.preventDefault();
+            setShowModal(false);
+          }}
+        />
+      )}
     </section>
   );
 }
