@@ -3,8 +3,10 @@ import { app } from "./app"
 import { logger } from "@config/logger"
 import { PrismaClient } from "@prisma/client"
 import { S3Client } from "@aws-sdk/client-s3"
+import { envSchema } from "@src/schemas/envSchema"
 
 dotenv.config({ path: "../../.env" })
+envSchema.parse(process.env) // Validate environment variables
 
 // Load Database connection - Will throw error here if unable to connect.
 export const prisma = new PrismaClient()
