@@ -2,12 +2,15 @@ import express, { NextFunction, Request, Response } from "express"
 import { generateSignedResumeUploadUrl, generateSignedResumeUrl } from "@src/utils/aws"
 import { z } from "zod"
 import crypto from "crypto"
+import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 
 export const router = express.Router()
 
 router.post("/resumes", async (req: Request, res: Response, next: NextFunction) => {
+  const auth: AuthResult = req.auth!
+
   try {
-    const resumeId = crypto.randomBytes(16).toString("hex") //generate random resume names
+    const resumeId = `${auth.payload.sub}_resume_${crypto.randomBytes(16).toString("hex")}` //generate unique resume name
     const url: string = await generateSignedResumeUploadUrl(resumeId)
     res.status(200).send({ resumeId, url })
   } catch (error) {
@@ -15,7 +18,7 @@ router.post("/resumes", async (req: Request, res: Response, next: NextFunction) 
   }
 })
 
-router.get("/resumes/:resumeId?", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/resumes/:resumeId?", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const resumeIdSchema = z.string().nonempty()
     const resumeId = resumeIdSchema.parse(req.params.resumeId)

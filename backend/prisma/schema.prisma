@@ -22,6 +22,7 @@ model Events {
 
 model Hacker_Applications {
   hacker_id            Int                      @id @default(autoincrement())
+  auth0_id             String                   @unique @db.VarChar(50)
   event_id             Int
   first_name           String                   @db.VarChar(50)
   last_name            String                   @db.VarChar(50)

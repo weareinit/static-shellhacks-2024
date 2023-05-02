@@ -8,8 +8,11 @@ import { requiredScopes } from "express-oauth2-jwt-bearer"
 export const router = express.Router()
 
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  const auth = req.auth!
+
   try {
     const newApplicantSchema = z.object({
+      auth0_id: z.string().nonempty(),
       event_id: z.string().regex(/^\d+$/).transform(Number),
       first_name: z.string().nonempty(),
       last_name: z.string().nonempty(),
@@ -31,7 +34,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
       developer_role: z.string(),
     })
 
-    const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
+    const validatedApplicant = newApplicantSchema.parse({ auth0_id: auth.payload.sub, event_id: req.params.eventId, ...req.body })
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
       ...validatedApplicant,

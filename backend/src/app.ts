@@ -5,7 +5,7 @@ import { router } from "./routes/v1/index"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
 import { errorHandler } from "./middleware/errors"
-import { auth, requiredScopes } from "express-oauth2-jwt-bearer"
+import { auth } from "express-oauth2-jwt-bearer"
 
 export const app = express()
 
@@ -28,12 +28,6 @@ app.use(
     },
   })
 )
-
-const validateToken = auth({
-  audience: process.env.AUTH0_AUDIENCE,
-  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
-  tokenSigningAlg: "RS256",
-})
 
 // Parse Json request body
 app.use(express.json())
@@ -59,6 +53,6 @@ app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Hello World" })
 })
 
-app.use("/api/v1", validateToken, router)
+app.use("/api/v1", auth(), router) //require a valid JWT for all routes, ISSUER_BASE_URL and AUDIENCE are fetched from .env
 
 app.use(errorHandler)
