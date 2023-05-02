@@ -3,12 +3,12 @@ import { Request, Response, NextFunction } from "express"
 import { z } from "zod"
 import { prisma } from "@src/index"
 import { application_status_enums, Prisma } from "@prisma/client"
-import { requiredScopes } from "express-oauth2-jwt-bearer"
+import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 
 export const router = express.Router()
 
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
-  const auth = req.auth!
+  const auth: AuthResult = req.auth!
 
   try {
     const newApplicantSchema = z.object({
