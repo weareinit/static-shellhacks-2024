@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import Papa from "papaparse";
 import * as Yup from "yup";
 
+import { parseCSV } from "@/util/parseCSV";
 import TextInput from "./form/TextInput";
 import SelectInput from "./form/SelectInput";
 
@@ -26,34 +27,24 @@ function RegisterForm() {
   const [countries, setCountries] = useState<string[]>([]);
 
   useEffect(() => {
-    function fetchData() {
-      // Used to fetch lists of MLH supported schools
-      Papa.parse(
+    async function fetchData() {
+      const schoolData: string[] = await parseCSV<string>(
         "https://raw.githubusercontent.com/MLH/mlh-policies/main/schools.csv",
-        {
-          download: true,
-          complete: (results: Papa.ParseResult<string>) => {
-            let parsedSchools = results.data.splice(1);
-            parsedSchools = Array.from(new Set(parsedSchools));
-            setSchools(parsedSchools);
-          },
-        }
+        false
       );
-      // Used to fetch lists of supported countries
-      Papa.parse(
-        "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv",
-        {
-          download: true,
-          header: true,
-          complete: (results: Papa.ParseResult<CountryDataType>) => {
-            // console.log(results);
-            let parsedCountries = results.data.map((country) => {
-              return country.name;
-            });
-            setCountries(parsedCountries);
-          },
-        }
+
+      const parsedSchools = schoolData.splice(1);
+      setSchools(parsedSchools);
+
+      const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
+        "https://raw.githubusercontent.com/MLH/mlh-policies/main/schools.csv"
       );
+
+      const parsedCountries = countryData.map((country) => {
+        return country.name;
+      });
+      setCountries(parsedCountries);
+      console.log(parsedCountries);
     }
     fetchData();
   }, []);
@@ -84,6 +75,11 @@ function RegisterForm() {
         <TextInput label="Phone Number" name="phoneNumber" type="tel" />
         <TextInput label="Email" name="email" type="email" />
         <SelectInput label="School" name="school" options={schools} />
+        <SelectInput
+          label="Country of Residency"
+          name="country"
+          options={countries}
+        />
       </Form>
     </Formik>
   );
