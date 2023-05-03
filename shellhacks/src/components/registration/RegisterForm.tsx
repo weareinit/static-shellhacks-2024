@@ -1,54 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { Formik, Form } from "formik";
-import Papa from "papaparse";
 import * as Yup from "yup";
 
-import { parseCSV } from "@/util/parseCSV";
+import { useFormOptionContext } from "@/hooks/FormOptionContext";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 
-interface CountryDataType {
-  name: string;
-  "alpha-2": string;
-  "alpha-3": string;
-  "country-code": string;
-  "iso_3166-2": string;
-  region: string;
-  "sub-region": string;
-  "intermediate-region": string;
-  "region-code": string;
-  "sub-region-code": string;
-  "intermediate-region-code": string;
-}
-
 function RegisterForm() {
-  const [schools, setSchools] = useState<string[]>([]);
-  const [countries, setCountries] = useState<string[]>([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const schoolData: string[] = await parseCSV<string>(
-        "https://raw.githubusercontent.com/MLH/mlh-policies/main/schools.csv",
-        false
-      );
-
-      const parsedSchools = schoolData.splice(1);
-      setSchools(parsedSchools);
-
-      const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
-        "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
-      );
-
-      const parsedCountries = countryData.map((country) => {
-        return country.name;
-      });
-      setCountries(parsedCountries);
-      console.log(parsedCountries);
-    }
-    fetchData();
-  }, []);
-
   const formValidation = Yup.object({
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
@@ -60,6 +19,8 @@ function RegisterForm() {
     levelOfStudy: Yup.string().required(),
     country: Yup.string().required(),
   });
+
+  const { schools, countries } = useFormOptionContext();
 
   return (
     <Formik
