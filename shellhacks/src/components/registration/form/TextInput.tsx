@@ -1,4 +1,4 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React, { useState, HTMLInputTypeAttribute } from "react";
 
 import { useField } from "formik";
 
@@ -13,6 +13,7 @@ interface TextInputProps {
 
 function TextInput(props: TextInputProps) {
   const [field, meta] = useField(props);
+  const [value, setValue] = useState("");
   return (
     <>
       <label htmlFor={props.name}>
@@ -23,6 +24,10 @@ function TextInput(props: TextInputProps) {
           type={props.type}
           min={props.min}
           max={props.max}
+          value={value}
+          onChange={(event) => {
+            setValue(event.target.value);
+          }}
         />
       </label>
     </>
