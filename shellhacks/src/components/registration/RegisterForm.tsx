@@ -37,7 +37,7 @@ function RegisterForm() {
       setSchools(parsedSchools);
 
       const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
-        "https://raw.githubusercontent.com/MLH/mlh-policies/main/schools.csv"
+        "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
       );
 
       const parsedCountries = countryData.map((country) => {
