@@ -5,8 +5,8 @@ import Papa from "papaparse";
 import * as Yup from "yup";
 
 import { parseCSV } from "@/util/parseCSV";
-import TextInput from "./form/TextInput";
-import SelectInput from "./form/SelectInput";
+import TextInput from "../input/TextInput";
+import SelectInput from "../input/SelectInput";
 
 interface CountryDataType {
   name: string;
