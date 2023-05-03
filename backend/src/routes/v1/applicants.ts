@@ -4,6 +4,7 @@ import { z } from "zod"
 import { prisma } from "@src/index"
 import { application_status_enums, Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
+import { newApplicantSchema } from "@src/schemas/applicantSchemas"
 
 export const router = express.Router()
 
@@ -11,29 +12,6 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
   const auth: AuthResult = req.auth!
 
   try {
-    const newApplicantSchema = z.object({
-      auth0_id: z.string().nonempty(),
-      event_id: z.string().regex(/^\d+$/).transform(Number),
-      first_name: z.string().nonempty(),
-      last_name: z.string().nonempty(),
-      email: z.string().email(),
-      discord: z.string().nonempty(), //TODO: add some regex parsing
-      gender: z.string().nonempty(),
-      ethnicity: z.string().nonempty(),
-      race: z.string().nonempty(),
-      phone_number: z.string().nonempty(),
-      dob: z.date(),
-      major: z.string(),
-      school: z.string(),
-      resume_path: z.string().url(),
-      github: z.string()?.url(),
-      linkedin: z.string()?.url(),
-      level_of_study: z.string(),
-      interest_response: z.string(),
-      email_message_status: z.boolean(),
-      developer_role: z.string(),
-    })
-
     const validatedApplicant = newApplicantSchema.parse({ auth0_id: auth.payload.sub, event_id: req.params.eventId, ...req.body })
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
