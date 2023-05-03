@@ -1,20 +1,25 @@
-import Papa from "papaparse";
+import CSVParser from "csv-parser";
 
 export async function parseCSV<T>(
   filepath: string,
-  header: boolean = true
+  hasHeaders: boolean = false
 ): Promise<T[]> {
-  return new Promise((resolve, reject) => {
-    Papa.parse(filepath, {
-      download: true,
-      header: header,
-      complete: (results: Papa.ParseResult<T>) => {
-        console.log(results);
-        return resolve(results.data);
-      },
-      error: (error) => {
-        return reject(error);
-      },
-    });
+  const response = await fetch(filepath);
+  const csvText = await response.text();
+
+  return new Promise<T[]>((resolve, reject) => {
+    const results: T[] = [];
+    const parserOptions = hasHeaders ? {} : { headers: false };
+    CSVParser(parserOptions)
+      .on("data", (data: T) => {
+        results.push(data);
+      })
+      .on("end", () => {
+        resolve(results);
+      })
+      .on("error", (error: Error) => {
+        reject(error);
+      })
+      .end(csvText);
   });
 }
