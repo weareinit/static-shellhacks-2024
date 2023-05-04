@@ -9,6 +9,7 @@ import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema
 export const router = express.Router()
 
 router.get("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Get the application of the current user
   const auth: AuthResult = req.auth!
   const auth0_id = z.string().nonempty().parse(auth.payload.sub)
 
@@ -21,6 +22,7 @@ router.get("/events/:eventId/application", async (req: Request, res: Response, n
 })
 
 router.put("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Update the application of the current user according to the "payload" schema
   const auth: AuthResult = req.auth!
   const auth0_id = z.string().nonempty().parse(auth.payload.sub)
   const payload = applicantUpdateSchema.parse(req.body)
@@ -34,6 +36,7 @@ router.put("/events/:eventId/application", async (req: Request, res: Response, n
 })
 
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  //Add a new applicant to the DB (register)
   const auth: AuthResult = req.auth!
 
   try {
@@ -52,7 +55,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 })
 
 router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
-  //NOTE: Admin route to get info on one or many hackers
+  //Admin route to get info on one or many hackers
   try {
     const filters = applicantFiltersSchema.parse({ event_id: req.params.eventId, ...req.query })
 
@@ -69,7 +72,7 @@ router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"),
 })
 
 router.put("events/:eventId/applicants/:hackerId/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
-  //NOTE: Admin route to update the app status of a hacker (add to wave, remove from wave, accept wave, etc.)
+  //Admin route to update the app status of a hacker (add to wave, remove from wave, etc.)
   try {
     const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({ event_id: req.params.eventId, hacker_id: req.params.hackerId, ...req.body })
 
