@@ -5,6 +5,19 @@ export const applicantUpdateSchema = z.object({
   application_status: z.literal("withdrawn").optional(),
 })
 
+export const applicantStatusChangeSchema = z.object({
+  event_id: z.string().regex(/^\d+$/).transform(Number),
+  hacker_id: z.string().regex(/^\d+$/).transform(Number),
+  application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
+})
+
+export const applicantFiltersSchema = z.object({
+  event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
+  hacker_id: z.number().optional(),
+  application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+  school: z.string().optional(),
+})
+
 export const newApplicantSchema = z.object({
   auth0_id: z.string().nonempty(),
   event_id: z.string().regex(/^\d+$/).transform(Number),
