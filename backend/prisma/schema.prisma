@@ -30,6 +30,8 @@ model Hacker_Applications {
   discord              String                   @db.VarChar(50)
   gender               String                   @db.VarChar(50)
   ethnicity            String                   @db.VarChar(50)
+  country              String                   @db.VarChar(50)
+  is_international     Boolean
   phone_number         String                   @db.VarChar(20)
   race                 String                   @db.VarChar(50)
   dob                  DateTime                 @db.Date

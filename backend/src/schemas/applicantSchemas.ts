@@ -15,6 +15,8 @@ export const newApplicantSchema = z.object({
   gender: z.string().nonempty(),
   ethnicity: z.string().nonempty(),
   race: z.string().nonempty(),
+  country: z.string().nonempty(),
+  is_international: z.boolean(),
   phone_number: z.string().nonempty(),
   dob: z.date(),
   major: z.string(),
