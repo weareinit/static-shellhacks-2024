@@ -11,9 +11,9 @@ function SelectInput({ label, options, name }: SelectInputProps) {
     <>
       <label htmlFor={name}>{label}</label>
       <select name={name}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
-            <option key={option} value={option}>
+            <option key={index} value={option}>
               {option}
             </option>
           );
