@@ -3,16 +3,16 @@ import { BucketParams } from "@src/interfaces/s3"
 import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, PutObjectCommand, PutObjectCommandOutput, S3 } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
-export const generateSignedResumeUploadUrl = async (resumeId: string) => {
+export const generateSignedResumeUrl = async (resumeId: string) => {
   const params: BucketParams = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId }
   const command = new PutObjectCommand(params)
   return await getSignedUrl(s3Client, command, { expiresIn: 60 * 60 * 3 })
 }
 
-export const generateSignedResumeUrl = async (resumeId: string) => {
+export const deleteResume = async (resumeId: string) => {
   const params: BucketParams = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId }
-  const command = new GetObjectCommand(params)
-  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 3 })
+  const command = new DeleteObjectCommand(params)
+  return await s3Client.send(command)
 }
 
 // export async function doesFileExistInS3(fileName: string) {
