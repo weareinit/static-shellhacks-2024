@@ -9,6 +9,7 @@ interface TextInputProps {
   placeholder?: string;
   min?: number;
   max?: number;
+  className?: string;
 }
 
 function TextInput(props: TextInputProps) {
@@ -16,10 +17,14 @@ function TextInput(props: TextInputProps) {
   const [value, setValue] = useState("");
   return (
     <>
-      <label htmlFor={props.name}>
+      <label
+        htmlFor={props.name}
+        className={`font-pixel text-xl w-fit flex flex-col ${props.className}`}
+      >
         {props.label}
         <input
           {...field}
+          className=" border-blue border-2 p-1 h-8"
           placeholder={props.placeholder}
           type={props.type}
           min={props.min}
