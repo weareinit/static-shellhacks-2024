@@ -5,7 +5,7 @@ import { z } from "zod"
 import { application_status_enums, Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
-import { deleteResume } from "@src/utils/aws"
+import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
 
 export const router = express.Router()
 
@@ -42,6 +42,7 @@ router.put("/events/:eventId/application", async (req: Request, res: Response, n
 
       await deleteResume(oldResumePath?.resume_path as string)
     }
+
     const applicant = await prisma.hacker_Applications.update({ where: { auth0_id }, data: payload })
     res.send(applicant).status(200)
   } catch (e) {
@@ -61,7 +62,9 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
       application_status: application_status_enums.registered,
       check_in_status: false,
     }
+
     const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
     res.send(applicant).status(200)
   } catch (e) {
     next(e)
