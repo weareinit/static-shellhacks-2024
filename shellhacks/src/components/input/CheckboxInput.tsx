@@ -13,14 +13,21 @@ function CheckboxInput(props: CheckboxInputPropTypes) {
 
   return (
     <>
-      <label htmlFor={props.name}>
+      <label
+        htmlFor={props.name}
+        className="font-pixel text-lg w-fit flex flex-col"
+      >
         {props.label}
-        <input
-          {...field}
-          type="checkbox"
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
+        <input {...field} type="checkbox" className=" sr-only" value={value} />
+        <div
+          className={`w-5 h-5 ${value === "n" ? "bg-white" : "bg-blue"}`}
+          onClick={() => {
+            setValue((prev) => {
+              if (prev === "n") {
+                return "y";
+              }
+              return "n";
+            });
           }}
         />
       </label>
