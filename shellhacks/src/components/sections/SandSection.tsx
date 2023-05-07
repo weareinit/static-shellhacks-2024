@@ -7,6 +7,14 @@ import Button from "../Button";
 function SandSection() {
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [showModal]);
+
   return (
     <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
       {/* <BeachChairCollection /> */}

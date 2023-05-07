@@ -11,7 +11,7 @@ interface HomeProps {
 
 export default function Home({ schools, countries }: HomeProps) {
   return (
-    <main className="bg-sand h-screen grid grid-cols-1 md:grid-cols-9">
+    <main className="bg-sand min-h-screen grid grid-cols-1 md:grid-cols-9">
       <ShorelineSection />
       <FormOptionContextProvider schools={schools} countries={countries}>
         <SandSection />

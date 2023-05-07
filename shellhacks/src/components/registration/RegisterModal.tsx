@@ -13,21 +13,12 @@ interface RegisterModalProps {
 
 function RegisterModal({ toClose }: RegisterModalProps) {
   return (
-    <Modal containerClassName=" grid relative:">
-      <header className="relative row-start-1 row-span-1 h-fit">
-        <Image
-          src="/assets/shellhacks_logo.gif"
-          alt="ShellHacks2023"
-          width={200}
-          height={75}
-        />
-        <h1 className=" pt-1 row-start-2 row-span-1 font-pixel text-xl underline text-deep_blue">
+    <Modal containerClassName="">
+      <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between">
+        <h1 className=" pt-1 row-start-2 row-span-1 font-pixel underline text-deep_blue text-3xl">
           Registration
         </h1>
-        <Button
-          className="font-pixel text-xl absolute top-0 right-0 text-blue"
-          onClick={toClose}
-        >
+        <Button className="font-pixel text-xl  text-blue" onClick={toClose}>
           <h1 className="text-base">CLOSE</h1>
         </Button>
       </header>

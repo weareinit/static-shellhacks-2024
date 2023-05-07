@@ -12,10 +12,10 @@ function Modal({ children, containerClassName, onBgClick }: ModalPropsType) {
     <div
       onClick={onBgClick}
       id="modal-background"
-      className="absolute top-0 left-0 grid content-center justify-center w-screen h-screen bg-black bg-opacity-20 z-10"
+      className="absolute top-0 left-0 grid content-center justify-center min-w-screen min-h-screen bg-black bg-opacity-20 z-10 backdrop-blur-sm"
     >
       <aside
-        className={`p-2 bg-white border-blue rounded-md min-w-[300px] min-h-[300px] w-[80vw] max-w-[1200px] z-20 border-2 ${containerClassName}`}
+        className={`p-2 bg-white/50 border-blue rounded-md w-screen h-screen z-20 border-2 overflow-scroll ${containerClassName}`}
       >
         {children}
       </aside>
