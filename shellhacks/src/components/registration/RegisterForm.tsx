@@ -73,11 +73,11 @@ function RegisterForm() {
           label="Are you an international student?"
           name="isInternational"
         />
-        <p>
+        <h2 className=" font-pixel text-lg">
           We are currently in the process of partnering with MLH. The following
           3 checkboxes are for this partnership. If we do not end up partnering
           with MLH, your information will not be shared.
-        </p>
+        </h2>
         <CheckboxInput
           label="I have read and agree to the MLH Code of Conduct. (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)"
           name="mlhCodeOfConduct"
