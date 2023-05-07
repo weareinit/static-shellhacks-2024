@@ -56,6 +56,7 @@ function RegisterForm() {
           label="Country of Residency"
           name="country"
           options={countries}
+          defaultValue="United States of America"
         />
         <TextInput
           label="Graduation Year"

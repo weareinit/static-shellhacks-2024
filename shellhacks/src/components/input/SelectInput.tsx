@@ -8,13 +8,21 @@ interface SelectInputProps {
   name: string;
   children?: React.ReactNode;
   className?: string;
+  defaultValue?: string;
 }
 
-function SelectInput({ label, options, name, children }: SelectInputProps) {
+function SelectInput({
+  label,
+  options,
+  name,
+  children,
+  defaultValue,
+}: SelectInputProps) {
   return (
     <>
       <Label htmlFor={name}>{label}</Label>
       <select
+        defaultValue={defaultValue}
         name={name}
         className="relative w-[300px] overflow-clip bg-white outline-none appearance-none border-blue fill-white rounded-none border-2 p-1"
       >
