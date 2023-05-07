@@ -11,7 +11,7 @@ interface SelectInputProps {
 function SelectInput({ label, options, name, children }: SelectInputProps) {
   return (
     <>
-      <label htmlFor={name} className=" text-xl font-pixel">
+      <label htmlFor={name} className=" text-lg font-pixel">
         {label}
       </label>
       <select

@@ -19,7 +19,7 @@ function TextInput(props: TextInputProps) {
     <>
       <label
         htmlFor={props.name}
-        className={`font-pixel text-xl w-fit flex flex-col ${props.className}`}
+        className={`font-pixel text-lg w-fit flex flex-col ${props.className}`}
       >
         {props.label}
         <input
