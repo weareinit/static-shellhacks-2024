@@ -26,7 +26,7 @@ function TextInput(props: TextInputProps) {
         {props.label}
         <input
           {...field}
-          className=" border-blue border-2 p-1 h-8"
+          className=" border-blue border-2 p-1 h-8 font-inter"
           placeholder={props.placeholder}
           type={props.type}
           min={props.min}

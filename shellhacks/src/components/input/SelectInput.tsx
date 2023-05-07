@@ -24,7 +24,7 @@ function SelectInput({
       <select
         defaultValue={defaultValue}
         name={name}
-        className="relative w-[300px] overflow-clip bg-white outline-none appearance-none border-blue fill-white rounded-none border-2 p-1"
+        className="relative w-[300px] overflow-clip bg-white outline-none appearance-none border-blue fill-white rounded-none border-2 p-1 font-inter"
       >
         {options.map((option, index) => {
           return (

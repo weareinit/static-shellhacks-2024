@@ -7,6 +7,7 @@ import Label from "./Label";
 interface CheckboxInputPropTypes {
   label: string;
   name: string;
+  hasInter?: boolean;
 }
 
 function CheckboxInput(props: CheckboxInputPropTypes) {
@@ -15,7 +16,11 @@ function CheckboxInput(props: CheckboxInputPropTypes) {
 
   return (
     <>
-      <Label htmlFor={props.name} className="w-fit flex flex-col">
+      <Label
+        htmlFor={props.name}
+        className="w-fit flex flex-col"
+        hasInter={props.hasInter}
+      >
         {props.label}
         <input {...field} type="checkbox" className=" sr-only" value={value} />
         <div
