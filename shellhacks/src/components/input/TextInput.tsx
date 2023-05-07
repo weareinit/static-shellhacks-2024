@@ -2,6 +2,8 @@ import React, { useState, HTMLInputTypeAttribute } from "react";
 
 import { useField } from "formik";
 
+import Label from "./Label";
+
 interface TextInputProps {
   label: string;
   name: string;
@@ -17,9 +19,9 @@ function TextInput(props: TextInputProps) {
   const [value, setValue] = useState("");
   return (
     <>
-      <label
+      <Label
         htmlFor={props.name}
-        className={`font-pixel text-lg w-fit flex flex-col ${props.className}`}
+        className={`w-fit flex flex-col ${props.className}`}
       >
         {props.label}
         <input
@@ -34,7 +36,7 @@ function TextInput(props: TextInputProps) {
             setValue(event.target.value);
           }}
         />
-      </label>
+      </Label>
     </>
   );
 }

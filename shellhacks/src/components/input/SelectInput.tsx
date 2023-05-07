@@ -1,5 +1,7 @@
 import React from "react";
 
+import Label from "./Label";
+
 interface SelectInputProps {
   label: string;
   options: string[];
@@ -11,9 +13,7 @@ interface SelectInputProps {
 function SelectInput({ label, options, name, children }: SelectInputProps) {
   return (
     <>
-      <label htmlFor={name} className=" text-lg font-pixel">
-        {label}
-      </label>
+      <Label htmlFor={name}>{label}</Label>
       <select
         name={name}
         className="relative w-[300px] overflow-clip bg-white outline-none appearance-none border-blue fill-white rounded-none border-2 p-1"

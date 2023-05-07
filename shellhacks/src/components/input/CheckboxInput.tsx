@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { useField } from "formik";
 
+import Label from "./Label";
+
 interface CheckboxInputPropTypes {
   label: string;
   name: string;
@@ -13,10 +15,7 @@ function CheckboxInput(props: CheckboxInputPropTypes) {
 
   return (
     <>
-      <label
-        htmlFor={props.name}
-        className="font-pixel text-lg w-fit flex flex-col"
-      >
+      <Label htmlFor={props.name} className="w-fit flex flex-col">
         {props.label}
         <input {...field} type="checkbox" className=" sr-only" value={value} />
         <div
@@ -30,7 +29,7 @@ function CheckboxInput(props: CheckboxInputPropTypes) {
             });
           }}
         />
-      </label>
+      </Label>
     </>
   );
 }
