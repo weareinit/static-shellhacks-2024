@@ -3,6 +3,7 @@ import React, { HTMLInputTypeAttribute } from "react";
 import { useField } from "formik";
 
 import Label from "./Label";
+import Error from "./Error";
 
 interface TextInputProps {
   label: string;
@@ -28,11 +29,7 @@ function TextInput({ label, ...props }: TextInputProps) {
               : `focus:ring-blue/50`
           }`}
         />
-        {meta.touched && meta.error ? (
-          <div className="font-inter text-sm text-red-600 m-0 p-0 font-semibold underline">
-            {meta.error}
-          </div>
-        ) : null}
+        {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>
     </>
   );

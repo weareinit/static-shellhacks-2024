@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useField } from "formik";
 
 import Label from "./Label";
+import Error from "./Error";
 
 interface CheckboxInputPropTypes {
   label: string;
@@ -23,7 +24,7 @@ function CheckboxInput({ label, hasInter, ...props }: CheckboxInputPropTypes) {
             helpers.setValue(!meta.value);
           }}
         />
-        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+        {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>
     </>
   );
