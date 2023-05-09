@@ -1,6 +1,9 @@
 import React from "react";
 
+import { useField } from "formik";
+
 import Label from "./Label";
+import Error from "./Error";
 
 interface SelectInputProps {
   label: string;
@@ -11,20 +14,14 @@ interface SelectInputProps {
   defaultValue?: string;
 }
 
-function SelectInput({
-  label,
-  options,
-  name,
-  children,
-  defaultValue,
-}: SelectInputProps) {
+function SelectInput({ label, options, ...props }: SelectInputProps) {
+  const [field, meta] = useField(props);
   return (
-    <>
-      <Label htmlFor={name}>{label}</Label>
+    <div className="flex flex-col w-fit">
+      <Label>{label}</Label>
       <select
-        defaultValue={defaultValue}
-        name={name}
-        className="relative w-[300px] overflow-clip bg-white outline-none appearance-none border-blue fill-white rounded-none border-2 p-1 font-inter"
+        {...field}
+        className="relative w-[300px] overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter"
       >
         {options.map((option, index) => {
           return (
@@ -34,7 +31,8 @@ function SelectInput({
           );
         })}
       </select>
-    </>
+      {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
+    </div>
   );
 }
 
