@@ -38,11 +38,16 @@ function RegisterForm() {
         "Invalid phone number format"
       )
       .required("Phone Number is required"),
-    email: Yup.string().email().required(),
-    school: Yup.string().required(),
-    gradYear: Yup.number().required().min(2024).max(2030),
-    levelOfStudy: Yup.string().required(),
-    country: Yup.string().required(),
+    email: Yup.string()
+      .email("Email is not formmated correctly")
+      .required("Email is required"),
+    school: Yup.string().required("School is required"),
+    gradYear: Yup.number()
+      .required("Graduation Year is required")
+      .min(2024)
+      .max(2030),
+    levelOfStudy: Yup.string().required("Level of Study is required"),
+    country: Yup.string().required("Country is requiured"),
     isInternational: Yup.boolean(),
     agreedMLHPrivacy: Yup.boolean().oneOf([true], "Must Be Checked"),
     agreedMLHConduct: Yup.boolean().oneOf([true], "Must Be Checked"),
