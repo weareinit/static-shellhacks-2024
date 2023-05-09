@@ -7,6 +7,7 @@ import { useFormOptionContext } from "@/hooks/FormOptionContext";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
+import Button from "../input/Button";
 
 function RegisterForm() {
   interface Values {
@@ -44,8 +45,8 @@ function RegisterForm() {
     school: Yup.string().required("School is required"),
     gradYear: Yup.number()
       .required("Graduation Year is required")
-      .min(2024)
-      .max(2030),
+      .min(2022)
+      .max(2028),
     levelOfStudy: Yup.string().required("Level of Study is required"),
     country: Yup.string().required("Country is requiured"),
     isInternational: Yup.boolean(),
@@ -84,7 +85,7 @@ function RegisterForm() {
         school: "",
         gradYear: "",
         levelOfStudy: "",
-        country: "",
+        country: "United States of America",
         agreedMLHConduct: false,
         agreedMLHNews: false,
         agreedMLHPrivacy: false,
@@ -146,7 +147,7 @@ function RegisterForm() {
             name="agreedMLHNews"
             hasInter
           />
-          <button type="submit">Click ME!</button>
+          <Button type="submit">Submit</Button>
         </Form>
       )}
     </Formik>
