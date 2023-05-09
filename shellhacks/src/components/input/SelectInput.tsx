@@ -21,7 +21,11 @@ function SelectInput({ label, options, ...props }: SelectInputProps) {
       <Label>{label}</Label>
       <select
         {...field}
-        className="relative w-[300px] overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter"
+        className={`relative w-[300px] overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter ${
+          meta.touched && meta.error
+            ? "border-red-600 focus:ring-red-600/50"
+            : ""
+        }`}
       >
         {options.map((option, index) => {
           return (
