@@ -15,7 +15,7 @@ function CheckboxInput({ label, hasInter, ...props }: CheckboxInputPropTypes) {
   const [field, meta, helpers] = useField(props);
   return (
     <>
-      <Label className="w-fit flex flex-col" hasInter={hasInter}>
+      <Label className="w-fit h-fit flex flex-col" hasInter={hasInter}>
         {label}
         <input {...field} {...props} type="checkbox" className=" sr-only" />
         <div
