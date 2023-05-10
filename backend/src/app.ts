@@ -6,6 +6,55 @@ import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
 import { errorHandler } from "./middleware/errors"
 import { auth } from "express-oauth2-jwt-bearer"
+import { ManagementClient, AuthenticationClient } from "auth0"
+import { logger } from "@config/logger"
+
+var management = new ManagementClient({
+  token: process.env.AUTH0_API_V2_TOKEN!,
+  domain: process.env.AUTH0_DOMAIN!,
+  clientId: `1T8U66xEruLkLNp1xcyts88zPibzP4Vl`, //process.env.AUTH0_CLIENT_ID!, //process.env.AUTH0_MANAGEMENT_CLIENT_ID!,
+  clientSecret: process.env.AUTH0_CLIENT_SECRET!, //process.env.AUTH0_MANAGEMENT_CLIENT_SECRET!
+})
+
+const auth0 = new AuthenticationClient({
+  domain: process.env.AUTH0_DOMAIN!,
+  clientId: `1T8U66xEruLkLNp1xcyts88zPibzP4Vl`, //process.env.AUTH0_CLIENT_ID!, //process.env.AUTH0_MANAGEMENT_CLIENT_ID!,
+  clientSecret: process.env.AUTH0_CLIENT_SECRET!, //process.env.AUTH0_MANAGEMENT_CLIENT_SECRET!
+})
+
+const email = "jschuster8765@gmail.com"
+const password = "password1werwiuahriareuAJKDEHSKJFHISDKEFHR334982347298#$@(*&$(*&2323"
+
+auth0.database?.signUp(
+  {
+    email,
+    password: "",
+    connection: "email",
+  },
+  (err, res) => {
+    if (err) {
+      logger.error(err)
+    } else {
+      logger.info("User created")
+    }
+  }
+)
+
+// management.createUser(
+//   {
+//     connection: "email",
+//     // connection: "Username-Password-Authentication",
+//     email: "jschuster8765@outlook.com",
+//     //password: "jhghjghFSdHFD#$$#@#$@^$45334",
+//   },
+//   (err: any) => {
+//     if (err) {
+//       logger.error(err)
+//     } else {
+//       logger.info("User created")
+//     }
+//   }
+// )
 
 export const app = express()
 

@@ -10,4 +10,6 @@ export const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
   ISSUER_BASE_URL: z.string().url(),
   AUDIENCE: z.string().url(),
+  AUTH0_API_V2_TOKEN: z.string(),
+  AUTH0_DOMAIN: z.string(),
 })
