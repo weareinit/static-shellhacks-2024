@@ -20,7 +20,7 @@ export const emailClient = new SESClient({})
 
 export const auth0 = new AuthenticationClient({
   domain: process.env.AUTH0_DOMAIN!,
-  clientId: `1T8U66xEruLkLNp1xcyts88zPibzP4Vl`, //process.env.AUTH0_CLIENT_ID!, //process.env.AUTH0_MANAGEMENT_CLIENT_ID!,
+  clientId: process.env.AUTH0_CLIENT_ID!, //process.env.AUTH0_MANAGEMENT_CLIENT_ID!,
   clientSecret: process.env.AUTH0_CLIENT_SECRET!, //process.env.AUTH0_MANAGEMENT_CLIENT_SECRET!
 })
 
