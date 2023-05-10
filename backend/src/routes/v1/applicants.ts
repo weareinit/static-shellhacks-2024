@@ -69,7 +69,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
       async (err, authResult) => {
         if (err) {
           logger.error("Unable to create auth0 account")
-          throw err
+          next(err)
         }
 
         logger.info("User created")
@@ -81,10 +81,14 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
           check_in_status: false,
         }
 
-        const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
-        const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
+        try {
+          const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+          const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
 
-        res.send({ applicant: applicant, auth0: authResult }).status(200)
+          res.send({ applicant: applicant, auth0: authResult }).status(200)
+        } catch (err) {
+          next(err)
+        }
       }
     )
   } catch (e) {
