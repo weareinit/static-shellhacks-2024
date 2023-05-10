@@ -71,23 +71,31 @@ function RegisterForm() {
         "Invalid phone number format"
       )
       .required("Phone Number is required"),
-    resume: Yup.mixed().test("fileType", "Unsupported File Format", (value) => {
-      let file = value as File | null;
-      if (!file) {
-        return new Yup.ValidationError("A file is required", value, "resume");
-      } else {
-        const supportedFormats = ["application/pdf"];
-        if (supportedFormats.includes(file.type)) {
-          return true;
+    resume: Yup.mixed()
+      .test("fileSize", "File size is too large", (value) => {
+        if (value instanceof File) {
+          return value.size <= 2000000;
         } else {
-          return new Yup.ValidationError(
-            "Unsupported File Format",
-            value,
-            "resume"
-          );
+          return false;
         }
-      }
-    }),
+      })
+      .test("fileType", "Unsupported File Format", (value) => {
+        let file = value as File | null;
+        if (!file) {
+          return new Yup.ValidationError("A file is required", value, "resume");
+        } else {
+          const supportedFormats = ["application/pdf"];
+          if (supportedFormats.includes(file.type)) {
+            return true;
+          } else {
+            return new Yup.ValidationError(
+              "Unsupported File Format",
+              value,
+              "resume"
+            );
+          }
+        }
+      }),
     discord: Yup.string().url(),
     github: Yup.string().url(),
     linkedin: Yup.string().url(),
