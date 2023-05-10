@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import RegisterModal from "../registration/RegisterModal";
 import Image from "next/image";
-import Button from "../Button";
+import Button from "../input/Button";
 
 function SandSection() {
   const [showModal, setShowModal] = useState(false);

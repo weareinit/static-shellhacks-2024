@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useField } from "formik";
 
 import Label from "./Label";
+import Error from "./Error";
 
 interface CheckboxInputPropTypes {
   label: string;
@@ -10,30 +11,20 @@ interface CheckboxInputPropTypes {
   hasInter?: boolean;
 }
 
-function CheckboxInput(props: CheckboxInputPropTypes) {
-  const [field, meta] = useField(props);
-  const [value, setValue] = useState<string>("n");
-
+function CheckboxInput({ label, hasInter, ...props }: CheckboxInputPropTypes) {
+  const [field, meta, helpers] = useField(props);
   return (
     <>
-      <Label
-        htmlFor={props.name}
-        className="w-fit flex flex-col"
-        hasInter={props.hasInter}
-      >
-        {props.label}
-        <input {...field} type="checkbox" className=" sr-only" value={value} />
+      <Label className="w-fit h-fit flex flex-col" hasInter={hasInter}>
+        {label}
+        <input {...field} {...props} type="checkbox" className=" sr-only" />
         <div
-          className={`w-5 h-5 ${value === "n" ? "bg-white" : "bg-blue"}`}
+          className={`w-5 h-5 ${meta.value === false ? "bg-white" : "bg-blue"}`}
           onClick={() => {
-            setValue((prev) => {
-              if (prev === "n") {
-                return "y";
-              }
-              return "n";
-            });
+            helpers.setValue(!meta.value);
           }}
         />
+        {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>
     </>
   );

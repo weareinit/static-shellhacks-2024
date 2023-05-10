@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 
-interface ButtonProps {
-  className?: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  children?: React.ReactNode;
-}
-
-function Button({ children, className, onClick }: ButtonProps) {
+function Button({
+  children,
+  className,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      onClick={onClick}
+      {...props}
       className={`bg-blue text-white text-center py-1 px-3 rounded-sm max-w-[16em] font-inter ${className}`}
     >
       {children}

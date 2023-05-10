@@ -4,7 +4,7 @@ import Papa from "papaparse";
 
 import Image from "next/image";
 import Modal from "../Modal";
-import Button from "../Button";
+import Button from "../input/Button";
 import RegisterForm from "./RegisterForm";
 
 interface RegisterModalProps {

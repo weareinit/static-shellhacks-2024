@@ -1,8 +1,9 @@
-import React, { useState, HTMLInputTypeAttribute } from "react";
+import React, { HTMLInputTypeAttribute } from "react";
 
 import { useField } from "formik";
 
 import Label from "./Label";
+import Error from "./Error";
 
 interface TextInputProps {
   label: string;
@@ -11,31 +12,24 @@ interface TextInputProps {
   placeholder?: string;
   min?: number;
   max?: number;
-  className?: string;
 }
 
-function TextInput(props: TextInputProps) {
+function TextInput({ label, ...props }: TextInputProps) {
   const [field, meta] = useField(props);
-  const [value, setValue] = useState("");
   return (
     <>
-      <Label
-        htmlFor={props.name}
-        className={`w-fit flex flex-col ${props.className}`}
-      >
-        {props.label}
+      <Label className="w-fit flex flex-col">
+        {label}
         <input
           {...field}
-          className=" border-blue border-2 p-1 h-8 font-inter"
-          placeholder={props.placeholder}
-          type={props.type}
-          min={props.min}
-          max={props.max}
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-          }}
+          {...props}
+          className={`border-blue border-2 p-1 h-8 font-inter focus:ring-2 ${
+            meta.touched && meta.error
+              ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
+              : `focus:ring-blue/50`
+          }`}
         />
+        {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>
     </>
   );
