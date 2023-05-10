@@ -5,12 +5,13 @@ import { useField } from "formik";
 import Label from "./Label";
 import Error from "./Error";
 
-interface FileInputProps {
+interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
+  isRequired?: boolean;
 }
 
-const FileInput = ({ label, ...props }: FileInputProps) => {
+const FileInput = ({ label, isRequired, ...props }: FileInputProps) => {
   const [field, meta, helpers] = useField(props);
   const { setValue } = helpers;
 
@@ -21,8 +22,8 @@ const FileInput = ({ label, ...props }: FileInputProps) => {
 
   return (
     <>
-      <Label>
-        {label}
+      <Label className=" flex flex-col">
+        {isRequired ? `*${label}` : label}
         <input type="file" onChange={handleChange} {...props} />
         {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>

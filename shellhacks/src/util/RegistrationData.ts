@@ -57,7 +57,7 @@ export const ethnicityOptions = [
   "White",
   "Other Asian (Thai, Cambodian, etc)",
   "Other Pacific Islander",
-  "Other (Please Specify)",
+  "Other",
   "Prefer Not to Answer",
 ];
 
@@ -73,7 +73,7 @@ export const majorOptions = [
   "Social science (such as anthropology, psychology, political science, etc.)",
   "Fine arts or performing arts (such as graphic design, music studio, art, etc.)",
   "Health science (such as nursing, pharmacy, radiology, etc.)",
-  "Other (please specify)",
+  "Other",
   "Undecided / No Declared Major",
   "My school does not offer majors / primary areas of study",
   "Prefer not to answer",
