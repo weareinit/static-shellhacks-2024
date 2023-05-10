@@ -1,21 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useField } from "formik";
 
 import Label from "./Label";
 import Error from "./Error";
 
-interface SelectInputProps {
+interface SelectInputProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: string[];
   name: string;
-  children?: React.ReactNode;
-  className?: string;
-  defaultValue?: string;
 }
 
 function SelectInput({ label, options, ...props }: SelectInputProps) {
-  const [field, meta] = useField(props);
+  const [field, meta, helpers] = useField(props);
   return (
     <div className="flex flex-col w-fit">
       <Label>{label}</Label>
