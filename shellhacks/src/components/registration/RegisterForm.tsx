@@ -4,6 +4,13 @@ import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 
 import { useFormOptionContext } from "@/hooks/FormOptionContext";
+import {
+  ethnicityOptions,
+  genderOptions,
+  levelsOfStudy,
+  majorOptions,
+  pronounOptions,
+} from "@/util/RegistrationData";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
@@ -13,14 +20,24 @@ function RegisterForm() {
   interface Values {
     firstName: string;
     lastName: string;
-    age: string;
-    phoneNumber: string;
-    email: string;
+    age: number;
     school: string;
+    major: string;
     gradYear: string;
     levelOfStudy: string;
     country: string;
+    // SOCIALS / CONTACTS
+    email: string;
+    phoneNumber: string;
+    discord: string;
+    github: string;
+    linkedin: string;
+    // DEMOGRAPHICS
     isInternational: boolean;
+    gender: string;
+    pronouns: string;
+    ethnicity: string;
+    // MLH QUESTIONS
     agreedMLHConduct: boolean;
     agreedMLHPrivacy: boolean;
     agreedMLHNews: boolean;
@@ -57,21 +74,6 @@ function RegisterForm() {
 
   const { schools, countries } = useFormOptionContext();
 
-  const levelsOfStudy = [
-    "Less than Secondary / High School",
-    "Secondary / High School",
-    "Undergraduate University (2 year - community college or similar)",
-    "Undergraduate University (3+ year)",
-    "Graduate University (3+ year)",
-    "Graduate University (Masters, Professional, Doctoral, etc)",
-    "Code School / Bootcamp",
-    "Other Vocational / Trade Program or Apprenticeship",
-    "Post Doctorate",
-    "Other",
-    "I'm not currently a student",
-    "Prefer not to answer",
-  ];
-
   return (
     <Formik
       validateOnChange
@@ -79,17 +81,27 @@ function RegisterForm() {
       initialValues={{
         firstName: "",
         lastName: "",
-        age: "",
-        phoneNumber: "",
-        email: "",
+        age: 18,
         school: "",
+        major: "",
         gradYear: "",
         levelOfStudy: "",
         country: "United States of America",
+        // SOCIALS / CONTACTS
+        email: "",
+        phoneNumber: "",
+        discord: "",
+        github: "",
+        linkedin: "",
+        // DEMOGRAPHICS
+        isInternational: false,
+        gender: "",
+        pronouns: "",
+        ethnicity: "",
+        // MLH QUESTIONS
         agreedMLHConduct: false,
         agreedMLHNews: false,
         agreedMLHPrivacy: false,
-        isInternational: false,
       }}
       onSubmit={(values) => {
         console.log(values);
@@ -101,15 +113,9 @@ function RegisterForm() {
           <TextInput label="First Name" name="firstName" type="text" />
           <TextInput label="Last Name" name="lastName" type="text" />
           <TextInput label="Age" name="age" type="number" min={18} max={114} />
-          <TextInput label="Phone Number" name="phoneNumber" type="tel" />
-          <TextInput label="Email" name="email" type="email" />
           <SelectInput label="School" name="school" options={schools} />
-          <SelectInput
-            label="Country of Residency"
-            name="country"
-            options={countries}
-            defaultValue="United States of America"
-          />
+          <SelectInput label="Major" name="major" options={majorOptions} />
+
           <TextInput
             label="Graduation Year"
             name="gradYear"
@@ -117,15 +123,42 @@ function RegisterForm() {
             min={2023}
             max={2033}
           />
+
           <SelectInput
             label="Level of Study"
             name="levelOfStudy"
             options={levelsOfStudy}
           />
+
+          <SelectInput
+            label="Country of Residency"
+            name="country"
+            options={countries}
+            defaultValue="United States of America"
+          />
+
+          <TextInput label="Email" name="email" type="email" />
+          <TextInput label="Phone Number" name="phoneNumber" type="tel" />
+          <TextInput label="Discord" name="discord" type="text" />
+          <TextInput label="Github" name="github" type="text" />
+          <TextInput label="LinkedIn" name="linkedin" type="text" />
           <CheckboxInput
             label="Are you an international student?"
             name="isInternational"
           />
+
+          <SelectInput label="Gender" name="gender" options={genderOptions} />
+          <SelectInput
+            label="Pronouns"
+            name="pronouns"
+            options={pronounOptions}
+          />
+          <SelectInput
+            label="Ethnicity"
+            name="ethnicity"
+            options={ethnicityOptions}
+          />
+
           <h2 className=" font-pixel text-lg font-black underline mt-2">
             We are currently in the process of partnering with MLH. The
             following 3 checkboxes are for this partnership. If we do not end up
