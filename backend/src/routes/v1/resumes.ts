@@ -1,71 +1,42 @@
-import express, { NextFunction, Request, Response } from "express";
-import multer from "multer";
-import { SignedUrl } from "../../interfaces/s3";
-import { deleteFromS3, retrieveFromS3, uploadToS3 } from "../../dal/aws";
-import { S3FileRetrievalError, S3FileUploadError } from "../../errors/error";
+import express, { NextFunction, Request, Response } from "express"
+import { generateSignedResumeUrl } from "@src/utils/aws"
+import { z } from "zod"
+import crypto from "crypto"
+import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 
-export const router = express.Router();
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+export const router = express.Router()
 
-// FIX ~ what should this return to notify the client that a successful upload/deletion occured?
-router.post(
-  "/resumes",
-  upload.single("resume"),
-  async (req: Request, res: Response, _: NextFunction) => {
-    try {
-      await uploadToS3(
-        req.file.originalname,
-        req.file.buffer,
-        req.file.mimetype
-      );
-      res.sendStatus(200);
-    } catch (error) {
-      if (error instanceof S3FileUploadError) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(500).send("Error uploading object to S3 bucket");
-      }
-    }
+router.post("/resumes", async (req: Request, res: Response, next: NextFunction) => {
+  const auth: AuthResult = req.auth!
+
+  try {
+    const resumeId = `${auth.payload.sub}_resume_${crypto.randomBytes(16).toString("hex")}` //generate unique resume name for each user
+    const url: string = await generateSignedResumeUrl(resumeId)
+    res.status(200).send({ resumeId, url })
+  } catch (error) {
+    next(error)
   }
-);
+})
 
-// FIX
-router.get(
-  "/resumes/:fileName?",
-  async (req: Request, res: Response, _: NextFunction) => {
-    if (!req.params) {
-      res.sendStatus(400);
-    }
-    try {
-      const URL: SignedUrl = await retrieveFromS3(req.params.fileName);
-      res.status(200).send(URL);
-    } catch (error) {
-      if (error instanceof S3FileRetrievalError) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(500).send("Error retrieving object to S3 bucket");
-      }
-    }
-  }
-);
+router.get("/resumes/:resumeId?", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const resumeIdSchema = z.string().nonempty()
+    const resumeId = resumeIdSchema.parse(req.params.resumeId)
 
-// FIX
-router.delete(
-  "/resumes/:fileName?",
-  async (req: Request, res: Response, _: NextFunction) => {
-    if (!req.params) {
-      res.sendStatus(400);
-    }
-    try {
-      await deleteFromS3(req.params.fileName);
-      res.sendStatus(200);
-    } catch (error) {
-      if (error instanceof S3FileRetrievalError) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(500).send("Error deleting object from S3 bucket");
-      }
-    }
+    const url: string = await generateSignedResumeUrl(resumeId)
+    res.status(200).send(url)
+  } catch (error) {
+    next(error)
   }
-);
+})
+
+// router.delete("/resumes/:fileName?", async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const { fileName } = resumeSchema.parse(req.params)
+
+//     await deleteFromS3(fileName)
+//     res.sendStatus(200)
+//   } catch (error) {
+//     next(error)
+//   }
+// })

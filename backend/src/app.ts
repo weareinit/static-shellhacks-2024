@@ -1,22 +1,16 @@
-import express, { NextFunction, Request, Response } from 'express'
-import { config } from './config/config'
-import cors from 'cors'
-import { router } from './routes/v1/index'
-import httpStatus from 'http-status'
-import { morganHandlers } from './config/morgan'
-import helmet from 'helmet'
-import ApiError from './errors/ApiError'
-import { errorConverter, errorHandler } from './errors/error'
-import { rateLimiter } from './middleware/ratelimiter'
+import "module-alias/register"
+import express, { NextFunction, Request, Response } from "express"
+import cors from "cors"
+import { router } from "./routes/v1/index"
+import helmet from "helmet"
+import { rateLimiter } from "./middleware/ratelimiter"
+import { errorHandler } from "./middleware/errors"
+import { auth } from "express-oauth2-jwt-bearer"
 
 export const app = express()
 
-if(config.env !== 'test'){
-  app.use(morganHandlers.successHandler);
-  app.use(morganHandlers.errorHandler);
-}
-
 // Secure http headers
+//Is this necessary or can nginx handle it?
 app.use(
   helmet({
     hsts: {
@@ -33,13 +27,13 @@ app.use(
       action: "deny",
     },
   })
-);
+)
 
 // Parse Json request body
 app.use(express.json())
 
 // Parse urlencoded request body
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }))
 
 // Enable cors
 app.use(cors())
@@ -51,19 +45,14 @@ app.use(cors())
 //   maxAge: 86400,
 // }));
 
-if(config.env === 'production'){
-  app.use('/api/v1', rateLimiter);
+if (process.env.NODE_ENV === "production") {
+  app.use("/api/v1", rateLimiter)
 }
-app.get('/', (req: Request, res: Response) => {
-  return res.status(200).json({message: 'Hello World'})
-})
-// api routes
-app.use('/api/v1', router)
 
-app.use((_ : Request, __: Response, next: NextFunction) => {
-  next(new ApiError(httpStatus.NOT_FOUND, 'Not found'))
+app.get("/", (req: Request, res: Response) => {
+  return res.status(200).json({ message: "Hello World" })
 })
 
-// Convert errors to ApiError and handle
-app.use(errorConverter)
+app.use("/api/v1", auth(), router) //require a valid JWT for all routes, ISSUER_BASE_URL and AUDIENCE are fetched from .env
+
 app.use(errorHandler)

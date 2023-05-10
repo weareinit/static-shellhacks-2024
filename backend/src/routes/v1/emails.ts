@@ -1,8 +1,6 @@
-import express from "express";
-import { prisma } from "../../index";
+import express from "express"
+import { prisma } from "../../index"
 
-export const router = express.Router();
-
-
+export const router = express.Router()
 
 // Will contain routes for emailing

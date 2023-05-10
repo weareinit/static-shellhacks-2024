@@ -8,7 +8,10 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
+    "strict": true,
     "paths": {
+      "@config*": ["src/config/*"],
+      "@src*": ["src/*"],
       "*": ["node_modules/*"]
     }
   },

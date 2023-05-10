@@ -1,156 +1,105 @@
-import express from "express";
-import { Request, Response, NextFunction } from "express";
-import { sanitizeAndPrepareParameters } from "../../filters/filters";
-import { Hacker_Applications } from "@prisma/client";
-import { dal } from "../../dal/dal";
-import { logger } from "../../config/logger";
-import { newHackerApplication } from "../../interfaces/newHackerApplication";
-import joi from "joi";
+import express from "express"
+import { Request, Response, NextFunction } from "express"
+import { prisma } from "@src/index"
+import { z } from "zod"
+import { application_status_enums, Prisma } from "@prisma/client"
+import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
+import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
+import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
 
-export const router = express.Router();
+export const router = express.Router()
 
-router.get(
-  "/events/:eventId?/applicants",
-  async (req: Request, res: Response, next: NextFunction) => {
-    // Check for query params
-    if (Object.keys(req.query).length < 1) {
-      if (!req.params) {
-        res.sendStatus(400);
-      }
-      const eventIdParam: number = parseInt(req.params.eventId, 10);
+router.get("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Get the application of the current user
+  const auth: AuthResult = req.auth!
+  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
 
-      if (isNaN(eventIdParam) || eventIdParam < 1) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-        res.sendStatus(404);
-      } else {
-        const applicants: Hacker_Applications[] =
-          await dal.applicants.getApplicantsByEventId(eventIdParam);
-        if (applicants.length < 1) {
-          // FIX - Different status code when no results are found
-          res.sendStatus(204);
-        } else {
-          res.send(applicants);
-        }
-      }
-      // If there are any query params, go to the GET route that handles them.
-    } else {
-      next();
-    }
+  try {
+    const applicant = await prisma.hacker_Applications.findUnique({ where: { auth0_id } })
+    res.send(applicant).status(200)
+  } catch (e) {
+    next(e)
   }
-);
+})
 
-// By URL Query param ->?application_status='<param>'
-router.get(
-  "/events/:eventId?/applicants",
-  async (req: Request, res: Response) => {
-    if (req.query.application_status !== "") {
-      if (!req.params) {
-        res.sendStatus(400);
-      }
-      const applicationStatusParam: string | string[] = req.query
-        .application_status as string | string[];
-      const eventIdParam: number = parseInt(req.params.eventId, 10);
+router.put("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Update the application of the current user according to the "payload" schema
+  const auth: AuthResult = req.auth!
+  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+  const payload = applicantUpdateSchema.parse(req.body)
 
-      const resultantFilters: object[] = sanitizeAndPrepareParameters(
-        applicationStatusParam
-      );
+  try {
+    if (payload.resume_path) {
+      //if the user is changing their resume, delete the old one from s3
+      const oldResumePath = await prisma.hacker_Applications.findUnique({
+        where: {
+          auth0_id,
+        },
+        select: {
+          resume_path: true,
+        },
+      })
 
-      if (isNaN(eventIdParam) || resultantFilters.length < 1) {
-        // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-        res.sendStatus(404);
-      } else {
-        const filteredApplicants =
-          await dal.applicants.getApplicantsByEventIdAndFilteredByApplicationStatus(
-            eventIdParam,
-            resultantFilters
-          );
-        if (filteredApplicants.length < 1) {
-          // FIX - Different status code when no results are found
-          res.sendStatus(204);
-        } else {
-          res.send(filteredApplicants);
-        }
-      }
-    } else {
-      // FIX - Different status code when missing or incorrect query param
-      res.sendStatus(404);
+      await deleteResume(oldResumePath?.resume_path as string)
     }
+
+    const applicant = await prisma.hacker_Applications.update({ where: { auth0_id }, data: payload })
+    res.send(applicant).status(200)
+  } catch (e) {
+    next(e)
   }
-);
+})
 
-router.get(
-  "/events/:eventId?/applicants/application_status/totals",
-  async (req: Request, res: Response) => {
+router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  //Add a new applicant to the DB (register)
+  const auth: AuthResult = req.auth!
 
-    if (!req.params) {
-      res.sendStatus(400);
+  try {
+    const validatedApplicant = newApplicantSchema.parse({ auth0_id: auth.payload.sub, event_id: req.params.eventId, ...req.body })
+
+    const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
+      ...validatedApplicant,
+      application_status: application_status_enums.registered,
+      check_in_status: false,
     }
 
-    const eventIdParam: number = parseInt(req.params.eventId, 10);
-
-    if (isNaN(eventIdParam)) {
-      // FIX - Come up with a better way to validate user input for request params - i.e. ":eventId"
-      res.sendStatus(404);
-    } else {
-      const totalNumberOfApplicantsGroupedByApplicationStatus: object =
-        await dal.applicants.getTotalNumberOfApplicantsGroupedByApplicationStatus(
-          eventIdParam
-        );
-      if (totalNumberOfApplicantsGroupedByApplicationStatus == null) {
-        // FIX - Different status code when no results are found
-        res.sendStatus(204);
-      } else {
-        res.send(totalNumberOfApplicantsGroupedByApplicationStatus);
-      }
-    }
+    const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
+    res.send(applicant).status(200)
+  } catch (e) {
+    next(e)
   }
-);
+})
 
-//Add Applicants when they register
-router.post(
-  "/events/:eventId/applicants",
-  async (req: Request, res: Response) => {
+router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+  //Admin route to get info on one or many hackers
+  try {
+    const filters = applicantFiltersSchema.parse({ event_id: req.params.eventId, ...req.query })
 
-    //Define required or necessary variables for request.
-    const newApplicantSchema = joi.object().keys({
-      event_id: joi.number().required(),
-      first_name: joi.string().required(),
-      last_name: joi.string().required(),
-      email: joi.string().required(),
-      discord: joi.string().required(),
-      gender: joi.string().required(),
-      ethnicity: joi.string().required(),
-      phone_number: joi.string().required(),
-      race: joi.string().required(),
-      dob: joi.date().required(),
-      major: joi.string().required(),
-      school: joi.string().required(),
-      resume_path: joi.string().required(),
-      github: joi.string(),
-      linkedin: joi.string(),
-      level_of_study: joi.string().required(),
-      interest_response: joi.string().required(),
-      email_message_status: joi.boolean().required(),
-      developer_role: joi.string().required()
-  })
+    const filteredApplicants = await prisma.hacker_Applications.findMany({
+      where: {
+        ...filters,
+      },
+    })
 
-    const eventIdParam: number = parseInt(req.params.eventId, 10);
-    if (isNaN(eventIdParam))
-      res.sendStatus(400);
-    
-    //Compares req.body and schema to validate all applicant variables.
-    else if (newApplicantSchema.validate(req.body).error != null){
-      console.log(newApplicantSchema.validate(req.body).error)
-      res.sendStatus(400);
-    }
-
-    //If all is good, will create applicant
-    else {
-      const newApplicant: newHackerApplication =
-        await dal.applicants.insertHackerApplication(
-          req.body
-        );
-        res.send(req.body).status(200)
-    }
+    res.send(filteredApplicants).status(200)
+  } catch (e) {
+    next(e)
   }
-);
+})
+
+router.put("events/:eventId/applicants/:hackerId/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+  //Admin route to update the app status of a hacker (add to wave, remove from wave, etc.)
+  try {
+    const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({ event_id: req.params.eventId, hacker_id: req.params.hackerId, ...req.body })
+
+    const updatedApplicant = await prisma.hacker_Applications.update({
+      where: { hacker_id },
+      data: { application_status },
+    })
+
+    res.send(updatedApplicant).status(200)
+  } catch (e) {
+    next(e)
+  }
+})
