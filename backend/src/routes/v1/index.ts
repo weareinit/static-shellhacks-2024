@@ -1,29 +1,21 @@
-import express, { NextFunction, Request, Response } from "express";
-import { router as EventsRouter } from "./events";
-import { router as ApplicantsRouter } from "./applicants";
-import { router as EmailsRouter } from "./emails";
+import express from "express"
+import { requiredScopes } from "express-oauth2-jwt-bearer"
+import { router as EventsRouter } from "./events"
+import { router as ApplicantsRouter } from "./applicants"
+import { router as EmailsRouter } from "./emails"
 import { router as ResumesRouter } from "./resumes"
+import { router as AdminRouter } from "./admin"
 
+export const router = express.Router()
 
-export const router = express.Router();
-
-const defaultRoutes = [
-  {
-    route: EventsRouter,
-  },
-  {
-    route: ApplicantsRouter
-  },
-  {
-    route: EmailsRouter
-  },
-  {
-    route: ResumesRouter
-  }
-
-];
+const routes = [EventsRouter, ApplicantsRouter, EmailsRouter, ResumesRouter]
+const adminRoutes = [AdminRouter]
 
 // Load additional routes
-defaultRoutes.forEach((route) => {
-  router.use(route.route);
-});
+routes.map((route) => {
+  router.use(route)
+})
+
+adminRoutes.map((route) => {
+  router.use("/admin", route) //, requiredScopes("access:admin-routes"), route)
+})
