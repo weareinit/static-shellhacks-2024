@@ -15,6 +15,7 @@ import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
 import Button from "../input/Button";
+import FileInput from "../input/FileInput";
 
 function RegisterForm() {
   interface Values {
@@ -29,6 +30,7 @@ function RegisterForm() {
     // SOCIALS / CONTACTS
     email: string;
     phoneNumber: string;
+    resume: File;
     discord: string;
     github: string;
     linkedin: string;
@@ -36,6 +38,7 @@ function RegisterForm() {
     isInternational: boolean;
     gender: string;
     pronouns: string;
+    fillInPronouns: string;
     ethnicity: string;
     // MLH QUESTIONS
     agreedMLHConduct: boolean;
@@ -44,29 +47,57 @@ function RegisterForm() {
   }
 
   const formValidation = Yup.object().shape({
-    firstName: Yup.string().required("First Name is equired"),
+    firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
     age: Yup.number()
-      .required()
+      .required("Age is required")
       .min(18, "You must be at least 18 to compete.")
       .max(114, "114 is the age of the oldest person on Earth..."),
+    school: Yup.string().required("School is required"),
+    major: Yup.string().required("Major is required"),
+    gradYear: Yup.number()
+      .required("Graduation Year is required")
+      .min(2022, "Minimum graduation year to participate is 2022.")
+      .max(2030, "Maximum graduation year to participate is 2030."),
+    levelOfStudy: Yup.string().required("Level of Study is required"),
+    country: Yup.string().required("Country is requiured"),
+    // SOCIALS / CONTACTS
+    email: Yup.string()
+      .email("Email is not formmated correctly")
+      .required("Email is required"),
     phoneNumber: Yup.string()
       .matches(
         /^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$/,
         "Invalid phone number format"
       )
       .required("Phone Number is required"),
-    email: Yup.string()
-      .email("Email is not formmated correctly")
-      .required("Email is required"),
-    school: Yup.string().required("School is required"),
-    gradYear: Yup.number()
-      .required("Graduation Year is required")
-      .min(2022)
-      .max(2028),
-    levelOfStudy: Yup.string().required("Level of Study is required"),
-    country: Yup.string().required("Country is requiured"),
+    resume: Yup.mixed().test("fileType", "Unsupported File Format", (value) => {
+      let file = value as File | null;
+      if (!file) {
+        return new Yup.ValidationError("A file is required", value, "resume");
+      } else {
+        const supportedFormats = ["application/pdf"];
+        if (supportedFormats.includes(file.type)) {
+          return true;
+        } else {
+          return new Yup.ValidationError(
+            "Unsupported File Format",
+            value,
+            "resume"
+          );
+        }
+      }
+    }),
+    discord: Yup.string().url(),
+    github: Yup.string().url(),
+    linkedin: Yup.string().url(),
+    // DEMOGRAPHICS
     isInternational: Yup.boolean(),
+    gender: Yup.string(),
+    pronouns: Yup.string(),
+    fillInPronouns: Yup.string(),
+    ethnicity: Yup.string().required("Ethnicity is a required field"),
+    // MLH Questions
     agreedMLHPrivacy: Yup.boolean().oneOf([true], "Must Be Checked"),
     agreedMLHConduct: Yup.boolean().oneOf([true], "Must Be Checked"),
     agreedMLHNews: Yup.boolean(),
@@ -90,6 +121,7 @@ function RegisterForm() {
         // SOCIALS / CONTACTS
         email: "",
         phoneNumber: "",
+        resume: new File([], ""),
         discord: "",
         github: "",
         linkedin: "",
@@ -97,6 +129,7 @@ function RegisterForm() {
         isInternational: false,
         gender: "",
         pronouns: "",
+        fillInPronouns: "",
         ethnicity: "",
         // MLH QUESTIONS
         agreedMLHConduct: false,
@@ -110,14 +143,14 @@ function RegisterForm() {
     >
       {(props: FormikProps<Values>) => (
         <Form className="grid gap-3 my-2">
-          <TextInput label="First Name" name="firstName" type="text" />
-          <TextInput label="Last Name" name="lastName" type="text" />
-          <TextInput label="Age" name="age" type="number" min={18} max={114} />
-          <SelectInput label="School" name="school" options={schools} />
-          <SelectInput label="Major" name="major" options={majorOptions} />
+          <TextInput label="*First Name" name="firstName" type="text" />
+          <TextInput label="*Last Name" name="lastName" type="text" />
+          <TextInput label="*Age" name="age" type="number" min={18} max={114} />
+          <SelectInput label="*School" name="school" options={schools} />
+          <SelectInput label="*Major" name="major" options={majorOptions} />
 
           <TextInput
-            label="Graduation Year"
+            label="*Graduation Year"
             name="gradYear"
             type="number"
             min={2023}
@@ -125,36 +158,44 @@ function RegisterForm() {
           />
 
           <SelectInput
-            label="Level of Study"
+            label="*Level of Study"
             name="levelOfStudy"
             options={levelsOfStudy}
           />
 
           <SelectInput
-            label="Country of Residency"
+            label="*Country of Residency"
             name="country"
             options={countries}
             defaultValue="United States of America"
           />
 
-          <TextInput label="Email" name="email" type="email" />
-          <TextInput label="Phone Number" name="phoneNumber" type="tel" />
+          <TextInput label="*Email" name="email" type="email" />
+          <TextInput label="*Phone Number" name="phoneNumber" type="tel" />
+          <FileInput label="*Resume" name="resume" />
           <TextInput label="Discord" name="discord" type="text" />
           <TextInput label="Github" name="github" type="text" />
           <TextInput label="LinkedIn" name="linkedin" type="text" />
           <CheckboxInput
-            label="Are you an international student?"
+            label="Check if you are an international student"
             name="isInternational"
           />
 
           <SelectInput label="Gender" name="gender" options={genderOptions} />
           <SelectInput
+            options={pronounOptions}
             label="Pronouns"
             name="pronouns"
-            options={pronounOptions}
           />
+          {props.values.pronouns === "Other" && (
+            <TextInput
+              label="Fill in your pronouns here"
+              name="fillInPronouns"
+              type="text"
+            />
+          )}
           <SelectInput
-            label="Ethnicity"
+            label="*Ethnicity"
             name="ethnicity"
             options={ethnicityOptions}
           />
