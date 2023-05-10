@@ -3,6 +3,9 @@ import { z } from "zod"
 export const applicantUpdateSchema = z.object({
   resume_path: z.string().optional(),
   application_status: z.literal("withdrawn").optional(),
+  phone: z.string().optional(),
+  github: z.string().optional(),
+  linkedin: z.string().optional(),
 })
 
 export const applicantStatusChangeSchema = z.object({

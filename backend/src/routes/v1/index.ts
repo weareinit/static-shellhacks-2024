@@ -17,5 +17,5 @@ routes.map((route) => {
 })
 
 adminRoutes.map((route) => {
-  router.use("/admin", requiredScopes("access:admin-routes"), route)
+  router.use("/admin", route) //, requiredScopes("access:admin-routes"), route)
 })

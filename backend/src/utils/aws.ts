@@ -1,7 +1,7 @@
 import { s3Client, emailClient } from "@src/index"
 import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
-import { SendTemplatedEmailCommand, type SendTemplatedEmailCommandInput } from "@aws-sdk/client-ses"
+import { SendTemplatedEmailCommand, CreateTemplateCommand, type SendTemplatedEmailCommandInput, CreateTemplateCommandInput } from "@aws-sdk/client-ses"
 
 export const generateSignedResumeUrl = async (resumeId: string) => {
   const params: PutObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId }
@@ -28,6 +28,21 @@ export const sendConfirmationEmail = async (toEmail: string, firstName: string) 
 
   const command = new SendTemplatedEmailCommand(params)
   await emailClient.send(command)
+}
+
+export const createEmailTemplate = async (templateName: string, subjectPart: string, htmlPart: string) => {
+  // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/commands/CreateTemplateCommand.html
+  const params: CreateTemplateCommandInput = {
+    Template: {
+      TemplateName: templateName,
+      SubjectPart: subjectPart,
+      HtmlPart: htmlPart,
+    },
+  }
+
+  const command = new CreateTemplateCommand(params)
+  const res = await emailClient.send(command)
+  return res
 }
 
 // export async function doesFileExistInS3(fileName: string) {
