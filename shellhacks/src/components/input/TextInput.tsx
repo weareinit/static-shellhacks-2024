@@ -5,21 +5,18 @@ import { useField } from "formik";
 import Label from "./Label";
 import Error from "./Error";
 
-interface TextInputProps {
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
-  type: HTMLInputTypeAttribute;
-  placeholder?: string;
-  min?: number;
-  max?: number;
+  isRequired?: boolean;
 }
 
-function TextInput({ label, ...props }: TextInputProps) {
+function TextInput({ label, isRequired, ...props }: TextInputProps) {
   const [field, meta] = useField(props);
   return (
     <>
       <Label className="w-fit flex flex-col">
-        {label}
+        {isRequired ? `*${label}` : label}
         <input
           {...field}
           {...props}

@@ -143,36 +143,66 @@ function RegisterForm() {
     >
       {(props: FormikProps<Values>) => (
         <Form className="grid gap-3 my-2">
-          <TextInput label="*First Name" name="firstName" type="text" />
-          <TextInput label="*Last Name" name="lastName" type="text" />
-          <TextInput label="*Age" name="age" type="number" min={18} max={114} />
-          <SelectInput label="*School" name="school" options={schools} />
-          <SelectInput label="*Major" name="major" options={majorOptions} />
+          <TextInput
+            label="First Name"
+            name="firstName"
+            type="text"
+            isRequired
+          />
+          <TextInput label="Last Name" name="lastName" type="text" isRequired />
+          <TextInput
+            label="Age"
+            name="age"
+            type="number"
+            min={18}
+            max={114}
+            isRequired
+          />
+          <SelectInput
+            label="School"
+            name="school"
+            options={schools}
+            isRequired
+          />
+          <SelectInput
+            label="Major"
+            name="major"
+            options={majorOptions}
+            isRequired
+          />
 
           <TextInput
-            label="*Graduation Year"
+            label="Graduation Year"
             name="gradYear"
             type="number"
             min={2023}
             max={2033}
+            isRequired
           />
 
           <SelectInput
-            label="*Level of Study"
+            label="Level of Study"
             name="levelOfStudy"
             options={levelsOfStudy}
+            isRequired
           />
 
           <SelectInput
-            label="*Country of Residency"
+            label="Country of Residency"
             name="country"
             options={countries}
             defaultValue="United States of America"
+            isRequired
           />
 
-          <TextInput label="*Email" name="email" type="email" />
-          <TextInput label="*Phone Number" name="phoneNumber" type="tel" />
-          <FileInput label="*Resume" name="resume" />
+          <TextInput label="Email" name="email" type="email" isRequired />
+          <TextInput
+            label="Phone Number"
+            name="phoneNumber"
+            type="tel"
+            isRequired
+          />
+          <FileInput label="Resume" name="resume" isRequired />
           <TextInput label="Discord" name="discord" type="text" />
           <TextInput label="Github" name="github" type="text" />
           <TextInput label="LinkedIn" name="linkedin" type="text" />
@@ -195,7 +225,7 @@ function RegisterForm() {
             />
           )}
           <SelectInput
-            label="*Ethnicity"
+            label="Ethnicity"
             name="ethnicity"
             options={ethnicityOptions}
           />
@@ -209,12 +239,14 @@ function RegisterForm() {
             label="I have read and agree to the MLH Code of Conduct. (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)"
             name="agreedMLHConduct"
             hasInter
+            isRequired
           />
           <CheckboxInput
             label="I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy (https://mlh.io/privacy).
           I further agree to the terms of both the MLH Contest Terms and Conditions (https://github.com/MLH/mlh-policies/blob/main/contest-terms.md) and the MLH Privacy Policy (https://mlh.io/privacy)."
             name="agreedMLHPrivacy"
             hasInter
+            isRequired
           />
           <CheckboxInput
             label="I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements."

@@ -9,14 +9,20 @@ interface SelectInputProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: string[];
+  isRequired?: boolean;
   name: string;
 }
 
-function SelectInput({ label, options, ...props }: SelectInputProps) {
+function SelectInput({
+  label,
+  options,
+  isRequired,
+  ...props
+}: SelectInputProps) {
   const [field, meta, helpers] = useField(props);
   return (
     <div className="flex flex-col w-fit">
-      <Label>{label}</Label>
+      <Label>{isRequired ? `*${label}` : label}</Label>
       <select
         {...field}
         className={`relative w-[300px] overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter ${
