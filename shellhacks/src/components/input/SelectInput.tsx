@@ -31,6 +31,7 @@ function SelectInput({
             : ""
         }`}
       >
+        <option />
         {options.map((option, index) => {
           return (
             <option key={index} value={option}>
