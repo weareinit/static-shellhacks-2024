@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express"
-import { generateSignedResumeUploadUrl, generateSignedResumeUrl } from "@src/utils/aws"
+import { generateSignedResumeUrl } from "@src/utils/aws"
 import { z } from "zod"
 import crypto from "crypto"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
@@ -10,8 +10,8 @@ router.post("/resumes", async (req: Request, res: Response, next: NextFunction) 
   const auth: AuthResult = req.auth!
 
   try {
-    const resumeId = `${auth.payload.sub}_resume_${crypto.randomBytes(16).toString("hex")}` //generate unique resume name
-    const url: string = await generateSignedResumeUploadUrl(resumeId)
+    const resumeId = `${auth.payload.sub}_resume_${crypto.randomBytes(16).toString("hex")}` //generate unique resume name for each user
+    const url: string = await generateSignedResumeUrl(resumeId)
     res.status(200).send({ resumeId, url })
   } catch (error) {
     next(error)

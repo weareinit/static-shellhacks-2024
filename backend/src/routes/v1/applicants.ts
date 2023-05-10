@@ -1,39 +1,60 @@
 import express from "express"
 import { Request, Response, NextFunction } from "express"
-import { z } from "zod"
 import { prisma } from "@src/index"
+import { z } from "zod"
 import { application_status_enums, Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
+import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
+import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
 
 export const router = express.Router()
 
+router.get("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Get the application of the current user
+  const auth: AuthResult = req.auth!
+  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+
+  try {
+    const applicant = await prisma.hacker_Applications.findUnique({ where: { auth0_id } })
+    res.send(applicant).status(200)
+  } catch (e) {
+    next(e)
+  }
+})
+
+router.put("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+  //Update the application of the current user according to the "payload" schema
+  const auth: AuthResult = req.auth!
+  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+  const payload = applicantUpdateSchema.parse(req.body)
+
+  try {
+    if (payload.resume_path) {
+      //if the user is changing their resume, delete the old one from s3
+      const oldResumePath = await prisma.hacker_Applications.findUnique({
+        where: {
+          auth0_id,
+        },
+        select: {
+          resume_path: true,
+        },
+      })
+
+      await deleteResume(oldResumePath?.resume_path as string)
+    }
+
+    const applicant = await prisma.hacker_Applications.update({ where: { auth0_id }, data: payload })
+    res.send(applicant).status(200)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
+  //Add a new applicant to the DB (register)
   const auth: AuthResult = req.auth!
 
   try {
-    const newApplicantSchema = z.object({
-      auth0_id: z.string().nonempty(),
-      event_id: z.string().regex(/^\d+$/).transform(Number),
-      first_name: z.string().nonempty(),
-      last_name: z.string().nonempty(),
-      email: z.string().email(),
-      discord: z.string().nonempty(), //TODO: add some regex parsing
-      gender: z.string().nonempty(),
-      ethnicity: z.string().nonempty(),
-      race: z.string().nonempty(),
-      phone_number: z.string().nonempty(),
-      dob: z.date(),
-      major: z.string(),
-      school: z.string(),
-      resume_path: z.string().url(),
-      github: z.string()?.url(),
-      linkedin: z.string()?.url(),
-      level_of_study: z.string(),
-      interest_response: z.string(),
-      email_message_status: z.boolean(),
-      developer_role: z.string(),
-    })
-
     const validatedApplicant = newApplicantSchema.parse({ auth0_id: auth.payload.sub, event_id: req.params.eventId, ...req.body })
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
@@ -41,7 +62,9 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
       application_status: application_status_enums.registered,
       check_in_status: false,
     }
+
     const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
     res.send(applicant).status(200)
   } catch (e) {
     next(e)
@@ -49,15 +72,9 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 })
 
 router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
-  //NOTE: Admin route to get info on one or many hackers
+  //Admin route to get info on one or many hackers
   try {
-    const filtersSchema = z.object({
-      event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
-      hacker_id: z.number().optional(),
-      application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
-      school: z.string().optional(),
-    })
-    const filters = filtersSchema.parse({ event_id: req.params.eventId, ...req.query })
+    const filters = applicantFiltersSchema.parse({ event_id: req.params.eventId, ...req.query })
 
     const filteredApplicants = await prisma.hacker_Applications.findMany({
       where: {
@@ -71,15 +88,10 @@ router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"),
   }
 })
 
-router.put("events/:eventId/applicants/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
-  //NOTE: Admin route to update the app status of a hacker (add to wave, remove from wave, accept wave, etc.)
+router.put("events/:eventId/applicants/:hackerId/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+  //Admin route to update the app status of a hacker (add to wave, remove from wave, etc.)
   try {
-    const requestSchema = z.object({
-      event_id: z.string().regex(/^\d+$/).transform(Number),
-      hacker_id: z.string().regex(/^\d+$/).transform(Number),
-      application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
-    })
-    const { hacker_id, application_status } = requestSchema.parse({ event_id: req.params.eventId, hacker_id: req.query.hackerId, ...req.body })
+    const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({ event_id: req.params.eventId, hacker_id: req.params.hackerId, ...req.body })
 
     const updatedApplicant = await prisma.hacker_Applications.update({
       where: { hacker_id },
