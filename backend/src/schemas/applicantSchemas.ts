@@ -22,7 +22,6 @@ export const applicantFiltersSchema = z.object({
 })
 
 export const newApplicantSchema = z.object({
-  auth0_id: z.string().nonempty(),
   event_id: z.string().regex(/^\d+$/).transform(Number),
   first_name: z.string().nonempty(),
   last_name: z.string().nonempty(),
@@ -34,7 +33,7 @@ export const newApplicantSchema = z.object({
   country: z.string().nonempty(),
   is_international: z.boolean(),
   phone_number: z.string().nonempty(),
-  dob: z.date(),
+  dob: z.coerce.date(),
   major: z.string(),
   school: z.string(),
   resume_path: z.string().url(),
@@ -42,6 +41,6 @@ export const newApplicantSchema = z.object({
   linkedin: z.string()?.url(),
   level_of_study: z.string(),
   interest_response: z.string(),
-  email_message_status: z.boolean(),
+  //email_message_status: z.boolean(),
   developer_role: z.string(),
 })

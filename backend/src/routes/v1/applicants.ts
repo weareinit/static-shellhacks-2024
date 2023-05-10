@@ -1,11 +1,13 @@
 import express from "express"
 import { Request, Response, NextFunction } from "express"
-import { prisma } from "@src/index"
+import { prisma, auth0 } from "@src/index"
+import { logger } from "@config/logger"
 import { z } from "zod"
 import { application_status_enums, Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
 import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
+import crypto from "crypto"
 
 export const router = express.Router()
 
@@ -53,19 +55,38 @@ router.put("/events/:eventId/application", async (req: Request, res: Response, n
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   //Add a new applicant to the DB (register)
   const auth: AuthResult = req.auth!
+  auth.payload.sub = crypto.randomBytes(6).toString("hex")
 
   try {
-    const validatedApplicant = newApplicantSchema.parse({ auth0_id: auth.payload.sub, event_id: req.params.eventId, ...req.body })
+    const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
 
-    const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
-      ...validatedApplicant,
-      application_status: application_status_enums.registered,
-      check_in_status: false,
-    }
+    auth0.database?.signUp(
+      {
+        email: validatedApplicant.email,
+        password: crypto.randomBytes(32).toString("hex"),
+        connection: "email",
+      },
+      async (err, authResult) => {
+        if (err) {
+          logger.error("Unable to create auth0 account")
+          throw err
+        }
 
-    const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
-    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
-    res.send(applicant).status(200)
+        logger.info("User created")
+
+        const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
+          ...validatedApplicant,
+          auth0_id: authResult?._id as string,
+          application_status: application_status_enums.registered,
+          check_in_status: false,
+        }
+
+        const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+        const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
+
+        res.send({ applicant: applicant, auth0: authResult }).status(200)
+      }
+    )
   } catch (e) {
     next(e)
   }
