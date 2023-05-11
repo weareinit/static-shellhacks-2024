@@ -15,6 +15,7 @@ router.get("/events/:eventId/application", async (req: Request, res: Response, n
   //Get the application of the current user
   const auth: AuthResult = req.auth!
   const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+  logger.info("AUTH0 ID: " + auth0_id)
 
   try {
     const applicant = await prisma.hacker_Applications.findUnique({ where: { auth0_id } })

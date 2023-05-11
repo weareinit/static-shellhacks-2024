@@ -14,12 +14,3 @@ services:
       - ${PORT}:${PORT}
     env_file:
       - ./.env
-  nginx:
-    image: nginx:latest
-    volumes:
-      - "./conf.d/my_conf.conf:/etc/nginx/nginx.conf"
-    depends_on:
-      - shellhacks
-      - backend
-    ports:
-      - 80:80
