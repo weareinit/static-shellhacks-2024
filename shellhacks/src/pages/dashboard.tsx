@@ -1,7 +1,7 @@
-import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from "react"
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
 
-export default function Dashboard() {
+export default withPageAuthRequired(function Dashboard() {
   const [myApplication, setMyApplication] = useState(null)
 
   useEffect(() => {
@@ -38,4 +38,4 @@ export default function Dashboard() {
       <p>My Application: {JSON.stringify(myApplication)}</p>
     </>
   )
-}
+})
