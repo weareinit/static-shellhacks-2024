@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { withPageAuthRequired, UserContext, useUser } from "@auth0/nextjs-auth0/client"
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
 
 import Modal from "../Modal"
 import Button from "../input/Button"
@@ -11,13 +11,6 @@ interface RegisterModalProps {
 }
 
 export default withPageAuthRequired(function RegisterModal({ toClose }: RegisterModalProps) {
-  const { user } = useUser()
-
-  useEffect(() => {
-    //log the user's auth info
-    console.log("user", UserContext.displayName)
-    console.log("user", user)
-  }, [user])
   return (
     <Modal containerClassName="">
       <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between">

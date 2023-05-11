@@ -10,6 +10,7 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.1.0",
     "@auth0/nextjs-auth0": "^2.2.1",
     "@next/font": "13.1.6",
     "@types/node": "18.13.0",
