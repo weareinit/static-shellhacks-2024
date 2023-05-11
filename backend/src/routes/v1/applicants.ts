@@ -1,6 +1,6 @@
 import express from "express"
 import { Request, Response, NextFunction } from "express"
-import { prisma, auth0 } from "@src/index"
+import { prisma, auth0Management } from "@src/index"
 import { logger } from "@config/logger"
 import { z } from "zod"
 import { application_status_enums, Prisma } from "@prisma/client"
@@ -60,11 +60,12 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
   try {
     const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
 
-    auth0.database?.signUp(
+    auth0Management.createUser(
       {
         email: validatedApplicant.email,
-        password: crypto.randomBytes(32).toString("hex"),
         connection: "email",
+        verify_email: false,
+        email_verified: true,
       },
       async (err, authResult) => {
         if (err) {
@@ -76,7 +77,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 
         const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
           ...validatedApplicant,
-          auth0_id: authResult?._id as string,
+          auth0_id: authResult?.user_id as string,
           application_status: application_status_enums.registered,
           check_in_status: false,
         }
