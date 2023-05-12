@@ -17,6 +17,10 @@
   }
 }
 
+a {
+  @apply text-blue underline;
+}
+
 :root {
   --bg-tile-size: 60px;
 }
