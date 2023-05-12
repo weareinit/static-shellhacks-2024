@@ -1,11 +1,20 @@
-import React from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
-import Button from "../Button";
-import GrassLine from "../GrassLine";
-import BeachChairCollection from "../BeachChairCollection";
+import RegisterModal from "../registration/RegisterModal";
+import Image from "next/image";
+import Button from "../input/Button";
 
 function SandSection() {
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [showModal]);
+
   return (
     <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
       {/* <BeachChairCollection /> */}
@@ -16,11 +25,27 @@ function SandSection() {
           width={400}
           height={150}
         />
-        <h2 className="text-blue text-center font-inter">
+        <h2 className="text-blue text-center font-pixel text-lg m-2">
           {"Florida's Largest Hackathon"}
         </h2>
-        <Button text="Join the Waitlist!" className=" mt-3" />
+        <Button
+          className=""
+          onClick={(e) => {
+            e.preventDefault();
+            setShowModal((prev) => !prev);
+          }}
+        >
+          <h2>Register Now!</h2>
+        </Button>
       </article>
+      {showModal && (
+        <RegisterModal
+          toClose={(event) => {
+            event.preventDefault();
+            setShowModal(false);
+          }}
+        />
+      )}
     </section>
   );
 }

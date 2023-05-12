@@ -9,14 +9,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      deep_blue: "#4A73AC",
-      blue: "#006887",
-      white: "#FFF",
-    },
     extend: {
+      colors: {
+        deep_blue: "#4A73AC",
+        blue: "#006887",
+        white: "#FFF",
+      },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
+        pixel: ["De Pixel", "serif"],
       },
       rotate: {
         270: "270deg",
