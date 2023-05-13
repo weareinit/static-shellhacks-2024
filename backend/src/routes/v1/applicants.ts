@@ -47,7 +47,7 @@ router.put("/events/:eventId/application", auth(), async (req: Request, res: Res
     }
 
     const applicant = await prisma.hacker_Applications.update({ where: { email: auth0_email }, data: payload })
-    res.send(applicant).status(200)
+    res.send({ applicant }).status(200)
   } catch (e) {
     next(e)
   }
@@ -98,7 +98,7 @@ router.put("events/:eventId/applicants/:hackerId/applicationStatus", auth(), req
       data: { application_status },
     })
 
-    res.send(updatedApplicant).status(200)
+    res.send({ updatedApplicant }).status(200)
   } catch (e) {
     next(e)
   }
