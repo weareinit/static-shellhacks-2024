@@ -5,24 +5,7 @@ import { router } from "./routes/v1/index"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
 import { errorHandler } from "./middleware/errors"
-import { auth } from "express-oauth2-jwt-bearer"
 import { logger } from "@config/logger"
-
-// management.createUser(
-//   {
-//     connection: "email",
-//     // connection: "Username-Password-Authentication",
-//     email: "jschuster8765@outlook.com",
-//     //password: "jhghjghFSdHFD#$$#@#$@^$45334",
-//   },
-//   (err: any) => {
-//     if (err) {
-//       logger.error(err)
-//     } else {
-//       logger.info("User created")
-//     }
-//   }
-// )
 
 export const app = express()
 
@@ -70,6 +53,6 @@ app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Hello World" })
 })
 
-app.use("/api/v1", auth(), router) //require a valid JWT for all routes, ISSUER_BASE_URL and AUDIENCE are fetched from .env
+app.use("/api/v1", router)
 
 app.use(errorHandler)

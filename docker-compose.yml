@@ -12,5 +12,6 @@ services:
       context: ./backend
     ports:
       - ${PORT}:${PORT}
+      - 5555:5555
     env_file:
       - ./.env

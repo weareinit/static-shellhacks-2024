@@ -37,18 +37,18 @@ router.post("/createEmailTemplate", async (req: Request, res: Response, next: Ne
   }
 })
 
-router.post("/testEmail", async (req: Request, res: Response, next: NextFunction) => {
-  const payloadSchema = z.object({
-    recipient: z.string(),
-    firstName: z.string(),
-  })
+// router.post("/testEmail", async (req: Request, res: Response, next: NextFunction) => {
+//   const payloadSchema = z.object({
+//     recipient: z.string(),
+//     firstName: z.string(),
+//   })
 
-  try {
-    const { recipient, firstName } = payloadSchema.parse(req.body)
+//   try {
+//     const { recipient, firstName } = payloadSchema.parse(req.body)
 
-    const result = await sendConfirmationEmail(recipient, firstName)
-    res.status(200).send(result)
-  } catch (e) {
-    next(e)
-  }
-})
+//     const result = await sendConfirmationEmail(recipient, firstName)
+//     res.status(200).send(result)
+//   } catch (e) {
+//     next(e)
+//   }
+// })

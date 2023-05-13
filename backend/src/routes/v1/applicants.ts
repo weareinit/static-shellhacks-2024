@@ -3,19 +3,18 @@ import { Request, Response, NextFunction } from "express"
 import { prisma, auth0Management } from "@src/index"
 import { logger } from "@config/logger"
 import { z } from "zod"
-import { application_status_enums, Prisma } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
 import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
-import crypto from "crypto"
+import { auth } from "express-oauth2-jwt-bearer"
 
 export const router = express.Router()
 
-router.get("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/events/:eventId/application", auth(), async (req: Request, res: Response, next: NextFunction) => {
   //Get the application of the current user
   const auth: AuthResult = req.auth!
   const auth0_id = z.string().nonempty().parse(auth.payload.sub)
-  logger.info("AUTH0 ID: " + auth0_id)
 
   try {
     const applicant = await prisma.hacker_Applications.findUnique({ where: { auth0_id } })
@@ -25,7 +24,7 @@ router.get("/events/:eventId/application", async (req: Request, res: Response, n
   }
 })
 
-router.put("/events/:eventId/application", async (req: Request, res: Response, next: NextFunction) => {
+router.put("/events/:eventId/application", auth(), async (req: Request, res: Response, next: NextFunction) => {
   //Update the application of the current user according to the "payload" schema
   const auth: AuthResult = req.auth!
   const auth0_id = z.string().nonempty().parse(auth.payload.sub)
@@ -54,10 +53,7 @@ router.put("/events/:eventId/application", async (req: Request, res: Response, n
 })
 
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
-  //Add a new applicant to the DB (register)
-  const auth: AuthResult = req.auth!
-  auth.payload.sub = crypto.randomBytes(6).toString("hex")
-
+  //Note: creating an application does not require authentication
   try {
     const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
 
@@ -79,8 +75,6 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
         const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
           ...validatedApplicant,
           auth0_id: authResult?.user_id as string,
-          application_status: application_status_enums.registered,
-          check_in_status: false,
         }
 
         try {
@@ -98,7 +92,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
   }
 })
 
-router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+router.get("/events/:eventId/applicants", auth(), requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
   //Admin route to get info on one or many hackers
   try {
     const filters = applicantFiltersSchema.parse({ event_id: req.params.eventId, ...req.query })
@@ -115,7 +109,7 @@ router.get("/events/:eventId/applicants", requiredScopes("access:admin-routes"),
   }
 })
 
-router.put("events/:eventId/applicants/:hackerId/applicationStatus", requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+router.put("events/:eventId/applicants/:hackerId/applicationStatus", auth(), requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
   //Admin route to update the app status of a hacker (add to wave, remove from wave, etc.)
   try {
     const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({ event_id: req.params.eventId, hacker_id: req.params.hackerId, ...req.body })
