@@ -22,7 +22,6 @@ model Events {
 
 model Hacker_Applications {
   hacker_id          Int                      @id @default(autoincrement())
-  auth0_id           String                   @unique @db.VarChar(50)
   event_id           Int
   // BASIC IFO
   first_name         String                   @db.VarChar(50)
@@ -30,23 +29,23 @@ model Hacker_Applications {
   age                Int
   school             String                   @db.VarChar(250)
   major              String                   @db.VarChar(50)
-  grad_year Int 
+  grad_year          Int
   level_of_study     String                   @db.VarChar(15)
   country            String                   @db.VarChar(50)
   // SOCIALS
   email              String                   @unique @db.VarChar(60)
   phone_number       String                   @db.VarChar(20)
   resume_path        String                   @db.VarChar(250)
-  discord            String?                   @db.VarChar(50)
+  discord            String?                  @db.VarChar(50)
   github             String?                  @db.VarChar(75)
   linkedin           String?                  @db.VarChar(75)
   // DEMOGRAPHIC INFO
   is_international   Boolean
   gender             String                   @db.VarChar(50)
-  pronouns String @db.VarChar(10)
+  pronouns           String                   @db.VarChar(10)
   ethnicity          String                   @db.VarChar(50)
   // STATUS
-  agreed_mlh_news Boolean
+  agreed_mlh_news    Boolean
   application_status application_status_enums @default(registered)
   check_in_status    Boolean                  @default(false)
   event              Events                   @relation(fields: [event_id], references: [event_id])

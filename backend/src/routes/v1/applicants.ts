@@ -59,7 +59,6 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
 
   const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
     ...validatedApplicant,
-    auth0_id: "test", //auth0_id: authResult?.user_id as string,
   }
 
   try {
