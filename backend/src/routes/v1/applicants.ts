@@ -1,6 +1,6 @@
 import express from "express"
 import { Request, Response, NextFunction } from "express"
-import { prisma, auth0Management } from "@src/index"
+import { prisma } from "@src/index"
 import { logger } from "@config/logger"
 import { z } from "zod"
 import { Prisma } from "@prisma/client"
@@ -14,11 +14,12 @@ export const router = express.Router()
 router.get("/events/:eventId/application", auth(), async (req: Request, res: Response, next: NextFunction) => {
   //Get the application of the current user
   const auth: AuthResult = req.auth!
-  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+  const auth0_email = z.string().email().parse(auth.payload.email)
+  logger.info(`User ${auth0_email} is getting their application`)
 
   try {
-    const applicant = await prisma.hacker_Applications.findUnique({ where: { auth0_id } })
-    res.send(applicant).status(200)
+    const applicant = await prisma.hacker_Applications.findUnique({ where: { email: auth0_email } })
+    res.send({ applicant }).status(200)
   } catch (e) {
     next(e)
   }
@@ -27,7 +28,7 @@ router.get("/events/:eventId/application", auth(), async (req: Request, res: Res
 router.put("/events/:eventId/application", auth(), async (req: Request, res: Response, next: NextFunction) => {
   //Update the application of the current user according to the "payload" schema
   const auth: AuthResult = req.auth!
-  const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+  const auth0_email = z.string().email().parse(auth.payload.email)
   const payload = applicantUpdateSchema.parse(req.body)
 
   try {
@@ -35,7 +36,7 @@ router.put("/events/:eventId/application", auth(), async (req: Request, res: Res
       //if the user is changing their resume, delete the old one from s3
       const oldResumePath = await prisma.hacker_Applications.findUnique({
         where: {
-          auth0_id,
+          email: auth0_email,
         },
         select: {
           resume_path: true,
@@ -45,7 +46,7 @@ router.put("/events/:eventId/application", auth(), async (req: Request, res: Res
       await deleteResume(oldResumePath?.resume_path as string)
     }
 
-    const applicant = await prisma.hacker_Applications.update({ where: { auth0_id }, data: payload })
+    const applicant = await prisma.hacker_Applications.update({ where: { email: auth0_email }, data: payload })
     res.send(applicant).status(200)
   } catch (e) {
     next(e)
@@ -54,41 +55,20 @@ router.put("/events/:eventId/application", auth(), async (req: Request, res: Res
 
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   //Note: creating an application does not require authentication
+  const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
+
+  const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
+    ...validatedApplicant,
+    auth0_id: "test", //auth0_id: authResult?.user_id as string,
+  }
+
   try {
-    const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
+    const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
 
-    auth0Management.createUser(
-      {
-        email: validatedApplicant.email,
-        connection: "email",
-        verify_email: false,
-        email_verified: true,
-      },
-      async (err, authResult) => {
-        if (err) {
-          logger.error("Unable to create auth0 account")
-          next(err)
-        }
-
-        logger.info("User created")
-
-        const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
-          ...validatedApplicant,
-          auth0_id: authResult?.user_id as string,
-        }
-
-        try {
-          const applicant = await prisma.hacker_Applications.create({ data: newApplicant })
-          const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name)
-
-          res.send({ applicant: applicant, auth0: authResult }).status(200)
-        } catch (err) {
-          next(err)
-        }
-      }
-    )
-  } catch (e) {
-    next(e)
+    res.send({ applicant }).status(200)
+  } catch (err) {
+    next(err)
   }
 })
 

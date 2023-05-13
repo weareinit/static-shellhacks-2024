@@ -22,9 +22,9 @@ router.post("/resumes", async (req: Request, res: Response, next: NextFunction) 
 router.get("/resumes/myResume", auth(), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const auth: AuthResult = req.auth!
-    const auth0_id = z.string().nonempty().parse(auth.payload.sub)
+    const auth0_email = z.string().email().parse(auth.payload.email)
 
-    const resumeId = await prisma.hacker_Applications.findUnique({ where: { auth0_id }, select: { resume_path: true } })
+    const resumeId = await prisma.hacker_Applications.findUnique({ where: { email: auth0_email }, select: { resume_path: true } })
     const url: string = await generateSignedResumeUrl(resumeId?.resume_path as string)
     res.status(200).send({ url })
   } catch (error) {
