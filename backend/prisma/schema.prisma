@@ -34,7 +34,7 @@ model Hacker_Applications {
   is_international   Boolean
   phone_number       String                   @db.VarChar(20)
   race               String                   @db.VarChar(50)
-  dob                DateTime                 @db.Date
+  dob                Int
   major              String                   @db.VarChar(50)
   school             String                   @db.VarChar(250)
   resume_path        String                   @db.VarChar(250)
