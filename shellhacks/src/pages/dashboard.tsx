@@ -1,5 +1,6 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
 import { useQuery } from "react-query"
+import Link from "next/link"
 
 const getapplicant = async () => {
   const response = await fetch("http://localhost:3000/api/getApplication", {
@@ -77,10 +78,21 @@ const HackerProfile = () => {
   )
 }
 
+const LogoutButton = () => {
+  return (
+    <div className="flex justify-end mt-4">
+      <Link href="/api/auth/logout">
+        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
+      </Link>
+    </div>
+  )
+}
+
 export default withPageAuthRequired(function Dashboard() {
   return (
     <main className="bg-sand min-h-screen p-5">
       <HackerProfile />
+      <LogoutButton />
     </main>
   )
 })
