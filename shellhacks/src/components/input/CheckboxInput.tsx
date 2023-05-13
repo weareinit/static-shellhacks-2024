@@ -7,7 +7,7 @@ import Error from "./Error";
 
 interface CheckboxInputPropTypes
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label: React.ReactNode;
   name: string;
   hasInter?: boolean;
   isRequired?: boolean;
@@ -23,7 +23,7 @@ function CheckboxInput({
   return (
     <>
       <Label className="w-fit h-fit flex flex-col" hasInter={hasInter}>
-        {isRequired ? `*${label}` : label}
+        {label}
         <input {...field} {...props} type="checkbox" className=" sr-only" />
         <div
           className={`w-5 h-5 ${meta.value === false ? "bg-white" : "bg-blue"}`}

@@ -244,14 +244,42 @@ function RegisterForm() {
             partnering with MLH, your information will not be shared.
           </h2>
           <CheckboxInput
-            label="I have read and agree to the MLH Code of Conduct. (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)"
+            label={
+              <h2>
+                I have read and agree to the MLH Code of Conduct.
+                <a
+                  target="_blank"
+                  href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+                >
+                  (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)
+                </a>
+              </h2>
+            }
             name="agreedMLHConduct"
             hasInter
             isRequired
           />
           <CheckboxInput
-            label="I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy (https://mlh.io/privacy).
-          I further agree to the terms of both the MLH Contest Terms and Conditions (https://github.com/MLH/mlh-policies/blob/main/contest-terms.md) and the MLH Privacy Policy (https://mlh.io/privacy)."
+            label={
+              <h2>
+                I authorize you to share my application/registration information
+                with Major League Hacking for event administration, ranking, and
+                MLH administration in-line with the MLH Privacy Policy
+                (https://mlh.io/privacy). I further agree to the terms of both
+                the MLH Contest Terms and Conditions (
+                <a
+                  target="_blank"
+                  href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                >
+                  https://github.com/MLH/mlh-policies/blob/main/contest-terms.md
+                </a>
+                ) and the MLH Privacy Policy (
+                <a target="_blank" href="https://mlh.io/privacy">
+                  https://mlh.io/privacy
+                </a>
+                ).
+              </h2>
+            }
             name="agreedMLHPrivacy"
             hasInter
             isRequired
