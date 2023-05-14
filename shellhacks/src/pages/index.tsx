@@ -1,5 +1,6 @@
 import { parseCSV } from "@/util/parseCSV";
 import { FormOptionContextProvider } from "@/hooks/FormOptionContext";
+import { ShowRegistrationProvider } from "@/hooks/ShowRegistrationContext";
 import SandSection from "@/components/sections/SandSection";
 import ShorelineSection from "@/components/sections/ShorelineSection";
 import GrassLine from "@/components/GrassLine";
@@ -13,9 +14,11 @@ export default function Home({ schools, countries }: HomeProps) {
   return (
     <main className="bg-sand min-h-screen grid grid-cols-1 md:grid-cols-9">
       <ShorelineSection />
-      <FormOptionContextProvider schools={schools} countries={countries}>
-        <SandSection />
-      </FormOptionContextProvider>
+      <ShowRegistrationProvider>
+        <FormOptionContextProvider schools={schools} countries={countries}>
+          <SandSection />
+        </FormOptionContextProvider>
+      </ShowRegistrationProvider>
       <GrassLine />
     </main>
   );
