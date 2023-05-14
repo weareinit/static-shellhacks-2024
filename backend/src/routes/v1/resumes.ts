@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express"
-import { generateSignedResumeUrl } from "@src/utils/aws"
+import { generateSignedResumeUploadUrl, generateSignedResumeUrl } from "@src/utils/aws"
 import { z } from "zod"
 import crypto from "crypto"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
@@ -12,7 +12,7 @@ router.post("/resumes", async (req: Request, res: Response, next: NextFunction) 
   //Note: creating a resume does not require authentication, because it is done alongside the application
   try {
     const resumeId = crypto.randomBytes(16).toString("hex") //generate unique resume name for each user
-    const url: string = await generateSignedResumeUrl(resumeId)
+    const url: string = await generateSignedResumeUploadUrl(resumeId)
     res.status(200).send({ resumeId, url })
   } catch (error) {
     next(error)
