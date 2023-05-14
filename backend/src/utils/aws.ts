@@ -6,7 +6,7 @@ import { logger } from "@config/logger"
 
 export const generateSignedResumeUploadUrl = async (resumeId: string) => {
   logger.info(`Generating signed url for resume ${resumeId}`)
-  const params: PutObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId + ".pdf" }
+  const params: PutObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId, ContentType: "application/pdf" }
   const command = new PutObjectCommand(params)
   return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 })
 }
