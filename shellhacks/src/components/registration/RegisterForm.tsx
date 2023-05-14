@@ -2,6 +2,7 @@ import React from "react";
 
 import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
+import { useQuery } from "react-query";
 
 import { useFormOptionContext } from "@/hooks/FormOptionContext";
 import {
@@ -19,55 +20,55 @@ import FileInput from "../input/FileInput";
 
 function RegisterForm() {
   interface Values {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     age: number;
     school: string;
     major: string;
     gradYear: string;
-    levelOfStudy: string;
+    level_of_study: string;
     country: string;
     // SOCIALS / CONTACTS
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     resume: File;
     discord: string;
     github: string;
     linkedin: string;
     // DEMOGRAPHICS
-    isInternational: boolean;
+    is_international: boolean;
     gender: string;
     pronouns: string;
-    fillInPronouns: string;
+    fill_in_pronouns: string;
     ethnicity: string;
     // MLH QUESTIONS
-    agreedMLHConduct: boolean;
-    agreedMLHPrivacy: boolean;
-    agreedMLHNews: boolean;
+    agreed_mlh_conduct: boolean;
+    agreed_mlh_privacy: boolean;
+    agreed_mlh_news: boolean;
   }
 
   const formValidation = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
+    first_name: Yup.string().required("First Name is required"),
+    last_name: Yup.string().required("Last Name is required"),
     age: Yup.number()
       .required("Age is required")
       .min(18, "You must be at least 18 to compete.")
       .max(114, "114 is the age of the oldest person on Earth..."),
     school: Yup.string().required("School is required"),
     major: Yup.string().required("Major is required"),
-    gradYear: Yup.number()
+    grad_year: Yup.number()
       .required("Graduation Year is required")
       .min(2022, "Minimum graduation year to participate is 2022.")
       .max(2030, "Maximum graduation year to participate is 2030."),
-    levelOfStudy: Yup.string().required("Level of Study is required"),
+    level_of_study: Yup.string().required("Level of Study is required"),
     country: Yup.string().required("Country is requiured"),
     // SOCIALS / CONTACTS
     email: Yup.string()
       .email("Email is not formmated correctly")
       .required("Email is required"),
-    phoneNumber: Yup.string()
+    phone_number: Yup.string()
       .matches(
-        /^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$/,
+        /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
         "Invalid phone number format"
       )
       .required("Phone Number is required"),
@@ -96,68 +97,118 @@ function RegisterForm() {
           }
         }
       }),
-    discord: Yup.string().url(),
+    discord: Yup.string(),
     github: Yup.string().url(),
     linkedin: Yup.string().url(),
     // DEMOGRAPHICS
-    isInternational: Yup.boolean(),
+    is_international: Yup.boolean(),
     gender: Yup.string(),
     pronouns: Yup.string(),
-    fillInPronouns: Yup.string(),
+    fill_in_pronouns: Yup.string(),
     ethnicity: Yup.string().required("Ethnicity is a required field"),
     // MLH Questions
-    agreedMLHPrivacy: Yup.boolean().oneOf([true], "Must Be Checked"),
-    agreedMLHConduct: Yup.boolean().oneOf([true], "Must Be Checked"),
-    agreedMLHNews: Yup.boolean(),
+    agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
+    agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
+    agreed_mlh_news: Yup.boolean(),
   });
 
   const { schools, countries } = useFormOptionContext();
+
+  async function getResumeLink() {
+    const response = await fetch("http://localhost:8000/api/v1/resumes", {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error("Error Fetching Resume Link");
+    }
+
+    return response.json();
+  }
+
+  async function uploadResume(resume: File, url: string) {
+    const response = await fetch(url, {
+      method: "POST",
+      body: resume,
+      headers: {
+        "Content-Type": "file",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error Uploading Resume");
+    }
+
+    return response.json();
+  }
 
   return (
     <Formik
       validateOnChange
       validationSchema={formValidation}
       initialValues={{
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         age: 18,
         school: "",
         major: "",
         gradYear: "",
-        levelOfStudy: "",
+        level_of_study: "",
         country: "United States of America",
         // SOCIALS / CONTACTS
         email: "",
-        phoneNumber: "",
+        phone_number: "",
         resume: new File([], ""),
         discord: "",
         github: "",
         linkedin: "",
         // DEMOGRAPHICS
-        isInternational: false,
+        is_international: false,
         gender: "",
         pronouns: "",
-        fillInPronouns: "",
+        fill_in_pronouns: "",
         ethnicity: "",
         // MLH QUESTIONS
-        agreedMLHConduct: false,
-        agreedMLHNews: false,
-        agreedMLHPrivacy: false,
+        agreed_mlh_conduct: false,
+        agreed_mlh_news: false,
+        agreed_mlh_privacy: false,
       }}
-      onSubmit={(values) => {
-        console.log(values);
-        return;
+      onSubmit={async (values) => {
+        let { resume, fill_in_pronouns, ...body } = values;
+
+        // TODO: Handle errors
+        const { resumeId, url } = await getResumeLink();
+
+        console.log(resumeId, url);
+
+        // TODO: Handle errors
+        await uploadResume(resume, url);
+
+        // body.pronouns =
+        //   values.pronouns === "Other"
+        //     ? values.fill_in_pronouns
+        //     : values.pronouns;
+
+        // await fetch("backend:8000/api/v1/events/1/applicant", {
+        //   method: "POST",
+        //   body: JSON.stringify(body),
+        // });
       }}
     >
       {(props: FormikProps<Values>) => (
         <Form className="grid gap-3 my-2">
           <TextInput
             label="First Name"
-            name="firstName"
+            name="first_name"
             type="text"
             isRequired
           />
-          <TextInput label="Last Name" name="lastName" type="text" isRequired />
+          <TextInput
+            label="Last Name"
+            name="last_name"
+            type="text"
+            isRequired
+          />
           <TextInput
             label="Age"
             name="age"
@@ -181,7 +232,7 @@ function RegisterForm() {
 
           <TextInput
             label="Graduation Year"
-            name="gradYear"
+            name="grad_year"
             type="number"
             min={2023}
             max={2033}
@@ -190,7 +241,7 @@ function RegisterForm() {
 
           <SelectInput
             label="Level of Study"
-            name="levelOfStudy"
+            name="level_of_study"
             options={levelsOfStudy}
             isRequired
           />
@@ -206,7 +257,7 @@ function RegisterForm() {
           <TextInput label="Email" name="email" type="email" isRequired />
           <TextInput
             label="Phone Number"
-            name="phoneNumber"
+            name="phone_number"
             type="tel"
             isRequired
           />
@@ -216,7 +267,7 @@ function RegisterForm() {
           <TextInput label="LinkedIn" name="linkedin" type="text" />
           <CheckboxInput
             label="Check if you are an international student"
-            name="isInternational"
+            name="is_international"
           />
 
           <SelectInput label="Gender" name="gender" options={genderOptions} />
@@ -228,7 +279,7 @@ function RegisterForm() {
           {props.values.pronouns === "Other" && (
             <TextInput
               label="Fill in your pronouns here"
-              name="fillInPronouns"
+              name="fill_in_pronouns"
               type="text"
             />
           )}
@@ -255,7 +306,7 @@ function RegisterForm() {
                 </a>
               </h2>
             }
-            name="agreedMLHConduct"
+            name="agreed_mlh_conduct"
             hasInter
             isRequired
           />
@@ -280,13 +331,13 @@ function RegisterForm() {
                 ).
               </h2>
             }
-            name="agreedMLHPrivacy"
+            name="agreed_mlh_privacy"
             hasInter
             isRequired
           />
           <CheckboxInput
             label="I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements."
-            name="agreedMLHNews"
+            name="agreed_mlh_news"
             hasInter
           />
           <Button type="submit">Submit</Button>
