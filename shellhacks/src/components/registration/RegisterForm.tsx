@@ -118,7 +118,7 @@ function RegisterForm() {
       throw new Error("Error Uploading Resume")
     }
 
-    return response.json()
+    return response
   }
 
   return (
@@ -161,17 +161,24 @@ function RegisterForm() {
         console.log(resumeId, url)
 
         // TODO: Handle errors
-        await uploadResume(resume, url)
+        const resume_res = await uploadResume(resume, url)
+        console.log(resume_res)
 
-        // body.pronouns =
-        //   values.pronouns === "Other"
-        //     ? values.fill_in_pronouns
-        //     : values.pronouns;
+        body.pronouns = values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns
+        console.log({ ...body, resume_path: resumeId })
+        const filteredBody = Object.fromEntries(Object.entries(body).filter(([_, value]) => value !== ""))
 
-        // await fetch("backend:8000/api/v1/events/1/applicant", {
-        //   method: "POST",
-        //   body: JSON.stringify(body),
-        // });
+        const data = await fetch("http://localhost:8000/api/v1/events/1/applicants", {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ ...filteredBody, resume_path: resumeId }),
+        })
+        console.log(data)
+        const json = await data.json()
+        console.log(json)
       }}
     >
       {(props: FormikProps<Values>) => (
