@@ -5,7 +5,6 @@ import { PrismaClient } from "@prisma/client"
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3"
 import { SESClient } from "@aws-sdk/client-ses"
 import { envSchema } from "@src/schemas/envSchema"
-import { hostname } from "os"
 
 dotenv.config({ path: "../../.env" })
 envSchema.parse(process.env) // Validate environment variables
@@ -23,7 +22,7 @@ const s3Configuration: S3ClientConfig = {
   },
   region: process.env.AWS_REGION!,
 }
-logger.info(`Creating S3 client with configuration: ${JSON.stringify(s3Configuration)}`)
+//logger.info(`Creating S3 client with configuration: ${JSON.stringify(s3Configuration)}`)
 
 export const s3Client = new S3Client(s3Configuration)
 export const emailClient = new SESClient({})
