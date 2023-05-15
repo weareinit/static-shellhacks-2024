@@ -1,12 +1,21 @@
 import { s3Client, emailClient } from "@src/index"
-import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3"
+import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, GetObjectCommandInput } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { SendTemplatedEmailCommand, CreateTemplateCommand, type SendTemplatedEmailCommandInput, CreateTemplateCommandInput } from "@aws-sdk/client-ses"
+import { logger } from "@config/logger"
+
+export const generateSignedResumeUploadUrl = async (resumeId: string) => {
+  logger.info(`Generating signed url for resume ${resumeId}`)
+  const params: PutObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId, ContentType: "application/pdf" }
+  const command = new PutObjectCommand(params)
+  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 })
+}
 
 export const generateSignedResumeUrl = async (resumeId: string) => {
-  const params: PutObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId }
-  const command = new PutObjectCommand(params)
-  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 60 * 3 })
+  logger.info(`Generating signed url for resume ${resumeId}`)
+  const params: GetObjectCommandInput = { Bucket: process.env.AWS_BUCKET_NAME!, Key: resumeId }
+  const command = new GetObjectCommand(params)
+  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 })
 }
 
 export const deleteResume = async (resumeId: string) => {
@@ -22,7 +31,7 @@ export const sendConfirmationEmail = async (toEmail: string, firstName: string) 
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "ConfirmationEmail",
+    Template: "confirmationEmail1",
     TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
   }
 

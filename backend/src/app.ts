@@ -5,7 +5,7 @@ import { router } from "./routes/v1/index"
 import helmet from "helmet"
 import { rateLimiter } from "./middleware/ratelimiter"
 import { errorHandler } from "./middleware/errors"
-import { auth } from "express-oauth2-jwt-bearer"
+import { logger } from "@config/logger"
 
 export const app = express()
 
@@ -53,6 +53,6 @@ app.get("/", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Hello World" })
 })
 
-app.use("/api/v1", auth(), router) //require a valid JWT for all routes, ISSUER_BASE_URL and AUDIENCE are fetched from .env
+app.use("/api/v1", router)
 
 app.use(errorHandler)

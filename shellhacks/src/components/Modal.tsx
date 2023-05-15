@@ -5,17 +5,23 @@ interface ModalPropsType {
   children?: React.ReactNode;
   onBgClick?: React.MouseEventHandler<HTMLDivElement>;
   containerClassName?: string;
+  backgroundClassName?: string;
 }
 
-function Modal({ children, containerClassName, onBgClick }: ModalPropsType) {
+function Modal({
+  children,
+  containerClassName,
+  onBgClick,
+  backgroundClassName,
+}: ModalPropsType) {
   let modal = (
     <div
       onClick={onBgClick}
       id="modal-background"
-      className="fixed top-0 left-0 grid content-center justify-center w-screen h-screen bg-black bg-opacity-20 z-10 backdrop-blur-sm"
+      className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 backdrop-blur-sm ${backgroundClassName}`}
     >
       <aside
-        className={`p-2 bg-white/50 border-blue rounded-md w-screen h-screen overflow-scroll z-20 border-2 ${containerClassName}`}
+        className={`p-2 bg-white/50 border-blue rounded-md overflow-scroll border-2 ${containerClassName}`}
       >
         {children}
       </aside>

@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   shellhacks:
+    networks:
+      - shellnetwork
     container_name: shellhacks
     build:
       context: ./shellhacks
@@ -9,10 +11,17 @@ services:
     env_file:
       - ./.env
   backend:
+    networks:
+      - shellnetwork
     container_name: backend
     build:
       context: ./backend
     ports:
       - ${PORT}:${PORT}
+      - 5555:5555
     env_file:
       - ./.env
+
+networks:
+  shellnetwork:
+    driver: bridge

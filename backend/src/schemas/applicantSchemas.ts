@@ -3,9 +3,12 @@ import { z } from "zod"
 export const applicantUpdateSchema = z.object({
   resume_path: z.string().optional(),
   application_status: z.literal("withdrawn").optional(),
-  phone: z.string().optional(),
-  github: z.string().optional(),
-  linkedin: z.string().optional(),
+  phone: z
+    .string()
+    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
+    .optional(),
+  github: z.string().url().optional(),
+  linkedin: z.string().url().optional(),
 })
 
 export const applicantStatusChangeSchema = z.object({
@@ -22,26 +25,24 @@ export const applicantFiltersSchema = z.object({
 })
 
 export const newApplicantSchema = z.object({
-  auth0_id: z.string().nonempty(),
   event_id: z.string().regex(/^\d+$/).transform(Number),
   first_name: z.string().nonempty(),
   last_name: z.string().nonempty(),
-  email: z.string().email(),
-  discord: z.string().nonempty(), //TODO: add some regex parsing
-  gender: z.string().nonempty(),
-  ethnicity: z.string().nonempty(),
-  race: z.string().nonempty(),
-  country: z.string().nonempty(),
-  is_international: z.boolean(),
-  phone_number: z.string().nonempty(),
-  dob: z.date(),
-  major: z.string(),
+  age: z.number().int().positive(),
   school: z.string(),
-  resume_path: z.string().url(),
-  github: z.string()?.url(),
-  linkedin: z.string()?.url(),
+  major: z.string(),
+  grad_year: z.number().int().positive(),
   level_of_study: z.string(),
-  interest_response: z.string(),
-  email_message_status: z.boolean(),
-  developer_role: z.string(),
+  country: z.string().nonempty(),
+  email: z.string().email(),
+  phone_number: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number"),
+  resume_path: z.string(),
+  discord: z.string().optional(),
+  github: z.string().url().optional(),
+  linkedin: z.string().url().optional(),
+  is_international: z.boolean(),
+  gender: z.string().nonempty(),
+  pronouns: z.string().nonempty(),
+  ethnicity: z.string().nonempty(),
+  agreed_mlh_news: z.boolean(),
 })
