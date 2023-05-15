@@ -56,7 +56,6 @@ router.put("/events/:eventId/application", auth(), async (req: Request, res: Res
 router.post("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   //Note: creating an application does not require authentication
   try {
-    console.log(req.body)
     const validatedApplicant = newApplicantSchema.parse({ event_id: req.params.eventId, ...req.body })
 
     const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
