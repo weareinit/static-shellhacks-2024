@@ -228,12 +228,6 @@ function RegisterForm() {
               options={ethnicityOptions}
               isRequired
             />
-
-            <h2 className=" font-pixel text-lg font-black underline mt-2">
-              We are currently in the process of partnering with MLH. The
-              following 3 checkboxes are for this partnership. If we do not end
-              up partnering with MLH, your information will not be shared.
-            </h2>
             <CheckboxInput
               label={
                 <h2>
