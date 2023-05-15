@@ -27,9 +27,12 @@ function RegisterForm() {
     useShowRegistrationContext();
 
   async function getResumeLink() {
-    const response = await fetch("http://localhost:8000/api/v1/resumes", {
-      method: "POST",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/resumes`,
+      {
+        method: "POST",
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Error Fetching Resume Link");
@@ -60,7 +63,7 @@ function RegisterForm() {
     );
 
     const response = await fetch(
-      "http://localhost:8000/api/v1/events/1/applicants",
+      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/events/1/applicants`,
       {
         headers: {
           Accept: "application/json",
