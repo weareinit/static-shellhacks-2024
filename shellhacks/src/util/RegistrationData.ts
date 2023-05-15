@@ -152,7 +152,7 @@ export const formValidation = Yup.object().shape({
           return true;
         } else {
           return new Yup.ValidationError(
-            "Unsupported File Format",
+            "Unsupported file format, only .pdf is supported",
             value,
             "resume"
           );
