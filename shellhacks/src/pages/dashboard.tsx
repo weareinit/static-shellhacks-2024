@@ -1,6 +1,6 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0/client"
-import { useQuery } from "react-query"
-import Link from "next/link"
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import { useQuery } from "react-query";
+import Link from "next/link";
 
 const getapplicant = async () => {
   const response = await fetch("http://localhost:3000/api/getApplication", {
@@ -8,43 +8,45 @@ const getapplicant = async () => {
     headers: {
       "Content-Type": "applicant/json",
     },
-  })
+  });
 
   if (!response.ok) {
-    throw new Error("Error fetching applicant")
+    throw new Error("Error fetching applicant");
   }
 
-  return response.json()
-}
+  return response.json();
+};
 
 const HackerProfile = () => {
-  const { data, isLoading, error } = useQuery("applicant", getapplicant)
-  const applicantData = data?.applicant
+  const { data, isLoading, error } = useQuery("applicant", getapplicant);
+  const applicantData = data?.applicant;
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
 
   if (!applicantData || error) {
     return (
       <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
-        <p>Please login using the same account you used when registering for this event.</p>
+        <h1 className="text-xl font-bold mb-4">
+          You need to login to a different account
+        </h1>
+        <p>
+          Please login using the same account you used when registering for this
+          event.
+        </p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-      <h1 className="text-xl font-bold mb-4">
+      <h1 className="text-xl mb-4 font-pixel">
         Application for {applicantData.first_name} {applicantData.last_name}
       </h1>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h2 className="text-lg font-medium mb-2">Personal Information</h2>
-          <p>Hacker ID: {applicantData.hacker_id}</p>
-          <p>Auth0 ID: {applicantData.auth0_id}</p>
-          <p>Event ID: {applicantData.event_id}</p>
           <p>Age: {applicantData.age}</p>
           <p>Country: {applicantData.country}</p>
           <p>Gender: {applicantData.gender}</p>
@@ -70,23 +72,29 @@ const HackerProfile = () => {
       </div>
       <div className="mt-4">
         <h2 className="text-lg font-medium mb-2">Additional Information</h2>
-        <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
-        <p>applicantData Status: {applicantData.applicantData_status}</p>
-        <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
+        <p>
+          Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}
+        </p>
+        <p>
+          Check-In Status:{" "}
+          {applicantData.check_in_status ? "Checked in" : "Not checked in"}
+        </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const LogoutButton = () => {
   return (
     <div className="flex justify-end mt-4">
       <Link href="/api/auth/logout">
-        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
+        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
+          Logout
+        </button>
       </Link>
     </div>
-  )
-}
+  );
+};
 
 export default withPageAuthRequired(function Dashboard() {
   return (
@@ -94,5 +102,5 @@ export default withPageAuthRequired(function Dashboard() {
       <HackerProfile />
       <LogoutButton />
     </main>
-  )
-})
+  );
+});
