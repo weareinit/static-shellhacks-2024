@@ -223,6 +223,7 @@ function RegisterForm() {
               label="Ethnicity"
               name="ethnicity"
               options={ethnicityOptions}
+              isRequired
             />
 
             <h2 className=" font-pixel text-lg font-black underline mt-2">
