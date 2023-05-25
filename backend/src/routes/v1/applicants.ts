@@ -7,6 +7,7 @@ import { Prisma } from "@prisma/client"
 import { requiredScopes, type AuthResult } from "express-oauth2-jwt-bearer"
 import { applicantStatusChangeSchema, newApplicantSchema, applicantFiltersSchema, applicantUpdateSchema } from "@src/schemas/applicantSchemas"
 import { deleteResume, sendConfirmationEmail } from "@src/utils/aws"
+import generateApplicantCSV from "@src/utils/generateApplicantCSV"
 import { auth } from "express-oauth2-jwt-bearer"
 
 export const router = express.Router()
@@ -82,7 +83,16 @@ router.get("/events/:eventId/applicants", auth(), requiredScopes("access:admin-r
       },
     })
 
-    res.send(filteredApplicants).status(200)
+    if (req.accepts("text/csv")) {
+      //export the csv of applicant data
+      const csvData = await generateApplicantCSV(filteredApplicants)
+      res.setHeader("Content-Type", "text/csv")
+      res.setHeader("Content-Disposition", "attachment; filename=applicants.csv")
+      res.status(200).send(csvData)
+    } else {
+      //otherwise, return the data as JSON
+      res.status(200).send(filteredApplicants)
+    }
   } catch (e) {
     next(e)
   }
