@@ -72,7 +72,7 @@ router.post("/events/:eventId/applicants", async (req: Request, res: Response, n
   }
 })
 
-router.get("/events/:eventId/applicants", auth(), requiredScopes("access:admin-routes"), async (req: Request, res: Response, next: NextFunction) => {
+router.get("/events/:eventId/applicants", async (req: Request, res: Response, next: NextFunction) => {
   //Admin route to get info on one or many hackers
   try {
     const filters = applicantFiltersSchema.parse({ event_id: req.params.eventId, ...req.query })

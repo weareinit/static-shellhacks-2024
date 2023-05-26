@@ -3,7 +3,7 @@ import { generateSignedResumeUrl } from "./aws"
 import { json2csv } from "json-2-csv"
 
 export default async function generateApplicantCSV(data: Prisma.Hacker_Applications[]) {
-  const applicantsWithResume: (Prisma.Hacker_Applications & { resume_url: string })[] = []
+  const applicantsWithResume: Array<Prisma.Hacker_Applications & { resume_url: string }> = []
 
   for (const applicant of data) {
     applicantsWithResume.push({
