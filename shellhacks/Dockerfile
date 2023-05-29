@@ -1,31 +1,26 @@
-FROM node:19.4-alpine AS base
+FROM --platform=linux/amd64 node:19.4-alpine 
 
 WORKDIR /shellhacks
 
 COPY package*.json ./
 
-FROM base as dev
+ENV NODE_ENV production
+ENV FRONTEND_PORT 3000
 
 RUN --mount=type=cache,target=/shellhacks/.npm \
     npm set cache /shellhacks/.npm && \
-    npm install
+    npm ci --only=production
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+# Copy the deploy.sh file and ensure it has execute permissions
+COPY deploy.sh /shellhacks/
+RUN chmod +x /shellhacks/deploy.sh
 
-FROM base as production
+RUN npx tailwindcss -o build.css --minify
 
-ENV NODE_ENV production
+EXPOSE 3000
 
-RUN --mount=type=cache,target=/shellhacks/.npm \
-    npm set cache /shellhacks/.npm && \
-    npm ci --onlny=production
+RUN npm run build
 
-USER node
-
-COPY --chown=node:node ./src/ .
-
-EXPOSE $FRONTEND_PORT
-
-CMD ["./deploy.sh"]
+ENTRYPOINT ["npm", "run", "start"]
