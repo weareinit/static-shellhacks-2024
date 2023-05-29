@@ -2,7 +2,7 @@ version: "3.9"
 services:
   shellhacks:
     networks:
-      - shellnetwork
+      - shell_network
     container_name: shellhacks
     build:
       context: ./shellhacks
@@ -12,7 +12,7 @@ services:
       - ./.env
   backend:
     networks:
-      - shellnetwork
+      - shell_network
     container_name: backend
     build:
       context: ./backend
@@ -23,5 +23,5 @@ services:
       - ./.env
 
 networks:
-  shellnetwork:
+  shell_network:
     driver: bridge
