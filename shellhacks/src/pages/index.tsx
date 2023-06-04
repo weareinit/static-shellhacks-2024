@@ -14,7 +14,7 @@ interface HomeProps {
 export default function Home({ schools, countries }: HomeProps) {
   return (
     <main className="bg-sand min-h-screen grid grid-cols-1 md:grid-cols-9">
-      <Image src="/assets/mlh-trust-badge-white-2024.png" width={75} height={75} className="md:col-span-2 absolute top-4 left-4" alt="Major League Hacking 2024 Hackathon Season" />
+      <Image src="/assets/mlh-trust-badge-white-2024.png" width={75} height={75} className="md:col-span-2 absolute top-0 left-4" alt="Major League Hacking 2024 Hackathon Season" />
       <ShorelineSection />
       <ShowRegistrationProvider>
         <FormOptionContextProvider schools={schools} countries={countries}>
