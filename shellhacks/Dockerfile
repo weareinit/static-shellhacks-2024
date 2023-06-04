@@ -1,7 +1,24 @@
-FROM --platform=linux/amd64 node:19.4-alpine 
+# Development Image
+FROM node:19.4-alpine AS Development
 
 WORKDIR /shellhacks
+COPY package*.json ./
 
+ENV NODE_ENV development
+ENV FRONTEND_PORT 3000
+
+RUN --mount=type=cache,target=/shellhacks/.npm \
+    npm set cache /shellhacks/.npm && \
+    npm install
+
+COPY . .
+
+CMD ["npm", "run", "dev"]
+
+# Production Image
+FROM --platform=linux/amd64 node:19.4-alpine AS Production
+
+WORKDIR /shellhacks
 COPY package*.json ./
 
 ENV NODE_ENV production
