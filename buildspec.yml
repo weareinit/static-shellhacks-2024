@@ -16,9 +16,13 @@ phases:
       - echo Building the Docker images...
       - docker build -t $REPOSITORY_URI_BACKEND:$IMAGE_TAG --target Production ./backend
       - docker build -t $REPOSITORY_URI_FRONTEND:$IMAGE_TAG --target Production ./frontend
-  post_build:
-    commands:
-      - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI_BACKEND:$IMAGE_TAG
       - docker push $REPOSITORY_URI_FRONTEND:$IMAGE_TAG
+      - echo Registering a new ECS task definition...
+      - aws ecs register-task-definition --family your-task-definition-family --container-definitions file://container-definitions.json
+      - echo Updating the ECS service...
+      - aws ecs update-service --service your-service --task-definition your-task-definition-family --cluster your-cluster
+  post_build:
+    commands:
+      - echo Build completed on `date`
