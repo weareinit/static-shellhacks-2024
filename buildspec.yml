@@ -20,9 +20,9 @@ phases:
       - docker push $REPOSITORY_URI_BACKEND:$IMAGE_TAG
       - docker push $REPOSITORY_URI_FRONTEND:$IMAGE_TAG
       - echo Registering a new ECS task definition...
-      - aws ecs register-task-definition --family your-task-definition-family --container-definitions file://container-definitions.json
+      - aws ecs register-task-definition --family shellhacks_frontend_logs --container-definitions file://container-definitions.json
       - echo Updating the ECS service...
-      - aws ecs update-service --service your-service --task-definition your-task-definition-family --cluster your-cluster
+      - aws ecs update-service --service shell_service --task-definition shellhacks_frontend_logs --cluster shellhacks-cluster
   post_build:
     commands:
       - echo Build completed on `date`
