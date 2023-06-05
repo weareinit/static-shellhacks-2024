@@ -228,6 +228,9 @@ function RegisterForm() {
               options={ethnicityOptions}
               isRequired
             />
+
+            <div className="sm:my-3" />
+
             <CheckboxInput
               label={
                 <h2>
@@ -275,7 +278,9 @@ function RegisterForm() {
               name="agreed_mlh_news"
               hasInter
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" className="sm:m-auto sm:w-full sm:mt-10">
+              Submit
+            </Button>
             {showErrorModal && (
               <h2 className="text-lg font-pixel text-red-600">
                 There was an error submitting, please try again later.
