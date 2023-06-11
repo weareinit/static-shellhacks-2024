@@ -1,16 +1,19 @@
-import "@/styles/globals.css"
-import type { AppProps } from "next/app"
-import { UserProvider } from "@auth0/nextjs-auth0/client"
-import { QueryClient, QueryClientProvider } from "react-query"
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
-    </QueryClientProvider>
-  )
+    <>
+      <title>ShellHacks</title>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </QueryClientProvider>
+    </>
+  );
 }
