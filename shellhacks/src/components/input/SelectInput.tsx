@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useField } from "formik";
 
-import Label from "./Label";
 import Error from "./Error";
+import Label from "./Label";
 
 interface SelectInputProps
   extends React.SelectHTMLAttributes<HTMLSelectElement> {
@@ -21,11 +21,11 @@ function SelectInput({
 }: SelectInputProps) {
   const [field, meta, helpers] = useField(props);
   return (
-    <div className="flex flex-col w-fit">
+    <div className="flex flex-col w-fit sm:w-full">
       <Label>{isRequired ? `*${label}` : label}</Label>
       <select
         {...field}
-        className={`relative w-[300px] overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter ${
+        className={`relative w-[300px] sm:w-full overflow-clip bg-white outline-none border-blue fill-white rounded-none border-2 p-1 font-inter ${
           meta.touched && meta.error
             ? "border-red-600 focus:ring-red-600/50"
             : ""
