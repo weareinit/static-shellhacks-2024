@@ -1,9 +1,9 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React from "react";
 
 import { useField } from "formik";
 
-import Label from "./Label";
 import Error from "./Error";
+import Label from "./Label";
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -15,12 +15,12 @@ function TextInput({ label, isRequired, ...props }: TextInputProps) {
   const [field, meta] = useField(props);
   return (
     <>
-      <Label className="w-fit flex flex-col">
+      <Label className="w-fit sm:w-full flex flex-col">
         {isRequired ? `*${label}` : label}
         <input
           {...field}
           {...props}
-          className={`border-blue border-2 p-1 h-8 font-inter focus:ring-2 ${
+          className={`border-blue border-2 p-1 h-8 sm:h-10 font-inter focus:ring-2 ${
             meta.touched && meta.error
               ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
               : `focus:ring-blue/50`

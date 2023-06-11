@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import Link from "next/link";
 
 const getapplicant = async () => {
-  const response = await fetch("http://localhost:3000/api/getApplication", {
+  const response = await fetch("/api/getApplication", {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",
