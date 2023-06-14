@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+import {
+  AiFillInstagram,
+  AiFillTwitterSquare,
+  AiFillLinkedin,
+  AiFillFacebook,
+} from "react-icons/ai";
+import { SiDiscord } from "react-icons/si";
+
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";
 import Image from "next/image";
@@ -28,33 +36,87 @@ function SandSection() {
           width={400}
           height={150}
         />
-        <h2 className="text-blue text-center font-pixel text-lg m-2">
-          {"Florida's Largest Hackathon"}
-        </h2>
-        {finishedRegistration && (
-          <h2 className=" text-green-600 text-center font-pixel text-lg m-2">
-            Thank you for registering!
+        <div className="my-2">
+          <h2 className="text-blue text-center font-pixel text-lg underline">
+            {"Florida's Largest Hackathon"}
           </h2>
-        )}
-        <div className="flex flex-row justify-center items-center">
-          {!finishedRegistration && (
-            <Button
-              className="mr-4"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowRegistration(true);
-              }}
-            >
-              <h2>Register Now!</h2>
-            </Button>
+          <h3 className="text-blue text-center font-pixel text-md">
+            September | Miami, Florida
+          </h3>
+        </div>
+        <nav className="grid sm:grid-cols-4 grid-cols-1 grid-rows-3 justify-center items-center my-1">
+          {finishedRegistration ? (
+            <h2 className=" text-green-600 text-center font-pixel text-lg m-2 col-span-full">
+              Thank you for registering!
+            </h2>
+          ) : (
+            <div className="w-full col-span-full flex justify-center">
+              <Button
+                className="col-span-full w-full bg-green-600"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowRegistration(true);
+                }}
+              >
+                <h2>Register Now!</h2>
+              </Button>
+            </div>
           )}
 
-          <Link href="/dashboard">
-            <Button className="">
-              <h2>Hacker Dashboard</h2>
-            </Button>
-          </Link>
-        </div>
+          <div className=" row-start-2 col-span-full space-x-2 mt-1">
+            <Link href="/dashboard">
+              <Button className="sm:min-w-[175px]">
+                <h2>Dashboard</h2>
+              </Button>
+            </Link>
+
+            <Link href="mailto:team@weareinit.org">
+              <Button className="sm:min-w-[175px]">
+                <h2>Sponsor Us</h2>
+              </Button>
+            </Link>
+          </div>
+
+          <div className="flex flex-row space-x-1 justify-center col-span-full my-1 row-start-3">
+            <Link href="https://discord.com/invite/init" target="_blank">
+              <SiDiscord
+                size={30}
+                className="hover:fill-green-600 hover:cursor-pointer"
+              />
+            </Link>
+            <Link
+              href="https://www.instagram.com/initofficial/"
+              target="_blank"
+            >
+              <AiFillInstagram
+                size={30}
+                className="hover:fill-green-600 hover:cursor-pointer"
+              />
+            </Link>
+            <Link href="https://twitter.com/initfiu" target="_blank">
+              <AiFillTwitterSquare
+                size={30}
+                className="hover:fill-green-600 hover:cursor-pointer"
+              />
+            </Link>
+
+            <Link href="https://www.facebook.com/init.fiu" target="_blank">
+              <AiFillFacebook
+                size={30}
+                className="hover:fill-green-600 hover:cursor-pointer"
+              />
+            </Link>
+            <Link
+              href="https://www.linkedin.com/company/initofficial/"
+              target="_blank"
+            >
+              <AiFillLinkedin
+                size={30}
+                className="hover:fill-green-600 hover:cursor-pointer"
+              />
+            </Link>
+          </div>
+        </nav>
       </article>
       {showRegistration && (
         <RegisterModal
