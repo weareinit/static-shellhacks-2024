@@ -8,7 +8,7 @@ function Button({
   return (
     <button
       {...props}
-      className={`bg-blue text-white text-center py-1 px-3 rounded-sm max-w-[16em] font-inter ${className}`}
+      className={`bg-blue text-white text-center py-1 px-3 rounded-sm font-inter sm:text-lg ${className}`}
     >
       {children}
     </button>

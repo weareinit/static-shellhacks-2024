@@ -14,7 +14,7 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
       containerClassName="w-screen h-screen z-20"
       backgroundClassName="z-10"
     >
-      <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between px-5 max-w-[800px] m-auto sm:my-4 sm:px-16 md:my-8">
+      <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between max-w-[700px] m-auto sm:px-16">
         <h1 className=" pt-1 row-start-2 row-span-1 font-pixel underline text-blue text-3xl">
           Registration
         </h1>
@@ -22,7 +22,7 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
           <h1 className="text-base">CLOSE</h1>
         </Button>
       </header>
-      <div className="sm:px-10 md:px-16 max-w-[1000px] m-auto">
+      <div className="sm:px-10 md:px-16 max-w-[700px] m-auto">
         <RegisterForm />
       </div>
     </Modal>
