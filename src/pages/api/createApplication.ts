@@ -19,12 +19,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     ...validatedApplicant,
   };
 
-  const applicant = await prisma.hacker_Applications.create({
-    data: newApplicant,
-  });
+  try {
+    const applicant = await prisma.hacker_Applications.create({
+      data: newApplicant,
+    });
 
-  const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
-  res.status(200).json({ applicant });
+    const confirmationEmailStatus = await sendConfirmationEmail(
+      validatedApplicant.email,
+      validatedApplicant.first_name
+    );
+    res.status(200).json({ applicant });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        res
+          .status(409)
+          .json({ message: "User already exists with that email." });
+      }
+    }
+  }
 };
 
 export default handler;
