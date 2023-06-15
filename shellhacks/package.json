@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p $FRONTEND_PORT",
+    "dev": "next dev",
     "build": "npx prisma generate && next build",
-    "start": "next start -p $FRONTEND_PORT",
+    "start": "next start",
     "lint": "next lint",
     "export": "next build && next export"
   },
