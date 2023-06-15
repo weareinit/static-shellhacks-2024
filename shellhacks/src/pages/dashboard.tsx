@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import Link from "next/link";
 
 const getapplicant = async () => {
-  const response = await fetch("/api/getApplication", {
+  const response = await fetch("/api/application", {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",
@@ -28,13 +28,8 @@ const HackerProfile = () => {
   if (!applicantData || error) {
     return (
       <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">
-          You need to login to a different account
-        </h1>
-        <p>
-          Please login using the same account you used when registering for this
-          event.
-        </p>
+        <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
+        <p>Please login using the same account you used when registering for this event.</p>
       </div>
     );
   }
@@ -72,13 +67,8 @@ const HackerProfile = () => {
       </div>
       <div className="mt-4">
         <h2 className="text-lg font-medium mb-2">Additional Information</h2>
-        <p>
-          Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}
-        </p>
-        <p>
-          Check-In Status:{" "}
-          {applicantData.check_in_status ? "Checked in" : "Not checked in"}
-        </p>
+        <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
+        <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
       </div>
     </div>
   );
@@ -88,9 +78,7 @@ const LogoutButton = () => {
   return (
     <div className="flex justify-end mt-4">
       <Link href="/api/auth/logout">
-        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
-          Logout
-        </button>
+        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
       </Link>
     </div>
   );

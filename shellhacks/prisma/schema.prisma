@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Events {
+  event_id            Int                   @id @default(autoincrement())
+  event_name          String                @db.VarChar(100)
+  description         String                @db.VarChar(250)
+  start_date          DateTime              @db.Date
+  end_date            DateTime              @db.Date
+  start_time          DateTime              @db.Timestamptz(3)
+  end_time            DateTime              @db.Timestamptz(3)
+  Hacker_Applications Hacker_Applications[]
+
+  @@map("events")
+}
+
+model Hacker_Applications {
+  hacker_id          Int                      @id @default(autoincrement())
+  event_id           Int
+  // BASIC IFO
+  first_name         String                   @db.VarChar(50)
+  last_name          String                   @db.VarChar(50)
+  age                Int
+  school             String                   @db.VarChar(250)
+  major              String                   @db.VarChar(250)
+  grad_year          Int
+  level_of_study     String                   @db.VarChar(250)
+  country            String                   @db.VarChar(50)
+  // SOCIALS
+  email              String                   @unique @db.VarChar(60)
+  phone_number       String                   @db.VarChar(20)
+  resume_path        String                   @db.VarChar(250)
+  discord            String?                  @db.VarChar(50)
+  github             String?                  @db.VarChar(75)
+  linkedin           String?                  @db.VarChar(75)
+  // DEMOGRAPHIC INFO
+  is_international   Boolean
+  gender             String                   @db.VarChar(50)
+  pronouns           String                   @db.VarChar(50)
+  ethnicity          String                   @db.VarChar(50)
+  // STATUS
+  agreed_mlh_news    Boolean
+  application_status application_status_enums @default(registered)
+  check_in_status    Boolean                  @default(false)
+  event              Events                   @relation(fields: [event_id], references: [event_id])
+
+  @@map("hacker_applications")
+}
+
+enum application_status_enums {
+  registered
+  in_wave
+  accepted
+  confirmed
+  withdrawn
+}
