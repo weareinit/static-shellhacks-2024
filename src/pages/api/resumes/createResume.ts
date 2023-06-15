@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient, Prisma } from "@prisma/client";
-import { generateSignedResumeUploadUrl, generateSignedResumeUrl, sendConfirmationEmail } from "src/util/aws";
+import {
+  generateSignedResumeUploadUrl,
+  generateSignedResumeUrl,
+  sendConfirmationEmail,
+} from "src/util/aws";
 import crypto from "crypto";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -8,14 +12,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
   }
-
-  console.log({
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    },
-    region: process.env.AWS_REGION!,
-  });
 
   const resumeId = crypto.randomBytes(16).toString("hex"); //generate unique resume name for each user
   const url: string = await generateSignedResumeUploadUrl(resumeId);

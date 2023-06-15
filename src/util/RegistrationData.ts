@@ -164,8 +164,8 @@ export const formValidation = Yup.object().shape({
   linkedin: Yup.string().url(),
   // DEMOGRAPHICS
   is_international: Yup.boolean(),
-  gender: Yup.string(),
-  pronouns: Yup.string(),
+  gender: Yup.string().required("Please fill an option for gender"),
+  pronouns: Yup.string().required("Please fill an option for pronouns"),
   fill_in_pronouns: Yup.string(),
   ethnicity: Yup.string().required("Ethnicity is a required field"),
   // MLH Questions
