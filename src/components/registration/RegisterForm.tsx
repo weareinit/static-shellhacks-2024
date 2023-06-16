@@ -187,11 +187,9 @@ function RegisterForm() {
             <CheckboxInput label="I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements." name="agreed_mlh_news" hasInter />
 
             <ReCAPTCHA
-              label="Captcha"
               size="normal"
-              name="recaptcha"
-              sitekey={process.env.PUBLIC_RECAPTCHA_KEY}
-              onChange={(code: string) => {
+              sitekey={process.env.PUBLIC_RECAPTCHA_KEY!}
+              onChange={(code: string | null) => {
                 props.setFieldValue("recaptcha", code);
               }}
             />

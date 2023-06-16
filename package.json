@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@types/papaparse": "^5.3.7",
+    "@types/react-google-recaptcha": "^2.1.5",
     "prisma": "^4.15.0"
   }
 }
