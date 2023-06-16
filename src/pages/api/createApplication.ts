@@ -10,6 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).json({ error: "Method not allowed" });
   }
 
+  delete req.body.recaptcha; //maybe do something with this in the future?
+
   const validatedApplicant = newApplicantSchema.parse({
     event_id: "1", //req.query.eventId,
     ...req.body,
@@ -24,17 +26,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data: newApplicant,
     });
 
-    const confirmationEmailStatus = await sendConfirmationEmail(
-      validatedApplicant.email,
-      validatedApplicant.first_name
-    );
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
     res.status(200).json({ applicant });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        res
-          .status(409)
-          .json({ message: "User already exists with that email." });
+        res.status(409).json({ message: "User already exists with that email." });
       }
     }
   }
