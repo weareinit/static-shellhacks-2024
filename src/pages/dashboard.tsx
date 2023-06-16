@@ -71,19 +71,9 @@ const HackerProfile = () => {
         <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
       </div>
 
-      <a href="#">
+      <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
         <p className="mt-4">MLH Code of Conduct</p>
       </a>
-    </div>
-  );
-};
-
-const LogoutButton = () => {
-  return (
-    <div className="flex justify-end mt-4">
-      <Link href="/api/auth/logout">
-        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-      </Link>
     </div>
   );
 };
