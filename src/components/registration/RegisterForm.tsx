@@ -70,7 +70,7 @@ function RegisterForm() {
   }
 
   const handleSubmit = async (values: ApplicantValues) => {
-    console.log("Submitting", values);
+    // console.log("Submitting", values);
     let { resume, fill_in_pronouns, ...body } = values;
 
     body.pronouns = values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
