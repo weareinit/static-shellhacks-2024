@@ -21,7 +21,7 @@ function CheckboxInput({
 }: CheckboxInputPropTypes) {
   const [field, meta, helpers] = useField(props);
   return (
-    <div className="flex flex-col basis-full">
+    <div className="flex flex-col">
       <div className="flex flex-col basis-full sm:flex-row sm:items-center sm:justify-between my-3">
         <Label hasInter={hasInter}>{label}</Label>
 
