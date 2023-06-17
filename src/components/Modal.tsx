@@ -21,7 +21,7 @@ function Modal({
       className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 backdrop-blur-sm ${backgroundClassName}`}
     >
       <aside
-        className={`p-2 bg-white/50 border-blue rounded-md overflow-scroll border-2 ${containerClassName}`}
+        className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white/50 border-blue sm:rounded-md overflow-y-scroll w-90 border-2 ${containerClassName}`}
       >
         {children}
       </aside>

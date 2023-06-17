@@ -129,7 +129,7 @@ function RegisterForm() {
         }}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="grid gap-3 my-2">
+          <Form className="flex flex-col my-2">
             <TextInput
               label="First Name"
               name="first_name"
@@ -233,17 +233,15 @@ function RegisterForm() {
 
             <CheckboxInput
               label={
-                <div className="max-sm:w-screen">
-                  <h2>
-                    I have read and agree to the MLH Code of Conduct.
-                    <a
-                      target="_blank"
-                      href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
-                    >
-                      (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)
-                    </a>
-                  </h2>
-                </div>
+                <h2>
+                  I have read and agree to the MLH Code of Conduct.
+                  <a
+                    target="_blank"
+                    href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+                  >
+                    (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)
+                  </a>
+                </h2>
               }
               name="agreed_mlh_conduct"
               hasInter
@@ -251,43 +249,39 @@ function RegisterForm() {
             />
             <CheckboxInput
               label={
-                <div className="max-sm:w-screen">
-                  <h2>
-                    I authorize you to share my application/registration
-                    information with Major League Hacking for event
-                    administration, ranking, and MLH administration in-line with
-                    the MLH Privacy Policy (https://mlh.io/privacy). I further
-                    agree to the terms of both the MLH Contest Terms and
-                    Conditions (
-                    <a
-                      target="_blank"
-                      href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
-                    >
-                      https://github.com/MLH/mlh-policies/blob/main/contest-terms.md
-                    </a>
-                    ) and the MLH Privacy Policy (
-                    <a target="_blank" href="https://mlh.io/privacy">
-                      https://mlh.io/privacy
-                    </a>
-                    ).
-                  </h2>
-                </div>
+                <h2>
+                  I authorize you to share my application/registration
+                  information with Major League Hacking for event
+                  administration, ranking, and MLH administration in-line with
+                  the MLH Privacy Policy (https://mlh.io/privacy). I further
+                  agree to the terms of both the MLH Contest Terms and
+                  Conditions (
+                  <a
+                    target="_blank"
+                    href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                  >
+                    https://github.com/MLH/mlh-policies/blob/main/contest-terms.md
+                  </a>
+                  ) and the MLH Privacy Policy (
+                  <a target="_blank" href="https://mlh.io/privacy">
+                    https://mlh.io/privacy
+                  </a>
+                  ).
+                </h2>
               }
               name="agreed_mlh_privacy"
               hasInter
               isRequired
             />
             <CheckboxInput
-              label={
-                <h2 className="max-sm:w-screen">
+              label="
                   I authorize MLH to send me occasional emails about relevant
                   events, career opportunities, and community announcements.
-                </h2>
-              }
+              "
               name="agreed_mlh_news"
               hasInter
             />
-            <Button type="submit" className="sm:m-auto sm:w-full sm:mt-10">
+            <Button type="submit" className="sm:m-auto w-full sm:mt-10">
               Submit
             </Button>
             {showErrorModal && (
