@@ -13,7 +13,7 @@ interface HomeProps {
 
 export default function Home({ schools, countries }: HomeProps) {
   return (
-    <main className="bg-sand min-h-screen grid grid-cols-1 md:grid-cols-9">
+    <main className="bg-sand h-screen grid grid-cols-1 md:grid-cols-9">
       <div className="w-16 h-28 absolute top-0 left-4 z-1000">
         <Image
           src="/assets/mlh-trust-badge-white-2024.png"
