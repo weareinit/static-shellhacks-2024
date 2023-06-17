@@ -25,8 +25,8 @@ export const dietaryRestrictions = [
 ];
 
 export const genderOptions = [
-  "Man",
-  "Woman",
+  "Male",
+  "Female",
   "Non-Binary",
   "Prefer to self-describe",
   "Prefer Not to Answer",
