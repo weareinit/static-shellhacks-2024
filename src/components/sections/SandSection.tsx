@@ -27,7 +27,7 @@ function SandSection() {
   }, [showRegistration]);
 
   return (
-    <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
+    <section className="grid col-span-1 md:col-span-5 justify-center items-end md:items-center mb-12 md:mb-0 align-center min-h-[60vh] relative">
       {/* <BeachChairCollection /> */}
       <article className="grid justify-center justify-items-center z-10">
         <Image
