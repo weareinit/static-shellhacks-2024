@@ -124,12 +124,39 @@ function RegisterForm() {
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="grid gap-3 my-2">
-            <TextInput label="First Name" name="first_name" type="text" isRequired />
-            <TextInput label="Last Name" name="last_name" type="text" isRequired />
-            <TextInput label="Age" name="age" type="number" min={18} max={114} isRequired />
-            <SelectInput label="School" name="school" options={schools} isRequired />
-            <SelectInput label="Major" name="major" options={majorOptions} isRequired />
+          <Form className="flex flex-col my-2">
+            <TextInput
+              label="First Name"
+              name="first_name"
+              type="text"
+              isRequired
+            />
+            <TextInput
+              label="Last Name"
+              name="last_name"
+              type="text"
+              isRequired
+            />
+            <TextInput
+              label="Age"
+              name="age"
+              type="number"
+              min={18}
+              max={114}
+              isRequired
+            />
+            <SelectInput
+              label="School"
+              name="school"
+              options={schools}
+              isRequired
+            />
+            <SelectInput
+              label="Major"
+              name="major"
+              options={majorOptions}
+              isRequired
+            />
 
             <TextInput label="Graduation Year" name="grad_year" type="number" min={2023} max={2033} isRequired />
 
@@ -184,7 +211,6 @@ function RegisterForm() {
               hasInter
               isRequired
             />
-            <CheckboxInput label="I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements." name="agreed_mlh_news" hasInter />
 
             <ReCAPTCHA
               size="normal"
@@ -194,7 +220,15 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="sm:m-auto sm:w-full sm:mt-10">
+            <CheckboxInput
+              label="
+                  I authorize MLH to send me occasional emails about relevant
+                  events, career opportunities, and community announcements.
+              "
+              name="agreed_mlh_news"
+              hasInter
+            />
+            <Button type="submit" className="sm:m-auto w-full sm:mt-10">
               Submit
             </Button>
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
