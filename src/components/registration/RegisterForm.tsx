@@ -129,7 +129,7 @@ function RegisterForm() {
         }}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="grid gap-3 my-2">
+          <Form className="flex flex-col my-2">
             <TextInput
               label="First Name"
               name="first_name"
@@ -274,11 +274,14 @@ function RegisterForm() {
               isRequired
             />
             <CheckboxInput
-              label="I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements."
+              label="
+                  I authorize MLH to send me occasional emails about relevant
+                  events, career opportunities, and community announcements.
+              "
               name="agreed_mlh_news"
               hasInter
             />
-            <Button type="submit" className="sm:m-auto sm:w-full sm:mt-10">
+            <Button type="submit" className="sm:m-auto w-full sm:mt-10">
               Submit
             </Button>
             {showErrorModal && (
