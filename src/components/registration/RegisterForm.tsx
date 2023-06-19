@@ -185,14 +185,6 @@ function RegisterForm() {
               isRequired
             />
 
-            <ReCAPTCHA
-              size="normal"
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-              onChange={(code: string | null) => {
-                props.setFieldValue("recaptcha", code);
-              }}
-            />
-
             <CheckboxInput
               label="
                   I authorize MLH to send me occasional emails about relevant
@@ -201,7 +193,15 @@ function RegisterForm() {
               name="agreed_mlh_news"
               hasInter
             />
-            <Button type="submit" className="sm:m-auto w-full sm:mt-10">
+
+            <ReCAPTCHA
+              size="normal"
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY!}
+              onChange={(code: string | null) => {
+                props.setFieldValue("recaptcha", code);
+              }}
+            />
+            <Button type="submit" className="sm:m-auto w-full sm:mt-5">
               Submit
             </Button>
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
