@@ -125,38 +125,11 @@ function RegisterForm() {
       >
         {(props: FormikProps<ApplicantValues>) => (
           <Form className="flex flex-col my-2">
-            <TextInput
-              label="First Name"
-              name="first_name"
-              type="text"
-              isRequired
-            />
-            <TextInput
-              label="Last Name"
-              name="last_name"
-              type="text"
-              isRequired
-            />
-            <TextInput
-              label="Age"
-              name="age"
-              type="number"
-              min={18}
-              max={114}
-              isRequired
-            />
-            <SelectInput
-              label="School"
-              name="school"
-              options={schools}
-              isRequired
-            />
-            <SelectInput
-              label="Major"
-              name="major"
-              options={majorOptions}
-              isRequired
-            />
+            <TextInput label="First Name" name="first_name" type="text" isRequired />
+            <TextInput label="Last Name" name="last_name" type="text" isRequired />
+            <TextInput label="Age" name="age" type="number" min={18} max={114} isRequired />
+            <SelectInput label="School" name="school" options={schools} isRequired />
+            <SelectInput label="Major" name="major" options={majorOptions} isRequired />
 
             <TextInput label="Graduation Year" name="grad_year" type="number" min={2023} max={2033} isRequired />
 
@@ -214,7 +187,7 @@ function RegisterForm() {
 
             <ReCAPTCHA
               size="normal"
-              sitekey={process.env.PUBLIC_RECAPTCHA_KEY!}
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
               onChange={(code: string | null) => {
                 props.setFieldValue("recaptcha", code);
               }}
