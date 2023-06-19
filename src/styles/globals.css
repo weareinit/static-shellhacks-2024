@@ -17,6 +17,12 @@
   }
 }
 
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
+}
+
 a {
   @apply text-blue underline;
 }
