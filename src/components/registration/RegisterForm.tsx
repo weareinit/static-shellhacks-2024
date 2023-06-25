@@ -12,6 +12,7 @@ import {
   pronounOptions,
   ApplicantValues,
   formValidation,
+  gradYearOptions,
 } from "@/util/RegistrationData";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
@@ -163,12 +164,10 @@ function RegisterForm() {
               isRequired
             />
 
-            <TextInput
+            <SelectInput
               label="Graduation Year"
               name="grad_year"
-              type="number"
-              min={2023}
-              max={2033}
+              options={gradYearOptions}
               isRequired
             />
 
