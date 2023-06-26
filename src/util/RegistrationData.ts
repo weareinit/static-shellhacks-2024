@@ -17,7 +17,13 @@ export const levelsOfStudy = [
 
 export const dietaryRestrictions = ["Vegetarian", "Vegan", "Celiac Disease", "Allergies", "Kosher", "Halal"];
 
-export const genderOptions = ["Man", "Woman", "Non-Binary", "Prefer to self-describe", "Prefer Not to Answer"];
+export const genderOptions = [
+  "Male",
+  "Female",
+  "Non-Binary",
+  "Prefer to self-describe",
+  "Prefer Not to Answer",
+];
 
 export const pronounOptions = ["She/Her", "He/Him", "They/Them", "She/They", "He/They", "Prefer Not to Answer", "Other"];
 
@@ -41,6 +47,16 @@ export const ethnicityOptions = [
   "Other",
   "Prefer Not to Answer",
 ];
+
+export const gradYearOptions = [
+  "2022",
+  "2023",
+  "2024",
+  "2025",
+  "2026",
+  "2027",
+  "2028",
+]
 
 export const majorOptions = [
   "Computer Science, computer engineering, or software engineering",

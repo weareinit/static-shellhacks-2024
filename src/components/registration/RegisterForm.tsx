@@ -4,7 +4,16 @@ import { Formik, Form, FormikProps } from "formik";
 
 import { useFormOptionContext } from "@/hooks/FormOptionContext";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
-import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation } from "@/util/RegistrationData";
+import {
+  ethnicityOptions,
+  genderOptions,
+  levelsOfStudy,
+  majorOptions,
+  pronounOptions,
+  ApplicantValues,
+  formValidation,
+  gradYearOptions,
+} from "@/util/RegistrationData";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
@@ -131,7 +140,12 @@ function RegisterForm() {
             <SelectInput label="School" name="school" options={schools} isRequired />
             <SelectInput label="Major" name="major" options={majorOptions} isRequired />
 
-            <TextInput label="Graduation Year" name="grad_year" type="number" min={2023} max={2033} isRequired />
+            <SelectInput
+              label="Graduation Year"
+              name="grad_year"
+              options={gradYearOptions}
+              isRequired
+            />
 
             <SelectInput label="Level of Study" name="level_of_study" options={levelsOfStudy} isRequired />
 
