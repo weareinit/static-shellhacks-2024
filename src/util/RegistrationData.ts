@@ -49,6 +49,7 @@ export const majorOptions = [
   "Computer Engineering",
   "Software Engineering",
   "Another engineering discipline (such as civil, electrical, mechanical, etc.)",
+  "Cybersecurity",
   "Information systems, information technology, or system administration",
   "Mathematics or Statistics",
   "A natural science (such as biology, chemistry, physics, etc.)",
