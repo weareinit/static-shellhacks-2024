@@ -15,32 +15,11 @@ export const levelsOfStudy = [
   "Prefer not to answer",
 ];
 
-export const dietaryRestrictions = [
-  "Vegetarian",
-  "Vegan",
-  "Celiac Disease",
-  "Allergies",
-  "Kosher",
-  "Halal",
-];
+export const dietaryRestrictions = ["Vegetarian", "Vegan", "Celiac Disease", "Allergies", "Kosher", "Halal"];
 
-export const genderOptions = [
-  "Man",
-  "Woman",
-  "Non-Binary",
-  "Prefer to self-describe",
-  "Prefer Not to Answer",
-];
+export const genderOptions = ["Male", "Female", "Non-Binary", "Prefer to self-describe", "Prefer Not to Answer"];
 
-export const pronounOptions = [
-  "She/Her",
-  "He/Him",
-  "They/Them",
-  "She/They",
-  "He/They",
-  "Prefer Not to Answer",
-  "Other",
-];
+export const pronounOptions = ["She/Her", "He/Him", "They/Them", "She/They", "He/They", "Prefer Not to Answer", "Other"];
 
 export const ethnicityOptions = [
   "Asian Indian",
@@ -63,13 +42,17 @@ export const ethnicityOptions = [
   "Prefer Not to Answer",
 ];
 
+export const gradYearOptions = ["2022", "2023", "2024", "2025", "2026", "2027", "2028"];
+
 export const majorOptions = [
-  "Computer Science, computer engineering, or software engineering",
-  "Another engineering discipline (such as civil, electrical mechanical, etc.)",
+  "Computer Science",
+  "Computer Engineering",
+  "Software Engineering",
+  "Another engineering discipline (such as civil, electrical, mechanical, etc.)",
+  "Cybersecurity",
   "Information systems, information technology, or system administration",
+  "Mathematics or Statistics",
   "A natural science (such as biology, chemistry, physics, etc.)",
-  "Mathematics or statistics",
-  "Web development or web design",
   "Business discipline (such as accounting, finance, marketing, etc.)",
   "Humanities discipline (such as literature, history, philosophy, etc.)",
   "Social science (such as anthropology, psychology, political science, etc.)",
@@ -107,32 +90,22 @@ export interface ApplicantValues {
   agreed_mlh_conduct: boolean;
   agreed_mlh_privacy: boolean;
   agreed_mlh_news: boolean;
+  recaptcha: string;
 }
 
 export const formValidation = Yup.object().shape({
   first_name: Yup.string().required("First Name is required"),
   last_name: Yup.string().required("Last Name is required"),
-  age: Yup.number()
-    .required("Age is required")
-    .min(18, "You must be at least 18 to compete.")
-    .max(114, "114 is the age of the oldest person on Earth..."),
+  age: Yup.number().required("Age is required").min(18, "You must be at least 18 to compete.").max(114, "114 is the age of the oldest person on Earth..."),
   school: Yup.string().required("School is required"),
   major: Yup.string().required("Major is required"),
-  grad_year: Yup.number()
-    .required("Graduation Year is required")
-    .min(2022, "Minimum graduation year to participate is 2022.")
-    .max(2030, "Maximum graduation year to participate is 2030."),
+  grad_year: Yup.number().required("Graduation Year is required").min(2022, "Minimum graduation year to participate is 2022.").max(2030, "Maximum graduation year to participate is 2030."),
   level_of_study: Yup.string().required("Level of Study is required"),
   country: Yup.string().required("Country is requiured"),
   // SOCIALS / CONTACTS
-  email: Yup.string()
-    .email("Email is not formmated correctly")
-    .required("Email is required"),
+  email: Yup.string().email("Email is not formmated correctly").required("Email is required"),
   phone_number: Yup.string()
-    .matches(
-      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-      "Invalid phone number format"
-    )
+    .matches(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number format")
     .required("Phone Number is required"),
   resume: Yup.mixed()
     .test("fileSize", "File size is too large", (value) => {
@@ -151,11 +124,7 @@ export const formValidation = Yup.object().shape({
         if (supportedFormats.includes(file.type)) {
           return true;
         } else {
-          return new Yup.ValidationError(
-            "Unsupported file format, only .pdf is supported",
-            value,
-            "resume"
-          );
+          return new Yup.ValidationError("Unsupported file format, only .pdf is supported", value, "resume");
         }
       }
     }),
@@ -171,5 +140,6 @@ export const formValidation = Yup.object().shape({
   // MLH Questions
   agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
   agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
+  recaptcha: Yup.string().required("Please complete the captcha"),
   agreed_mlh_news: Yup.boolean(),
 });
