@@ -6,6 +6,10 @@ import { generateSignedResumeUrl } from "src/util/aws";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== "GET") {
+    res.status(405).json({ error: "Method not allowed" });
+  }
+
   const session = await getSession(req, res);
   const email = session?.user?.email;
   const admin = await isAdmin(req, res);
@@ -14,7 +18,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.query.resumeId && admin) {
     resumeId = req.query.resumeId as string;
   } else {
-    const userResume = await prisma.hacker_Applications.findUnique({ where: { email }, select: { resume_path: true } });
+    const userResume = await prisma.hacker_Applications.findUnique({
+      where: { email },
+      select: { resume_path: true },
+    });
     resumeId = userResume?.resume_path ?? "";
   }
 

@@ -27,7 +27,7 @@ function SandSection() {
   }, [showRegistration]);
 
   return (
-    <section className="grid col-span-1 md:col-span-5 justify-center items-center align-middle min-h-[60vh] relative">
+    <section className="grid col-span-1 md:col-span-5 justify-center items-end md:items-center mb-12 md:mb-0 align-center min-h-[60vh] relative">
       {/* <BeachChairCollection /> */}
       <article className="grid justify-center justify-items-center z-10">
         <Image
@@ -47,7 +47,8 @@ function SandSection() {
         <nav className="grid sm:grid-cols-4 grid-cols-1 grid-rows-3 justify-center items-center my-1">
           {finishedRegistration ? (
             <h2 className=" text-green-600 text-center font-pixel text-lg m-2 col-span-full">
-              Thank you for registering!
+              Thank you for registering!<br/>
+              Check your email for next steps...
             </h2>
           ) : (
             <div className="w-full col-span-full flex justify-center">

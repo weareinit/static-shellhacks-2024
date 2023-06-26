@@ -35,7 +35,7 @@ const HackerProfile = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+    <div className="bg-white rounded-md shadow-md p-6">
       <h1 className="text-xl mb-4 font-pixel">
         Application for {applicantData.first_name} {applicantData.last_name}
       </h1>
@@ -70,16 +70,10 @@ const HackerProfile = () => {
         <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
         <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
       </div>
-    </div>
-  );
-};
 
-const LogoutButton = () => {
-  return (
-    <div className="flex justify-end mt-4">
-      <Link href="/api/auth/logout">
-        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-      </Link>
+      <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+        <p className="mt-4">MLH Code of Conduct</p>
+      </a>
     </div>
   );
 };
@@ -87,8 +81,18 @@ const LogoutButton = () => {
 export default withPageAuthRequired(function Dashboard() {
   return (
     <main className="bg-sand min-h-screen p-5">
-      <HackerProfile />
-      <LogoutButton />
+      <div className="max-w-md mx-auto ">
+        <HackerProfile />
+
+        <div className="flex justify-between mt-4 row">
+          <Link href="/">
+            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
+          </Link>
+          <Link href="/api/auth/logout">
+            <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
+          </Link>
+        </div>
+      </div>
     </main>
   );
 });
