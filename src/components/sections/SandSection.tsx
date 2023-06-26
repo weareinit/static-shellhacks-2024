@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  AiFillInstagram,
-  AiFillTwitterSquare,
-  AiFillLinkedin,
-  AiFillFacebook,
-} from "react-icons/ai";
+import { AiFillInstagram, AiFillTwitterSquare, AiFillLinkedin, AiFillFacebook } from "react-icons/ai";
 import { SiDiscord } from "react-icons/si";
 
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
@@ -15,8 +10,7 @@ import Button from "../input/Button";
 import Link from "next/link";
 
 function SandSection() {
-  const { showRegistration, setShowRegistration, finishedRegistration } =
-    useShowRegistrationContext();
+  const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
 
   useEffect(() => {
     if (showRegistration) {
@@ -30,24 +24,16 @@ function SandSection() {
     <section className="grid col-span-1 md:col-span-5 justify-center items-end md:items-center mb-12 md:mb-0 align-center min-h-[60vh] relative">
       {/* <BeachChairCollection /> */}
       <article className="grid justify-center justify-items-center z-10">
-        <Image
-          src="/assets/shellhacks_logo.gif"
-          alt="ShellHacks2023"
-          width={400}
-          height={150}
-        />
+        <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={400} height={150} />
         <div className="my-2">
-          <h2 className="text-blue text-center font-pixel text-lg underline">
-            {"Florida's Largest Hackathon"}
-          </h2>
-          <h3 className="text-blue text-center font-pixel text-md">
-            September | Miami, Florida
-          </h3>
+          <h2 className="text-blue text-center font-pixel text-lg underline">{"Florida's Largest Hackathon"}</h2>
+          <h3 className="text-blue text-center font-pixel text-md">September | Miami, Florida</h3>
         </div>
         <nav className="grid sm:grid-cols-4 grid-cols-1 grid-rows-3 justify-center items-center my-1">
           {finishedRegistration ? (
-            <h2 className=" text-green-600 text-center font-pixel text-lg m-2 col-span-full">
-              Thank you for registering!<br/>
+            <h2 className=" text-green-600 text-center font-pixel text-lg col-span-full">
+              Thank you for registering!
+              <br />
               Check your email for next steps...
             </h2>
           ) : (
@@ -64,7 +50,7 @@ function SandSection() {
             </div>
           )}
 
-          <div className=" row-start-2 col-span-full space-x-2 mt-1">
+          <div className="flex justify-center row-start-2 col-span-full space-x-2 mt-1">
             <Link href="/dashboard">
               <Button className="sm:min-w-[175px]">
                 <h2>Dashboard</h2>
@@ -80,41 +66,20 @@ function SandSection() {
 
           <div className="flex flex-row space-x-1 justify-center col-span-full my-1 row-start-3">
             <Link href="https://discord.com/invite/init" target="_blank">
-              <SiDiscord
-                size={30}
-                className="hover:fill-green-600 hover:cursor-pointer"
-              />
+              <SiDiscord size={30} className="hover:fill-green-600 hover:cursor-pointer" />
             </Link>
-            <Link
-              href="https://www.instagram.com/initofficial/"
-              target="_blank"
-            >
-              <AiFillInstagram
-                size={30}
-                className="hover:fill-green-600 hover:cursor-pointer"
-              />
+            <Link href="https://www.instagram.com/initofficial/" target="_blank">
+              <AiFillInstagram size={30} className="hover:fill-green-600 hover:cursor-pointer" />
             </Link>
             <Link href="https://twitter.com/initfiu" target="_blank">
-              <AiFillTwitterSquare
-                size={30}
-                className="hover:fill-green-600 hover:cursor-pointer"
-              />
+              <AiFillTwitterSquare size={30} className="hover:fill-green-600 hover:cursor-pointer" />
             </Link>
 
             <Link href="https://www.facebook.com/init.fiu" target="_blank">
-              <AiFillFacebook
-                size={30}
-                className="hover:fill-green-600 hover:cursor-pointer"
-              />
+              <AiFillFacebook size={30} className="hover:fill-green-600 hover:cursor-pointer" />
             </Link>
-            <Link
-              href="https://www.linkedin.com/company/initofficial/"
-              target="_blank"
-            >
-              <AiFillLinkedin
-                size={30}
-                className="hover:fill-green-600 hover:cursor-pointer"
-              />
+            <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
+              <AiFillLinkedin size={30} className="hover:fill-green-600 hover:cursor-pointer" />
             </Link>
           </div>
         </nav>
