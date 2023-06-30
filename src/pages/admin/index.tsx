@@ -1,6 +1,8 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery } from "react-query";
 import Link from "next/link";
+import ApplicantCell from "@/components/dashboard/ApplicantCell";
+import ShorelineSection from "@/components/sections/ShorelineSection";
 
 const getApplicants = async () => {
   const response = await fetch("/api/admin/applications", {
@@ -36,6 +38,14 @@ const ApplicantsTable = () => {
   }
 
   return (
+    <div className="bg-white rounded-md shadow-md p-6">
+      {applicantData.map((entry: any, index: number) => (
+        <ApplicantCell data={entry} key={index} />
+      ))}
+    </div>
+  );
+
+  /*return (
     <table className="divide-gray-200">
       <thead className="bg-gray-50">
         <tr>
@@ -62,15 +72,13 @@ const ApplicantsTable = () => {
         ))}
       </tbody>
     </table>
-  );
+  );*/
 };
 
 export default withPageAuthRequired(function AdminDashboard() {
   return (
     <main className="bg-sand min-h-screen p-5">
-      <ApplicantsTable />
-
-      <div className="flex justify-between mt-4 row">
+      <div className="flex justify-between mb-4 row">
         <Link href="/">
           <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
         </Link>
@@ -78,6 +86,8 @@ export default withPageAuthRequired(function AdminDashboard() {
           <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
         </Link>
       </div>
+
+      <ApplicantsTable />
     </main>
   );
 });
