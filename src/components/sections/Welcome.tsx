@@ -25,34 +25,34 @@ function Welcome() {
             Check your email for next steps...
           </h2>
         ) : (
-          <div className="w-full col-span-full flex justify-center">
+          <div className="w-full col-span-full flex justify-center rounded-pixel h-16">
             <Button
-              className="col-span-full w-full bg-green-600"
+              className="col-span-full w-full bg-white text-blue rounded-pixel-primary hover:underline"
               onClick={(e) => {
                 e.preventDefault();
                 setShowRegistration(true);
               }}
             >
-              <h2>Register Now!</h2>
+              <h2 className="font-extrabold">Register Now!</h2>
             </Button>
           </div>
         )}
 
         <div className=" row-start-2 col-span-full space-x-2 mt-1">
           <Link href="/dashboard">
-            <Button className="md:min-w-[175px]">
-              <h2>Dashboard</h2>
+            <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
+              <h2 className="font-pixel">Dashboard</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
-            <Button className="md:min-w-[175px]">
-              <h2>Sponsor Us</h2>
+            <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
+              <h2 className="font-pixel">Sponsor Us</h2>
             </Button>
           </Link>
         </div>
 
-        <div className="flex flex-row space-x-1 justify-center col-span-full my-1 row-start-3">
+        <div className="flex flex-row space-x-1 justify-center col-span-full row-start-3 self-start">
           <Link href="https://discord.com/invite/init" target="_blank">
             <SiDiscord size={30} className="hover:fill-green-600 hover:cursor-pointer" />
           </Link>
