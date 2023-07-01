@@ -2,7 +2,6 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery } from "react-query";
 import Link from "next/link";
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import ShorelineSection from "@/components/sections/ShorelineSection";
 
 const getApplicants = async () => {
   const response = await fetch("/api/admin/applications", {
