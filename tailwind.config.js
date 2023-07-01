@@ -10,6 +10,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backdropBlur: {
+        xs: "2px",
+      },
+      gridTemplateColumns: {
+        24: "repeat(24, minmax(0, 1fr))",
+      },
+      gridTemplateRows: {
+        24: "repeat(24, minmax(0, 1fr))",
+      },
       colors: {
         deep_blue: "#4A73AC",
         blue: "#006887",
