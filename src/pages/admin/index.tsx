@@ -2,7 +2,9 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery } from "react-query";
 import Link from "next/link";
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
+import FiltersModal from "@/components/dashboard/FiltersModal";
 import ShorelineSection from "@/components/sections/ShorelineSection";
+import { useState } from "react";
 
 const getApplicants = async () => {
   const response = await fetch("/api/admin/applications", {
@@ -38,11 +40,11 @@ const ApplicantsTable = () => {
   }
 
   return (
-    <div className="bg-white rounded-md shadow-md p-6">
+    <>
       {applicantData.map((entry: any, index: number) => (
         <ApplicantCell data={entry} key={index} />
       ))}
-    </div>
+    </>
   );
 
   /*return (
@@ -76,6 +78,8 @@ const ApplicantsTable = () => {
 };
 
 export default withPageAuthRequired(function AdminDashboard() {
+  const [showFilters, setShowFilters] = useState(false);
+
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="flex justify-between mb-4 row">
@@ -87,7 +91,22 @@ export default withPageAuthRequired(function AdminDashboard() {
         </Link>
       </div>
 
-      <ApplicantsTable />
+      <div className="bg-white rounded-md shadow-md p-5">
+        <div className="flex justify-between mb-5 row align-middle items-center">
+          <h2 className="text-2xl">Showing 16 Applicants</h2>
+          <div className="flex row">
+            <input className="border border-gray-300 rounded-md p-1 mr-2" type="text" placeholder="Search" />
+            <button className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
+              Filters
+            </button>
+            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Export</button>
+          </div>
+        </div>
+
+        {showFilters && <FiltersModal />}
+
+        <ApplicantsTable />
+      </div>
     </main>
   );
 });

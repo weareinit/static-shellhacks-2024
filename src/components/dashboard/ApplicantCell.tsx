@@ -41,7 +41,7 @@ export default function ApplicantCell({ data }: ApplicantCellPropType) {
         <p className="col-span-3 text-left">
           {data.first_name} {data.last_name}
         </p>
-        <p className="col-span-3 text-left">{data.school}</p>
+        <p className="col-span-3 text-left truncate">{data.school}</p>
 
         <div className="flex flex-row justify-between col-span-1">
           <div className="w-4 h-4 bg-blue rounded-full" />
