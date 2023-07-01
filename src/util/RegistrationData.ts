@@ -17,7 +17,7 @@ export const levelsOfStudy = [
 
 export const dietaryRestrictions = ["Vegetarian", "Vegan", "Celiac Disease", "Allergies", "Kosher", "Halal"];
 
-export const genderOptions = ["Man", "Woman", "Non-Binary", "Prefer to self-describe", "Prefer Not to Answer"];
+export const genderOptions = ["Male", "Female", "Non-Binary", "Prefer to self-describe", "Prefer Not to Answer"];
 
 export const pronounOptions = ["She/Her", "He/Him", "They/Them", "She/They", "He/They", "Prefer Not to Answer", "Other"];
 
@@ -42,13 +42,17 @@ export const ethnicityOptions = [
   "Prefer Not to Answer",
 ];
 
+export const gradYearOptions = ["2022", "2023", "2024", "2025", "2026", "2027", "2028"];
+
 export const majorOptions = [
-  "Computer Science, computer engineering, or software engineering",
-  "Another engineering discipline (such as civil, electrical mechanical, etc.)",
+  "Computer Science",
+  "Computer Engineering",
+  "Software Engineering",
+  "Another engineering discipline (such as civil, electrical, mechanical, etc.)",
+  "Cybersecurity",
   "Information systems, information technology, or system administration",
+  "Mathematics or Statistics",
   "A natural science (such as biology, chemistry, physics, etc.)",
-  "Mathematics or statistics",
-  "Web development or web design",
   "Business discipline (such as accounting, finance, marketing, etc.)",
   "Humanities discipline (such as literature, history, philosophy, etc.)",
   "Social science (such as anthropology, psychology, political science, etc.)",

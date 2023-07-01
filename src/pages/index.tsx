@@ -43,7 +43,7 @@ interface CountryDataType {
 }
 
 export async function getStaticProps() {
-  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/MLH/mlh-policies/main/schools.csv");
+  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
 
   const schools = schoolData
     .map((school) => {

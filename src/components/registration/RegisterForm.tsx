@@ -4,7 +4,7 @@ import { Formik, Form, FormikProps } from "formik";
 
 import { useFormOptionContext } from "@/hooks/FormOptionContext";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
-import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation } from "@/util/RegistrationData";
+import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation, gradYearOptions } from "@/util/RegistrationData";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
@@ -131,7 +131,7 @@ function RegisterForm() {
             <SelectInput label="School" name="school" options={schools} isRequired />
             <SelectInput label="Major" name="major" options={majorOptions} isRequired />
 
-            <TextInput label="Graduation Year" name="grad_year" type="number" min={2023} max={2033} isRequired />
+            <SelectInput label="Graduation Year" name="grad_year" options={gradYearOptions} isRequired />
 
             <SelectInput label="Level of Study" name="level_of_study" options={levelsOfStudy} isRequired />
 
@@ -143,7 +143,7 @@ function RegisterForm() {
             <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
-            <CheckboxInput label="Check if you are an international student" name="is_international" />
+            <CheckboxInput label="Are you an international student (currently on a non-immigrant visa status in the US such as F-1, or others)?" name="is_international" />
 
             <SelectInput label="Gender" name="gender" options={genderOptions} isRequired />
             <SelectInput options={pronounOptions} label="Pronouns" name="pronouns" isRequired />
@@ -201,7 +201,7 @@ function RegisterForm() {
                 props.setFieldValue("recaptcha", code);
               }}
             />
-            <Button type="submit" className="sm:m-auto w-full sm:mt-5">
+            <Button type="submit" className="sm:m-auto w-full mt-3 sm:mt-5">
               Submit
             </Button>
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
