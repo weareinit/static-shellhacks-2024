@@ -5,13 +5,13 @@ import FillImage from "../FillImage";
 function AboutUsImages() {
   return (
     <div className="relative w-[300px] h-[300px]">
-      <div className="absolute w-fit top-0">
+      <div className="absolute w-fit top-0 hover:z-10">
         <FillImage src="/assets/init_eboard.jpeg" alt="The INIT Eboard" />
       </div>
-      <div className="absolute w-fit bottom-0 left-12">
-        <FillImage src="/assets/init_logo.png" alt="The INIT Logo" />
+      <div className="absolute w-fit bottom-0 left-12 hover:z-10">
+        <FillImage src="/assets/hackers_pic.jpeg" alt="Hackathon participants in last year's shellhacks" />
       </div>
-      <div className="absolute w-fit top-12 right-0">
+      <div className="absolute w-fit top-12 right-0 hover:z-10">
         <FillImage src="/assets/init_logo.png" alt="The INIT Logo" />
       </div>
     </div>
@@ -27,7 +27,7 @@ function AboutUs() {
       <article>
         <h2 className="font-pixel text-deep_blue text-2xl mb-2">About Us</h2>
         <p className="font-inter mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together: </p>
-        <ul className="list-disc ml-6 mb-2">
+        <ul className="list-disc ml-6 mb-2 font-inter">
           <li>to learn the latest technologies</li>
           <li>develop innovative solutions</li>
           <li>network with top companies, and more!</li>
