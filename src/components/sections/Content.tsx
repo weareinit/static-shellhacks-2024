@@ -6,6 +6,7 @@ import MLHBanner from "../decorations/MLHBanner";
 import Welcome from "./Welcome";
 import AboutUs from "./AboutUs";
 import BlurBackdrop from "../decorations/BlurBackdrop";
+import FAQ from "./FAQ";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -26,6 +27,7 @@ function Content() {
       <MLHBanner />
       <Welcome />
       <AboutUs />
+      <FAQ />
       {showRegistration && (
         <RegisterModal
           toClose={(event) => {
