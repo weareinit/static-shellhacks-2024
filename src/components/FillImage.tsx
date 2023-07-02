@@ -4,11 +4,12 @@ interface FillImageProps {
   src: string;
   alt: string;
   objectFit?: string;
+  className?: string;
 }
 
 function FillImage(props: FillImageProps) {
   return (
-    <div className="relative w-40 h-40 rounded-pixel">
+    <div className={`relative ${props.className}`}>
       <Image src={props.src} alt={props.alt} fill style={{ objectFit: "cover" }} />
     </div>
   );

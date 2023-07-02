@@ -12,10 +12,10 @@ function Welcome() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
   return (
     <section className="flex flex-col items-center justify-center w-96 h-fit min-h-screen">
-      <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={400} height={150} />
-      <div className="my-2">
-        <h2 className="text-blue text-center font-pixel text-lg underline">{"Florida's Largest Hackathon"}</h2>
-        <h3 className="text-blue text-center font-pixel text-md">September | Miami, Florida</h3>
+      <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={800} height={300} />
+      <div className="my-3">
+        <h2 className="text-blue text-center font-pixel font-bold text-2xl pt-6 underline">{"Florida's Largest Hackathon"}</h2>
+        <h3 className="text-blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
         {finishedRegistration ? (
@@ -27,7 +27,7 @@ function Welcome() {
         ) : (
           <div className="w-full col-span-full flex justify-center rounded-pixel h-16">
             <Button
-              className="col-span-full w-full bg-white text-blue rounded-pixel-primary hover:underline"
+              className="col-span-full w-full bg-green-500 text-white rounded-pixel-primary hover:underline"
               onClick={(e) => {
                 e.preventDefault();
                 setShowRegistration(true);

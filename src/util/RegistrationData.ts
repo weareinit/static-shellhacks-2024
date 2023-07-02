@@ -87,6 +87,7 @@ export interface ApplicantValues {
   fill_in_pronouns: string;
   ethnicity: string;
   // MLH QUESTIONS
+  agreed_sponsors: boolean; //required for us to send resumes to sponsors
   agreed_mlh_conduct: boolean;
   agreed_mlh_privacy: boolean;
   agreed_mlh_news: boolean;
@@ -138,6 +139,7 @@ export const formValidation = Yup.object().shape({
   fill_in_pronouns: Yup.string(),
   ethnicity: Yup.string().required("Ethnicity is a required field"),
   // MLH Questions
+  agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
   agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
   agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
   recaptcha: Yup.string().required("Please complete the captcha"),

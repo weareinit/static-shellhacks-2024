@@ -2,9 +2,22 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery } from "react-query";
 import Link from "next/link";
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
+import FiltersModal from "@/components/dashboard/FiltersModal";
+import { useState } from "react";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+import { z } from "zod";
 
-const getApplicants = async () => {
-  const response = await fetch("/api/admin/applications", {
+type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
+
+interface ApplicantsTableProps {
+  data: any;
+  isLoading: boolean;
+  error: any;
+}
+
+const getApplicants = async (filters: ApplicantFilterType) => {
+  const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
+  const response = await fetch(`/api/admin/applications?${params}`, {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",
@@ -18,16 +31,12 @@ const getApplicants = async () => {
   return response.json();
 };
 
-const ApplicantsTable = () => {
-  const { data, isLoading, error } = useQuery("applicant", getApplicants);
-  const applicantData = data;
-  console.log(applicantData);
-
+const ApplicantsTable = ({ data, isLoading, error }: ApplicantsTableProps) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (!applicantData || error) {
+  if (error) {
     return (
       <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
         <h1 className="text-xl font-bold mb-4">This account doesn't have admin privileges</h1>
@@ -36,45 +45,29 @@ const ApplicantsTable = () => {
     );
   }
 
+  if (!data) return <p>No data</p>;
+
   return (
-    <div className="bg-white rounded-md shadow-md p-6">
-      {applicantData.map((entry: any, index: number) => (
+    <>
+      {data.map((entry: any, index: number) => (
         <ApplicantCell data={entry} key={index} />
       ))}
-    </div>
+    </>
   );
-
-  /*return (
-    <table className="divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th className="py-1 px-1 text-left">First Name</th>
-          <th className="py-1 px-1 text-left">Last Name</th>
-          <th className="py-1 px-1 text-left">Email</th>
-          <th className="py-1 px-1 text-left">Age</th>
-          <th className="py-1 px-1 text-left">Country</th>
-          <th className="py-1 px-1 text-left">Major</th>
-          <th className="py-1 px-1 text-left">School</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {applicantData.map((entry: any, index: number) => (
-          <tr key={index}>
-            <td className="py-1 px-1">{entry.first_name}</td>
-            <td className="py-1 px-1">{entry.last_name}</td>
-            <td className="py-1 px-1">{entry.email}</td>
-            <td className="py-1 px-1">{entry.age}</td>
-            <td className="py-1 px-1">{entry.country}</td>
-            <td className="py-1 px-1">{entry.major}</td>
-            <td className="py-1 px-1">{entry.school}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );*/
 };
 
 export default withPageAuthRequired(function AdminDashboard() {
+  const [showFilters, setShowFilters] = useState(false);
+  const [name, setName] = useState("");
+  const [filters, setFilters] = useState<ApplicantFilterType>({ event_id: 1 });
+
+  const { data, isLoading, error } = useQuery(["applicants", filters], () => getApplicants(filters), {
+    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
+  });
+
+  const applicantData = data;
+  console.log(applicantData);
+
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="flex justify-between mb-4 row">
@@ -86,7 +79,22 @@ export default withPageAuthRequired(function AdminDashboard() {
         </Link>
       </div>
 
-      <ApplicantsTable />
+      <div className="bg-white rounded-md shadow-md p-5">
+        <div className="flex justify-between mb-5 row align-middle items-center">
+          <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
+          <div className="flex row">
+            <input className="border border-gray-300 rounded-md p-1 mr-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
+            <button className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
+              Filters
+            </button>
+            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Export</button>
+          </div>
+        </div>
+
+        {showFilters && <FiltersModal handleFilterChange={setFilters} />}
+
+        <ApplicantsTable data={data} isLoading={isLoading} error={error} />
+      </div>
     </main>
   );
 });
