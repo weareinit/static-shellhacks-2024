@@ -201,7 +201,7 @@ function RegisterForm() {
                 props.setFieldValue("recaptcha", code);
               }}
             />
-            <Button type="submit" className="sm:m-auto w-full mt-3 sm:mt-5">
+            <Button type="submit" className="sm:m-auto w-full mt-3 sm:mt-5 bg-blue rounded-pixel text-white">
               Submit
             </Button>
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
