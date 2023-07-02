@@ -17,10 +17,10 @@ export interface BeachChairPropsType {
 }
 
 const CHAIR_COLORS = {
-  blue: "/assets/blue_umbrella.png",
-  red: "/assets/red_umbrella.png",
-  yellow: "/assets/yellow_umbrella.png",
-  green: "/assets/green_umbrella.png",
+  blue: "/assets/decorations/blue_umbrella.png",
+  red: "/assets/decorations/red_umbrella.png",
+  yellow: "/assets/decorations/yellow_umbrella.png",
+  green: "/assets/decorations/green_umbrella.png",
 };
 
 const CHAIR_SIZE = 60;

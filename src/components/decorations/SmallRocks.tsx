@@ -18,7 +18,7 @@ function SmallRocks({ row, column, className }: RockProps) {
         gridColumnStart: column,
       }}
     >
-      <Image src="/assets/small_rocks.png" alt="" height={ROCK_SIZE} width={ROCK_SIZE} />
+      <Image src="/assets/decorations/small_rocks.png" alt="" height={ROCK_SIZE} width={ROCK_SIZE} />
     </div>
   );
 }
