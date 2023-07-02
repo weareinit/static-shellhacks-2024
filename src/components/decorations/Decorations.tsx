@@ -1,34 +1,39 @@
-import React, { ReactElement } from "react";
+import React from "react";
 
+import { BeachChairPropsType, BeachColors } from "./BeachChair";
+import DecorationContainer from "./DecorationContainer";
 import BeachChair from "./BeachChair";
 import SmallRocks from "./SmallRocks";
 
-function Decorations() {
-  function generateBeachChairs(): ReactElement[] {
-    let beaches = [];
-    for (let row = 2; row < 24; row += 3) {
-      beaches.push(<BeachChair chairKey={`row=${row},col=${18}`} color="red" column={21} row={row} />);
-    }
-    for (let row = 3; row < 24; row += 3) {
-      beaches.push(<BeachChair chairKey={`row=${row},col=${23}`} color="red" column={23} row={row} />);
-    }
-    return beaches;
+function generateBeachChairs(): BeachChairPropsType[] {
+  let beaches = [];
+  for (let row = 2; row < 24; row += 3) {
+    beaches.push({ color: BeachColors.red, column: 21, row });
   }
+  for (let row = 3; row < 24; row += 3) {
+    beaches.push({ color: BeachColors.red, column: 23, row });
+  }
+  return beaches;
+}
+
+function Decorations() {
   return (
-    <div className="hidden md:grid grid-cols-24 grid-rows-24 col-span-10 row-start-1 col-start-2 h-screen">
-      {generateBeachChairs().map((element) => {
-        return element;
-      })}
+    <DecorationContainer>
+      <>
+        {generateBeachChairs().map((element, index) => {
+          return <BeachChair color={element.color} row={element.row} column={element.column} key={index} />;
+        })}
+      </>
       <SmallRocks column={2} row={2} />
       <SmallRocks column={5} row={20} />
-      <BeachChair color="green" column={1} row={6} />
-      <BeachChair color="blue" column={5} row={9} />
-      <BeachChair color="blue" column={3} row={4} />
-      <BeachChair color="yellow" column={3} row={12} />
-      <BeachChair color="green" column={3} row={15} />
-      <BeachChair color="blue" column={6} row={18} />
-      <BeachChair color="red" column={2} row={20} />
-    </div>
+      <BeachChair color={BeachColors.green} column={1} row={6} />
+      <BeachChair color={BeachColors.blue} column={5} row={9} />
+      <BeachChair color={BeachColors.blue} column={3} row={4} />
+      <BeachChair color={BeachColors.yellow} column={3} row={12} />
+      <BeachChair color={BeachColors.green} column={3} row={15} />
+      <BeachChair color={BeachColors.blue} column={6} row={18} />
+      <BeachChair color={BeachColors.red} column={2} row={20} />
+    </DecorationContainer>
   );
 }
 
