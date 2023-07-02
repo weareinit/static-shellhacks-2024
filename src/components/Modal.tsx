@@ -17,7 +17,9 @@ function Modal({ children, containerClassName, onBgClick, backgroundClassName }:
 
   let modal = (
     <div onClick={onBgClick} id="modal-background" className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 ${backgroundClassName}`}>
-      <aside className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white/50 border-blue sm:rounded-md overflow-y-scroll w-90 border-2 ${containerClassName}`}>{children}</aside>
+      <aside className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white sm:rounded-md overflow-y-scroll w-90 border-2 border-blue ${containerClassName}`}>
+        {children}
+      </aside>
     </div>
   );
 

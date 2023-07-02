@@ -15,7 +15,7 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
         <h1 className=" pt-1 row-start-2 row-span-1 font-pixel underline text-blue text-3xl">
           Registration
         </h1>
-        <Button className="font-pixel text-xl  text-blue" onClick={toClose}>
+        <Button className="font-pixel text-xl  text-blue hover:underline" onClick={toClose}>
           <h1 className="text-base">CLOSE</h1>
         </Button>
       </header>
