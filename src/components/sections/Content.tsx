@@ -23,7 +23,7 @@ function Content() {
 
   return (
     // TODO: Implement sky section design, with About Us, Welcome, FAQ
-    <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10 pb-24">
+    <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
       <MLHBanner />
       <Welcome />
       <AboutUs />
