@@ -2,8 +2,15 @@ import React from "react";
 
 import Image from "next/image";
 
+export enum BeachColors {
+  red = "red",
+  blue = "blue",
+  green = "green",
+  yellow = "yellow",
+}
+
 export interface BeachChairPropsType {
-  color: "blue" | "red" | "yellow" | "green";
+  color: BeachColors;
   row: number;
   column: number;
   chairKey?: string;
