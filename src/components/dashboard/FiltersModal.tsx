@@ -1,10 +1,16 @@
 import { useReducer, useState, useEffect } from "react";
 
-export default function Filters({ updateFilters }) {
-  const applicationStates = ["pending", "in-wave", "accepted", "withdrawn", "waitlisted"];
-  const [applicationStatus, setApplicationStatus] = useState("pending");
+interface FiltersPropType {
+  handleFilterChange: (filters: any) => void;
+}
 
-  const updateFilters = useEffect;
+export default function Filters({ handleFilterChange }: FiltersPropType) {
+  const applicationStates = ["registered", "in_wave", "accepted", "withdrawn", "confirmed"];
+  const [applicationStatus, setApplicationStatus] = useState("registered");
+
+  useEffect(() => {
+    handleFilterChange({ event_id: 1, application_status: applicationStatus });
+  }, [applicationStatus]);
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
