@@ -141,7 +141,7 @@ function RegisterForm() {
 
             <TextInput label="Email" name="email" type="email" isRequired />
             <TextInput label="Phone Number" name="phone_number" type="tel" isRequired />
-            <FileInput label="Resume" name="resume" isRequired maxSize={5 * 1024 * 1024} />
+            <FileInput label="Resume" name="resume" isRequired maxSize={1 * 1024 * 1024} />
             <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
