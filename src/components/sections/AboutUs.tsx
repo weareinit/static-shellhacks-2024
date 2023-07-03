@@ -4,7 +4,7 @@ import FillImage from "../FillImage";
 
 function AboutUsImages() {
   return (
-    <div className="relative w-[400px] h-[300px]">
+    <div className="relative w-[300px] h-[300px]">
       <div className="absolute w-fit top-0 left-0 hover:z-10">
         <FillImage src="/assets/init_eboard_mem.jpeg" alt="The INIT Eboard" className="w-52 h-52 rounded-pixel" />
       </div>
