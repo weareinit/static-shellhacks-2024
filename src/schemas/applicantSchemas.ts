@@ -22,7 +22,7 @@ export const applicantFiltersSchema = z.object({
   hacker_id: z.number().optional(),
   application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
   school: z.string().optional(),
-  outFormat: z.string().optional(),
+  format: z.string().optional(),
 });
 
 export const newApplicantSchema = z.object({

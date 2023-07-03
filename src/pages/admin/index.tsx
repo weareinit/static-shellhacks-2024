@@ -17,10 +17,11 @@ interface ApplicantsTableProps {
 
 const getApplicants = async (filters: ApplicantFilterType) => {
   const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
+  console.log(params);
   const response = await fetch(`/api/admin/applications?${params}`, {
     method: "GET",
     headers: {
-      "Content-Type": "applicant/json",
+      "Content-Type": "applicantion/json",
     },
   });
 
@@ -68,6 +69,26 @@ export default withPageAuthRequired(function AdminDashboard() {
   const applicantData = data;
   console.log(applicantData);
 
+  const downloadCsv = async () => {
+    const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
+
+    const response = await fetch(`/api/admin/applications?${params}&format=csv`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "text/csv",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error fetching applicant");
+    }
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    return;
+  };
+
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="flex justify-between mb-4 row">
@@ -87,7 +108,9 @@ export default withPageAuthRequired(function AdminDashboard() {
             <button className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
               Filters
             </button>
-            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Export</button>
+            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={downloadCsv}>
+              Export
+            </button>
           </div>
         </div>
 
