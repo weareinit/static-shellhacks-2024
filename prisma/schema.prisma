@@ -32,6 +32,7 @@ model Hacker_Applications {
   grad_year          Int
   level_of_study     String                   @db.VarChar(250)
   country            String                   @db.VarChar(50)
+  created_at         DateTime                 @default(now())
   // SOCIALS
   email              String                   @unique @db.VarChar(60)
   phone_number       String                   @db.VarChar(20)

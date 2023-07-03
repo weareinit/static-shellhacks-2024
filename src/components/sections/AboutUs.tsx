@@ -4,9 +4,9 @@ import FillImage from "../FillImage";
 
 function AboutUsImages() {
   return (
-    <div className="relative w-[400px] h-[300px]">
+    <div className="relative w-[300px] h-[300px]">
       <div className="absolute w-fit top-0 left-0 hover:z-10">
-        <FillImage src="/assets/init_eboard_mem.jpeg" alt="The INIT Eboard" className="w-52 h-52 rounded-pixel" />
+        <FillImage src="/assets/init_eboard_mem.jpeg" alt="A ShellHacks volunteer holding up a ShellHacks 2022 sign" className="w-52 h-52 rounded-pixel" />
       </div>
       <div className="absolute w-fit bottom-0 right-0 hover:z-10">
         <FillImage src="/assets/cup_stack.jpeg" alt="Hackathon participants in last year's shellhacks" className=" w-52 h-52 rounded-pixel" />

@@ -189,12 +189,9 @@ function RegisterForm() {
             <CheckboxInput
               label={
                 <h2>
-              By checking this box, you acknowledge and authorize the sharing 
-              of your registration information with corporate sponsors for the 
-              purpose of exploring potential job opportunities. This sharing of 
-              information allows us to connect you with relevant corporate sponsors 
-              who may be interested in considering you for employment or related opportunities. 
-              </h2>
+                  By checking this box, you acknowledge and authorize the sharing of your registration information with corporate sponsors for the purpose of exploring potential job opportunities.
+                  This sharing of information allows us to connect you with relevant corporate sponsors who may be interested in considering you for employment or related opportunities.
+                </h2>
               }
               name="agreed_sponsors"
               hasInter
@@ -202,12 +199,7 @@ function RegisterForm() {
             />
 
             <CheckboxInput //required for us to send resumes to sponsors
-              label={
-                <h2>
-                  I authorize MLH to send me occasional emails about relevant
-                  events, career opportunities, and community announcements.
-                </h2>
-              }
+              label={<h2>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</h2>}
               name="agreed_mlh_news"
               hasInter
             />
@@ -226,14 +218,9 @@ function RegisterForm() {
               }}
             />
 
-            <Button
-              type="submit"
-              className="bg-green-600 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap"
-            >
+            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56">
               Submit
             </Button>
-
-
 
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
           </Form>

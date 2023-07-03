@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FillImage from "../FillImage";
 
 interface FAQItemProps {
   question: string;
@@ -14,20 +15,14 @@ function FAQItem({ question, answer }: FAQItemProps) {
 
   return (
     //old width max-w-[600px]
-    <div className="bg-white p-2 rounded-pixel h-fit w-full relative"> 
+    <div className="bg-white p-2 rounded-pixel h-fit w-full relative">
       <h3
         onClick={toggleItem}
         className="font-pixel font-bold text-lg decoration-blue hover:underline hover:cursor-pointer"
         style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
         {question}
-        <svg
-          className={`transform transition-transform ${showItem ? "rotate-180" : ""}`}
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-        >
+        <svg className={`transform transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
           <path fill="#3182ce" d="M7 10l5 5 5-5z" />
         </svg>
       </h3>
@@ -38,8 +33,8 @@ function FAQItem({ question, answer }: FAQItemProps) {
 
 function FAQ() {
   return (
-    <section className="flex flex-col md:flex-row m-2 p-4 max-w-[600px] lg:max-w-[900px] w-full bg-deep_blue rounded-pixel">
-      <article className="space-y-2 w-full">
+    <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center">
+      <article className="space-y-2 w-full bg-deep_blue p-2 rounded-pixel max-w-[900px]">
         <h2 className=" font-pixel text-2xl text-white mb-2">Frequently Asked Questions</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
@@ -67,6 +62,10 @@ function FAQ() {
           answer="Nothing! That’s right, ShellHacks is entirely free (even the food!) for all attendees to participate. All you need to worry about is learning new skills, developing cool projects, and having fun!"
         />
       </article>
+      {/* <div className="relative min-w-[300px] m-2">
+        <FillImage src="/assets/hackers_pic.jpeg" alt="Image of hackers at ShellHacks 2023 waiting for the hackathon to start." className=" w-92 h-52 rounded-pixel top-0 left-0" />
+        <FillImage src="/assets/hackers_pic.jpeg" alt="Image of hackers at ShellHacks 2023 waiting for the hackathon to start." className=" w-64 h-52 rounded-pixel top-0 left-0" />
+      </div> */}
     </section>
   );
 }
