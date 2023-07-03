@@ -8,6 +8,7 @@ import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOp
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
+import SearchInput from "../input/searchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -116,6 +117,7 @@ function RegisterForm() {
           fill_in_pronouns: "",
           ethnicity: "",
           // MLH QUESTIONS
+          agreed_sponsors: false, //required for us to send resumes to sponsors
           agreed_mlh_conduct: false,
           agreed_mlh_news: false,
           agreed_mlh_privacy: false,
@@ -128,7 +130,7 @@ function RegisterForm() {
             <TextInput label="First Name" name="first_name" type="text" isRequired />
             <TextInput label="Last Name" name="last_name" type="text" isRequired />
             <TextInput label="Age" name="age" type="number" min={18} max={114} isRequired />
-            <SelectInput label="School" name="school" options={schools} isRequired />
+            <SearchInput label="School" name="school" options={schools} isRequired />
             <SelectInput label="Major" name="major" options={majorOptions} isRequired />
 
             <SelectInput label="Graduation Year" name="grad_year" options={gradYearOptions} isRequired />
@@ -139,7 +141,7 @@ function RegisterForm() {
 
             <TextInput label="Email" name="email" type="email" isRequired />
             <TextInput label="Phone Number" name="phone_number" type="tel" isRequired />
-            <FileInput label="Resume" name="resume" isRequired />
+            <FileInput label="Resume" name="resume" isRequired maxSize={5 * 1024 * 1024} />
             <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
@@ -182,14 +184,22 @@ function RegisterForm() {
               }
               name="agreed_mlh_privacy"
               hasInter
-              isRequired
             />
 
             <CheckboxInput
-              label="
-                  I authorize MLH to send me occasional emails about relevant
-                  events, career opportunities, and community announcements.
-              "
+              label={
+                <h2>
+                  By checking this box, you acknowledge and authorize the sharing of your registration information with corporate sponsors for the purpose of exploring potential job opportunities.
+                  This sharing of information allows us to connect you with relevant corporate sponsors who may be interested in considering you for employment or related opportunities.
+                </h2>
+              }
+              name="agreed_sponsors"
+              hasInter
+              isRequired
+            />
+
+            <CheckboxInput //required for us to send resumes to sponsors
+              label={<h2>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</h2>}
               name="agreed_mlh_news"
               hasInter
             />
@@ -200,10 +210,18 @@ function RegisterForm() {
               onChange={(code: string | null) => {
                 props.setFieldValue("recaptcha", code);
               }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "1rem",
+                marginBottom: "1rem", // Adjust the margin top as needed
+              }}
             />
-            <Button type="submit" className="sm:m-auto w-full mt-3 sm:mt-5">
+
+            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56">
               Submit
             </Button>
+
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
           </Form>
         )}

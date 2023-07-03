@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalPropsType {
@@ -8,27 +8,24 @@ interface ModalPropsType {
   backgroundClassName?: string;
 }
 
-function Modal({
-  children,
-  containerClassName,
-  onBgClick,
-  backgroundClassName,
-}: ModalPropsType) {
+function Modal({ children, containerClassName, onBgClick, backgroundClassName }: ModalPropsType) {
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
   let modal = (
-    <div
-      onClick={onBgClick}
-      id="modal-background"
-      className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 backdrop-blur-sm ${backgroundClassName}`}
-    >
-      <aside
-        className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white/50 border-blue sm:rounded-md overflow-y-scroll w-90 border-2 ${containerClassName}`}
-      >
-        {children}
-      </aside>
+    <div onClick={onBgClick} id="modal-background" className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 ${backgroundClassName}`}>
+      <aside className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white sm:rounded-md overflow-y-scroll w-90 border-2 border-blue ${containerClassName}`}>{children}</aside>
     </div>
   );
 
-  return <>{createPortal(modal, document.body)}</>;
+  if (isBrowser) {
+    return <>{createPortal(modal, document.body)}</>;
+  } else {
+    return <></>;
+  }
 }
 
 export default Modal;
