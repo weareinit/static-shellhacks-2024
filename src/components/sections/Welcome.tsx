@@ -14,8 +14,8 @@ function Welcome() {
     <section className="flex flex-col items-center justify-center w-96 h-fit min-h-screen">
       <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={800} height={300} className=" drop-shadow-md" />
       <div className="my-4">
-        <h2 className="text-blue text-center font-pixel font-bold text-md underline">{"Florida's Largest Hackathon"}</h2>
-        <h3 className="text-blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
+        <h2 className="text-deep_blue text-center font-pixel font-bold text-md underline">{"Florida's Largest Hackathon"}</h2>
+        <h3 className="text-deep_blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
         {finishedRegistration ? (
@@ -40,13 +40,13 @@ function Welcome() {
 
         <div className=" row-start-2 col-span-full space-x-2 mt-1">
           <Link href="/dashboard">
-            <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline">
               <h2 className="font-pixel text-sm py-1">Dashboard</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
-            <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline">
               <h2 className="font-pixel text-sm py-1">Sponsor Us</h2>
             </Button>
           </Link>
@@ -54,20 +54,20 @@ function Welcome() {
 
         <div className="flex flex-row space-x-1 justify-center col-span-full row-start-3 self-start">
           <Link href="https://discord.com/invite/init" target="_blank">
-            <SiDiscord size={30} className="hover:fill-green-600 hover:cursor-pointer" />
+            <SiDiscord size={30} className="hover:fill-green-600 hover:cursor-pointer fill-deep_blue" />
           </Link>
           <Link href="https://www.instagram.com/initofficial/" target="_blank">
-            <AiFillInstagram size={30} className="hover:fill-green-600 hover:cursor-pointer" />
+            <AiFillInstagram size={30} className="hover:fill-green-600 hover:cursor-pointer fill-deep_blue" />
           </Link>
           <Link href="https://twitter.com/initfiu" target="_blank">
-            <AiFillTwitterSquare size={30} className="hover:fill-green-600 hover:cursor-pointer" />
+            <AiFillTwitterSquare size={30} className="hover:fill-green-600 hover:cursor-pointer fill-deep_blue" />
           </Link>
 
           <Link href="https://www.facebook.com/init.fiu" target="_blank">
-            <AiFillFacebook size={30} className="hover:fill-green-600 hover:cursor-pointer" />
+            <AiFillFacebook size={30} className="hover:fill-green-600 hover:cursor-pointer fill-deep_blue" />
           </Link>
           <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
-            <AiFillLinkedin size={30} className="hover:fill-green-600 hover:cursor-pointer" />
+            <AiFillLinkedin size={30} className="hover:fill-green-600 hover:cursor-pointer fill-deep_blue" />
           </Link>
         </div>
       </nav>
