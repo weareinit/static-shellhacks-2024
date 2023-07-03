@@ -53,7 +53,7 @@ export const sendConfirmationEmail = async (toEmail: string, firstName: string) 
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "welcome-email",
+    Template: "welcome-email-2",
     TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
