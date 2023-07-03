@@ -15,6 +15,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 function RegisterForm() {
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { schools, countries } = useFormOptionContext();
   const { setFinishedRegistration, setShowRegistration } = useShowRegistrationContext();
@@ -71,9 +72,10 @@ function RegisterForm() {
   }
 
   const handleSubmit = async (values: ApplicantValues) => {
-    // console.log("Submitting", values);
-    let { resume, fill_in_pronouns, ...body } = values;
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
+    let { resume, fill_in_pronouns, ...body } = values;
     body.pronouns = values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
 
     try {
@@ -85,6 +87,7 @@ function RegisterForm() {
       return;
     }
 
+    setIsSubmitting(false);
     setFinishedRegistration(true);
     setShowRegistration(false);
   };
@@ -218,8 +221,13 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56">
+            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
               Submit
+              {isSubmitting && (
+                <span className="ml-2">
+                  <img src="/assets/decorations/shell.svg" className="animate-spin w-5" />
+                </span>
+              )}
             </Button>
 
             {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
