@@ -29,7 +29,7 @@ const FileInput = ({ label, isRequired, maxSize, ...props }: FileInputProps) => 
     <>
       <Label className="flex flex-col">
         {isRequired ? `*${label}` : label}
-        <input type="file" accept=".doc,.docx,.pdf,.txt" onChange={handleChange} {...props} />
+        <input type="file" accept=".pdf" onChange={handleChange} {...props} />
         {meta.touched && meta.error ? <Error>{meta.error}</Error> : null}
       </Label>
     </>
