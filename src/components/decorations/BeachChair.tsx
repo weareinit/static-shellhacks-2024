@@ -14,6 +14,7 @@ export interface BeachChairPropsType {
   row: number;
   column: number;
   chairKey?: string;
+  className?: string;
 }
 
 const CHAIR_COLORS = {
@@ -25,11 +26,11 @@ const CHAIR_COLORS = {
 
 const CHAIR_SIZE = 60;
 
-function BeachChair({ color, row, column, chairKey }: BeachChairPropsType) {
+function BeachChair({ color, row, column, chairKey, className }: BeachChairPropsType) {
   return (
     <div
       key={chairKey}
-      className=" col-span-2 pointer-events-none"
+      className={`col-span-2 pointer-events-none ${className}`}
       style={{
         gridColumnStart: column,
         gridRowStart: row,
