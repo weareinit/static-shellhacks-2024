@@ -218,7 +218,7 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap">
+            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56">
               Submit
             </Button>
 
