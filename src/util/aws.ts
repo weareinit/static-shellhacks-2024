@@ -1,18 +1,6 @@
-import {
-  DeleteObjectCommand,
-  DeleteObjectCommandInput,
-  PutObjectCommand,
-  PutObjectCommandInput,
-  GetObjectCommand,
-  GetObjectCommandInput,
-} from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, GetObjectCommandInput } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import {
-  SendTemplatedEmailCommand,
-  CreateTemplateCommand,
-  type SendTemplatedEmailCommandInput,
-  CreateTemplateCommandInput,
-} from "@aws-sdk/client-ses";
+import { SendTemplatedEmailCommand, CreateTemplateCommand, type SendTemplatedEmailCommandInput, CreateTemplateCommandInput } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
 
@@ -58,17 +46,14 @@ export const deleteResume = async (resumeId: string) => {
   return await s3Client.send(command);
 };
 
-export const sendConfirmationEmail = async (
-  toEmail: string,
-  firstName: string
-) => {
+export const sendConfirmationEmail = async (toEmail: string, firstName: string) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
   const params: SendTemplatedEmailCommandInput = {
     Destination: {
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "confirmationEmailTemplateFinal4",
+    Template: "welcome-email",
     TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
@@ -76,11 +61,7 @@ export const sendConfirmationEmail = async (
   await emailClient.send(command);
 };
 
-export const createEmailTemplate = async (
-  templateName: string,
-  subjectPart: string,
-  htmlPart: string
-) => {
+export const createEmailTemplate = async (templateName: string, subjectPart: string, htmlPart: string) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/commands/CreateTemplateCommand.html
   const params: CreateTemplateCommandInput = {
     Template: {
