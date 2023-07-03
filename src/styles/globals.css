@@ -47,38 +47,38 @@ p {
 }
 
 .bg-sand {
-  background-image: url("/assets/sand_tile.png");
+  background-image: url("/assets/decorations/sand_tile.png");
   @apply tile-background;
 }
 
 .bg-shore-line {
-  background-image: url("/assets/shore_line_rotated.gif");
+  background-image: url("/assets/decorations/shore_line_rotated.gif");
   @apply tile-background;
 }
 
 .bg-water {
-  background-image: url("/assets/water_rotated.gif");
+  background-image: url("/assets/decorations/water_rotated.gif");
   @apply tile-background;
 }
 
 @media (min-width: 768px) {
   .bg-shore-line {
-    background-image: url("/assets/shore_line.gif");
+    background-image: url("/assets/decorations/shore_line.gif");
     max-width: 60px;
   }
 
   .bg-water {
-    background-image: url("/assets/water.gif");
+    background-image: url("/assets/decorations/water.gif");
   }
 }
 
 .bg-grass-tile {
-  background-image: url("/assets/grass_tile.png");
+  background-image: url("/assets/decorations/grass_tile.png");
   @apply tile-background;
 }
 
 .bg-grass {
-  background-image: url("/assets/grass.png");
+  background-image: url("/assets/decorations/grass.png");
   @apply tile-background;
 }
 

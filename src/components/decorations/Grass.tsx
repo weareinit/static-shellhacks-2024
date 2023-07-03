@@ -11,7 +11,7 @@ interface GrassProps {
 function Grass({ column, row, className }: GrassProps) {
   return (
     <div className={` ${className}`} style={{ gridColumnStart: column, gridRowStart: row }}>
-      <Image src="/assets/grass.png" alt="" />
+      <Image src="/assets/decorations/grass.png" alt="" />
     </div>
   );
 }

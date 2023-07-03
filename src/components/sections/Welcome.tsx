@@ -13,8 +13,8 @@ function Welcome() {
   return (
     <section className="flex flex-col items-center justify-center w-96 h-fit min-h-screen">
       <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={800} height={300} />
-      <div className="my-3">
-        <h2 className="text-blue text-center font-pixel font-bold text-2xl pt-6 underline">{"Florida's Largest Hackathon"}</h2>
+      <div className="my-4">
+        <h2 className="text-blue text-center font-pixel font-bold text-md underline">{"Florida's Largest Hackathon"}</h2>
         <h3 className="text-blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
@@ -41,13 +41,13 @@ function Welcome() {
         <div className=" row-start-2 col-span-full space-x-2 mt-1">
           <Link href="/dashboard">
             <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
-              <h2 className="font-pixel">Dashboard</h2>
+              <h2 className="font-pixel text-sm py-1">Dashboard</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
             <Button className="md:min-w-[175px] bg-blue text-white hover:underline">
-              <h2 className="font-pixel">Sponsor Us</h2>
+              <h2 className="font-pixel text-sm py-1">Sponsor Us</h2>
             </Button>
           </Link>
         </div>

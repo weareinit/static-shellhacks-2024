@@ -2,27 +2,35 @@ import React from "react";
 
 import Image from "next/image";
 
+export enum BeachColors {
+  red = "red",
+  blue = "blue",
+  green = "green",
+  yellow = "yellow",
+}
+
 export interface BeachChairPropsType {
-  color: "blue" | "red" | "yellow" | "green";
+  color: BeachColors;
   row: number;
   column: number;
   chairKey?: string;
+  className?: string;
 }
 
 const CHAIR_COLORS = {
-  blue: "/assets/blue_umbrella.png",
-  red: "/assets/red_umbrella.png",
-  yellow: "/assets/yellow_umbrella.png",
-  green: "/assets/green_umbrella.png",
+  blue: "/assets/decorations/blue_umbrella.png",
+  red: "/assets/decorations/red_umbrella.png",
+  yellow: "/assets/decorations/yellow_umbrella.png",
+  green: "/assets/decorations/green_umbrella.png",
 };
 
 const CHAIR_SIZE = 60;
 
-function BeachChair({ color, row, column, chairKey }: BeachChairPropsType) {
+function BeachChair({ color, row, column, chairKey, className }: BeachChairPropsType) {
   return (
     <div
       key={chairKey}
-      className=" col-span-2 pointer-events-none"
+      className={`col-span-2 pointer-events-none ${className}`}
       style={{
         gridColumnStart: column,
         gridRowStart: row,

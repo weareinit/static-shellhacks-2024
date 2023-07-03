@@ -6,7 +6,7 @@ function BlurBackdrop() {
   useEffect(() => {
     setIsBrowser(true);
   }, []);
-  let backdrop = <div className=" fixed top-0 left-0 w-screen h-screen backdrop-blur-xs" />;
+  let backdrop = <div className=" fixed top-0 left-0 w-screen h-screen backdrop-blur-sm" />;
   if (isBrowser) {
     return createPortal(backdrop, document.body);
   } else {
