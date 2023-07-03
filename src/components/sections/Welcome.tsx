@@ -38,15 +38,15 @@ function Welcome() {
           </div>
         )}
 
-        <div className=" row-start-2 col-span-full space-x-2 mt-1">
+        <div className=" row-start-2 col-span-full space-x-2 mt-1 grid grid-cols-2">
           <Link href="/dashboard">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline">
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full">
               <h2 className="font-pixel text-sm py-1">Dashboard</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline">
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full">
               <h2 className="font-pixel text-sm py-1">Sponsor Us</h2>
             </Button>
           </Link>

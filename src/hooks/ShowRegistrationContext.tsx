@@ -18,14 +18,9 @@ export function useShowRegistrationContext() {
   return useContext(ShowRegistrationContext);
 }
 
-export function ShowRegistrationProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function ShowRegistrationProvider({ children }: { children: React.ReactNode }) {
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
-  const [finishedRegistration, setFinishedRegistration] =
-    useState<boolean>(false);
+  const [finishedRegistration, setFinishedRegistration] = useState<boolean>(true);
 
   return (
     <ShowRegistrationContext.Provider
