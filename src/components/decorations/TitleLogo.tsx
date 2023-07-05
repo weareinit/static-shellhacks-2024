@@ -7,7 +7,7 @@ const NARROW_SCREEN_LOGO_WIDTH_PERCENTAGE: number = 0.75;
 export default function TitleLogo() {
   const titleReference = useRef<HTMLDivElement>();
   const { width: windowWidth = 1000 } = useWindowSize();
-  const isWideScreen = !!(windowWidth > 750);
+  const isWideScreen: boolean = windowWidth > 750;
 
   // We need an even round number as any decimals in height/width break the "flipbook" effectt
   const adjustedSpriteFrameWidth = isWideScreen
@@ -33,4 +33,4 @@ export default function TitleLogo() {
   );
 }
 
-const evenOutOddNumber = (number: number) => (number % 2 == 0 ? number : number + 1);
+const evenOutOddNumber = (num: number) => (num % 2 == 0 ? num : num + 1);
