@@ -17,7 +17,6 @@ interface ApplicantsTableProps {
 
 const getApplicants = async (filters: ApplicantFilterType) => {
   const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
-  console.log(params);
   const response = await fetch(`/api/admin/applications?${params}`, {
     method: "GET",
     headers: {
@@ -60,14 +59,11 @@ const ApplicantsTable = ({ data, isLoading, error }: ApplicantsTableProps) => {
 export default withPageAuthRequired(function AdminDashboard() {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
-  const [filters, setFilters] = useState<ApplicantFilterType>({ event_id: 1 });
+  const [filters, setFilters] = useState<ApplicantFilterType>({ application_status: "registered" });
 
   const { data, isLoading, error } = useQuery(["applicants", filters], () => getApplicants(filters), {
     select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
   });
-
-  const applicantData = data;
-  console.log(applicantData);
 
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
@@ -91,24 +87,25 @@ export default withPageAuthRequired(function AdminDashboard() {
 
   return (
     <main className="bg-sand min-h-screen p-5">
-      <div className="flex justify-between mb-4 row">
-        <Link href="/">
-          <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
-        </Link>
-        <Link href="/api/auth/logout">
-          <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-        </Link>
-      </div>
+      <div className="p-5 pt-0">
+        <div className="flex justify-between mb-10 row">
+          <Link href="/">
+            <h3 className="underline text-green-500 hover:text-green-600 text-xl font-pixel">Home</h3>
+          </Link>
+          <Link href="/api/auth/logout">
+            <h3 className="underline text-red-500 hover:text-red-600 text-xl font-pixel">Logout</h3>
+          </Link>
+        </div>
 
-      <div className="bg-white rounded-md shadow-md p-5">
         <div className="flex justify-between mb-5 row align-middle items-center">
           <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
           <div className="flex row">
-            <input className="border border-gray-300 rounded-md p-1 mr-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
-            <button className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
+            <input className="border border-gray-300 font-pixel text-md pl-1 mr-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
+
+            <button className="bg-deep_blue font-pixel text-md hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
               Filters
             </button>
-            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={downloadCsv}>
+            <button className="font-pixel text-md bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={downloadCsv}>
               Export
             </button>
           </div>

@@ -36,6 +36,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       where: {
         ...filters,
       },
+      orderBy: {
+        created_at: "desc",
+      },
     });
 
     if (outFormat === "csv") {
