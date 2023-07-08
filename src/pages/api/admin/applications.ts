@@ -29,12 +29,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       ...req.query,
     });
 
-    const outFormat = filters.outFormat;
-    delete filters.outFormat;
+    const outFormat = filters.format;
+    delete filters.format;
 
     const filteredApplicants = await prisma.hacker_Applications.findMany({
       where: {
         ...filters,
+      },
+      orderBy: {
+        created_at: "desc",
       },
     });
 

@@ -18,11 +18,16 @@ export const applicantStatusChangeSchema = z.object({
 });
 
 export const applicantFiltersSchema = z.object({
-  event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
+  //event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
   hacker_id: z.number().optional(),
   application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+  grad_year: z
+    .string()
+    .regex(/^(202[2-8])$/)
+    .transform(Number)
+    .optional(),
   school: z.string().optional(),
-  outFormat: z.string().optional(),
+  format: z.string().optional(),
 });
 
 export const newApplicantSchema = z.object({

@@ -1,11 +1,86 @@
 import React, { useRef, useState } from "react";
 import { Prisma } from "@prisma/client";
 import ApplicantInfo from "./ApplicantInfo";
+import Button from "../input/Button";
+
 interface ApplicantCellPropType {
   data: Prisma.Hacker_ApplicationsUncheckedCreateInput;
 }
 
 export default function ApplicantCell({ data }: ApplicantCellPropType) {
+  const [showItem, setShowItem] = useState(false);
+
+  const toggleItem = () => {
+    setShowItem((prev) => !prev);
+  };
+
+  const openResume = async (resumePath: string) => {
+    const response = await fetch(`/api/resumes/getResume?resumeId=${resumePath}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "applicant/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error fetching applicant");
+    }
+
+    const { url } = await response.json();
+    window.open(url, "_blank");
+  };
+
+  return (
+    //old width max-w-[600px]
+    <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full relative">
+      <h3 onClick={toggleItem} className="font-pixel font-bold text-lg decoration-blue hover:cursor-pointer grid grid-cols-8">
+        <span className="col-span-2 truncate">
+          {data.first_name} {data.last_name}
+        </span>
+
+        <span className="col-span-2 truncate"> {new Date(data.created_at!).toLocaleDateString()}</span>
+
+        <span className="col-span-3 truncate"> {data.school}</span>
+
+        <div className="col-span-1 flex justify-between items-center">
+          <div className="w-4 h-4 bg-blue rounded-full" />
+          <svg className={`transform transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+            <path fill="#3182ce" d="M7 10l5 5 5-5z" />
+          </svg>
+        </div>
+      </h3>
+
+      {showItem && (
+        <div className="py-4 justify-between items-center gap-3 grid grid-cols-8 px-4">
+          <div className="col-span-6">
+            <ApplicantInfo data={data} />
+          </div>
+          <div className="col-span-2 text-white">
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+              <h2 className="font-pixel text-sm py-1">View Resume</h2>
+            </Button>
+
+            <Button className="md:min-w-[175px] mt-2 bg-deep_blue text-white hover:underline col-span-1 w-full">
+              <h2 className="font-pixel text-sm py-1">Send message</h2>
+            </Button>
+
+            <div className="border-b-2 border-gray-600 mt-4" />
+
+            <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+              <h2 className="font-pixel text-sm py-1">Add to Wave</h2>
+            </Button>
+
+            <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+              <h2 className="font-pixel text-sm py-1">Waitlist</h2>
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ApplicantCellNew({ data }: ApplicantCellPropType) {
   const [active, setActive] = useState(false);
   const [height, setHeight] = useState("0px");
   const [rotate, setRotate] = useState("transform duration-700 ease");
