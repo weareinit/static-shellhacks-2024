@@ -7,15 +7,16 @@ import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } 
 
 import Button from "../input/Button";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
+import TitleLogo from "../decorations/TitleLogo";
 
 function Welcome() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
   return (
     <section className="flex flex-col items-center justify-center w-96 h-fit min-h-screen">
-      <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={800} height={300} className=" drop-shadow-md" />
+      <TitleLogo />
       <div className="my-4">
         <h2 className="text-deep_blue text-center font-pixel font-bold text-md underline">{"Florida's Largest Hackathon"}</h2>
-        <h3 className="text-deep_blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
+        <h3 className="text-deep_blue text-center font-pixel font-bold text-md">September | In Person, Miami, Florida</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
         {finishedRegistration ? (
