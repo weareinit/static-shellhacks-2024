@@ -60,7 +60,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
             <button className="bg-deep_blue font-pixel text-md hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
               Filters
             </button>
-            <button className="font-pixel text-md bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={downloadCsv}>
+            <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
               Export
             </button>
           </div>
