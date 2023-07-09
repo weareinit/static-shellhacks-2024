@@ -31,6 +31,10 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
     window.open(url, "_blank");
   };
 
+  const setAppStatus = async (application_status: string) => {
+    await handleAppStatusChange.mutate({ hacker_id: data.hacker_id, application_status });
+  };
+
   return (
     //old width max-w-[600px]
     <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full relative">
@@ -67,11 +71,11 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
 
             <div className="border-b-2 border-gray-600 mt-4" />
 
-            <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => handleAppStatusChange(data.hacker_id, "in_wave")}>
+            <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("in_wave")}>
               <h2 className="font-pixel text-sm py-1">Add to Wave</h2>
             </Button>
 
-            <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => handleAppStatusChange(data.hacker_id, "waitlisted")}>
+            <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("waitlisted")}>
               <h2 className="font-pixel text-sm py-1">Waitlist</h2>
             </Button>
           </div>

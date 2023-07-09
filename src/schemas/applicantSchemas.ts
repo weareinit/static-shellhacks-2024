@@ -12,8 +12,8 @@ export const applicantUpdateSchema = z.object({
 });
 
 export const applicantStatusChangeSchema = z.object({
-  event_id: z.string().regex(/^\d+$/).transform(Number),
-  hacker_id: z.string().regex(/^\d+$/).transform(Number),
+  //event_id: z.string().regex(/^\d+$/).transform(Number),
+  hacker_id: z.number(),
   application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
 });
 

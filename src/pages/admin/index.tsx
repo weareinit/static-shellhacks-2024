@@ -5,6 +5,7 @@ import ApplicantCell from "@/components/dashboard/ApplicantCell";
 import FiltersModal from "@/components/dashboard/FiltersModal";
 import { useState } from "react";
 import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
 import { z } from "zod";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
@@ -14,11 +15,6 @@ interface ApplicantsTableProps {
   isLoading: boolean;
   error: any;
   appStatusMutation: any;
-}
-
-interface AppStatusUpdate {
-  hacker_id: Number;
-  status: string;
 }
 
 const getApplicants = async (filters: ApplicantFilterType) => {
@@ -32,22 +28,6 @@ const getApplicants = async (filters: ApplicantFilterType) => {
 
   if (!response.ok) {
     throw new Error("Error fetching applicant");
-  }
-
-  return response.json();
-};
-
-const setAppStatus = async (args: AppStatusUpdate) => {
-  const response = await fetch(`/api/admin/applications`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "applicantion/json",
-    },
-    body: JSON.stringify(applicantStatusChangeSchema.parse(args)),
-  });
-
-  if (!response.ok) {
-    throw new Error("Error updating applicant");
   }
 
   return response.json();
@@ -76,17 +56,6 @@ const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: Applican
       ))}
     </>
   );
-};
-
-const useAppStatusMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (args: AppStatusUpdate) => setAppStatus(args),
-    onSuccess: () => {
-      queryClient.invalidateQueries("applicants");
-    },
-  });
 };
 
 export default withPageAuthRequired(function AdminDashboard() {
