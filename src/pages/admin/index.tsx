@@ -10,11 +10,12 @@ import { parseCSV } from "@/util/parseCSV";
 import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
+const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
 
 export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
-  const [filters, setFilters] = useState<ApplicantFilterType>({});
+  const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
 
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
   const appStatusMutation = useAppStatusMutation();
