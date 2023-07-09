@@ -8,6 +8,7 @@ import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/a
 import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
 import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
 import { z } from "zod";
+import { parseCSV } from "@/util/parseCSV";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 
@@ -43,7 +44,7 @@ const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: Applican
   );
 };
 
-export default withPageAuthRequired(function AdminDashboard() {
+export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
   const [filters, setFilters] = useState<ApplicantFilterType>({});
@@ -97,10 +98,26 @@ export default withPageAuthRequired(function AdminDashboard() {
           </div>
         </div>
 
-        {showFilters && <FiltersModal handleFilterChange={setFilters} />}
+        {showFilters && <FiltersModal handleFilterChange={setFilters} schools={schools} />}
 
         <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
       </div>
     </main>
   );
 });
+
+export async function getStaticProps() {
+  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+
+  const schools = schoolData
+    .map((school) => {
+      return school[0];
+    })
+    .splice(1);
+
+  return {
+    props: {
+      schools,
+    },
+  };
+}

@@ -8,18 +8,20 @@ import { useFormOptionContext } from "@/hooks/FormOptionContext";
 
 interface FiltersPropType {
   handleFilterChange: (filters: any) => void;
+  schools: string[];
 }
 
 const gradYears = ["any", ...gradYearOptions];
 
-export default function Filters({ handleFilterChange }: FiltersPropType) {
+export default function Filters({ handleFilterChange, schools }: FiltersPropType) {
   const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed"];
   const [applicationStatus, setApplicationStatus] = useState("any");
   const [school, setSchool] = useState("any");
   const [gradYear, setGradYear] = useState("any");
 
   //const { schools, countries } = useFormOptionContext();
-  const schools = ["any", "Florida International University", "The University of Florida"];
+  //const schools = ["any", "Florida International University", "The University of Florida"];
+  const schoolOptions = ["any", ...schools];
 
   useEffect(() => {
     let filters: Record<string, string> = {};
@@ -60,7 +62,7 @@ export default function Filters({ handleFilterChange }: FiltersPropType) {
         <div className="my-1">
           <Label>School:</Label>
           <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={school} onChange={(e) => setSchool(e.target.value)}>
-            {schools.map((state) => (
+            {schoolOptions.map((state) => (
               <option key={state} value={state}>
                 {state}
               </option>
