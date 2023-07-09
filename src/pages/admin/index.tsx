@@ -6,6 +6,7 @@ import FiltersModal from "@/components/dashboard/FiltersModal";
 import { useState } from "react";
 import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
 import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
+import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
 import { z } from "zod";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
@@ -16,22 +17,6 @@ interface ApplicantsTableProps {
   error: any;
   appStatusMutation: any;
 }
-
-const getApplicants = async (filters: ApplicantFilterType) => {
-  const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
-  const response = await fetch(`/api/admin/applications?${params}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "applicantion/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Error fetching applicant");
-  }
-
-  return response.json();
-};
 
 const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: ApplicantsTableProps) => {
   if (isLoading) {
@@ -63,10 +48,7 @@ export default withPageAuthRequired(function AdminDashboard() {
   const [name, setName] = useState("");
   const [filters, setFilters] = useState<ApplicantFilterType>({ application_status: "registered" });
 
-  const { data, isLoading, error } = useQuery(["applicants", filters], () => getApplicants(filters), {
-    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
-  });
-
+  const { data, isLoading, error } = useApplicantsQuery(filters, name);
   const appStatusMutation = useAppStatusMutation();
 
   const downloadCsv = async () => {
