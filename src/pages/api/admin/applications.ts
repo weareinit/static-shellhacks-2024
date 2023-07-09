@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method == "PUT") {
     const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({
       event_id: "1",
-      hacker_id: req.query.hackerId,
+      //hacker_id: req.query.hackerId,
       ...req.body,
     });
 

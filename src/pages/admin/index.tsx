@@ -1,10 +1,10 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient, useMutation } from "react-query";
 import Link from "next/link";
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
 import FiltersModal from "@/components/dashboard/FiltersModal";
 import { useState } from "react";
-import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
 import { z } from "zod";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
@@ -13,6 +13,12 @@ interface ApplicantsTableProps {
   data: any;
   isLoading: boolean;
   error: any;
+  appStatusMutation: any;
+}
+
+interface AppStatusUpdate {
+  hacker_id: Number;
+  status: string;
 }
 
 const getApplicants = async (filters: ApplicantFilterType) => {
@@ -31,7 +37,23 @@ const getApplicants = async (filters: ApplicantFilterType) => {
   return response.json();
 };
 
-const ApplicantsTable = ({ data, isLoading, error }: ApplicantsTableProps) => {
+const setAppStatus = async (args: AppStatusUpdate) => {
+  const response = await fetch(`/api/admin/applications`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "applicantion/json",
+    },
+    body: JSON.stringify(applicantStatusChangeSchema.parse(args)),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error updating applicant");
+  }
+
+  return response.json();
+};
+
+const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: ApplicantsTableProps) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -50,10 +72,21 @@ const ApplicantsTable = ({ data, isLoading, error }: ApplicantsTableProps) => {
   return (
     <>
       {data.map((entry: any, index: number) => (
-        <ApplicantCell data={entry} key={index} />
+        <ApplicantCell data={entry} key={index} handleAppStatusChange={appStatusMutation} />
       ))}
     </>
   );
+};
+
+const useAppStatusMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (args: AppStatusUpdate) => setAppStatus(args),
+    onSuccess: () => {
+      queryClient.invalidateQueries("applicants");
+    },
+  });
 };
 
 export default withPageAuthRequired(function AdminDashboard() {
@@ -64,6 +97,8 @@ export default withPageAuthRequired(function AdminDashboard() {
   const { data, isLoading, error } = useQuery(["applicants", filters], () => getApplicants(filters), {
     select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
   });
+
+  const appStatusMutation = useAppStatusMutation();
 
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
@@ -113,7 +148,7 @@ export default withPageAuthRequired(function AdminDashboard() {
 
         {showFilters && <FiltersModal handleFilterChange={setFilters} />}
 
-        <ApplicantsTable data={data} isLoading={isLoading} error={error} />
+        <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
       </div>
     </main>
   );

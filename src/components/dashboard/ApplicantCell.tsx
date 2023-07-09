@@ -5,9 +5,10 @@ import Button from "../input/Button";
 
 interface ApplicantCellPropType {
   data: Prisma.Hacker_ApplicationsUncheckedCreateInput;
+  handleAppStatusChange: any;
 }
 
-export default function ApplicantCell({ data }: ApplicantCellPropType) {
+export default function ApplicantCell({ data, handleAppStatusChange }: ApplicantCellPropType) {
   const [showItem, setShowItem] = useState(false);
 
   const toggleItem = () => {
@@ -66,11 +67,11 @@ export default function ApplicantCell({ data }: ApplicantCellPropType) {
 
             <div className="border-b-2 border-gray-600 mt-4" />
 
-            <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+            <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => handleAppStatusChange(data.hacker_id, "in_wave")}>
               <h2 className="font-pixel text-sm py-1">Add to Wave</h2>
             </Button>
 
-            <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+            <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => handleAppStatusChange(data.hacker_id, "waitlisted")}>
               <h2 className="font-pixel text-sm py-1">Waitlist</h2>
             </Button>
           </div>
