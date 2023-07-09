@@ -46,7 +46,7 @@ const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: Applican
 export default withPageAuthRequired(function AdminDashboard() {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
-  const [filters, setFilters] = useState<ApplicantFilterType>({ application_status: "registered" });
+  const [filters, setFilters] = useState<ApplicantFilterType>({});
 
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
   const appStatusMutation = useAppStatusMutation();

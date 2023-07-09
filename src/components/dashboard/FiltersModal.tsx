@@ -13,8 +13,8 @@ interface FiltersPropType {
 const gradYears = ["any", ...gradYearOptions];
 
 export default function Filters({ handleFilterChange }: FiltersPropType) {
-  const applicationStatusOptions = ["registered", "in_wave", "accepted", "withdrawn", "confirmed"];
-  const [applicationStatus, setApplicationStatus] = useState("registered");
+  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed"];
+  const [applicationStatus, setApplicationStatus] = useState("any");
   const [school, setSchool] = useState("any");
   const [gradYear, setGradYear] = useState("any");
 
@@ -22,9 +22,10 @@ export default function Filters({ handleFilterChange }: FiltersPropType) {
   const schools = ["any", "Florida International University", "The University of Florida"];
 
   useEffect(() => {
-    let filters: Record<string, string> = { application_status: applicationStatus };
+    let filters: Record<string, string> = {};
     if (school !== "any") filters = { ...filters, school };
     if (gradYear !== "any") filters = { ...filters, grad_year: gradYear };
+    if (applicationStatus !== "any") filters = { ...filters, application_status: applicationStatus };
 
     handleFilterChange(filters);
   }, [applicationStatus, gradYear, school]);
@@ -70,18 +71,3 @@ export default function Filters({ handleFilterChange }: FiltersPropType) {
     </div>
   );
 }
-
-/*
-/* Application Status Filter
-      <div className="mb-4">
-        <label htmlFor="applicationStatus" className="mr-2">
-          Application Status:
-        </label>
-        <select id="applicationStatus" value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value)}>
-          {applicationStates.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
-      </div>*/
