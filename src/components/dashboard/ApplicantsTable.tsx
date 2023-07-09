@@ -1,4 +1,5 @@
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
+import LoadingSpinner from "../misc/LoadingSpinner";
 
 interface ApplicantsTableProps {
   data: any;
@@ -27,5 +28,9 @@ export default function ({ data, isLoading, error, appStatusMutation }: Applican
     );
   }
 
-  return <p>Loading...</p>;
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <LoadingSpinner />
+    </div>
+  );
 }
