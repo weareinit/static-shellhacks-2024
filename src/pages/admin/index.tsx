@@ -1,48 +1,15 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery, useQueryClient, useMutation } from "react-query";
 import Link from "next/link";
-import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import FiltersModal from "@/components/dashboard/FiltersModal";
+import FiltersModal from "@/components/dashboard/Filters";
 import { useState } from "react";
-import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
 import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
 import { z } from "zod";
 import { parseCSV } from "@/util/parseCSV";
+import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
-
-interface ApplicantsTableProps {
-  data: any;
-  isLoading: boolean;
-  error: any;
-  appStatusMutation: any;
-}
-
-const ApplicantsTable = ({ data, isLoading, error, appStatusMutation }: ApplicantsTableProps) => {
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return (
-      <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">This account doesn't have admin privileges</h1>
-        <p>You might need to login using a different account.</p>
-      </div>
-    );
-  }
-
-  if (!data) return <p>No data</p>;
-
-  return (
-    <>
-      {data.map((entry: any, index: number) => (
-        <ApplicantCell data={entry} key={index} handleAppStatusChange={appStatusMutation} />
-      ))}
-    </>
-  );
-};
 
 export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);

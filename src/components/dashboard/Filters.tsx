@@ -1,10 +1,6 @@
-import { useReducer, useState, useEffect } from "react";
-import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation, gradYearOptions } from "@/util/RegistrationData";
-import SelectInput from "../input/SelectInput";
-import { Formik, Form, FormikProps } from "formik";
-import SearchInput from "../input/searchInput";
+import { useState, useEffect } from "react";
+import { gradYearOptions } from "@/util/RegistrationData";
 import Label from "../input/Label";
-import { useFormOptionContext } from "@/hooks/FormOptionContext";
 
 interface FiltersPropType {
   handleFilterChange: (filters: any) => void;
@@ -19,8 +15,6 @@ export default function Filters({ handleFilterChange, schools }: FiltersPropType
   const [school, setSchool] = useState("any");
   const [gradYear, setGradYear] = useState("any");
 
-  //const { schools, countries } = useFormOptionContext();
-  //const schools = ["any", "Florida International University", "The University of Florida"];
   const schoolOptions = ["any", ...schools];
 
   useEffect(() => {
