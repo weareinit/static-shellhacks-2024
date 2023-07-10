@@ -63,8 +63,8 @@ export default function Filters({ filters, setFilters, schools }: FiltersPropTyp
         <div className="my-1">
           <Label>School:</Label>
           <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={filters["school"] || "any"} onChange={(e) => handleFilterChange("school", e.target.value)}>
-            {schoolOptions.map((state) => (
-              <option key={state} value={state}>
+            {schoolOptions.map((state, i) => (
+              <option key={i} value={state}>
                 {state}
               </option>
             ))}
