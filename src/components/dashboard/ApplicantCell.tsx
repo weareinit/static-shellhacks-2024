@@ -44,8 +44,6 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
     await handleAppStatusChange.mutate({ hacker_id: data.hacker_id, application_status });
   };
 
-  console.log(applicationStatusColorMapping[data.application_status!]);
-
   return (
     <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full relative">
       <h3 onClick={toggleItem} className="font-pixel font-bold text-lg decoration-blue hover:cursor-pointer grid grid-cols-8">

@@ -73,7 +73,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
           </div>
         </div>
 
-        {showFilters && <FiltersModal handleFilterChange={setFilters} schools={schools} />}
+        {showFilters && <FiltersModal filters={filters} setFilters={setFilters} schools={schools} />}
 
         <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
       </div>

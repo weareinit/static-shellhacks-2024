@@ -1,30 +1,32 @@
 import { useState, useEffect } from "react";
 import { gradYearOptions } from "@/util/RegistrationData";
 import Label from "../input/Label";
+import z from "zod";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+
+type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 
 interface FiltersPropType {
-  handleFilterChange: (filters: any) => void;
+  filters: Record<string, any>;
+  setFilters: any;
   schools: string[];
 }
 
 const gradYears = ["any", ...gradYearOptions];
 
-export default function Filters({ handleFilterChange, schools }: FiltersPropType) {
+export default function Filters({ filters, setFilters, schools }: FiltersPropType) {
   const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
-  const [applicationStatus, setApplicationStatus] = useState("registered");
-  const [school, setSchool] = useState("any");
-  const [gradYear, setGradYear] = useState("any");
 
   const schoolOptions = ["any", ...schools];
 
-  useEffect(() => {
-    let filters: Record<string, string> = {};
-    if (school !== "any") filters = { ...filters, school };
-    if (gradYear !== "any") filters = { ...filters, grad_year: gradYear };
-    if (applicationStatus !== "any") filters = { ...filters, application_status: applicationStatus };
-
-    handleFilterChange(filters);
-  }, [applicationStatus, gradYear, school]);
+  const handleFilterChange = (field: string, value: string) => {
+    if (value === "any" && filters[field]) {
+      const { [field]: _, ...rest } = filters;
+      setFilters(rest);
+    } else {
+      setFilters((prev: Record<string, string>) => ({ ...prev, [field]: value }));
+    }
+  };
 
   return (
     <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full">
@@ -33,7 +35,12 @@ export default function Filters({ handleFilterChange, schools }: FiltersPropType
       <div className="flex flex-col">
         <div className="my-1">
           <Label>Application Status:</Label>
-          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="applicationStatus" value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value)}>
+          <select
+            className="cursor-pointer bg-white rounded-none p-1 ml-2"
+            id="applicationStatus"
+            value={filters["application_status"] || "any"}
+            onChange={(e) => handleFilterChange("application_status", e.target.value)}
+          >
             {applicationStatusOptions.map((state) => (
               <option key={state} value={state}>
                 {state}
@@ -44,7 +51,7 @@ export default function Filters({ handleFilterChange, schools }: FiltersPropType
 
         <div className="my-1">
           <Label>Graduation year:</Label>
-          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="gradYear" value={gradYear} onChange={(e) => setGradYear(e.target.value)}>
+          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="gradYear" value={filters["grad_year"] || "any"} onChange={(e) => handleFilterChange("grad_year", e.target.value)}>
             {gradYears.map((state) => (
               <option key={state} value={state}>
                 {state}
@@ -55,7 +62,7 @@ export default function Filters({ handleFilterChange, schools }: FiltersPropType
 
         <div className="my-1">
           <Label>School:</Label>
-          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={school} onChange={(e) => setSchool(e.target.value)}>
+          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={filters["school"] || "any"} onChange={(e) => handleFilterChange("school", e.target.value)}>
             {schoolOptions.map((state) => (
               <option key={state} value={state}>
                 {state}
