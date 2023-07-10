@@ -8,6 +8,7 @@ import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
 import { z } from "zod";
 import { parseCSV } from "@/util/parseCSV";
 import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
+import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
@@ -19,6 +20,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
 
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
   const appStatusMutation = useAppStatusMutation();
+  const acceptWaveMutation = useAcceptWaveMutation();
 
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
@@ -63,6 +65,11 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
             <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
               Export
             </button>
+            {filters.application_status == "in_wave" && (
+              <button className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded" onClick={() => acceptWaveMutation.mutate()}>
+                Accept Wave
+              </button>
+            )}
           </div>
         </div>
 

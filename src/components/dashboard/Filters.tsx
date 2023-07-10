@@ -10,7 +10,7 @@ interface FiltersPropType {
 const gradYears = ["any", ...gradYearOptions];
 
 export default function Filters({ handleFilterChange, schools }: FiltersPropType) {
-  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed"];
+  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
   const [applicationStatus, setApplicationStatus] = useState("registered");
   const [school, setSchool] = useState("any");
   const [gradYear, setGradYear] = useState("any");
