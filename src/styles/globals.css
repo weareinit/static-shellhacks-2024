@@ -5,8 +5,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @font-face {
-  font-family: "De Pixel";
-  src: url("/fonts/depixelklein.woff2") format("woff2");
+  font-family: "Small Pixel";
+  src: url("/fonts/small_pixel.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Broken Console";
+  src: url("/fonts/broken_console.woff2") format("woff2");
 }
 
 @layer base {
@@ -29,7 +34,7 @@ a {
 
 h1,
 h2 {
-  @apply font-pixel;
+  @apply font-console;
 }
 
 h3,
@@ -54,13 +59,17 @@ p {
   background-size: cover;
   background-repeat: no-repeat;
   image-rendering: pixelated;
-  filter: drop-shadow(4px 4px 0px rgb( 0 37 61 / 0.9));
+  filter: drop-shadow(4px 4px 0px rgb(0 37 61 / 0.9));
   animation: sprite-flow calc(150ms * 20) steps(20) infinite;
 }
 
 @keyframes sprite-flow {
-  from {background-position: 0;}
-  to {background-position: var(--title-sprite-frame-end-position);}   
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: var(--title-sprite-frame-end-position);
+  }
 }
 
 .bg-sand {
