@@ -73,9 +73,11 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
               <h2 className="font-pixel text-sm py-1">View Resume</h2>
             </Button>
 
-            <Button className="md:min-w-[175px] mt-2 bg-deep_blue text-white hover:underline col-span-1 w-full">
-              <h2 className="font-pixel text-sm py-1">Send message</h2>
-            </Button>
+            <a href={`mailto:${data.email}`}>
+              <Button className="md:min-w-[175px] mt-2 bg-deep_blue text-white hover:underline col-span-1 w-full">
+                <h2 className="font-pixel text-sm py-1">Send message</h2>
+              </Button>
+            </a>
 
             <div className="border-b-2 border-gray-600 mt-4" />
 
