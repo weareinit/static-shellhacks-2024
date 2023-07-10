@@ -36,7 +36,7 @@ function Content() {
           }}
         />
       )}
-      <BlurBackdrop />
+      {/* <BlurBackdrop /> */}
     </main>
   );
 }
