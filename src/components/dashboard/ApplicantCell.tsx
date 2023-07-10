@@ -98,12 +98,6 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
                 <h2 className="font-pixel text-sm py-1">Remove From Wave</h2>
               </Button>
             )}
-
-            {["waitlist"].includes(data.application_status!) && (
-              <Button className="md:min-w-[175px] mt-2 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("registered")}>
-                <h2 className="font-pixel text-sm py-1">Remove From Waitlist</h2>
-              </Button>
-            )}
           </div>
         </div>
       )}
