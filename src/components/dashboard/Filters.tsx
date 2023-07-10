@@ -1,30 +1,27 @@
-import { useReducer, useState, useEffect } from "react";
-import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation, gradYearOptions } from "@/util/RegistrationData";
-import SelectInput from "../input/SelectInput";
-import { Formik, Form, FormikProps } from "formik";
-import SearchInput from "../input/searchInput";
+import { useState, useEffect } from "react";
+import { gradYearOptions } from "@/util/RegistrationData";
 import Label from "../input/Label";
-import { useFormOptionContext } from "@/hooks/FormOptionContext";
 
 interface FiltersPropType {
   handleFilterChange: (filters: any) => void;
+  schools: string[];
 }
 
 const gradYears = ["any", ...gradYearOptions];
 
-export default function Filters({ handleFilterChange }: FiltersPropType) {
-  const applicationStatusOptions = ["registered", "in_wave", "accepted", "withdrawn", "confirmed"];
+export default function Filters({ handleFilterChange, schools }: FiltersPropType) {
+  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
   const [applicationStatus, setApplicationStatus] = useState("registered");
   const [school, setSchool] = useState("any");
   const [gradYear, setGradYear] = useState("any");
 
-  //const { schools, countries } = useFormOptionContext();
-  const schools = ["any", "Florida International University", "The University of Florida"];
+  const schoolOptions = ["any", ...schools];
 
   useEffect(() => {
-    let filters: Record<string, string> = { application_status: applicationStatus };
+    let filters: Record<string, string> = {};
     if (school !== "any") filters = { ...filters, school };
     if (gradYear !== "any") filters = { ...filters, grad_year: gradYear };
+    if (applicationStatus !== "any") filters = { ...filters, application_status: applicationStatus };
 
     handleFilterChange(filters);
   }, [applicationStatus, gradYear, school]);
@@ -59,7 +56,7 @@ export default function Filters({ handleFilterChange }: FiltersPropType) {
         <div className="my-1">
           <Label>School:</Label>
           <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={school} onChange={(e) => setSchool(e.target.value)}>
-            {schools.map((state) => (
+            {schoolOptions.map((state) => (
               <option key={state} value={state}>
                 {state}
               </option>
@@ -70,18 +67,3 @@ export default function Filters({ handleFilterChange }: FiltersPropType) {
     </div>
   );
 }
-
-/*
-/* Application Status Filter
-      <div className="mb-4">
-        <label htmlFor="applicationStatus" className="mr-2">
-          Application Status:
-        </label>
-        <select id="applicationStatus" value={applicationStatus} onChange={(e) => setApplicationStatus(e.target.value)}>
-          {applicationStates.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
-      </div>*/

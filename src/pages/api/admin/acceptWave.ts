@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   const admin = await isAdmin(req, res);
 
   if (!admin) {
-    res.status(403).json({ error: "Forbidden" });
+    return res.status(403).json({ error: "Forbidden" });
   }
 
   await prisma.hacker_Applications.updateMany({
@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     data: { application_status: application_status_enums.accepted },
   });
 
-  res.status(200);
+  return res.status(200).send({});
 };
 
 export default withApiAuthRequired(handler);

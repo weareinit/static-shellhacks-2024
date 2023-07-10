@@ -1,69 +1,26 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery } from "react-query";
 import Link from "next/link";
-import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import FiltersModal from "@/components/dashboard/FiltersModal";
+import FiltersModal from "@/components/dashboard/Filters";
 import { useState } from "react";
 import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
+import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
 import { z } from "zod";
+import { parseCSV } from "@/util/parseCSV";
+import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
+import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
+const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
 
-interface ApplicantsTableProps {
-  data: any;
-  isLoading: boolean;
-  error: any;
-}
-
-const getApplicants = async (filters: ApplicantFilterType) => {
-  const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
-  const response = await fetch(`/api/admin/applications?${params}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "applicantion/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Error fetching applicant");
-  }
-
-  return response.json();
-};
-
-const ApplicantsTable = ({ data, isLoading, error }: ApplicantsTableProps) => {
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return (
-      <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">This account doesn't have admin privileges</h1>
-        <p>You might need to login using a different account.</p>
-      </div>
-    );
-  }
-
-  if (!data) return <p>No data</p>;
-
-  return (
-    <>
-      {data.map((entry: any, index: number) => (
-        <ApplicantCell data={entry} key={index} />
-      ))}
-    </>
-  );
-};
-
-export default withPageAuthRequired(function AdminDashboard() {
+export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
-  const [filters, setFilters] = useState<ApplicantFilterType>({ application_status: "registered" });
+  const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
 
-  const { data, isLoading, error } = useQuery(["applicants", filters], () => getApplicants(filters), {
-    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
-  });
+  const { data, isLoading, error } = useApplicantsQuery(filters, name);
+  const appStatusMutation = useAppStatusMutation();
+  const acceptWaveMutation = useAcceptWaveMutation();
 
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
@@ -105,16 +62,37 @@ export default withPageAuthRequired(function AdminDashboard() {
             <button className="bg-deep_blue font-pixel text-md hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
               Filters
             </button>
-            <button className="font-pixel text-md bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded" onClick={downloadCsv}>
+            <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
               Export
             </button>
+            {filters.application_status == "in_wave" && (
+              <button className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded" onClick={() => acceptWaveMutation.mutate()}>
+                Accept Wave
+              </button>
+            )}
           </div>
         </div>
 
-        {showFilters && <FiltersModal handleFilterChange={setFilters} />}
+        {showFilters && <FiltersModal handleFilterChange={setFilters} schools={schools} />}
 
-        <ApplicantsTable data={data} isLoading={isLoading} error={error} />
+        <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
       </div>
     </main>
   );
 });
+
+export async function getStaticProps() {
+  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+
+  const schools = schoolData
+    .map((school) => {
+      return school[0];
+    })
+    .splice(1);
+
+  return {
+    props: {
+      schools,
+    },
+  };
+}

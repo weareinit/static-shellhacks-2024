@@ -60,4 +60,5 @@ enum application_status_enums {
   accepted
   confirmed
   withdrawn
+  waitlisted
 }
