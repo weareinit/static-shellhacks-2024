@@ -8,8 +8,8 @@ export enum TreeSide {
 
 function PalmTree({ className, treeSide }: { className: string; treeSide: TreeSide }) {
   return (
-    <div className={`relative ${className}`}>
-      <Image src={`/assets/decorations/${treeSide}`} alt="" fill />
+    <div className={`relative select-none ${className}`}>
+      <Image src={`/assets/decorations/${treeSide}`} alt="" fill draggable="false" />
     </div>
   );
 }

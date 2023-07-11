@@ -6,7 +6,8 @@ import Shoreline from "@/components/decorations/Shoreline";
 import GrassLine from "@/components/decorations/Grassline";
 import Content from "@/components/sections/Content";
 import MLHBanner from "@/components/decorations/MLHBanner";
-import Decorations from "@/components/decorations/Decorations";
+import WelcomeDecorations from "@/components/decorations/WelcomeDecorations";
+import AboutUsDecorations from "@/components/decorations/AboutUsDecorations";
 
 interface HomeProps {
   schools: string[];
@@ -16,7 +17,10 @@ interface HomeProps {
 export default function Home({ schools, countries }: HomeProps) {
   return (
     <div className="bg-sand min-h-screen min-w-screen grid grid-cols-1 md:grid-cols-12">
-      <Decorations />
+      <div className="flex flex-col col-span-10 col-start-2 row-start-1 col-end-12">
+        <WelcomeDecorations />
+        <AboutUsDecorations />
+      </div>
       <Shoreline />
       <GrassLine />
       <ShowRegistrationProvider>
