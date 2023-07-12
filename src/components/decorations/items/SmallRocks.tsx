@@ -12,13 +12,13 @@ const ROCK_SIZE = 30;
 function SmallRocks({ row, column, className }: RockProps) {
   return (
     <div
-      className={` ${className}`}
+      className={`select-none ${className}`}
       style={{
         gridRowStart: row,
         gridColumnStart: column,
       }}
     >
-      <Image src="/assets/decorations/small_rocks.png" alt="" height={ROCK_SIZE} width={ROCK_SIZE} />
+      <Image src="/assets/decorations/small_rocks.png" alt="" height={ROCK_SIZE} width={ROCK_SIZE} draggable="false" />
     </div>
   );
 }

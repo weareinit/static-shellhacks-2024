@@ -18,7 +18,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
     <div className="bg-white p-2 rounded-pixel h-fit w-full relative">
       <h3
         onClick={toggleItem}
-        className="font-pixel font-bold text-lg decoration-blue hover:underline hover:cursor-pointer"
+        className="font-inter font-bold text-lg decoration-blue hover:underline hover:cursor-pointer"
         style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
         {question}
@@ -35,7 +35,7 @@ function FAQ() {
   return (
     <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center">
       <article className="space-y-2 w-full bg-deep_blue p-2 rounded-pixel max-w-[900px]">
-        <h2 className=" font-pixel text-2xl text-white mb-2">Frequently Asked Questions</h2>
+        <h2 className=" font-console text-2xl text-white mb-2">Frequently Asked Questions</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
           question="How long is it?"

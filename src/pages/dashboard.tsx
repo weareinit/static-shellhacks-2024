@@ -1,6 +1,11 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery } from "react-query";
 import Link from "next/link";
+import Image from "next/image";
+import blue from "/public/assets/decorations/blue_umbrella.png";
+import red from "/public/assets/decorations/red_umbrella.png";
+import yellow from "/public/assets/decorations/yellow_umbrella.png";
+import green from "/public/assets/decorations/green_umbrella.png";
 
 const getapplicant = async () => {
   const response = await fetch("/api/application", {
@@ -17,12 +22,16 @@ const getapplicant = async () => {
   return response.json();
 };
 
-const HackerProfile = () => {
+const Dashboard = () => {
   const { data, isLoading, error } = useQuery("applicant", getapplicant);
   const applicantData = data?.applicant;
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return(
+      <div className="max-w-md mx-auto flex justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
   }
 
   if (!applicantData || error) {
@@ -34,56 +43,78 @@ const HackerProfile = () => {
     );
   }
 
-  return (
-    <div className="bg-white rounded-md shadow-md p-6">
-      <h1 className="text-xl mb-4 font-pixel">
-        Application for {applicantData.first_name} {applicantData.last_name}
-      </h1>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <h2 className="text-lg font-medium mb-2">Personal Information</h2>
-          <p>Age: {applicantData.age}</p>
-          <p>Country: {applicantData.country}</p>
-          <p>Gender: {applicantData.gender}</p>
-          <p>Pronouns: {applicantData.pronouns}</p>
-          <p>Ethnicity: {applicantData.ethnicity}</p>
-          <p>International: {applicantData.is_international ? "Yes" : "No"}</p>
-        </div>
-        <div>
-          <h2 className="text-lg font-medium mb-2">Education Information</h2>
-          <p>School: {applicantData.school}</p>
-          <p>Major: {applicantData.major}</p>
-          <p>Graduation Year: {applicantData.grad_year}</p>
-          <p>Level of Study: {applicantData.level_of_study}</p>
-        </div>
-      </div>
-      <div className="mt-4">
-        <h2 className="text-lg font-medium mb-2">Contact Information</h2>
-        <p>Email: {applicantData.email}</p>
-        <p>Phone Number: {applicantData.phone_number}</p>
-        <p>Discord: {applicantData.discord}</p>
-        <p>GitHub: {applicantData.github}</p>
-        <p>LinkedIn: {applicantData.linkedin}</p>
-      </div>
-      <div className="mt-4">
-        <h2 className="text-lg font-medium mb-2">Additional Information</h2>
-        <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
-        <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
-      </div>
+  let decorationImage = yellow; //defaults to yellow but this is always overwritten depending on app status
 
-      <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-        <p className="mt-4">MLH Code of Conduct</p>
-      </a>
-    </div>
-  );
-};
+  if (applicantData.application_status === "registered" || applicantData.application_status === "in_wave") {
+    decorationImage = yellow;
+  } else if (applicantData.application_status === "accepted") {
+    decorationImage = blue;
+  } else if (applicantData.application_status === "confirmed") {
+    decorationImage = green;
+  } else if (applicantData.application_status === "withdrawn") {
+    decorationImage = red;
+  }
 
-export default withPageAuthRequired(function Dashboard() {
+  //add level of study text replacement for frontend (wont affect backend entry at all)
+
   return (
     <main className="bg-sand min-h-screen p-5">
-      <div className="max-w-md mx-auto ">
-        <HackerProfile />
-
+      <div className="max-w-md mx-auto">
+        <div className="bg-white rounded-md shadow-md p-6">
+          <h1 className="text-xl mb-4 font-pixel text-center">
+            Hacker Dashboard
+          </h1>
+          <div className="mt-4">
+            <div className="bg-white rounded-md shadow-md p-6 flex flex-col items-center justify-center">
+            <h2 className="text-lg font-medium mb-2">Current Application Status</h2>
+              <div>
+                <Image src={decorationImage} alt="Umbrella Decoration" />
+              </div>
+              <p> You are {applicantData.application_status}! </p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+              <h2 className="text-lg font-medium mb-2">Personal Information</h2>
+              <p>Name: {applicantData.first_name} {applicantData.last_name}</p>
+              <p>Age: {applicantData.age}</p>
+              <p>Country: {applicantData.country}</p>
+              <p>Gender: {applicantData.gender}</p>
+              <p>Pronouns: {applicantData.pronouns}</p>
+              <p>Ethnicity: {applicantData.ethnicity}</p>
+              <p>International: {applicantData.is_international ? "Yes" : "No"}</p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+              <h2 className="text-lg font-medium mb-2">Education Information</h2>
+              <p>School: {applicantData.school}</p>
+              <p>Major: {applicantData.major}</p>
+              <p>Graduation Year: {applicantData.grad_year}</p>
+              <p>Level of Study: {applicantData.level_of_study}</p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+              <h2 className="text-lg font-medium mb-2">Contact Information</h2>
+              <p>Email: {applicantData.email}</p>
+              <p>Phone Number: {applicantData.phone_number}</p>
+              <p>Discord: {applicantData.discord}</p>
+              <p>GitHub: {applicantData.github}</p>
+              <p>LinkedIn: {applicantData.linkedin}</p>
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+              <h2 className="text-lg font-medium mb-2">Additional Information</h2>
+              <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
+              <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
+              <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+                <p className="mt-4">MLH Code of Conduct</p>
+              </a>
+            </div>
+          </div>
+        </div>
         <div className="flex justify-between mt-4 row">
           <Link href="/">
             <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
@@ -95,4 +126,6 @@ export default withPageAuthRequired(function Dashboard() {
       </div>
     </main>
   );
-});
+};
+
+export default withPageAuthRequired(Dashboard);

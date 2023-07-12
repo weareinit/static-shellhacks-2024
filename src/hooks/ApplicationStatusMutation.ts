@@ -1,0 +1,34 @@
+import { useQueryClient, useMutation } from "react-query";
+import { applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { z } from "zod";
+
+type ApplicantStatusChangeType = z.infer<typeof applicantStatusChangeSchema>;
+
+export const useAppStatusMutation = () => {
+  const queryClient = useQueryClient();
+
+  const setAppStatus = async (args: ApplicantStatusChangeType) => {
+    const response = await fetch(`/api/admin/applications`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "applicantion/json",
+      },
+      body: JSON.stringify(args),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error updating applicant");
+    }
+
+    return response.json();
+  };
+
+  return useMutation({
+    mutationFn: (args: ApplicantStatusChangeType) => setAppStatus(args),
+    onSuccess: () => {
+      queryClient.invalidateQueries("applicants");
+    },
+  });
+};
+
+export type AppStatusMutationType = ReturnType<typeof useAppStatusMutation>;

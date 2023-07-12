@@ -21,13 +21,16 @@ module.exports = {
       },
       colors: {
         deep_blue: "#3C72A7",
+        crate_brown: "#695E53",
+        caramel_brown: "#A2917C",
         grass_green: "#8EBE6B",
         blue: "#006887",
         white: "#FFF",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
-        pixel: ["De Pixel", "serif"],
+        pixel: ["Small Pixel", "serif"],
+        console: ["Broken Console", "serif"],
       },
       rotate: {
         270: "270deg",

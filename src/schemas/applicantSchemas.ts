@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const application_status_enums = ["registered", "in_wave", "accepted", "confirmed", "withdrawn", "waitlisted"] as const;
+
 export const applicantUpdateSchema = z.object({
   resume_path: z.string().optional(),
   application_status: z.literal("withdrawn").optional(),
@@ -12,17 +14,22 @@ export const applicantUpdateSchema = z.object({
 });
 
 export const applicantStatusChangeSchema = z.object({
-  event_id: z.string().regex(/^\d+$/).transform(Number),
-  hacker_id: z.string().regex(/^\d+$/).transform(Number),
-  application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]),
+  //event_id: z.string().regex(/^\d+$/).transform(Number),
+  hacker_id: z.number(),
+  application_status: z.enum(application_status_enums),
 });
 
 export const applicantFiltersSchema = z.object({
-  event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
+  //event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
   hacker_id: z.number().optional(),
-  application_status: z.enum(["registered", "in_wave", "accepted", "confirmed", "withdrawn"]).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+  application_status: z.enum(application_status_enums).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+  grad_year: z
+    .string()
+    .regex(/^(202[2-8])$/)
+    .transform(Number)
+    .optional(),
   school: z.string().optional(),
-  outFormat: z.string().optional(),
+  format: z.string().optional(),
 });
 
 export const newApplicantSchema = z.object({

@@ -7,15 +7,18 @@ import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } 
 
 import Button from "../input/Button";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
+import TitleLogo from "../decorations/TitleLogo";
 
 function Welcome() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
   return (
-    <section className="flex flex-col items-center justify-center w-96 h-fit min-h-screen">
-      <Image src="/assets/shellhacks_logo.gif" alt="ShellHacks2023" width={800} height={300} className=" drop-shadow-md" />
+    <section className="flex flex-col items-center justify-center min-w-96 h-fit min-h-screen">
+      <TitleLogo />
       <div className="my-4">
-        <h2 className="text-deep_blue text-center font-pixel font-bold text-md underline">{"Florida's Largest Hackathon"}</h2>
-        <h3 className="text-deep_blue text-center font-pixel font-bold text-md">September | Miami, Florida</h3>
+        {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}
+        <h2 className="text-crate_brown text-center font-console font-bold lg:text-3xl md:text-2xl text-lg">{"Florida's Largest Hackathon"}</h2>
+        <h3 className="text-crate_brown text-center font-pixel text-md">September | Miami, Florida</h3>
+        <h3 className="text-crate_brown text-center font-pixel text-md">In-Person</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
         {finishedRegistration ? (
@@ -40,13 +43,13 @@ function Welcome() {
 
         <div className=" row-start-2 col-span-full space-x-2 mt-1 grid grid-cols-2">
           <Link href="/dashboard">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full">
+            <Button className="md:min-w-[175px] bg-caramel_brown text-white hover:underline col-span-1 w-full">
               <h2 className="font-pixel text-sm py-1">Dashboard</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full">
+            <Button className="md:min-w-[175px] bg-caramel_brown text-white hover:underline col-span-1 w-full">
               <h2 className="font-pixel text-sm py-1">Sponsor Us</h2>
             </Button>
           </Link>
