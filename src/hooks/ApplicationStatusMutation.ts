@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation } from "react-query";
-type ApplicantStatusChangeType = z.infer<typeof applicantStatusChangeSchema>;
 import { applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
 import { z } from "zod";
+
+type ApplicantStatusChangeType = z.infer<typeof applicantStatusChangeSchema>;
 
 export const useAppStatusMutation = () => {
   const queryClient = useQueryClient();
@@ -29,3 +30,5 @@ export const useAppStatusMutation = () => {
     },
   });
 };
+
+export type AppStatusMutationType = ReturnType<typeof useAppStatusMutation>;

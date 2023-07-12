@@ -4,15 +4,36 @@ import Label from "../input/Label";
 import z from "zod";
 import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 
-type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
-
 interface FiltersPropType {
   filters: Record<string, any>;
   setFilters: any;
   schools: string[];
 }
 
+interface FilterPropType {
+  label: string;
+  options: string[];
+  filters: Record<string, any>;
+  handleOnChange: any;
+  filterName: string;
+}
+
 const gradYears = ["any", ...gradYearOptions];
+
+const Filter = ({ label, filterName, options, filters, handleOnChange }: FilterPropType) => {
+  return (
+    <div className="my-1">
+      <Label>{label}</Label>
+      <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id={filterName} value={filters[filterName] || "any"} onChange={handleOnChange}>
+        {options.map((state, i) => (
+          <option key={i} value={state}>
+            {state}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 export default function Filters({ filters, setFilters, schools }: FiltersPropType) {
   const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
@@ -33,43 +54,29 @@ export default function Filters({ filters, setFilters, schools }: FiltersPropTyp
       <h3 className="text-2xl mb-3 font-pixel font-bold">Filters</h3>
 
       <div className="flex flex-col">
-        <div className="my-1">
-          <Label>Application Status:</Label>
-          <select
-            className="cursor-pointer bg-white rounded-none p-1 ml-2"
-            id="applicationStatus"
-            value={filters["application_status"] || "any"}
-            onChange={(e) => handleFilterChange("application_status", e.target.value)}
-          >
-            {applicationStatusOptions.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Filter
+          label="Application Status:"
+          filterName="application_status"
+          options={applicationStatusOptions}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("application_status", e.target.value)}
+        />
 
-        <div className="my-1">
-          <Label>Graduation year:</Label>
-          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="gradYear" value={filters["grad_year"] || "any"} onChange={(e) => handleFilterChange("grad_year", e.target.value)}>
-            {gradYears.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Filter
+          label="Graduation year"
+          filterName="grad_year"
+          options={gradYears}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("grad_year", e.target.value)}
+        />
 
-        <div className="my-1">
-          <Label>School:</Label>
-          <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id="school" value={filters["school"] || "any"} onChange={(e) => handleFilterChange("school", e.target.value)}>
-            {schoolOptions.map((state, i) => (
-              <option key={i} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Filter
+          label="School"
+          filterName="school"
+          options={schoolOptions}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("school", e.target.value)}
+        />
       </div>
     </div>
   );
