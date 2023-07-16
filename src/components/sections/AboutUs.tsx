@@ -23,11 +23,11 @@ function AboutUs() {
       </div>
       <article>
         <h2 className="font-console text-deep_blue text-2xl mb-2">About Us</h2>
-        <p className="font-inter mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together: </p>
+        <p className="font-inter mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together to: </p>
         <ul className="list-disc ml-6 mb-2 font-inter">
-          <li>to learn the latest technologies</li>
-          <li>develop innovative solutions</li>
-          <li>network with top companies, and more!</li>
+          <li>Learn the latest technologies</li>
+          <li>Develop innovative solutions</li>
+          <li>Network with top companies, and more!</li>
         </ul>
         <p>
           Explore the world of technology through our workshop tracks. Work together with fellow students and mentors to <span className=" font-extrabold inline-block">build exciting projects</span>.
