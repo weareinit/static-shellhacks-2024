@@ -28,6 +28,7 @@ module.exports = {
         grass_green: "#8EBE6B",
         blue: "#006887",
         pink: "#FF66A4",
+        light_pink: "#F1A4C9",
         white: "#FFF",
         tan: "#F9EDE3",
       },
@@ -51,6 +52,11 @@ module.exports = {
       },
       backgroundSize: {
         tile: "60px 60px",
+      },
+      dropShadow: {
+        pink: "2px 2px 0 #F1A4C9",
+        light_brown: "2px 2px 0 #E2D2BB",
+        white: "2px 2px 0 #FFF",
       },
     },
   },
