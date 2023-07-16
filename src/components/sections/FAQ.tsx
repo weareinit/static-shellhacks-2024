@@ -42,7 +42,7 @@ function FAQ() {
         />
         <FAQItem
           question="Who can come?"
-          answer="If you're currently a college student or have graduated in the past year, you're mroe than welcome to attend! Not a student? No problem! You can attend as a mentor and help our students! Mentor applications will be available soon!"
+          answer="If you're currently a college student or have graduated in the past year, you're more than welcome to attend! Not a student? No problem! You can attend as a mentor and help our students! Mentor applications will be available soon!"
         />
         <FAQItem
           question="Will there be any transportation aid provided?"
