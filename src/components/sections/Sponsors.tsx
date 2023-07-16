@@ -2,8 +2,8 @@ import Image from "next/image";
 
 function SponsorImage({ className, src, alt }: { className?: string; src: string; alt: string }) {
   return (
-    <div className={`min-w-[250px] min-h-[150px] w-full relative ${className}`}>
-      <Image src={src} alt={alt} style={{ objectFit: "contain" }} fill />
+    <div className={`min-w-[200px] min-h-[150px] w-full relative ${className}`}>
+      <Image src={src} alt={alt} className=" object-cover p-5" fill />
     </div>
   );
 }
