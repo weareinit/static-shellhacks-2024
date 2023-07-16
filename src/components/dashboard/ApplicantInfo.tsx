@@ -54,7 +54,7 @@ export default function ApplicantCell({ data }: ApplicantCellPropType) {
             <u>Phone Number:</u> {data.phone_number}
           </p>
           <p>
-            <u>Discord:</u> <a href={data.discord ?? "#"}>{data.discord}</a>
+            <u>Discord:</u> {data.discord}
           </p>
           <p>
             <u>GitHub:</u> <a href={data.github ?? "#"}>{data.github}</a>

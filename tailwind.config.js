@@ -21,11 +21,15 @@ module.exports = {
       },
       colors: {
         deep_blue: "#3C72A7",
-        crate_brown: "#695E53",
-        caramel_brown: "#A2917C",
+        crate_brown: "#6B5E51",
+        navbar_background: "#E5D1B8",
+        cyan_blue: "#24B2C0",
+        caramel_brown: "#A59079",
         grass_green: "#8EBE6B",
         blue: "#006887",
+        pink: "#FF66A4",
         white: "#FFF",
+        tan: "#F9EDE3",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

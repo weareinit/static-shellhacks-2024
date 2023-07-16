@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: "Small Pixel";
-  src: url("/fonts/small_pixel.woff2") format("woff2");
+  src: url("/fonts/depixelklein.woff2") format("woff2");
 }
 
 @font-face {
@@ -229,7 +229,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(22 163 74);
+  background: #FFA0CB;
   display: block;
   pointer-events: none;
 }

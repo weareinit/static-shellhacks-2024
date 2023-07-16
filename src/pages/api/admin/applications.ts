@@ -11,18 +11,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!admin) return res.status(403).json({ error: "Forbidden" });
 
   if (req.method == "PUT") {
-    const { event_id, hacker_id, application_status } = applicantStatusChangeSchema.parse({
-      event_id: "1",
-      hacker_id: req.query.hackerId,
-      ...req.body,
-    });
+    req.body = JSON.parse(req.body); //Next doesn't do this automatically?
+
+    const { hacker_id, application_status } = applicantStatusChangeSchema.parse(req.body);
 
     const updatedApplicant = await prisma.hacker_Applications.update({
       where: { hacker_id },
       data: { application_status },
     });
 
-    res.status(200).json({ updatedApplicant });
+    res.status(200).json(updatedApplicant);
   } else if (req.method === "GET") {
     const filters = applicantFiltersSchema.parse({
       event_id: "1",

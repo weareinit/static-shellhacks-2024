@@ -22,18 +22,20 @@ function AboutUs() {
         <AboutUsImages />
       </div>
       <article>
-        <h2 className="font-console text-deep_blue text-2xl mb-2">About Us</h2>
-        <p className="font-inter mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together to: </p>
-        <ul className="list-disc ml-6 mb-2 font-inter">
-          <li>Learn the latest technologies</li>
-          <li>Develop innovative solutions</li>
-          <li>Network with top companies, and more!</li>
-        </ul>
-        <p>
-          Explore the world of technology through our workshop tracks. Work together with fellow students and mentors to <span className=" font-extrabold inline-block">build exciting projects</span>.
-          Meet recruiters and <span className="font-extrabold inline-block">land internships</span> and job opportunities. <span className="font-extrabold inline-block">Win amazing prizes</span>, get
-          tons of cool swag, and more - all at ShellHacks!
-        </p>
+        <h2 className="font-console text-crate_brown text-4xl mb-2 text-center">About Us</h2>
+        <div className="bg-navbar_background p-6 rounded">
+          <p className="font-inter mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together to: </p>
+          <ul className="list-disc ml-6 mb-2 font-inter">
+            <li>Learn the latest technologies</li>
+            <li>Develop innovative solutions</li>
+            <li>Network with top companies, and more!</li>
+          </ul>
+          <p>
+            Explore the world of technology through our workshop tracks. Work together with fellow students and mentors to <span className=" font-extrabold inline-block">build exciting projects</span>
+            . Meet recruiters and <span className="font-extrabold inline-block">land internships</span> and job opportunities. <span className="font-extrabold inline-block">Win amazing prizes</span>,
+            get tons of cool swag, and more - all at ShellHacks!
+          </p>
+        </div>
       </article>
     </section>
   );
