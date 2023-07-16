@@ -10,6 +10,7 @@ import FAQ from "./FAQ";
 import Navbar from "../navigation/navBar";
 import Schedule from "./Schedule";
 import Sponsors from "./Sponsors";
+import Workshops from "./Workshops";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -31,6 +32,7 @@ function Content() {
       <MLHBanner />
       <Welcome />
       <AboutUs />
+      <Workshops />
       <FAQ />
       <Schedule />
       <Sponsors />
