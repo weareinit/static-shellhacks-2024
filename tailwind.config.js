@@ -39,6 +39,19 @@ module.exports = {
       rotate: {
         270: "270deg",
       },
+      width: {
+        tile: "60px",
+      },
+      backgroundImage: {
+        sand: "url('/assets/decorations/sand_tile.png')",
+        "shore-line": "url('/assets/decorations/shore_line.gif')",
+        water: "url('/assets/decorations/water.gif')",
+        grass: "url('/assets/decorations/grass.png')",
+        "grass-tile": "url('/assets/decorations/grass_tile.png')",
+      },
+      backgroundSize: {
+        tile: "60px 60px",
+      },
     },
   },
   plugins: [],
