@@ -1,9 +1,25 @@
-import ScheduleCard from "../ScheduleCard";
+import Image from "next/image";
 
 function ScheduleReminder() {
   return (
-    <div className="min-w-[250px] w-[50vw] max-w-[300px] h-[350px] md:max-w-none md:w-full border-black border-2 p-4 flex justify-center items-center md:col-span-4 md:h-24 text-center">
-      <p className="font-pixel uppercase font-thin text-center text-crate_brown">For our full schedule including workshops and activities, check out the hacker guide in your dashboard!</p>
+    <div className="w-[200px] h-[250px] md:max-w-none md:w-full border-black border-2 p-2 flex flex-col md:flex-row justify-center items-center md:col-span-4 md:h-fit text-center">
+      <Image src="/assets/decorations/pink_shell.svg" height={75} width={75} alt="Pink Shell" className="p-2" />
+      <p className="font-pixel uppercase font-thin text-center text-crate_brown text-xs m-2">For our full schedule including workshops and activities, check out the hacker guide in your dashboard!</p>
+    </div>
+  );
+}
+
+function ScheduleCard({ weekDay, scheduleItems, className }: { weekDay: String; scheduleItems: String[]; className?: String }) {
+  return (
+    <div className={`flex flex-col bg-caramel_brown max-w-[300px] min-w-[200px] h-[250px] justify-self-center ${className || ""}`}>
+      <h2 className="font-pixel py-1 text-lg text-center w-full bg-deep_blue text-white">{weekDay}</h2>
+      <ul className="p-4">
+        {scheduleItems.map((item, index) => (
+          <li className="m-2 font-pixel text-xs text-crate_brown" key={index}>
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -12,7 +28,7 @@ function Schedule() {
   return (
     <section className="mt-36">
       <h1 className="mb-12 text-4xl text-crate_brown text-center">Schedule</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 w-fit justify-items-center items-end space-y-3 md:space-y-4">
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 w-fit justify-items-center items-center justify-center content-center place-items-center">
         <ScheduleCard
           className="justify-self-start"
           weekDay="Friday"
