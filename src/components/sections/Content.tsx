@@ -7,6 +7,8 @@ import Welcome from "./Welcome";
 import AboutUs from "./AboutUs";
 import BlurBackdrop from "../decorations/BlurBackdrop";
 import FAQ from "./FAQ";
+import Schedule from "./Schedule";
+import Sponsors from "./Sponsors";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -28,6 +30,8 @@ function Content() {
       <Welcome />
       <AboutUs />
       <FAQ />
+      <Schedule />
+      <Sponsors />
       {showRegistration && (
         <RegisterModal
           toClose={(event) => {
