@@ -14,18 +14,23 @@ function FAQItem({ question, answer }: FAQItemProps) {
   };
 
   return (
-    <div className="rounded-pixel bg-cyan_blue h-fit w-full relative">
+    <div className="bg-cyan_blue h-fit w-full relative rounded-sm">
       <h3
         onClick={toggleItem}
-        className={`p-2 font-console text-tan text-center hover:text-pink md:text-2xl decoration-blue transition ease-in-out hover:cursor-pointer ${showItem ? "bg-pink hover:text-tan" : ""}`}
-        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        className={`relative font-pixel p-2 text-tan text-left hover:text-pink decoration-blue transition ease-in-out hover:cursor-pointer ${showItem && "bg-pink hover:text-tan"}`}
       >
-        <span>{question}</span>
-        {/* <svg className={`transform fill-pink transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+        {question}
+        <svg
+          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} absolute right-1 top-1 opacity-50 z-10 cursor-pointer select-none`}
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+        >
           <path d="M7 10l5 5 5-5z" />
-        </svg> */}
+        </svg>
       </h3>
-      {showItem && <p className="font-inter bg-navbar_background p-4 transition ease-in-out delay-150">{answer}</p>}
+      {showItem && <p className={`font-inter bg-navbar_background p-4 transition ease-in-out delay-150 ${showItem && " bg-caramel_brown "}`}>{answer}</p>}
     </div>
   );
 }
@@ -34,7 +39,7 @@ function FAQ() {
   return (
     <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center mt-36">
       <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
-        <h2 className="text-center font-console font-bold text-4xl lg:text-5xl text-crate_brown mb-12">FAQs</h2>
+        <h2 className="text-center font-console font-bold text-4xl text-crate_brown mb-12">FAQs</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
           question="How long is it?"
@@ -45,7 +50,7 @@ function FAQ() {
           answer="If you're currently a college student or have graduated in the past year, you're more than welcome to attend! Not a student? No problem! You can attend as a mentor and help our students! Mentor applications will be available soon!"
         />
         <FAQItem
-          question="Will there be transportation aid provided?"
+          question="Will there be transportation aid?"
           answer="If you are an FIU students there will be busses transporting hackers from MMC to BBC throughout the weekend. If you are a student at a university/college in Florida, ShellHacks will send busses to those schools if sign ups and confirmations are significantly high, so tell your friends and classmates to sign up to hopefully have shuttles go to your school."
         />
         <FAQItem
