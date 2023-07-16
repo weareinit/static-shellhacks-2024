@@ -17,7 +17,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
     <div className="rounded-pixel bg-cyan_blue h-fit w-full relative">
       <h3
         onClick={toggleItem}
-        className={`p-2 font-console text-tan hover:text-pink text-xl decoration-blue hover:scale-110 transition ease-in-out hover:cursor-pointer ${showItem ? "bg-pink hover:text-tan" : ""}`}
+        className={`p-2 font-console text-tan text-center hover:text-pink md:text-2xl decoration-blue transition ease-in-out hover:cursor-pointer ${showItem ? "bg-pink hover:text-tan" : ""}`}
         style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <span>{question}</span>
@@ -32,9 +32,9 @@ function FAQItem({ question, answer }: FAQItemProps) {
 
 function FAQ() {
   return (
-    <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center">
+    <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center min-h-screen">
       <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
-        <h2 className=" text-center font-console font-bold lg:text-4xl md:text-2xl text-lg text-crate_brown mb-2">FAQS</h2>
+        <h2 className="text-center font-console font-bold text-4xl lg:text-5xl text-crate_brown mb-2">FAQs</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
           question="How long is it?"
@@ -45,7 +45,7 @@ function FAQ() {
           answer="If you're currently a college student or have graduated in the past year, you're more than welcome to attend! Not a student? No problem! You can attend as a mentor and help our students! Mentor applications will be available soon!"
         />
         <FAQItem
-          question="Will there be any transportation aid provided?"
+          question="Will there be transportation aid provided?"
           answer="If you are an FIU students there will be busses transporting hackers from MMC to BBC throughout the weekend. If you are a student at a university/college in Florida, ShellHacks will send busses to those schools if sign ups and confirmations are significantly high, so tell your friends and classmates to sign up to hopefully have shuttles go to your school."
         />
         <FAQItem

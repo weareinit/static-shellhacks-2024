@@ -16,9 +16,9 @@ function Welcome() {
       <TitleLogo />
       <div className="my-4">
         {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}
-        <h2 className="m-2 text-crate_brown text-center font-console font-bold lg:text-3xl md:text-2xl text-lg">{"Florida's Largest Hackathon"}</h2>
-        <h3 className="m-2 text-crate_brown text-center font-pixel text-lg">Kovens Conference Center at Florida Int. University</h3>
-        <h3 className="m-2 text-crate_brown text-center font-pixel text-lg">September 15-17, 2023</h3>
+        <h2 className="m-2 text-crate_brown text-center font-console font-bold lg:text-3xl text-2xl">{"Florida's Largest Hackathon"}</h2>
+        <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Kovens Conference Center at Florida Int. University</h3>
+        <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">September 15-17, 2023</h3>
       </div>
       <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
         {finishedRegistration ? (
