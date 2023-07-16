@@ -27,14 +27,14 @@ function FAQItem({ question, answer }: FAQItemProps) {
       </h3>
       {showItem && <p className="font-inter bg-navbar_background p-4 transition ease-in-out delay-150">{answer}</p>}
     </div>
-  ); 
-}  
+  );
+}
 
 function FAQ() {
   return (
-    <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center min-h-screen">
+    <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center mt-36">
       <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
-        <h2 className="text-center font-console font-bold text-4xl lg:text-5xl text-crate_brown mb-2">FAQs</h2>
+        <h2 className="text-center font-console font-bold text-4xl lg:text-5xl text-crate_brown mb-12">FAQs</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
           question="How long is it?"

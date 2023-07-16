@@ -11,7 +11,7 @@ function ScheduleReminder() {
 function Schedule() {
   return (
     <section className="mt-36">
-      <h1 className=" text-4xl text-crate_brown text-center">Schedule</h1>
+      <h1 className="mb-12 text-4xl text-crate_brown text-center">Schedule</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 w-fit justify-items-center items-end space-y-3 md:space-y-4">
         <ScheduleCard
           className="justify-self-start"
