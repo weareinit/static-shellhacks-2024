@@ -229,7 +229,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(22 163 74);
+  background: #FFA0CB;
   display: block;
   pointer-events: none;
 }

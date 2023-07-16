@@ -14,28 +14,27 @@ function FAQItem({ question, answer }: FAQItemProps) {
   };
 
   return (
-    //old width max-w-[600px]
-    <div className="bg-white p-2 rounded-pixel h-fit w-full relative">
+    <div className="rounded-pixel bg-cyan_blue h-fit w-full relative">
       <h3
         onClick={toggleItem}
-        className="font-inter font-bold text-lg decoration-blue hover:underline hover:cursor-pointer"
-        style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+        className={`p-2 font-console text-tan hover:text-pink text-xl decoration-blue hover:scale-110 transition ease-in-out hover:cursor-pointer ${showItem ? "bg-pink hover:text-tan" : ""}`}
+        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        {question}
-        <svg className={`transform transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-          <path fill="#3182ce" d="M7 10l5 5 5-5z" />
-        </svg>
+        <span>{question}</span>
+        {/* <svg className={`transform fill-pink transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+          <path d="M7 10l5 5 5-5z" />
+        </svg> */}
       </h3>
-      {showItem && <p className="font-inter">{answer}</p>}
+      {showItem && <p className="font-inter bg-navbar_background p-4 transition ease-in-out delay-150">{answer}</p>}
     </div>
-  );
-}
+  ); 
+}  
 
 function FAQ() {
   return (
     <section className="flex flex-col md:flex-row m-2 p-4 w-full justify-center items-center">
-      <article className="space-y-2 w-full bg-deep_blue p-2 rounded-pixel max-w-[900px]">
-        <h2 className=" font-console text-2xl text-white mb-2">Frequently Asked Questions</h2>
+      <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
+        <h2 className=" text-center font-console font-bold lg:text-4xl md:text-2xl text-lg text-crate_brown mb-2">FAQS</h2>
         <FAQItem question="What is a hackathon?" answer="A hackathon is a weekend-long event where students come together to learn the latest technologies and build innovatitve projects." />
         <FAQItem
           question="How long is it?"
