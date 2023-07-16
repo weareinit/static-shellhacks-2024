@@ -13,17 +13,17 @@ function Sponsors() {
     <section className=" m-4 p-4 mt-36">
       <h1 className=" text-4xl text-crate_brown text-center ">Sponsors</h1>
       <div className="grid grid-cols-2 md:grid-cols-12 gap-5">
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="col-span-2 md:col-span-12" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-6" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-6" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-6" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-6" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/microsoft.png" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="col-span-2 md:col-span-12" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-6" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-6" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-6" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-6" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="md:col-span-4" />
       </div>
     </section>
   );
