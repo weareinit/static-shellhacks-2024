@@ -8,6 +8,8 @@ import AboutUs from "./AboutUs";
 import BlurBackdrop from "../decorations/BlurBackdrop";
 import FAQ from "./FAQ";
 import Navbar from "../navigation/navBar";
+import Schedule from "./Schedule";
+import Sponsors from "./Sponsors";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -26,15 +28,12 @@ function Content() {
     // TODO: Implement sky section design, with About Us, Welcome, FAQ
     <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
       <Navbar />
-      <section id="welcome">
-          <Welcome />
-        </section>
-        <section id="about">
-          <AboutUs />
-        </section>
-        <section id="faq">
-          <FAQ />
-        </section>
+      <MLHBanner />
+      <Welcome />
+      <AboutUs />
+      <FAQ />
+      <Schedule />
+      <Sponsors />
       {showRegistration && (
         <RegisterModal
           toClose={(event) => {

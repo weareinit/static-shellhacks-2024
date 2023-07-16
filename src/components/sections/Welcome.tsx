@@ -43,13 +43,13 @@ function Welcome() {
 
         <div className=" row-start-2 col-span-full space-x-2 mt-1 grid grid-cols-2">
           <Link href="/dashboard">
-            <Button className="md:min-w-[275px] md:min-h-[50px] bg-caramel_brown text-white col-span-1 w-full h-16 rounded">
+            <Button className="md:min-w-[275px] md:min-h-[50px] bg-dark_brown text-white col-span-1 w-full h-16 rounded">
               <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">DASHBOARD</h2>
             </Button>
           </Link>
 
           <Link href="mailto:team@weareinit.org">
-            <Button className="md:min-w-[275px] md:min-h-[50px] bg-caramel_brown text-white col-span-1 w-full h-16 rounded">
+            <Button className="md:min-w-[275px] md:min-h-[50px] bg-dark_brown text-white col-span-1 w-full h-16 rounded">
               <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">SPONSOR US</h2>
             </Button>
           </Link>
@@ -57,20 +57,20 @@ function Welcome() {
 
         <div className="flex flex-row space-x-3 justify-center col-span-full row-start-3 self-start p-2">
           <Link href="https://discord.com/invite/init" target="_blank">
-            <SiDiscord size={45} className="hover:fill-pink hover:cursor-pointer fill-caramel_brown hover:scale-125 transition ease-in-out" />
+            <SiDiscord size={45} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
           </Link>
           <Link href="https://www.instagram.com/initofficial/" target="_blank">
-            <AiFillInstagram size={45} className="hover:fill-pink hover:cursor-pointer fill-caramel_brown hover:scale-125 transition ease-in-out" />
+            <AiFillInstagram size={45} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
           </Link>
           <Link href="https://twitter.com/initfiu" target="_blank">
-            <AiFillTwitterSquare size={45} className="hover:fill-pink hover:cursor-pointer fill-caramel_brown hover:scale-125 transition ease-in-out" />
+            <AiFillTwitterSquare size={45} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
           </Link>
 
           <Link href="https://www.facebook.com/init.fiu" target="_blank">
-            <AiFillFacebook size={45} className="hover:fill-pink hover:cursor-pointer fill-caramel_brown hover:scale-125 transition ease-in-out" />
+            <AiFillFacebook size={45} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
           </Link>
           <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
-            <AiFillLinkedin size={45} className="hover:fill-pink hover:cursor-pointer fill-caramel_brown hover:scale-125 transition ease-in-out" />
+            <AiFillLinkedin size={45} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
           </Link>
         </div>
       </nav>

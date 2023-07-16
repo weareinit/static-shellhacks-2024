@@ -24,11 +24,11 @@ function AboutUs() {
       <article className="flex flex-col justify-center w-full lg:w-3/5">
         <h2 className="font-console text-crate_brown text-5xl lg:text-6xl mb-2 text-center">About Us</h2>
         <div className="bg-navbar_background p-6 rounded">
-          <p className="font-inter text-lg lg:text-xl mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together: </p>
+          <p className="font-inter text-lg lg:text-xl mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together to: </p>
           <ul className="list-disc ml-6 mb-2 font-inter text-lg lg:text-xl">
-            <li>to learn the latest technologies</li>
-            <li>develop innovative solutions</li>
-            <li>network with top companies, and more!</li>
+            <li>Learn the latest technologies</li>
+            <li>Develop innovative solutions</li>
+            <li>Network with top companies, and more!</li>
           </ul>
           <p className="text-lg lg:text-xl">
             Explore the world of technology through our workshop tracks. Work together with fellow students and mentors to <span className="font-extrabold inline-block">build exciting projects</span>.
