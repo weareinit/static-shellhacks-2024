@@ -40,7 +40,7 @@ h2 {
 h3,
 h4,
 p {
-  font-family: "Inter";
+  @apply font-pixel;
 }
 
 :root {
