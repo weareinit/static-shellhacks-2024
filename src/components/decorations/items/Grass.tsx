@@ -10,8 +10,8 @@ interface GrassProps {
 
 function Grass({ column, row, className }: GrassProps) {
   return (
-    <div className={` ${className}`} style={{ gridColumnStart: column, gridRowStart: row }}>
-      <Image src="/assets/decorations/grass.png" alt="" />
+    <div className={`select-none ${className}`} style={{ gridColumnStart: column, gridRowStart: row }}>
+      <Image src="/assets/decorations/grass.png" alt="" draggable="false" />
     </div>
   );
 }

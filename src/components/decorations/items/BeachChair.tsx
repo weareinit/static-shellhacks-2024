@@ -30,13 +30,15 @@ function BeachChair({ color, row, column, chairKey, className }: BeachChairProps
   return (
     <div
       key={chairKey}
-      className={`col-span-2 pointer-events-none ${className}`}
+      className={`col-span-2 pointer-events-none select-none ${className}`}
       style={{
         gridColumnStart: column,
         gridRowStart: row,
+        width: "64px",
+        height: "64px",
       }}
     >
-      <Image alt={`${color} beach chair`} src={CHAIR_COLORS[color]} width={CHAIR_SIZE} height={CHAIR_SIZE} />
+      <Image alt={`${color} beach chair`} src={CHAIR_COLORS[color]} width={CHAIR_SIZE} height={CHAIR_SIZE} style={{ objectFit: "cover" }} draggable="false" />
     </div>
   );
 }
