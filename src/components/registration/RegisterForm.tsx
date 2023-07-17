@@ -12,8 +12,6 @@ import SearchInput from "../input/searchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
-import { error } from "console";
-import { set } from "zod";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
