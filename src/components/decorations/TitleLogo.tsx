@@ -1,5 +1,6 @@
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { useEffect, useRef } from "react";
+import { isMobile } from "react-device-detect";
 
 const WIDE_SCREEN_LOGO_WIDTH_PERCENTAGE: number = 0.4;
 const NARROW_SCREEN_LOGO_WIDTH_PERCENTAGE: number = 0.75;
@@ -15,16 +16,16 @@ export default function TitleLogo() {
     : evenOutOddNumber(Math.round(windowWidth * NARROW_SCREEN_LOGO_WIDTH_PERCENTAGE));
 
   useEffect(() => {
-      if (titleReference.current)  {
-        titleReference.current.style.setProperty(
-        "--title-sprite-frame-end-position", 
-        `-${20 * adjustedSpriteFrameWidth}px`
-      );
-      titleReference.current.classList.remove("title-sprite");
-      setTimeout(()=>{
-        titleReference.current && titleReference.current.classList.add("title-sprite");
-      }, 25)
-  }
+    if (titleReference.current) {
+      titleReference.current.style.setProperty("--title-sprite-frame-end-position", `-${20 * adjustedSpriteFrameWidth}px`);
+
+      if (isMobile) {
+        titleReference.current.classList.remove("title-sprite");
+        setTimeout(() => {
+          titleReference.current && titleReference.current.classList.add("title-sprite");
+        }, 25);
+      }
+    }
   }, [adjustedSpriteFrameWidth]);
 
   return (
@@ -34,7 +35,7 @@ export default function TitleLogo() {
         if (!element) return;
         titleReference.current = element;
       }}
-      style={{width:`${adjustedSpriteFrameWidth}px`}}
+      style={{ width: `${adjustedSpriteFrameWidth}px` }}
     />
   );
 }
