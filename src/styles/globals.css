@@ -40,7 +40,7 @@ p {
 
 :root {
   --bg-tile-size: 60px;
-  --title-sprite-frame-end-position: -5120px;
+  --title-sprite-frame-end-position: 0px;
 }
 
 .tile-background {
@@ -49,7 +49,7 @@ p {
 
 .title-sprite {
   width: 256px;
-  height: 128px;
+  aspect-ratio: 2;
   background-image: url("../../public/assets/shellhacks_logo_spritesheet.png");
   background-size: cover;
   background-repeat: no-repeat;
