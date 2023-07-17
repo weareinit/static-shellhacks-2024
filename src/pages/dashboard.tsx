@@ -6,6 +6,7 @@ import blue from "/public/assets/decorations/blue_umbrella.png";
 import red from "/public/assets/decorations/red_umbrella.png";
 import yellow from "/public/assets/decorations/yellow_umbrella.png";
 import green from "/public/assets/decorations/green_umbrella.png";
+import Navbar from "@/components/dashboard/Navbar";
 
 const getapplicant = async () => {
   const response = await fetch("/api/application", {
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const applicantData = data?.applicant;
 
   if (isLoading) {
-    return(
+    return (
       <div className="max-w-md mx-auto flex justify-center items-center h-screen">
         <h1 className="text-2xl font-bold">Loading...</h1>
       </div>
@@ -36,10 +37,15 @@ const Dashboard = () => {
 
   if (!applicantData || error) {
     return (
-      <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
-        <p>Please login using the same account you used when registering for this event.</p>
-      </div>
+      <>
+        <div className="py-2 px-6">
+          <Navbar />
+        </div>
+        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+          <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
+          <p>Please login using the same account you used when registering for this event.</p>
+        </div>
+      </>
     );
   }
 
@@ -59,14 +65,16 @@ const Dashboard = () => {
 
   return (
     <main className="bg-sand min-h-screen p-5">
+      <div className="py-2 px-6">
+        <Navbar />
+      </div>
+
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-md shadow-md p-6">
-          <h1 className="text-xl mb-4 font-pixel text-center">
-            Hacker Dashboard
-          </h1>
+          <h1 className="text-xl mb-4 font-pixel text-center">Hacker Dashboard</h1>
           <div className="mt-4">
             <div className="bg-white rounded-md shadow-md p-6 flex flex-col items-center justify-center">
-            <h2 className="text-lg font-medium mb-2">Current Application Status</h2>
+              <h2 className="text-lg font-medium mb-2">Current Application Status</h2>
               <div>
                 <Image src={decorationImage} alt="Umbrella Decoration" />
               </div>
@@ -76,7 +84,9 @@ const Dashboard = () => {
           <div className="mt-4">
             <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
               <h2 className="text-lg font-medium mb-2">Personal Information</h2>
-              <p>Name: {applicantData.first_name} {applicantData.last_name}</p>
+              <p>
+                Name: {applicantData.first_name} {applicantData.last_name}
+              </p>
               <p>Age: {applicantData.age}</p>
               <p>Country: {applicantData.country}</p>
               <p>Gender: {applicantData.gender}</p>
@@ -114,14 +124,6 @@ const Dashboard = () => {
               </a>
             </div>
           </div>
-        </div>
-        <div className="flex justify-between mt-4 row">
-          <Link href="/">
-            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
-          </Link>
-          <Link href="/api/auth/logout">
-            <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-          </Link>
         </div>
       </div>
     </main>
