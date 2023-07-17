@@ -148,7 +148,7 @@ function RegisterForm() {
             <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
-            <CheckboxInput label="Are you an international student (currently on a non-immigrant visa status in the US such as F-1, or others)?" name="is_international" />
+            <CheckboxInput label="Check if you are an international student (currently on a non-immigrant visa status in the US such as F-1, or others)" name="is_international" />
 
             <SelectInput label="Gender" name="gender" options={genderOptions} isRequired />
             <SelectInput options={pronounOptions} label="Pronouns" name="pronouns" isRequired />
@@ -221,7 +221,7 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
+            <Button type="submit" className="bg-pink text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
               Submit
               {isSubmitting && (
                 <span className="ml-2">

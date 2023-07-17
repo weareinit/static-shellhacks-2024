@@ -40,16 +40,11 @@ h2 {
 h3,
 h4,
 p {
-  font-family: "Inter";
+  @apply font-pixel;
 }
 
 :root {
-  --bg-tile-size: 60px;
   --title-sprite-frame-end-position: -5120px;
-}
-
-.tile-background {
-  background-size: var(--bg-tile-size) var(--bg-tile-size);
 }
 
 .title-sprite {
@@ -70,42 +65,6 @@ p {
   to {
     background-position: var(--title-sprite-frame-end-position);
   }
-}
-
-.bg-sand {
-  background-image: url("/assets/decorations/sand_tile.png");
-  @apply tile-background;
-}
-
-.bg-shore-line {
-  background-image: url("/assets/decorations/shore_line_rotated.gif");
-  @apply tile-background;
-}
-
-.bg-water {
-  background-image: url("/assets/decorations/water_rotated.gif");
-  @apply tile-background;
-}
-
-@media (min-width: 768px) {
-  .bg-shore-line {
-    background-image: url("/assets/decorations/shore_line.gif");
-    max-width: 60px;
-  }
-
-  .bg-water {
-    background-image: url("/assets/decorations/water.gif");
-  }
-}
-
-.bg-grass-tile {
-  background-image: url("/assets/decorations/grass_tile.png");
-  @apply tile-background;
-}
-
-.bg-grass {
-  background-image: url("/assets/decorations/grass.png");
-  @apply tile-background;
 }
 
 .rounded-pixel {
@@ -229,7 +188,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(22 163 74);
+  background: #ffa0cb;
   display: block;
   pointer-events: none;
 }
