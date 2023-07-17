@@ -12,9 +12,11 @@ import SearchInput from "../input/searchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
+import { error } from "console";
+import { set } from "zod";
 
 function RegisterForm() {
-  const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { schools, countries } = useFormOptionContext();
@@ -65,7 +67,8 @@ function RegisterForm() {
     });
 
     if (!response.ok) {
-      throw new Error("Error Registering Applicant");
+      const data = await response.json();
+      throw new Error(data.error);
     }
 
     return response;
@@ -82,12 +85,13 @@ function RegisterForm() {
       const { resumeId, url } = await getResumeLink(body.recaptcha);
       await uploadResume(resume, url);
       await registerApplicant(resumeId, body);
-    } catch {
-      setShowErrorModal(true);
+      setIsSubmitting(false);
+    } catch (e: any) {
+      setError(e.message);
+      setIsSubmitting(false);
       return;
     }
 
-    setIsSubmitting(false);
     setFinishedRegistration(true);
     setShowRegistration(false);
   };
@@ -230,7 +234,7 @@ function RegisterForm() {
               )}
             </Button>
 
-            {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
+            {error != "" && <h2 className="text-lg text-center mt-1 font-pixel text-red-600">There was an error submitting, please try again later. {error}</h2>}
           </Form>
         )}
       </Formik>

@@ -53,7 +53,7 @@ function Welcome() {
               className="col-span-full w-full bg-pink text-white text-center flex items-center justify-center drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]"
               onClick={(e) => {
                 e.preventDefault();
-                user ? setShowRegistration(true) : router.push("/dashboard");
+                user ? router.push("/dashboard") : setShowRegistration(true);
               }}
             >
               <h2 className="font-extrabold text-md text-center hover:scale-110 transition ease-in-out">{user ? "Hacker Dashboard" : "Register Now!"}</h2>
