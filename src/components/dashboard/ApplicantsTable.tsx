@@ -1,5 +1,5 @@
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import LoadingSpinner from "../misc/LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface ApplicantsTableProps {
   data: any;
