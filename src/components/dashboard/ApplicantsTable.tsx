@@ -1,5 +1,5 @@
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import LoadingSpinner from "../misc/LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface ApplicantsTableProps {
   data: any;
@@ -13,7 +13,7 @@ export default function ({ data, isLoading, error, appStatusMutation }: Applican
     return (
       <>
         {data.map((entry: any, index: number) => (
-          <ApplicantCell data={entry} key={index} handleAppStatusChange={appStatusMutation} />
+          <ApplicantCell data={entry} key={entry.hacker_id} handleAppStatusChange={appStatusMutation} />
         ))}
       </>
     );
