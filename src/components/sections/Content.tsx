@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";
 import MLHBanner from "../decorations/MLHBanner";
@@ -8,6 +7,7 @@ import AboutUs from "./AboutUs";
 import BlurBackdrop from "../decorations/BlurBackdrop";
 import FAQ from "./FAQ";
 import Navbar from "../navigation/navBar";
+import MobileNav from "../navigation/mobileNav";
 import Schedule from "./Schedule";
 import Sponsors from "./Sponsors";
 import Workshops from "./Workshops";
@@ -15,6 +15,19 @@ import Showcase from "./Showcase";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (showRegistration) {
@@ -24,17 +37,23 @@ function Content() {
     }
   }, [showRegistration]);
 
-  let modal = <div className="fixed top-0 left-0 w-screen h-screen"></div>;
-
   return (
-    // TODO: Implement sky section design, with About Us, Welcome, FAQ
     <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
-      <Navbar />
+      {isMobile ? <MobileNav /> : <Navbar />}
       <MLHBanner />
-      <Welcome />
-      <AboutUs />
-      <Workshops />
-      <FAQ />
+      <div id="welcome" className="pl-4 md:pl-10">
+        <Welcome />
+      </div>
+
+      <div id="about">
+        <AboutUs />
+      </div>
+      <div id="workshops">
+        <Workshops />
+      </div>
+      <div id="faq" className="w-full">
+        <FAQ />
+      </div>
       {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -42,8 +61,12 @@ function Content() {
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Showcase> */}
-      <Schedule />
-      <Sponsors />
+      <section id="schedule">
+        <Schedule />
+      </section>
+      <section id="sponsors">
+        <Sponsors />
+      </section>
       {showRegistration && (
         <RegisterModal
           toClose={(event) => {

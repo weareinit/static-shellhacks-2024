@@ -31,7 +31,7 @@ function Welcome() {
   const router = useRouter();
 
   return (
-    <section className="flex flex-col items-center justify-center h-fit min-h-screen">
+    <section className="flex flex-col items-center justify-center h-fit min-h-screen mt-5">
       <TitleLogo />
       <div className="my-4 flex flex-col justify-center items-center">
         {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}
@@ -50,13 +50,13 @@ function Welcome() {
         ) : (
           <div className="w-full col-span-full flex justify-center">
             <Button
-              className="col-span-full w-full bg-pink text-white text-center flex items-center justify-center drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]"
+              className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-blue min-h-[50px] h-[10vw] max-h-[60px]"
               onClick={(e) => {
                 e.preventDefault();
                 user ? router.push("/dashboard") : setShowRegistration(true);
               }}
             >
-              <h2 className="font-extrabold text-md text-center hover:scale-110 transition ease-in-out">{user ? "Hacker Dashboard" : "Register Now!"}</h2>
+              <h2 className="font-console text-xl text-center hover:scale-110 transition ease-in-out">{user ? "Hacker Dashboard" : "Register Now!"}</h2>
             </Button>
           </div>
         )}
