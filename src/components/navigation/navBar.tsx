@@ -2,7 +2,7 @@ import React from "react";
 import MLHBanner from "../decorations/MLHBanner";
 
 function Navbar() {
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
