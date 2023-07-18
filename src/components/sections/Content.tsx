@@ -15,24 +15,29 @@ import Showcase from "./Showcase";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 768);
+      window.addEventListener("resize", handleResize);
+    }
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
     };
   }, []);
 
   useEffect(() => {
-    if (showRegistration) {
+    if (showRegistration && typeof document !== "undefined") {
       document.body.classList.add("overflow-hidden");
-    } else {
+    } else if (typeof document !== "undefined") {
       document.body.classList.remove("overflow-hidden");
     }
   }, [showRegistration]);
