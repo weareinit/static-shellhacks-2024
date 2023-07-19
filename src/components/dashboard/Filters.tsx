@@ -1,0 +1,83 @@
+import { useState, useEffect } from "react";
+import { gradYearOptions } from "@/util/RegistrationData";
+import Label from "../input/Label";
+import z from "zod";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+
+interface FiltersPropType {
+  filters: Record<string, any>;
+  setFilters: any;
+  schools: string[];
+}
+
+interface FilterPropType {
+  label: string;
+  options: string[];
+  filters: Record<string, any>;
+  handleOnChange: any;
+  filterName: string;
+}
+
+const gradYears = ["any", ...gradYearOptions];
+
+const Filter = ({ label, filterName, options, filters, handleOnChange }: FilterPropType) => {
+  return (
+    <div className="my-1">
+      <Label>{label}</Label>
+      <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id={filterName} value={filters[filterName] || "any"} onChange={handleOnChange}>
+        {options.map((state, i) => (
+          <option key={i} value={state}>
+            {state}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export default function Filters({ filters, setFilters, schools }: FiltersPropType) {
+  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
+
+  const schoolOptions = ["any", ...schools];
+
+  const handleFilterChange = (field: string, value: string) => {
+    if (value === "any" && filters[field]) {
+      const { [field]: _, ...rest } = filters;
+      setFilters(rest);
+    } else {
+      setFilters((prev: Record<string, string>) => ({ ...prev, [field]: value }));
+    }
+  };
+
+  return (
+    <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full">
+      <h3 className="text-2xl mb-3 font-pixel font-bold">Filters</h3>
+
+      <div className="flex flex-col">
+        <Filter
+          label="Application Status:"
+          filterName="application_status"
+          options={applicationStatusOptions}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("application_status", e.target.value)}
+        />
+
+        <Filter
+          label="Graduation year"
+          filterName="grad_year"
+          options={gradYears}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("grad_year", e.target.value)}
+        />
+
+        <Filter
+          label="School"
+          filterName="school"
+          options={schoolOptions}
+          filters={filters}
+          handleOnChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("school", e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}

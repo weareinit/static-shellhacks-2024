@@ -1,93 +1,98 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery } from "react-query";
 import Link from "next/link";
-import ApplicantCell from "@/components/dashboard/ApplicantCell";
-import ShorelineSection from "@/components/sections/ShorelineSection";
+import FiltersModal from "@/components/dashboard/Filters";
+import { useState } from "react";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
+import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
+import { z } from "zod";
+import { parseCSV } from "@/util/parseCSV";
+import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
+import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
 
-const getApplicants = async () => {
-  const response = await fetch("/api/admin/applications", {
-    method: "GET",
-    headers: {
-      "Content-Type": "applicant/json",
-    },
-  });
+type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
+const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
 
-  if (!response.ok) {
-    throw new Error("Error fetching applicant");
-  }
+export default withPageAuthRequired(function AdminDashboard({ schools }) {
+  const [showFilters, setShowFilters] = useState(false);
+  const [name, setName] = useState("");
+  const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
 
-  return response.json();
-};
+  const { data, isLoading, error } = useApplicantsQuery(filters, name);
+  const appStatusMutation = useAppStatusMutation();
+  const acceptWaveMutation = useAcceptWaveMutation();
 
-const ApplicantsTable = () => {
-  const { data, isLoading, error } = useQuery("applicant", getApplicants);
-  const applicantData = data;
-  console.log(applicantData);
+  const downloadCsv = async () => {
+    const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+    const response = await fetch(`/api/admin/applications?${params}&format=csv`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "text/csv",
+      },
+    });
 
-  if (!applicantData || error) {
-    return (
-      <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-        <h1 className="text-xl font-bold mb-4">This account doesn't have admin privileges</h1>
-        <p>You might need to login using a different account.</p>
-      </div>
-    );
-  }
+    if (!response.ok) {
+      throw new Error("Error fetching applicant");
+    }
 
-  return (
-    <div className="bg-white rounded-md shadow-md p-6">
-      {applicantData.map((entry: any, index: number) => (
-        <ApplicantCell data={entry} key={index} />
-      ))}
-    </div>
-  );
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    return;
+  };
 
-  /*return (
-    <table className="divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th className="py-1 px-1 text-left">First Name</th>
-          <th className="py-1 px-1 text-left">Last Name</th>
-          <th className="py-1 px-1 text-left">Email</th>
-          <th className="py-1 px-1 text-left">Age</th>
-          <th className="py-1 px-1 text-left">Country</th>
-          <th className="py-1 px-1 text-left">Major</th>
-          <th className="py-1 px-1 text-left">School</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {applicantData.map((entry: any, index: number) => (
-          <tr key={index}>
-            <td className="py-1 px-1">{entry.first_name}</td>
-            <td className="py-1 px-1">{entry.last_name}</td>
-            <td className="py-1 px-1">{entry.email}</td>
-            <td className="py-1 px-1">{entry.age}</td>
-            <td className="py-1 px-1">{entry.country}</td>
-            <td className="py-1 px-1">{entry.major}</td>
-            <td className="py-1 px-1">{entry.school}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );*/
-};
-
-export default withPageAuthRequired(function AdminDashboard() {
   return (
     <main className="bg-sand min-h-screen p-5">
-      <div className="flex justify-between mb-4 row">
-        <Link href="/">
-          <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Home</button>
-        </Link>
-        <Link href="/api/auth/logout">
-          <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">Logout</button>
-        </Link>
-      </div>
+      <div className="p-5 pt-0">
+        <div className="flex justify-between mb-10 row">
+          <Link href="/">
+            <h3 className="underline text-green-500 hover:text-green-600 text-xl font-pixel">Home</h3>
+          </Link>
+          <Link href="/api/auth/logout">
+            <h3 className="underline text-red-500 hover:text-red-600 text-xl font-pixel">Logout</h3>
+          </Link>
+        </div>
 
-      <ApplicantsTable />
+        <div className="flex justify-between mb-5 row align-middle items-center">
+          <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
+          <div className="flex row">
+            <input className="border border-gray-300 font-pixel text-md pl-1 mr-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
+
+            <button className="bg-deep_blue font-pixel text-md hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
+              Filters
+            </button>
+            <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
+              Export
+            </button>
+            {filters.application_status == "in_wave" && (
+              <button className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded" onClick={() => acceptWaveMutation.mutate()}>
+                Accept Wave
+              </button>
+            )}
+          </div>
+        </div>
+
+        {showFilters && <FiltersModal filters={filters} setFilters={setFilters} schools={schools} />}
+
+        <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
+      </div>
     </main>
   );
 });
+
+export async function getStaticProps() {
+  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+
+  const schools = schoolData
+    .map((school) => {
+      return school[0];
+    })
+    .splice(1);
+
+  return {
+    props: {
+      schools,
+    },
+  };
+}
