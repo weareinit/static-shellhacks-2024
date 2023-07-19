@@ -14,7 +14,7 @@ import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
 
 function RegisterForm() {
-  const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { schools, countries } = useFormOptionContext();
@@ -65,7 +65,8 @@ function RegisterForm() {
     });
 
     if (!response.ok) {
-      throw new Error("Error Registering Applicant");
+      const data = await response.json();
+      throw new Error(data.error);
     }
 
     return response;
@@ -82,12 +83,13 @@ function RegisterForm() {
       const { resumeId, url } = await getResumeLink(body.recaptcha);
       await uploadResume(resume, url);
       await registerApplicant(resumeId, body);
-    } catch {
-      setShowErrorModal(true);
+      setIsSubmitting(false);
+    } catch (e: any) {
+      setError(e.message);
+      setIsSubmitting(false);
       return;
     }
 
-    setIsSubmitting(false);
     setFinishedRegistration(true);
     setShowRegistration(false);
   };
@@ -159,12 +161,12 @@ function RegisterForm() {
 
             <CheckboxInput
               label={
-                <h2>
+                <p>
                   I have read and agree to the MLH Code of Conduct.
                   <a target="_blank" href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                     (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)
                   </a>
-                </h2>
+                </p>
               }
               name="agreed_mlh_conduct"
               hasInter
@@ -172,7 +174,7 @@ function RegisterForm() {
             />
             <CheckboxInput
               label={
-                <h2>
+                <p>
                   I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy
                   Policy (https://mlh.io/privacy). I further agree to the terms of both the MLH Contest Terms and Conditions (
                   <a target="_blank" href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md">
@@ -183,7 +185,7 @@ function RegisterForm() {
                     https://mlh.io/privacy
                   </a>
                   ).
-                </h2>
+                </p>
               }
               name="agreed_mlh_privacy"
               hasInter
@@ -191,10 +193,10 @@ function RegisterForm() {
 
             <CheckboxInput
               label={
-                <h2>
+                <p>
                   By checking this box, you acknowledge and authorize the sharing of your registration information with corporate sponsors for the purpose of exploring potential job opportunities.
                   This sharing of information allows us to connect you with relevant corporate sponsors who may be interested in considering you for employment or related opportunities.
-                </h2>
+                </p>
               }
               name="agreed_sponsors"
               hasInter
@@ -202,7 +204,7 @@ function RegisterForm() {
             />
 
             <CheckboxInput //required for us to send resumes to sponsors
-              label={<h2>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</h2>}
+              label={<p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</p>}
               name="agreed_mlh_news"
               hasInter
             />
@@ -230,7 +232,7 @@ function RegisterForm() {
               )}
             </Button>
 
-            {showErrorModal && <h2 className="text-lg font-pixel text-red-600">There was an error submitting, please try again later.</h2>}
+            {error != "" && <h2 className="text-lg text-center mt-1 font-pixel text-red-600">There was an error submitting, please try again later. {error}</h2>}
           </Form>
         )}
       </Formik>

@@ -1,24 +1,15 @@
 import { useState, useEffect } from "react";
+import {isMobile} from 'react-device-detect';
 
-type WindowSizeType = {
-  width?: number;
-  height?: number;
-};
 // Hook
-function useWindowSize() {
-  // Initialize state with undefined width/height so server and client renders match
-  const [windowSize, setWindowSize] = useState<WindowSizeType>({
-    width: undefined,
-    height: undefined,
-  });
+function useWindowWidth() {
+  // Initialize state with undefined width so server and client renders match
+  const [windowSize, setWindowWidth] = useState<number | undefined>(undefined);
   useEffect(() => {
     // Handler to call on window resize
     function handleResize() {
-      // Set window width/height to state
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      // Set window width to state
+      setWindowWidth(isMobile ? window.outerWidth : window.innerWidth);
     }
     // Add event listener
     window.addEventListener("resize", handleResize);
@@ -30,4 +21,4 @@ function useWindowSize() {
   return windowSize;
 }
 
-export default useWindowSize;
+export default useWindowWidth;

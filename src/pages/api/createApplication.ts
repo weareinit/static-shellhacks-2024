@@ -34,11 +34,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("Error occured!", e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        return res.status(409).json({ message: "User already exists with that email." });
+        return res.status(409).json({ error: "User already exists with that email." });
       }
     }
 
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 
   console.log("got here");

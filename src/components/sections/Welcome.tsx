@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
 
 import { SiDiscord } from "react-icons/si";
 import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } from "react-icons/ai";
@@ -25,8 +27,11 @@ function MicrosoftBoard() {
 
 function Welcome() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
+  const { user } = useUser();
+  const router = useRouter();
+
   return (
-    <section className="flex flex-col items-center justify-center h-fit min-h-screen">
+    <section className="flex flex-col items-center justify-center h-fit min-h-screen mt-5">
       <TitleLogo />
       <div className="my-4 flex flex-col justify-center items-center">
         {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}
@@ -46,27 +51,27 @@ function Welcome() {
         ) : (
           <div className="w-full col-span-full flex justify-center">
             <Button
-              className="col-span-full w-full bg-pink text-white text-center flex items-center justify-center drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]"
+              className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-blue min-h-[50px] h-[10vw] max-h-[60px]"
               onClick={(e) => {
                 e.preventDefault();
-                setShowRegistration(true);
+                user ? router.push("/dashboard") : setShowRegistration(true);
               }}
             >
-              <h2 className="font-extrabold text-md text-center hover:scale-110 transition ease-in-out">Register Now!</h2>
+              <h2 className="font-console text-xl text-center hover:scale-110 transition ease-in-out">{user ? "Hacker Dashboard" : "Register Now!"}</h2>
             </Button>
           </div>
         )}
 
         <div className=" row-start-2 col-span-full space-x-2 mt-1 grid grid-cols-2">
-          <Link href="/dashboard">
+          <Link href={user ? "/api/auth/logout" : "/dashboard"}>
             <Button className="bg-dark_brown text-tan col-span-1 min-w-[150px] min-h-[40px] w-[20vw] max-w-[250px] max-h-[50px] h-[10vw] drop-shadow-light_brown">
-              <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">DASHBOARD</h2>
+              <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">{user ? "LOG OUT" : "LOG IN"}</h2>
             </Button>
           </Link>
 
-          <Link href="mailto:team@weareinit.org">
+          <Link href="https://discord.com/invite/init">
             <Button className="bg-dark_brown text-tan col-span-1 min-w-[150px] min-h-[40px] w-[20vw] max-w-[250px] max-h-[50px] h-[10vw] drop-shadow-light_brown">
-              <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">SPONSOR US</h2>
+              <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">JOIN DISCORD</h2>
             </Button>
           </Link>
         </div>
