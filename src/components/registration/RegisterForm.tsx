@@ -223,7 +223,7 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="bg-green-500 text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
+            <Button type="submit" className="bg-pink text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
               Submit
               {isSubmitting && (
                 <span className="ml-2">
