@@ -10,9 +10,9 @@ function SponsorImage({ className, src, alt }: { className?: string; src: string
 
 function Sponsors() {
   return (
-    <section className=" m-4 p-4 mt-36 min-w-[300px] w-[70vw] max-w-[1200px]">
+    <section className=" m-4 p-4 mt-36 min-w-[300px] w-[70vw] max-w-[1200px] flex flex-col justify-center items-center">
       <h1 className=" text-4xl text-crate_brown text-center ">Sponsors</h1>
-      <div className="grid grid-cols-2 md:grid-cols-12 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-12 gap-5 w-full">
         <SponsorImage src="/assets/sponsors/INIT FIU.svg" alt="INIT FIU's Logo" className="col-span-2 md:col-span-12" />
         <SponsorImage src="/assets/sponsors/Microsoft.svg" alt="Microsoft Logo" className="col-span-2 md:col-span-12" />
         <SponsorImage src="/assets/sponsors/Xbox.svg" alt="Xbox Logo" className="md:col-span-4" />
