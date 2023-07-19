@@ -44,7 +44,9 @@ function Content() {
 
   return (
     <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
-      {isMobile ? <MobileNav /> : <Navbar />}
+      <div className="pb-4">
+        {isMobile ? <MobileNav /> : <Navbar />}
+      </div>
       <div id="welcome" className="pl-4 md:pl-10">
         <Welcome />
       </div>
