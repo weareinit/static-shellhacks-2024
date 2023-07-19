@@ -14,20 +14,16 @@ function FAQItem({ question, answer }: FAQItemProps) {
   };
 
   return (
-    <div className="bg-cyan_blue h-fit w-full relative rounded-sm">
+    //old width max-w-[600px]
+    <div className="bg-white p-2 rounded-pixel h-fit w-full relative">
       <h3
         onClick={toggleItem}
-        className={`relative font-pixel p-2 text-tan text-left hover:text-pink decoration-blue transition ease-in-out hover:cursor-pointer ${showItem && "bg-pink hover:text-tan"}`}
+        className="font-inter font-bold text-lg decoration-blue hover:underline hover:cursor-pointer"
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
         {question}
-        <svg
-          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} absolute right-1 top-1 opacity-50 z-10 cursor-pointer select-none`}
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-        >
-          <path d="M7 10l5 5 5-5z" />
+        <svg className={`transform transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+          <path fill="#3182ce" d="M7 10l5 5 5-5z" />
         </svg>
       </h3>
       {showItem && <p className={`text-crate_brown bg-navbar_background p-4 transition ease-in-out delay-150 ${showItem && " bg-caramel_brown "}`}>{answer}</p>}
@@ -57,7 +53,7 @@ function FAQ() {
           answer="Students and recent graduates (up to a year) from any college, university, or coding bootcamp can participate in ShellHacks. Not a student? You can participate as a mentor or volunteer and join the experience! Mentor and volunteer applications are coming soon!"
         />
         <FAQItem
-          question="Will there be transportation aid?"
+          question="Will there be any transportation aid provided?"
           answer="If you are an FIU students there will be busses transporting hackers from MMC to BBC throughout the weekend. If you are a student at a university/college in Florida, ShellHacks will send busses to those schools if sign ups and confirmations are significantly high, so tell your friends and classmates to sign up to hopefully have shuttles go to your school."
         />
         <FAQItem
