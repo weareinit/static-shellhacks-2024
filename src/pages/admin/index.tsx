@@ -9,6 +9,7 @@ import { z } from "zod";
 import { parseCSV } from "@/util/parseCSV";
 import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
 import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
+import Navbar from "../../components/dashboard/Navbar";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
@@ -45,14 +46,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="p-5 pt-0">
-        <div className="flex justify-between mb-10 row">
-          <Link href="/">
-            <h3 className="underline text-green-500 hover:text-green-600 text-xl font-pixel">Home</h3>
-          </Link>
-          <Link href="/api/auth/logout">
-            <h3 className="underline text-red-500 hover:text-red-600 text-xl font-pixel">Logout</h3>
-          </Link>
-        </div>
+        <Navbar />
 
         <div className="flex justify-between mb-5 row align-middle items-center">
           <h2 className="text-2xl">Showing {data?.length} Applicants</h2>

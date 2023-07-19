@@ -101,6 +101,12 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
                 <h2 className="font-pixel text-sm py-1">Remove From Wave</h2>
               </Button>
             )}
+
+            {["accepted", "confirmed"].includes(data.application_status!) && (
+              <Button className="md:min-w-[175px] mt-2 bg-pink text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("checked_in")}>
+                <h2 className="font-pixel text-sm py-1">Check in</h2>
+              </Button>
+            )}
           </div>
         </div>
       )}

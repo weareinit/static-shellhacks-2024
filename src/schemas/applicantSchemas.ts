@@ -5,7 +5,7 @@ const application_status_enums = ["registered", "in_wave", "accepted", "confirme
 export const applicantUpdateSchema = z.object({
   resume_path: z.string().optional(),
   application_status: z.literal("withdrawn").optional(),
-  phone: z
+  phone_number: z
     .string()
     .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
     .optional(),
@@ -30,6 +30,10 @@ export const applicantFiltersSchema = z.object({
     .optional(),
   school: z.string().optional(),
   format: z.string().optional(),
+  phone_number: z
+    .string()
+    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
+    .optional(),
 });
 
 export const newApplicantSchema = z.object({
