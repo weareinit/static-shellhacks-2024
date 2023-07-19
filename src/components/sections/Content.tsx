@@ -46,19 +46,10 @@ function Content() {
   return (
     <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
       <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
-      <div id="welcome" className="pl-4 md:pl-10">
-        <Welcome />
-      </div>
-
-      <div id="about">
-        <AboutUs />
-      </div>
-      <div id="workshops">
-        <Workshops />
-      </div>
-      <div id="faq" className="w-full">
-        <FAQ />
-      </div>
+      <Welcome />
+      <AboutUs />
+      <Workshops />
+      <FAQ />
       {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -66,12 +57,8 @@ function Content() {
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Showcase> */}
-      <section id="schedule">
-        <Schedule />
-      </section>
-      <section id="sponsors">
-        <Sponsors />
-      </section>
+      <Schedule />
+      <Sponsors />
       <CommunityPartners />
       {showRegistration && (
         <RegisterModal
