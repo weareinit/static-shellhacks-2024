@@ -16,7 +16,7 @@ interface HomeProps {
 
 export default function Home({ schools, countries }: HomeProps) {
   return (
-    <div className="bg-sand min-h-screen min-w-screen grid grid-cols-1 md:grid-cols-12">
+    <div className="bg-sand min-h-screen min-w-screen grid grid-cols-1 md:grid-cols-12 overflow-x-hidden">
       <div className="flex flex-col col-span-10 col-start-2 row-start-1 col-end-12">
         {/* <WelcomeDecorations />
         <AboutUsDecorations /> */}

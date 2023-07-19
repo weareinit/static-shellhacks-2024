@@ -12,6 +12,7 @@ import Schedule from "./Schedule";
 import Sponsors from "./Sponsors";
 import Workshops from "./Workshops";
 import Showcase from "./Showcase";
+import CommunityPartners from "./CommunityPartners";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -44,9 +45,7 @@ function Content() {
 
   return (
     <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
-      <div className="pb-4">
-        {isMobile ? <MobileNav /> : <Navbar />}
-      </div>
+      <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
       <div id="welcome" className="pl-4 md:pl-10">
         <Welcome />
       </div>
@@ -73,6 +72,7 @@ function Content() {
       <section id="sponsors">
         <Sponsors />
       </section>
+      <CommunityPartners />
       {showRegistration && (
         <RegisterModal
           toClose={(event) => {
