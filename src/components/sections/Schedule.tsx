@@ -26,7 +26,7 @@ function ScheduleCard({ weekDay, scheduleItems, className }: { weekDay: String; 
 
 function Schedule() {
   return (
-    <section className="mt-36">
+    <section className="pt-36" id="schedule">
       <h1 className="mb-12 text-4xl text-crate_brown text-center">Schedule</h1>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-y-6 lg:grid-cols-3 w-fit justify-items-center items-center justify-center content-center place-items-center">
         <ScheduleCard
