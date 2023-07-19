@@ -29,7 +29,7 @@ function Sponsors() {
         <SponsorImage src="/assets/sponsors/NVIDIA.svg" alt="Nvidia Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/FIU_SGA.svg" alt="FIU SGA Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GitHub.svg" alt="GitHub Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/emerge.svg" alt="eMerge Americas Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/emerge_logo.svg" alt="eMerge Americas Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GCP.svg" alt="Google Cloud Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GDG.svg" alt="Google Developer Student Club Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Jetbrains.svg" alt="Jet Brains IDE Logo" className="md:col-span-4" />
