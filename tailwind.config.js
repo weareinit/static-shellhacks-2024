@@ -57,6 +57,7 @@ module.exports = {
         pink: "2px 2px 0 #F1A4C9",
         light_brown: "2px 2px 0 #E2D2BB",
         white: "2px 2px 0 #FFF",
+        teal: "2px 2px 0 #24B2C0",
       },
       screens: {
         xs: "400px",
