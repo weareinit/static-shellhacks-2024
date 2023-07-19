@@ -37,7 +37,7 @@ function Welcome() {
         {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}
         <h2 className="m-2 text-crate_brown text-center font-console font-bold lg:text-3xl text-2xl">{"Florida's Largest Hackathon"}</h2>
         <MicrosoftBoard />
-        <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Kovens Conference Center @ Florida Int. University</h3>
+        <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Florida International University</h3>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Biscayne Bay Campus | Miami, Florida</h3>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">September 15-17, 2023</h3>
       </div>
@@ -51,7 +51,7 @@ function Welcome() {
         ) : (
           <div className="w-full col-span-full flex justify-center">
             <Button
-              className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-blue min-h-[50px] h-[10vw] max-h-[60px]"
+              className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]"
               onClick={(e) => {
                 e.preventDefault();
                 user ? router.push("/dashboard") : setShowRegistration(true);
