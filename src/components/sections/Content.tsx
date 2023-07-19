@@ -11,6 +11,7 @@ import MobileNav from "../navigation/mobileNav";
 import Schedule from "./Schedule";
 import Sponsors from "./Sponsors";
 import Workshops from "./Workshops";
+import Showcase from "./Showcase";
 import CommunityPartners from "./CommunityPartners";
 
 function Content() {

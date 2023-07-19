@@ -21,11 +21,16 @@ module.exports = {
       },
       colors: {
         deep_blue: "#3C72A7",
+        dark_brown: "#A1917C",
         crate_brown: "#695E53",
-        caramel_brown: "#A2917C",
+        caramel_brown: "#E2D2BB",
+        cyan_blue: "#24B2C0",
         grass_green: "#8EBE6B",
         blue: "#006887",
+        pink: "#FF66A4",
+        light_pink: "#F1A4C9",
         white: "#FFF",
+        tan: "#F9EDE3",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
