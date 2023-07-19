@@ -58,6 +58,9 @@ module.exports = {
         light_brown: "2px 2px 0 #E2D2BB",
         white: "2px 2px 0 #FFF",
       },
+      screens: {
+        xs: "400px",
+      },
     },
   },
   plugins: [],
