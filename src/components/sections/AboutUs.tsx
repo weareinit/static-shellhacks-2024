@@ -8,10 +8,10 @@ function AboutUs() {
     <section className="m-2 p-4 h-fit min-w[300px] w-[70vw] max-w-[900px]">
       <h1 className="my-4 font-console text-crate_brown text-4xl mb-2 text-center">About Us</h1>
       <div className="flex flex-col lg:flex-row justify-center items-stretch space-x-5">
-        <div className="relative min-w-[300px] min-h-[200px] w-full">
+        <div className="relative flex-1 min-w-[300px] min-h-[200px] w-full">
           <Image src="/images/hackers_pic.jpg" alt="Hackers at ShellHacks 2022" fill className="object-cover h-full" />
         </div>
-        <article className="flex flex-col justify-center text-sm">
+        <article className="flex flex-1 flex-col justify-center text-sm">
           <div className="bg-navbar_background bg-caramel_brown p-6 rounded-sm text-crate_brown h-full">
             <p className="font-pixel mb-2">Ready to kickstart your career in tech? Join us for Florida's Largest Hackathon! 1,000+ students from around the world will come together to: </p>
             <ul className="list-disc ml-6 mb-2 font-pixel">
