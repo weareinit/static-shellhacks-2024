@@ -1,4 +1,4 @@
-mport React from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -28,7 +28,7 @@ function Welcome() {
         <Image src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" width={125} height={50} className="ml-3" />
       </div>
     );
-  }  
+  }
 
   return (
     <section className="flex flex-col items-center justify-center h-fit min-h-screen mt-5">
