@@ -57,10 +57,6 @@ function FAQ() {
           answer="Students and recent graduates (up to a year) from any college, university, or coding bootcamp can participate in ShellHacks. Not a student? You can participate as a mentor or volunteer and join the experience! Mentor and volunteer applications are coming soon!"
         />
         <FAQItem
-          question="Will there be transportation aid?"
-          answer="If you are an FIU students there will be busses transporting hackers from MMC to BBC throughout the weekend. If you are a student at a university/college in Florida, ShellHacks will send busses to those schools if sign ups and confirmations are significantly high, so tell your friends and classmates to sign up to hopefully have shuttles go to your school."
-        />
-        <FAQItem
           question="How much experience do I need to participate?"
           answer="None! We welcome students from all academic backgrounds and skill levels, and provide an inclusive environment for anyone to learn, build, and network. Whether you’ve never coded before or live and breathe AI/ML, there’s a place for you at ShellHacks! In fact, about half of our attendees every year are first-time hackers. If you fall in this group, we’ll have introductory workshops for you to learn technical skills, resources and tools to help you build a project, and industry mentors to guide you every step of the way. No matter where you are on your journey, don’t be afraid to take a detour and explore the world of tech with us - you won’t regret it!"
         />
