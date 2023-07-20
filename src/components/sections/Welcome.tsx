@@ -31,7 +31,7 @@ function Welcome() {
   const router = useRouter();
 
   return (
-    <section className="flex flex-col items-center justify-center h-fit min-h-screen mt-5">
+    <section className="flex flex-col items-center justify-center h-fit min-h-screen mt-5" id="welcome">
       <TitleLogo />
       <div className="my-4 flex flex-col justify-center items-center">
         {/* TODO : Sometimes Florida's Largest Hackathon is way bigger than logo. Need to fix */}

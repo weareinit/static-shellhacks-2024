@@ -37,7 +37,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
 
 function FAQ() {
   return (
-    <section className="flex flex-col md:flex-row m-2 justify-center items-center mt-36">
+    <section className="flex flex-col md:flex-row m-2 justify-center items-center pt-36" id="faq">
       <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
         <h2 className="text-center font-console font-bold text-4xl text-crate_brown mb-12">FAQs</h2>
         <FAQItem

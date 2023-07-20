@@ -5,7 +5,7 @@ import FillImage from "../FillImage";
 
 function AboutUs() {
   return (
-    <section className="m-2 p-4 h-fit min-w-[350px] w-[70vw] max-w-[900px]">
+    <section className="m-2 p-4 h-fit min-w-[350px] w-[70vw] max-w-[900px] pt-16" id="about">
       <h1 className="my-4 font-console text-crate_brown text-4xl mb-2 text-center">About Us</h1>
       <div className="flex flex-col lg:flex-row justify-center items-stretch w-full gap-x-2">
         <div className="relative flex-1 min-w-[300px] min-h-[200px] w-full mb-2">
