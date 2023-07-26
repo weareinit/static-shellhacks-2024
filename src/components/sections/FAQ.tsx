@@ -49,6 +49,10 @@ function FAQ() {
           answer="ShellHacks takes place from September 15th through the 17th at the Kovens Conference Center, located at Florida International University’s Biscayne Bay Campus in North Miami, Florida."
         />
         <FAQItem
+          question="Is ShellHacks in-person or virtual?"
+          answer="ShellHacks will be an in-person event only this year. We look forward to hosting you on-site for an exciting and immersive experience!"
+        />
+        <FAQItem
           question="How long is ShellHacks?"
           answer="ShellHacks is a 36-hour hackathon, beginning at 4pm on Friday and ending at 3pm on Sunday. Throughout this time, you can expect key events such as our opening and closing ceremonies, career fair, and judging, as well as a variety of workshops, activities, meals, and snacks. Hacking (project-building) time begins at 10pm on Friday and ends at 8am on Sunday. We encourage you to work on a project for as long as you can during this time!"
         />
