@@ -11,7 +11,7 @@ export const useAppUpdateMutation = () => {
     const response = await fetch(`/api/application`, {
       method: "PUT",
       headers: {
-        "Content-Type": "applicantion/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(args),
     });
@@ -20,7 +20,7 @@ export const useAppUpdateMutation = () => {
       throw new Error("Error updating applicant");
     }
 
-    return response.json();
+    return await response.json();
   };
 
   return useMutation({

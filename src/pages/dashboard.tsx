@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
   useEffect(() => {
-    switch (applicantData.application_status) {
+    switch (applicantData?.application_status) {
       case application_status_enums.registered:
         setDecorationImage(yellow);
         break;
@@ -51,7 +51,7 @@ const Dashboard = () => {
       default:
         setDecorationImage(yellow);
     }
-  }, [applicantData.application_status]);
+  }, [applicantData]);
 
   if (isLoading) {
     return (
@@ -90,7 +90,7 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-md mx-auto">
-        {applicantData.application_status == application_status_enums.confirmed && (
+        {applicantData.application_status == application_status_enums.accepted && (
           <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
             <h2 className="text-lg font-medium mb-2">Confirmation</h2>
             <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
