@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient, Prisma } from "@prisma/client";
 import { sendConfirmationEmail } from "src/util/aws";
 import { newApplicantSchema } from "@/schemas/applicantSchemas";
+import { generateSignedResumeUploadUrl } from "src/util/aws";
+import crypto from "crypto";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,10 +12,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  delete req.body.recaptcha; //maybe do something with this in the future?
+  const { recaptcha } = req.body;
+  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+    },
+    method: "POST",
+  });
+  const captchaValidation = await response.json();
+  if (!captchaValidation.success) return res.status(400).json({ error: "Captcha validation failed" });
+
+  delete req.body.recaptcha;
+
+  const resumeId = crypto.randomBytes(16).toString("hex"); //generate unique resume name for each user
 
   const validatedApplicant = newApplicantSchema.parse({
     event_id: "1", //req.query.eventId,
+    resume_path: resumeId,
     ...req.body,
   });
 
@@ -28,8 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     console.log("inserted applicant");
 
-    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
-    return res.status(200).json({ applicant });
+    // const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
+
+    const url: string = await generateSignedResumeUploadUrl(resumeId);
+    return res.status(200).json({ resume_url: url });
   } catch (e) {
     console.log("Error occured!", e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -40,8 +57,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(500).json({ error: "Internal server error" });
   }
-
-  console.log("got here");
 };
 
 export default handler;

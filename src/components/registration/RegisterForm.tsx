@@ -20,28 +20,28 @@ function RegisterForm() {
   const { schools, countries } = useFormOptionContext();
   const { setFinishedRegistration, setShowRegistration } = useShowRegistrationContext();
 
-  async function getResumeLink(recaptchaCode: string) {
-    const response = await fetch(`/api/resumes/createResume`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ recaptcha: recaptchaCode }),
-    });
+  // async function getResumeLink(recaptchaCode: string) {
+  //   const response = await fetch(`/api/resumes/createResume`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ recaptcha: recaptchaCode }),
+  //   });
 
-    if (!response.ok) {
-      throw new Error("Error Fetching Resume Link");
-    }
+  //   if (!response.ok) {
+  //     throw new Error("Error Fetching Resume Link");
+  //   }
 
-    return await response.json();
-  }
+  //   return await response.json();
+  // }
 
   async function uploadResume(resume: File, url: string) {
     const response = await fetch(url, {
       method: "PUT",
       body: resume,
       headers: {
-        "Content-Type": "file",
+        "Content-Type": "application/pdf",
       },
     });
 
@@ -52,7 +52,7 @@ function RegisterForm() {
     return response;
   }
 
-  async function registerApplicant(resumeId: string, body: Object) {
+  async function registerApplicant(body: Object) {
     const filteredBody = Object.fromEntries(Object.entries(body).filter(([_, value]) => value !== ""));
 
     const response = await fetch(`/api/createApplication`, {
@@ -61,7 +61,7 @@ function RegisterForm() {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ ...filteredBody, resume_path: resumeId }),
+      body: JSON.stringify(filteredBody),
     });
 
     if (!response.ok) {
@@ -69,7 +69,8 @@ function RegisterForm() {
       throw new Error(data.error);
     }
 
-    return response;
+    const content = await response.json();
+    return content;
   }
 
   const handleSubmit = async (values: ApplicantValues) => {
@@ -80,9 +81,10 @@ function RegisterForm() {
     body.pronouns = values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
 
     try {
-      const { resumeId, url } = await getResumeLink(body.recaptcha);
-      await uploadResume(resume, url);
-      await registerApplicant(resumeId, body);
+      // const { resumeId, url } = await getResumeLink(body.recaptcha);
+
+      const { resume_url } = await registerApplicant(body);
+      await uploadResume(resume, resume_url);
       setIsSubmitting(false);
     } catch (e: any) {
       setError(e.message);
