@@ -50,7 +50,7 @@ function FAQ() {
         />
         <FAQItem
           question="Is ShellHacks in-person or virtual?"
-          answer="ShellHacks will be an in-person event only this year. We look forward to hosting you on-site for an exciting and immersive experience!"
+          answer="ShellHacks will be in person only this year due to MLH’s guidance on event modality for events in the 2023-2024 hackathon season. We look forward to hosting you on-site for an exciting and immersive experience!"
         />
         <FAQItem
           question="How long is ShellHacks?"
