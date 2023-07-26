@@ -1,13 +1,16 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
 import red from "/public/assets/decorations/red_umbrella.png";
 import yellow from "/public/assets/decorations/yellow_umbrella.png";
 import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
+import { application_status_enums } from "@prisma/client";
+import { set } from "zod";
 
 const getapplicant = async () => {
   const response = await fetch("/api/application", {
@@ -27,7 +30,28 @@ const getapplicant = async () => {
 const Dashboard = () => {
   const { data, isLoading, error } = useQuery("applicant", getapplicant);
   const applicantData = data?.applicant;
-  const [showConfirmButton, setShowConfirmButton] = useState(false);
+
+  const appUpdateMutation = useAppUpdateMutation();
+
+  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
+  useEffect(() => {
+    switch (applicantData.application_status) {
+      case application_status_enums.registered:
+        setDecorationImage(yellow);
+        break;
+      case application_status_enums.accepted:
+        setDecorationImage(blue);
+        break;
+      case application_status_enums.confirmed:
+        setDecorationImage(green);
+        break;
+      case application_status_enums.withdrawn:
+        setDecorationImage(red);
+        break;
+      default:
+        setDecorationImage(yellow);
+    }
+  }, [applicantData.application_status]);
 
   if (isLoading) {
     return (
@@ -51,49 +75,13 @@ const Dashboard = () => {
     );
   }
 
-  let decorationImage = yellow; //defaults to yellow but this is always overwritten depending on app status
-
-  if (applicantData.application_status === "registered" || applicantData.application_status === "in_wave") {
-    decorationImage = yellow;
-  } else if (applicantData.application_status === "accepted") {
-    decorationImage = blue;
-  } else if (applicantData.application_status === "confirmed") {
-    decorationImage = green;
-  } else if (applicantData.application_status === "withdrawn") {
-    decorationImage = red;
-  }
-
-  if (applicantData.application_status === "accepted"){
-    setShowConfirmButton(true);
-  }
-
   const handleConfirmClick = async () => {
     try {
-      const response = await fetch("/api/attendance/confirmAttendance", {
-        method: "PUT",
-        body: JSON.stringify({
-          hacker_id: applicantData.hacker_id, // Or use the appropriate unique identifier here
-          application_status: "confirmed", // Add application_status with value "confirmed"
-        }), // Or use the appropriate unique identifier here
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (response.ok) {
-        alert("Application status changed to 'confirmed' successfully!");
-        // Optionally, you can update the local state to hide the "Confirm" button after successful confirmation
-        // setShowConfirmButton(false);
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error}`);
-      }
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
     } catch (error) {
       console.error("Error changing application status:", error);
     }
   };
-
-  //add level of study text replacement for frontend (wont affect backend entry at all)
 
   return (
     <main className="bg-sand min-h-screen p-5">
@@ -102,18 +90,15 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-md mx-auto">
-      {showConfirmButton && (
-        <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-          <h2 className="text-lg font-medium mb-2">Confirmation</h2>
-          <p>
-            Congratulations! Your application has been accepted. Please click the "Confirm" button below to
-            confirm your attendance to the event.
-          </p>
-          <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
-            Confirm
-          </button>
-        </div>
-      )}
+        {applicantData.application_status == application_status_enums.confirmed && (
+          <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+            <h2 className="text-lg font-medium mb-2">Confirmation</h2>
+            <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
+            <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
+              Confirm
+            </button>
+          </div>
+        )}
         <div className="bg-white rounded-md shadow-md p-6">
           <h1 className="text-xl mb-4 font-pixel text-center">Hacker Dashboard</h1>
           <div className="mt-4">

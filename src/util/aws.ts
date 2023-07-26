@@ -18,6 +18,7 @@ const emailClient = new SESClient({});
 
 export const generateSignedResumeUploadUrl = async (resumeId: string) => {
   // logger.info(`Generating signed url for resume ${resumeId}`);
+  console.log("resumeId", resumeId, "access id", process.env.AWS_SECRET_ACCESS_KEY!, "secret access", process.env.AWS_SECRET_ACCESS_KEY!);
   const params: PutObjectCommandInput = {
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: resumeId,

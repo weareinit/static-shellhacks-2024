@@ -15,10 +15,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(403).json({ error: "Forbidden" });
   }
 
+  const emails = await prisma.hacker_Applications.findMany({
+    where: { application_status: application_status_enums.in_wave },
+    select: { email: true },
+  });
+
   await prisma.hacker_Applications.updateMany({
     where: { application_status: application_status_enums.in_wave },
     data: { application_status: application_status_enums.accepted },
   });
+
+  //send the acceptance emails
 
   return res.status(200).send({});
 };
