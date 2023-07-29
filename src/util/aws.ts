@@ -1,6 +1,14 @@
 import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, GetObjectCommandInput } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { SendTemplatedEmailCommand, CreateTemplateCommand, type SendTemplatedEmailCommandInput, CreateTemplateCommandInput } from "@aws-sdk/client-ses";
+import {
+  SendTemplatedEmailCommand,
+  CreateTemplateCommand,
+  SendBulkTemplatedEmailCommand,
+  type SendTemplatedEmailCommandInput,
+  CreateTemplateCommandInput,
+  SendBulkTemplatedEmailCommandInput,
+  BulkEmailDestination,
+} from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
 
@@ -45,6 +53,52 @@ export const deleteResume = async (resumeId: string) => {
   };
   const command = new DeleteObjectCommand(params);
   return await s3Client.send(command);
+};
+
+interface EmailPayload {
+  first_name: string;
+  email: string;
+}
+
+export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
+  const destinations = applicants.map((applicant) => {
+    const { email, first_name } = applicant;
+    const destination: BulkEmailDestination = {
+      Destination: {
+        ToAddresses: [email],
+      },
+      ReplacementTemplateData: JSON.stringify({ first_name }),
+    };
+
+    return destination;
+  });
+
+  const params: SendBulkTemplatedEmailCommandInput = {
+    Destinations: destinations,
+    Source: "fiuoperations@weareinit.org",
+    Template: "status-accepted-template",
+    DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
+  };
+
+  const command = new SendBulkTemplatedEmailCommand(params);
+  await emailClient.send(command);
+};
+
+export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
+  // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
+  const { email, first_name } = applicant;
+
+  const params: SendTemplatedEmailCommandInput = {
+    Destination: {
+      ToAddresses: [email],
+    },
+    Source: "fiuoperations@weareinit.org",
+    Template: "status-confirmed-template",
+    TemplateData: `{ \"first_name\":\"${first_name}\" }`,
+  };
+
+  const command = new SendTemplatedEmailCommand(params);
+  await emailClient.send(command);
 };
 
 export const sendConfirmationEmail = async (toEmail: string, firstName: string) => {

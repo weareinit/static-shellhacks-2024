@@ -9,11 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // const admin = await isAdmin(req, res);
+  const admin = await isAdmin(req, res);
 
-  // if (!admin) {
-  //   return res.status(403).json({ error: "Forbidden" });
-  // }
+  if (!admin) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
 
   const payloadSchema = z.object({
     templateName: z.string(),
@@ -27,4 +27,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).send(result);
 };
 
-export default handler; //withApiAuthRequired(handler);
+export default withApiAuthRequired(handler);

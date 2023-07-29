@@ -3,7 +3,7 @@ import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { PrismaClient } from "@prisma/client";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
 import { application_status_enums } from "@prisma/client";
-import { sendConfirmationEmail } from "@/util/aws";
+import { sendConfirmationEmail, sendStatusConfirmedEmail } from "@/util/aws";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       //send the confirmation email
-      await sendConfirmationEmail(applicant?.email as string, applicant?.first_name as string);
+      await sendStatusConfirmedEmail({ email: applicant?.email!, first_name: applicant?.first_name! });
     }
 
     // if (payload.resume_path) {
