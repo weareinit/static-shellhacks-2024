@@ -3,6 +3,7 @@ import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { PrismaClient } from "@prisma/client";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
 import { application_status_enums } from "@prisma/client";
+import { sendConfirmationEmail } from "@/util/aws";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -26,16 +27,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       //send the confirmation email
-      //await sendConfirmationEmail(applicant?.email as string, applicant?.first_name as string);
+      await sendConfirmationEmail(applicant?.email as string, applicant?.first_name as string);
     }
 
-    if (payload.resume_path) {
-      //if the user is changing their resume, delete the old one from s3
-      const oldResumePath = applicant?.resume_path;
+    // if (payload.resume_path) {
+    //   //if the user is changing their resume, delete the old one from s3
+    //   const oldResumePath = applicant?.resume_path;
 
-      //await deleteResume(oldResumePath?.resume_path as string);
-      console.log("deleting resume...");
-    }
+    //   await deleteResume(oldResumePath?.resume_path as string);
+    //   console.log("deleting resume...");
+    // }
 
     const result = await prisma.hacker_Applications.update({
       where: { email },
