@@ -2,42 +2,48 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { PrismaClient } from "@prisma/client";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
+import { application_status_enums } from "@prisma/client";
+import { sendConfirmationEmail, sendStatusConfirmedEmail } from "@/util/aws";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
   const email = session?.user?.email;
 
-  if (req.method === "GET") {
-    const applicant = await prisma.hacker_Applications.findUnique({
-      where: { email },
-    });
+  const applicant = await prisma.hacker_Applications.findUnique({
+    where: { email },
+  });
 
+  if (req.method === "GET") {
     res.status(200).json({ applicant });
   } else if (req.method === "PUT") {
     const payload = applicantUpdateSchema.parse(req.body);
 
-    if (payload.resume_path) {
-      //if the user is changing their resume, delete the old one from s3
-      const oldResumePath = await prisma.hacker_Applications.findUnique({
-        where: {
-          email,
-        },
-        select: {
-          resume_path: true,
-        },
-      });
+    if (payload.application_status && payload.application_status == application_status_enums.confirmed) {
+      //if the user is changing their application status to confirmed, make sure they were already accepted
+      const existingStatus = applicant?.application_status;
+      if (existingStatus !== application_status_enums.accepted) {
+        return res.status(400).json({ error: "You must be accepted to confirm your application." });
+      }
 
-      //await deleteResume(oldResumePath?.resume_path as string);
-      console.log("deleting resume...");
+      //send the confirmation email
+      await sendStatusConfirmedEmail({ email: applicant?.email!, first_name: applicant?.first_name! });
     }
 
-    const applicant = await prisma.hacker_Applications.update({
+    // if (payload.resume_path) {
+    //   //if the user is changing their resume, delete the old one from s3
+    //   const oldResumePath = applicant?.resume_path;
+
+    //   await deleteResume(oldResumePath?.resume_path as string);
+    //   console.log("deleting resume...");
+    // }
+
+    const result = await prisma.hacker_Applications.update({
       where: { email },
       data: payload,
     });
 
-    res.status(200).json({ applicant });
+    res.status(200).json({ result });
   }
 };
 

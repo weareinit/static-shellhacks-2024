@@ -6,13 +6,13 @@ import z from "zod";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   const admin = await isAdmin(req, res);
 
   if (!admin) {
-    res.status(403).json({ error: "Forbidden" });
+    return res.status(403).json({ error: "Forbidden" });
   }
 
   const payloadSchema = z.object({
@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { templateName, subject, htmlTemplate } = payloadSchema.parse(req.body);
 
   const result = await createEmailTemplate(templateName, subject, htmlTemplate);
-  res.status(200).send(result);
+  return res.status(200).send(result);
 };
 
 export default withApiAuthRequired(handler);
