@@ -76,7 +76,7 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
   const params: SendBulkTemplatedEmailCommandInput = {
     Destinations: destinations,
     Source: "fiuoperations@weareinit.org",
-    Template: "status-accepted-template",
+    Template: "status-accepted-template-updated",
     DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
   };
 
@@ -93,7 +93,7 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
       ToAddresses: [email],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "status-confirmed-template",
+    Template: "status-confirmed-template-updated",
     TemplateData: `{ \"first_name\":\"${first_name}\" }`,
   };
 
