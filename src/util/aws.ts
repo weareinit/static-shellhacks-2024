@@ -93,7 +93,7 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
       ToAddresses: [email],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "status-confirmed-template-updated",
+    Template: "status-confirmed-template-updated-1",
     TemplateData: `{ \"first_name\":\"${first_name}\" }`,
   };
 
