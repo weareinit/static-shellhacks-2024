@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import Link from "next/link";
@@ -7,10 +8,8 @@ import red from "/public/assets/decorations/red_umbrella.png";
 import yellow from "/public/assets/decorations/yellow_umbrella.png";
 import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
-import { useEffect, useState } from "react";
-import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 import { application_status_enums } from "@prisma/client";
-import { set } from "zod";
+import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
 const getapplicant = async () => {
   const response = await fetch("/api/application", {
@@ -37,6 +36,7 @@ const Dashboard = () => {
   useEffect(() => {
     switch (applicantData?.application_status) {
       case application_status_enums.registered:
+      case application_status_enums.in_wave:
         setDecorationImage(yellow);
         break;
       case application_status_enums.accepted:
@@ -52,6 +52,36 @@ const Dashboard = () => {
         setDecorationImage(yellow);
     }
   }, [applicantData]);
+
+  const handleConfirmClick = async () => {
+    try {
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
+    } catch (error) {
+      console.error("Error changing application status:", error);
+    }
+  };
+
+  let applicationStatusMessage = "";
+
+  switch (applicantData?.application_status) {
+    case application_status_enums.registered:
+      applicationStatusMessage = "You have applied!";
+      break;
+    case application_status_enums.in_wave:
+      applicationStatusMessage = "You have applied!";
+      break;
+    case application_status_enums.accepted:
+      applicationStatusMessage = "You are accepted!";
+      break;
+    case application_status_enums.confirmed:
+      applicationStatusMessage = "You are confirmed!";
+      break;
+    case application_status_enums.withdrawn:
+      applicationStatusMessage = "You have withdrawn! :(";
+      break;
+    default:
+      applicationStatusMessage = "";
+  }
 
   if (isLoading) {
     return (
@@ -75,14 +105,6 @@ const Dashboard = () => {
     );
   }
 
-  const handleConfirmClick = async () => {
-    try {
-      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
-    } catch (error) {
-      console.error("Error changing application status:", error);
-    }
-  };
-
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="py-2 px-6">
@@ -90,9 +112,9 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-md mx-auto">
-        {applicantData.application_status == application_status_enums.accepted && (
+        {applicantData.application_status === application_status_enums.accepted && (
           <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-            <h2 className="text-lg font-medium mb-2">Confirmation</h2>
+            <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
             <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
             <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
               Confirm
@@ -107,7 +129,7 @@ const Dashboard = () => {
               <div>
                 <Image src={decorationImage} alt="Umbrella Decoration" />
               </div>
-              <p> You are {applicantData.application_status}! </p>
+              <p>{applicationStatusMessage}</p>
             </div>
           </div>
           <div className="mt-4">
