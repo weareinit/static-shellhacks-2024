@@ -19,9 +19,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     },
     method: "POST",
   });
+
   const captchaValidation = await response.json();
   if (!captchaValidation.success) return res.status(400).json({ error: "Captcha validation failed" });
-
   delete req.body.recaptcha;
 
   const resumeId = crypto.randomBytes(16).toString("hex"); //generate unique resume name for each user
@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     console.log("inserted applicant");
 
-    // const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
+    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
 
     const url: string = await generateSignedResumeUploadUrl(resumeId);
     return res.status(200).json({ resume_url: url });
