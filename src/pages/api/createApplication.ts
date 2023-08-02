@@ -41,11 +41,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const applicant = await prisma.hacker_Applications.create({
       data: newApplicant,
     });
-    console.log("inserted applicant");
 
-    const confirmationEmailStatus = await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
-
+    await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
     const url: string = await generateSignedResumeUploadUrl(resumeId);
+
     return res.status(200).json({ resume_url: url });
   } catch (e) {
     console.log("Error occured!", e);
