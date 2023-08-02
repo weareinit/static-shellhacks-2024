@@ -1,12 +1,15 @@
+import React, { useState, useEffect } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
 import red from "/public/assets/decorations/red_umbrella.png";
 import yellow from "/public/assets/decorations/yellow_umbrella.png";
 import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
+import { application_status_enums } from "@prisma/client";
+import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
 const getapplicant = async () => {
   const response = await fetch("/api/application", {
@@ -26,6 +29,59 @@ const getapplicant = async () => {
 const Dashboard = () => {
   const { data, isLoading, error } = useQuery("applicant", getapplicant);
   const applicantData = data?.applicant;
+
+  const appUpdateMutation = useAppUpdateMutation();
+
+  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
+  useEffect(() => {
+    switch (applicantData?.application_status) {
+      case application_status_enums.registered:
+      case application_status_enums.in_wave:
+        setDecorationImage(yellow);
+        break;
+      case application_status_enums.accepted:
+        setDecorationImage(blue);
+        break;
+      case application_status_enums.confirmed:
+        setDecorationImage(green);
+        break;
+      case application_status_enums.withdrawn:
+        setDecorationImage(red);
+        break;
+      default:
+        setDecorationImage(yellow);
+    }
+  }, [applicantData]);
+
+  const handleConfirmClick = async () => {
+    try {
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
+    } catch (error) {
+      console.error("Error changing application status:", error);
+    }
+  };
+
+  let applicationStatusMessage = "";
+
+  switch (applicantData?.application_status) {
+    case application_status_enums.registered:
+      applicationStatusMessage = "You have applied!";
+      break;
+    case application_status_enums.in_wave:
+      applicationStatusMessage = "You have applied!";
+      break;
+    case application_status_enums.accepted:
+      applicationStatusMessage = "You are accepted!";
+      break;
+    case application_status_enums.confirmed:
+      applicationStatusMessage = "You are confirmed!";
+      break;
+    case application_status_enums.withdrawn:
+      applicationStatusMessage = "You have withdrawn! :(";
+      break;
+    default:
+      applicationStatusMessage = "";
+  }
 
   if (isLoading) {
     return (
@@ -49,20 +105,6 @@ const Dashboard = () => {
     );
   }
 
-  let decorationImage = yellow; //defaults to yellow but this is always overwritten depending on app status
-
-  if (applicantData.application_status === "registered" || applicantData.application_status === "in_wave") {
-    decorationImage = yellow;
-  } else if (applicantData.application_status === "accepted") {
-    decorationImage = blue;
-  } else if (applicantData.application_status === "confirmed") {
-    decorationImage = green;
-  } else if (applicantData.application_status === "withdrawn") {
-    decorationImage = red;
-  }
-
-  //add level of study text replacement for frontend (wont affect backend entry at all)
-
   return (
     <main className="bg-sand min-h-screen p-5">
       <div className="py-2 px-6">
@@ -70,6 +112,15 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-md mx-auto">
+        {applicantData.application_status === application_status_enums.accepted && (
+          <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+            <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
+            <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
+            <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
+              Confirm
+            </button>
+          </div>
+        )}
         <div className="bg-white rounded-md shadow-md p-6">
           <h1 className="text-xl mb-4 font-pixel text-center">Hacker Dashboard</h1>
           <div className="mt-4">
@@ -78,7 +129,7 @@ const Dashboard = () => {
               <div>
                 <Image src={decorationImage} alt="Umbrella Decoration" />
               </div>
-              <p> You are {applicantData.application_status}! </p>
+              <p>{applicationStatusMessage}</p>
             </div>
           </div>
           <div className="mt-4">

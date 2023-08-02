@@ -21,7 +21,6 @@ function Sponsors() {
         <SponsorImage src="/assets/sponsors/Waymo.svg" alt="Waymo Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Cutting_Edge_AI.svg" alt="Cutting Edge AI Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Lexis_Nexis.svg" alt="Lexis Nexis Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/HPCC_Systems.svg" alt="HPCC Systems Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Southwest.svg" alt="Southwest Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Addigy.svg" alt="Addigy Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Mediastream.svg" alt="Mediastream Logo" className="md:col-span-4" />

@@ -26,7 +26,18 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
   const handleOptionClick = (option: string) => {
     setSearchValue(option);
     setIsOptionSelected(true);
-    field.onChange({ target: { name: field.name, value: option } }); // Manually update the formik field value
+    field.onChange({ target: { name: field.name, value: option } });
+  };
+
+  const handleInputBlur = () => {
+    // Check if the input matches any option, if not, set it to "Other"
+    if (searchValue.trim() !== "" && !filteredOptions?.length) {
+      setSearchValue("Other");
+      setIsOptionSelected(true);
+      field.onChange({ target: { name: field.name, value: "Other" } });
+    } else {
+      setIsOptionSelected(false);
+    }
   };
 
   const showError = meta.touched && meta.error && !isOptionSelected;
@@ -41,11 +52,11 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
           type="text"
           value={searchValue}
           onChange={handleSearchChange}
-          className={`border-blue w-full basis-full border-2 p-1 h-8 sm:h-10 font-inter focus:ring-2 ${
-            showError
-              ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
-              : `focus:ring-blue/50`
-          }`}
+          onBlur={handleInputBlur}
+          className={`border-blue w-full basis-full border-2 p-1 h-8 sm:h-10 font-inter focus:ring-2 ${showError
+            ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
+            : `focus:ring-blue/50`
+            }`}
         />
         {searchValue && filteredOptions && filteredOptions.length > 0 && !isOptionSelected && (
           <ul className="absolute z-10 left-0 right-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md max-h-36 overflow-y-auto">
