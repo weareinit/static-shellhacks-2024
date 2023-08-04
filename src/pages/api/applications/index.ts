@@ -22,7 +22,7 @@ const prisma = new PrismaClient();
 //   return res.status(200).json(updatedApplicant);
 // }
 
-async function isValidCaptcha(req: NextApiRequest, res: NextApiResponse): Promise<boolean> {
+async function isValidCaptcha(req: NextApiRequest, res: NextApiResponse) {
   const { recaptcha } = req.body;
   const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`, {
     headers: {
@@ -30,16 +30,14 @@ async function isValidCaptcha(req: NextApiRequest, res: NextApiResponse): Promis
     },
     method: "POST",
   });
-
-  const captchaValidation = await response.json();
-  return await captchaValidation.success;
+  return response;
 }
 
 async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
   const admin = await isAdmin(req, res);
 
   if (!admin) {
-    return res.status(403).json({ message: "Forbidden. You are not allowed access to this route with the admin role." });
+    return res.status(403).json({ message: "Forbidden. You are not allowed get all applicants without the admin role." });
   }
 
   const filters = applicantFiltersSchema.parse({
@@ -70,8 +68,13 @@ async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
-  let captchaValid: boolean = await isValidCaptcha(req, res);
-  if (!captchaValid) {
+  const captchaValid = await isValidCaptcha(req, res);
+  if (!captchaValid.ok) {
+    return res.status(400).json({ message: "Failed to make Captcha validation" });
+  }
+
+  const captchaData = await captchaValid.json();
+  if (!captchaData.success) {
     return res.status(400).json({ message: "Captcha validation failed" });
   }
 
@@ -86,7 +89,6 @@ async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
   const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
     ...validatedApplicant,
   };
-  console.log("validated", validatedApplicant);
 
   try {
     const applicant = await prisma.hacker_Applications.create({
