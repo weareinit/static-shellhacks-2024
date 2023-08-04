@@ -12,14 +12,9 @@ import Navbar from "@/components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
-const getapplicant = async () => {
-  const { user, error, isLoading } = useUser();
-
-  if (error) {
-    throw error;
-  }
-
-  const response = await fetch(`/api/applications/${user?.email}`, {
+const getApplicant = async ({ queryKey }: { queryKey: any }) => {
+  const [_, email] = queryKey;
+  const response = await fetch(`/api/applications/${email}`, {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",
@@ -34,7 +29,8 @@ const getapplicant = async () => {
 };
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useQuery("applicant", getapplicant);
+  const { user } = useUser();
+  const { data, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
   const applicantData = data?.applicant;
 
   const appUpdateMutation = useAppUpdateMutation();
@@ -62,7 +58,7 @@ const Dashboard = () => {
 
   const handleConfirmClick = async () => {
     try {
-      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData.email });
     } catch (error) {
       console.error("Error changing application status:", error);
     }

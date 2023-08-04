@@ -12,6 +12,7 @@ const application_statuses = [
 const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
 export const applicantUpdateSchema = z.object({
+  email: z.string().email().optional(),
   resume_path: z.string().optional(),
   application_status: z.enum(user_changeable_application_statuses).optional(),
   phone_number: z
@@ -24,7 +25,7 @@ export const applicantUpdateSchema = z.object({
 
 export const applicantStatusChangeSchema = z.object({
   //event_id: z.string().regex(/^\d+$/).transform(Number),
-  hacker_id: z.number(),
+  email: z.string().email(),
   application_status: z.enum(application_statuses),
 });
 

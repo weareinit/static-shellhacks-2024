@@ -2,9 +2,22 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Hacker_Applications, PrismaClient, application_status_enums } from "@prisma/client";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
 import { sendStatusConfirmedEmail } from "@/util/aws";
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { isAdmin } from "@/util/auth0Utils";
 
 const prisma = new PrismaClient();
+
+async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession(req, res);
+  const admin = await isAdmin(req, res);
+  if (session == null) {
+    return res.status(403).json({ message: "Request must be made from authenticated source." });
+  }
+  if (!admin && session.user.email !== applicant.email) {
+    return res.status(403).json({ message: "Forbidden. User does not have access to this route." });
+  }
+  return res.status(200).json({ applicant });
+}
 
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const email = req.query.email as string;
@@ -53,7 +66,7 @@ async function applicationHandler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === "GET") {
-    return res.status(200).json({ applicant });
+    return getApplicant(applicant, req, res);
   }
 
   if (req.method === "PUT") {

@@ -21,7 +21,7 @@ function RegisterForm() {
   const { setFinishedRegistration, setShowRegistration } = useShowRegistrationContext();
 
   // async function getResumeLink(recaptchaCode: string) {
-  //   const response = await fetch(`/api/resumes/createResume`, {
+  //   const response = await fetch(`/api/resumes/`, {
   //     method: "POST",
   //     headers: {
   //       "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function RegisterForm() {
   async function registerApplicant(body: Object) {
     const filteredBody = Object.fromEntries(Object.entries(body).filter(([_, value]) => value !== ""));
 
-    const response = await fetch(`/api/createApplication`, {
+    const response = await fetch(`/api/applications`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -66,6 +66,7 @@ function RegisterForm() {
 
     if (!response.ok) {
       const data = await response.json();
+      console.log(data);
       throw new Error(data.error);
     }
 

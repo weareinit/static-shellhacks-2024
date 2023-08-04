@@ -26,14 +26,15 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
     setShowItem((prev) => !prev);
   };
 
-  const openResume = async (resumePath: string) => {
-    const response = await fetch(`/api/resumes/getResume?resumeId=${resumePath}`, {
+  const openResume = async (email: string) => {
+    const response = await fetch(`/api/resumes/${email}`, {
       method: "GET",
       headers: {
         "Content-Type": "applicant/json",
       },
     });
 
+    // Use message from response
     if (!response.ok) {
       throw new Error("Error fetching applicant");
     }
@@ -72,7 +73,7 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
             <ApplicantInfo data={data} />
           </div>
           <div className="col-span-2 text-white">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.resume_path)}>
+            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.email)}>
               <h2 className="font-pixel text-sm py-1">View Resume</h2>
             </Button>
 

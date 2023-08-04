@@ -1,0 +1,47 @@
+import { isAdmin } from "@/util/auth0Utils";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { Hacker_Applications, PrismaClient } from "@prisma/client";
+import { generateSignedResumeUrl } from "@/util/aws";
+import { NextApiRequest, NextApiResponse } from "next";
+
+const prisma = new PrismaClient();
+
+async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
+  const admin = await isAdmin(req, res);
+  const session = await getSession(req, res);
+
+  if (!admin && session?.user.email !== hacker.email) {
+    return res.status(403).json({ message: "Forbidden. User does not have credentials to access this route." });
+  }
+
+  const url: string = await generateSignedResumeUrl(hacker.resume_path);
+  return res.status(200).json({ url });
+}
+
+async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.query.resumeId === null) {
+    return res.status(400).json({ message: "Failed to pass in resumeId" });
+  }
+
+  let hacker = await prisma.hacker_Applications.findFirst({
+    where: {
+      resume_path: req.query.resumeId as string,
+    },
+  });
+
+  if (hacker == null) {
+    return res.status(404).json({ message: "User does not exist" });
+  }
+
+  if (hacker.resume_path == null) {
+    return res.status(404).json({ message: "Resume for user does not exist" });
+  }
+
+  if (req.method === "GET") {
+    return getResume(hacker, req, res);
+  }
+
+  return res.status(403).json({ message: "Forbidden" });
+}
+
+export default withApiAuthRequired(resumeHandler);

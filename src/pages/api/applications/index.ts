@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { isAdmin } from "src/util/auth0Utils";
 import { generateApplicantCSV } from "@/util/generateApplicantCSV";
@@ -36,6 +36,12 @@ async function isValidCaptcha(req: NextApiRequest, res: NextApiResponse): Promis
 }
 
 async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
+  const admin = await isAdmin(req, res);
+
+  if (!admin) {
+    return res.status(403).json({ message: "Forbidden. You are not allowed access to this route with the admin role." });
+  }
+
   const filters = applicantFiltersSchema.parse({
     event_id: "1",
     ...req.query,
@@ -64,7 +70,8 @@ async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
-  if (!(await isValidCaptcha(req, res))) {
+  let captchaValid: boolean = await isValidCaptcha(req, res);
+  if (!captchaValid) {
     return res.status(400).json({ message: "Captcha validation failed" });
   }
 
@@ -104,20 +111,15 @@ async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const applicationsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const admin = await isAdmin(req, res);
-  if (!admin) return res.status(403).json({ error: "Forbidden" });
-
   if (req.method === "GET") {
-    getApplicant(req, res);
-    return;
+    return getApplicant(req, res);
   }
 
   if (req.method === "POST") {
-    createApplicant(req, res);
-    return;
+    return createApplicant(req, res);
   }
 
   return res.status(405).json({ error: "Method not allowed" });
 };
 
-export default withApiAuthRequired(applicationsHandler);
+export default applicationsHandler;
