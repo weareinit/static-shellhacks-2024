@@ -44,7 +44,7 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
   };
 
   const setAppStatus = async (application_status: string) => {
-    const payload = applicantStatusChangeSchema.parse({ hacker_id: data.hacker_id, application_status });
+    const payload = applicantStatusChangeSchema.parse({ email: data.email, application_status });
     await handleAppStatusChange.mutate(payload);
   };
 
