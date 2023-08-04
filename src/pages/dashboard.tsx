@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
@@ -12,7 +13,13 @@ import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
 const getapplicant = async () => {
-  const response = await fetch("/api/application", {
+  const { user, error, isLoading } = useUser();
+
+  if (error) {
+    throw error;
+  }
+
+  const response = await fetch(`/api/applications/${user?.email}`, {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",

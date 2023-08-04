@@ -26,7 +26,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
 
-    const response = await fetch(`/api/admin/applications?${params}&format=csv`, {
+    const response = await fetch(`/api/applications?${params}&format=csv`, {
       method: "GET",
       headers: {
         "Content-Type": "text/csv",
