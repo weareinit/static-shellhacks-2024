@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Hacker_Applications, PrismaClient, application_status_enums } from "@prisma/client";
-import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
+import { applicantUpdateSchema, user_changeable_application_statuses } from "@/schemas/applicantSchemas";
 import { sendStatusConfirmedEmail } from "@/util/aws";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { isAdmin } from "@/util/auth0Utils";
@@ -20,10 +20,33 @@ async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest,
 }
 
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
+  if (req.query.email == null) {
+    return res.status(400).json({ message: "User email is missing from query" });
+  }
   const email = req.query.email as string;
-  const payload = applicantUpdateSchema.parse(req.body);
+  let body = req.body;
+  delete body.email;
+  const payload = applicantUpdateSchema.parse(JSON.parse(req.body));
 
-  if (payload.application_status && payload.application_status == application_status_enums.confirmed) {
+  const admin = await isAdmin(req, res);
+  if (admin) {
+    try {
+      const result = await prisma.hacker_Applications.update({
+        where: { email },
+        data: payload,
+      });
+      return res.status(200).json({ result });
+    } catch (e) {
+      return res.status(500).json({ message: "Error updating user as admin" });
+    }
+  }
+
+  const appStatus = payload.application_status;
+  if (appStatus != null && !Object.keys(user_changeable_application_statuses).includes(appStatus)) {
+    return res.status(403).json({ message: "You are not authorized to change your status outside of conformed and withdrawn" });
+  }
+
+  if (appStatus == application_status_enums.confirmed) {
     //if the user is changing their application status to confirmed, make sure they were already accepted
     const existingStatus = applicant?.application_status;
     if (existingStatus !== application_status_enums.accepted) {
@@ -41,13 +64,15 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
   //   await deleteResume(oldResumePath?.resume_path as string);
   //   console.log("deleting resume...");
   // }
-
-  const result = await prisma.hacker_Applications.update({
-    where: { email },
-    data: payload,
-  });
-
-  res.status(200).json({ result });
+  try {
+    const result = await prisma.hacker_Applications.update({
+      where: { email },
+      data: payload,
+    });
+    return res.status(200).json({ result });
+  } catch (e) {
+    return res.status(500).json({ message: "Failed updating user with user permissions" });
+  }
 }
 
 async function applicationHandler(req: NextApiRequest, res: NextApiResponse) {
