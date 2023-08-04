@@ -57,7 +57,7 @@ async function applicationHandler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === "PUT") {
-    return updateApplicant(applicant, res, req);
+    return updateApplicant(applicant, req, res);
   }
 }
 
