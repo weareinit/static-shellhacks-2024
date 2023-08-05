@@ -9,11 +9,12 @@ const application_statuses = [
   application_status_enums.withdrawn,
   application_status_enums.waitlisted,
 ] as const;
-const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
+export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
 export const applicantUpdateSchema = z.object({
+  email: z.string().email().optional(),
   resume_path: z.string().optional(),
-  application_status: z.enum(user_changeable_application_statuses).optional(),
+  application_status: z.enum(application_statuses).optional(),
   phone_number: z
     .string()
     .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
@@ -24,7 +25,7 @@ export const applicantUpdateSchema = z.object({
 
 export const applicantStatusChangeSchema = z.object({
   //event_id: z.string().regex(/^\d+$/).transform(Number),
-  hacker_id: z.number(),
+  email: z.string(),
   application_status: z.enum(application_statuses),
 });
 
