@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { isAdmin } from "src/util/auth0Utils";
 import { generateApplicantCSV } from "@/util/generateApplicantCSV";
@@ -8,7 +7,8 @@ import { newApplicantSchema } from "@/schemas/applicantSchemas";
 import { sendConfirmationEmail } from "@/util/aws";
 import { generateSignedResumeUploadUrl } from "@/util/aws";
 import { randomBytes } from "crypto";
-const prisma = new PrismaClient();
+import { validateCaptcha } from "@/util/ApiUtils";
+import { prisma } from "@/util/ApiUtils";
 
 // async function updateApplicant(req: NextApiRequest, res: NextApiResponse) {
 //   req.body = JSON.parse(req.body);
@@ -22,22 +22,11 @@ const prisma = new PrismaClient();
 //   return res.status(200).json(updatedApplicant);
 // }
 
-async function isValidCaptcha(req: NextApiRequest, res: NextApiResponse) {
-  const { recaptcha } = req.body;
-  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-    },
-    method: "POST",
-  });
-  return response;
-}
-
-async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
+async function getApplicants(req: NextApiRequest, res: NextApiResponse) {
   const admin = await isAdmin(req, res);
 
   if (!admin) {
-    return res.status(403).json({ message: "Forbidden. You are not allowed get all applicants without the admin role." });
+    return res.status(401).json({ message: "Unauthorized. You are not allowed get all applicants without the admin role." });
   }
 
   const filters = applicantFiltersSchema.parse({
@@ -68,15 +57,7 @@ async function getApplicant(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
-  const captchaValid = await isValidCaptcha(req, res);
-  if (!captchaValid.ok) {
-    return res.status(400).json({ message: "Failed to make Captcha validation" });
-  }
-
-  const captchaData = await captchaValid.json();
-  if (!captchaData.success) {
-    return res.status(400).json({ message: "Captcha validation failed" });
-  }
+  validateCaptcha(req, res);
 
   const resumeId = randomBytes(16).toString("hex"); //generate unique resume name for each user
 
@@ -86,35 +67,29 @@ async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
     ...req.body,
   });
 
-  const newApplicant: Prisma.Hacker_ApplicationsUncheckedCreateInput = {
-    ...validatedApplicant,
-  };
-
   try {
-    const applicant = await prisma.hacker_Applications.create({
-      data: newApplicant,
+    await prisma.hacker_Applications.create({
+      data: validatedApplicant,
     });
 
     await sendConfirmationEmail(validatedApplicant.email, validatedApplicant.first_name);
-    const url: string = await generateSignedResumeUploadUrl(resumeId);
+    const url = await generateSignedResumeUploadUrl(resumeId);
 
     return res.status(200).json({ resume_url: url });
   } catch (e) {
     console.log("Error occured!", e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        return res.status(409).json({ error: "User already exists with that email." });
+        return res.status(409).json({ error: "Duplicate. User already exists with that email." });
       }
     }
-    res.status(304);
-
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal Error. Could not create applicant and send confirmation email." });
   }
 }
 
 const applicationsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    return getApplicant(req, res);
+    return getApplicants(req, res);
   }
 
   if (req.method === "POST") {

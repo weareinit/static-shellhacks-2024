@@ -2,13 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { isAdmin } from "src/util/auth0Utils";
 import { createEmailTemplate, getEmailTemplates, removeEmailTemplate, updateEmailTemplate } from "@/util/aws";
-import z from "zod";
-
-const emailTemplateSchema = z.object({
-  templateName: z.string(),
-  subject: z.string(),
-  htmlTemplate: z.string(),
-});
+import { emailTemplateSchema } from "@/schemas/emailSchemas";
 
 async function sendEmailTemplates(req: NextApiRequest, res: NextApiResponse) {
   let emailTemplates = await getEmailTemplates();
@@ -20,7 +14,7 @@ async function uploadEmailTemplates(req: NextApiRequest, res: NextApiResponse) {
   try {
     body = emailTemplateSchema.parse(req.body);
   } catch (e) {
-    return res.status(400).json({ message: "Could not parse request body to upload email template" });
+    return res.status(400).json({ message: "Error. Could not parse request body to upload email template" });
   }
 
   const result = await createEmailTemplate(body.templateName, body.subject, body.htmlTemplate);
@@ -31,7 +25,7 @@ const emailTemplateHandler = async (req: NextApiRequest, res: NextApiResponse) =
   const admin = await isAdmin(req, res);
 
   if (!admin) {
-    return res.status(403).json({ error: "Forbidden" });
+    return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });
   }
 
   if (req.method === "GET") {
@@ -42,7 +36,7 @@ const emailTemplateHandler = async (req: NextApiRequest, res: NextApiResponse) =
     return uploadEmailTemplates(req, res);
   }
 
-  return res.status(403).json({ message: "Forbidden" });
+  return res.status(405).json({ message: "Method not allowed for this route" });
 };
 
 export default withApiAuthRequired(emailTemplateHandler);

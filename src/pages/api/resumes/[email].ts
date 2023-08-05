@@ -3,8 +3,7 @@ import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { Hacker_Applications, PrismaClient } from "@prisma/client";
 import { generateSignedResumeUrl } from "@/util/aws";
 import { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/util/ApiUtils";
 
 async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const admin = await isAdmin(req, res);
@@ -20,7 +19,7 @@ async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: 
 
 async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.email == null) {
-    return res.status(400).json({ message: "Failed to pass in email" });
+    return res.status(400).json({ message: "Error. Failed to pass in email" });
   }
 
   let hacker = await prisma.hacker_Applications.findFirst({
@@ -30,11 +29,11 @@ async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
   });
 
   if (hacker == null) {
-    return res.status(404).json({ message: "User does not exist" });
+    return res.status(404).json({ message: "Missing. User does not exist" });
   }
 
   if (hacker.resume_path == null) {
-    return res.status(404).json({ message: "Resume for user does not exist" });
+    return res.status(404).json({ message: "Missing. Resume for user does not exist" });
   }
 
   if (req.method === "GET") {
