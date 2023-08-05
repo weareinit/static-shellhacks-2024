@@ -5,7 +5,7 @@ import { randomBytes } from "crypto";
 import { validateCaptcha } from "@/util/ApiUtils";
 
 async function uploadResume(req: NextApiRequest, res: NextApiResponse) {
-  validateCaptcha(req, res);
+  await validateCaptcha(req, res);
 
   const resumeId = randomBytes(16).toString("hex"); //generate unique resume name for each user
   const url: string = await generateSignedResumeUploadUrl(resumeId);

@@ -57,7 +57,7 @@ async function getApplicants(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
-  validateCaptcha(req, res);
+  await validateCaptcha(req, res);
 
   const resumeId = randomBytes(16).toString("hex"); //generate unique resume name for each user
 
