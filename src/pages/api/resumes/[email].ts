@@ -19,13 +19,13 @@ async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: 
 }
 
 async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.query.resumeId === null) {
-    return res.status(400).json({ message: "Failed to pass in resumeId" });
+  if (req.query.email == null) {
+    return res.status(400).json({ message: "Failed to pass in email" });
   }
 
   let hacker = await prisma.hacker_Applications.findFirst({
     where: {
-      resume_path: req.query.resumeId as string,
+      email: req.query.email as string,
     },
   });
 
