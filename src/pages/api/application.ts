@@ -3,15 +3,20 @@ import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import { PrismaClient } from "@prisma/client";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
 import { application_status_enums } from "@prisma/client";
-import { sendConfirmationEmail, sendStatusConfirmedEmail } from "@/util/aws";
+import { sendStatusConfirmedEmail } from "@/util/aws";
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
   const email = session?.user?.email;
 
-  const applicant = await prisma.hacker_Applications.findUnique({
-    where: { email },
+  const applicant = await prisma.hacker_Applications.findFirst({
+    where: {
+      email: {
+        equals: email,
+        mode: "insensitive",
+      },
+    },
   });
 
   if (req.method === "GET") {
