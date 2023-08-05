@@ -87,9 +87,12 @@ async function applicationHandler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ message: "Email not passed" });
   }
 
-  let applicant = await prisma.hacker_Applications.findFirst({
+  const applicant = await prisma.hacker_Applications.findFirst({
     where: {
-      email: req.query.email as string,
+      email: {
+        equals: req.query.email as string,
+        mode: "insensitive",
+      },
     },
   });
 

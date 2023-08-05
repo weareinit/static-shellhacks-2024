@@ -22,9 +22,12 @@ async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ message: "Error. Failed to pass in email" });
   }
 
-  let hacker = await prisma.hacker_Applications.findFirst({
+  const hacker = await prisma.hacker_Applications.findFirst({
     where: {
-      email: req.query.email as string,
+      email: {
+        equals: req.query.email as string,
+        mode: "insensitive",
+      },
     },
   });
 
