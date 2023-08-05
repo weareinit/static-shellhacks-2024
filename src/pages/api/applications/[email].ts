@@ -4,29 +4,30 @@ import { applicantUpdateSchema, user_changeable_application_statuses } from "@/s
 import { sendStatusConfirmedEmail } from "@/util/aws";
 import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { isAdmin } from "@/util/auth0Utils";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/util/ApiUtils";
 
 async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession(req, res);
   const admin = await isAdmin(req, res);
-  if (session == null) {
-    return res.status(403).json({ message: "Request must be made from authenticated source." });
-  }
-  if (!admin && session.user.email !== applicant.email) {
-    return res.status(403).json({ message: "Forbidden. User does not have access to this route." });
+  if (!admin && session?.user.email !== applicant.email) {
+    return res.status(401).json({ message: "Unauthorized. User does not have access to this route." });
   }
   return res.status(200).json({ applicant });
 }
 
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
-  if (req.query.email == null) {
-    return res.status(400).json({ message: "User email is missing from query" });
+  const newApplicantInfo = {
+    email: req.query.email,
+    ...req.body,
+  };
+  let payload;
+  try {
+    payload = applicantUpdateSchema.parse(newApplicantInfo);
+  } catch (e) {
+    return res.status(400).json({ message: "Error. Could not parse provided update applicant information" });
   }
-  const email = req.query.email as string;
-  let body = req.body;
-  delete body.email;
-  const payload = applicantUpdateSchema.parse(JSON.parse(req.body));
+  const email = payload.email;
+  delete payload?.email;
 
   const admin = await isAdmin(req, res);
   if (admin) {
@@ -37,20 +38,25 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
       });
       return res.status(200).json({ result });
     } catch (e) {
-      return res.status(500).json({ message: "Error updating user as admin" });
+      return res.status(500).json({ message: "Internal Error. Could not update user as admin" });
     }
+  }
+
+  const session = await getSession(req, res);
+  if (session?.user.email !== applicant.email) {
+    return res.status(401).json({ message: "Unauthorized. You are not authorized to change another user's application" });
   }
 
   const appStatus = payload.application_status;
   if (appStatus != null && !Object.keys(user_changeable_application_statuses).includes(appStatus)) {
-    return res.status(403).json({ message: "You are not authorized to change your status outside of conformed and withdrawn" });
+    return res.status(401).json({ message: "Unauthorized. You are not authorized to change your status outside of conformed and withdrawn" });
   }
 
   if (appStatus == application_status_enums.confirmed) {
     //if the user is changing their application status to confirmed, make sure they were already accepted
     const existingStatus = applicant?.application_status;
     if (existingStatus !== application_status_enums.accepted) {
-      return res.status(400).json({ error: "You must be accepted to confirm your application." });
+      return res.status(400).json({ error: "Error. You must be accepted to confirm your application." });
     }
 
     //send the confirmation email
@@ -64,9 +70,10 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
   //   await deleteResume(oldResumePath?.resume_path as string);
   //   console.log("deleting resume...");
   // }
+
   try {
     const result = await prisma.hacker_Applications.update({
-      where: { email },
+      where: { email: applicant.email },
       data: payload,
     });
     return res.status(200).json({ result });
@@ -97,6 +104,8 @@ async function applicationHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
     return updateApplicant(applicant, req, res);
   }
+
+  return res.status(405).json({ message: "Method is not allowed for this route" });
 }
 
 export default withApiAuthRequired(applicationHandler);
