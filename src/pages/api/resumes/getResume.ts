@@ -13,13 +13,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
   const email = session?.user?.email;
   const admin = await isAdmin(req, res);
+
   var resumeId;
 
   if (req.query.resumeId && admin) {
     resumeId = req.query.resumeId as string;
   } else {
-    const userResume = await prisma.hacker_Applications.findUnique({
-      where: { email },
+    const userResume = await prisma.hacker_Applications.findFirst({
+      where: {
+        email: {
+          equals: email,
+          mode: "insensitive",
+        },
+      },
       select: { resume_path: true },
     });
     resumeId = userResume?.resume_path ?? "";
