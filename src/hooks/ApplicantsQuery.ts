@@ -29,6 +29,6 @@ export const useApplicantsQuery = (filters: ApplicantFilterType, name: string = 
   };
 
   return useQuery(["applicants", filters], getApplicants, {
-    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase())),
+    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase()) || entry.email.toLowerCase().includes(name.toLowerCase())),
   });
 };
