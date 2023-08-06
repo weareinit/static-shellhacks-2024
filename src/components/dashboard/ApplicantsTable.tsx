@@ -1,5 +1,6 @@
 import ApplicantCell from "@/components/dashboard/ApplicantCell";
 import LoadingSpinner from "../misc/LoadingSpinner";
+import { Hacker_Applications } from "@prisma/client";
 
 interface ApplicantsTableProps {
   data: any;
@@ -12,7 +13,7 @@ export default function ({ data, isLoading, error, appStatusMutation }: Applican
   if (data) {
     return (
       <>
-        {data.map((entry: any, index: number) => (
+        {data.map((entry: Hacker_Applications, index: number) => (
           <ApplicantCell data={entry} key={entry.hacker_id} handleAppStatusChange={appStatusMutation} />
         ))}
       </>
