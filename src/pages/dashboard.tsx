@@ -20,6 +20,7 @@ const getapplicant = async () => {
   });
 
   if (!response.ok) {
+
     throw new Error("Error fetching applicant");
   }
 
