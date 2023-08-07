@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
@@ -11,8 +12,9 @@ import Navbar from "@/components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
-const getapplicant = async () => {
-  const response = await fetch("/api/application", {
+const getApplicant = async ({ queryKey }: { queryKey: any }) => {
+  const [_, email] = queryKey;
+  const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",
@@ -28,7 +30,8 @@ const getapplicant = async () => {
 };
 
 const Dashboard = () => {
-  const { data, isLoading, error } = useQuery("applicant", getapplicant);
+  const { user } = useUser();
+  const { data, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
   const applicantData = data?.applicant;
 
   const appUpdateMutation = useAppUpdateMutation();
@@ -56,7 +59,7 @@ const Dashboard = () => {
 
   const handleConfirmClick = async () => {
     try {
-      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed });
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData.email });
     } catch (error) {
       console.error("Error changing application status:", error);
     }

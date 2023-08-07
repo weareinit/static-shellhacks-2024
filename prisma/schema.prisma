@@ -37,9 +37,9 @@ model Hacker_Applications {
   email              String                   @unique @db.VarChar(60)
   phone_number       String                   @db.VarChar(20)
   resume_path        String                   @db.VarChar(250)
-  discord            String?                  @db.VarChar(50)
-  github             String?                  @db.VarChar(75)
-  linkedin           String?                  @db.VarChar(75)
+  discord            String?                  @db.VarChar(250)
+  github             String?                  @db.VarChar(250)
+  linkedin           String?                  @db.VarChar(250)
   // DEMOGRAPHIC INFO
   is_international   Boolean
   gender             String                   @db.VarChar(50)

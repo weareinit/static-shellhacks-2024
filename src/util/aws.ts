@@ -8,6 +8,9 @@ import {
   CreateTemplateCommandInput,
   SendBulkTemplatedEmailCommandInput,
   BulkEmailDestination,
+  ListTemplatesCommand,
+  UpdateTemplateCommand,
+  DeleteTemplateCommand,
 } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
@@ -76,7 +79,7 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
   const params: SendBulkTemplatedEmailCommandInput = {
     Destinations: destinations,
     Source: "fiuoperations@weareinit.org",
-    Template: "status-accepted-template-updated",
+    Template: "status-accepted-template-accepted-5",
     DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
   };
 
@@ -93,7 +96,7 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
       ToAddresses: [email],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "status-confirmed-template-updated-1",
+    Template: "status-confirmed-template-updated-5",
     TemplateData: `{ \"first_name\":\"${first_name}\" }`,
   };
 
@@ -108,7 +111,7 @@ export const sendConfirmationEmail = async (toEmail: string, firstName: string) 
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "welcome-template3",
+    Template: "welcome-template-updated-3",
     TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
@@ -130,6 +133,39 @@ export const createEmailTemplate = async (templateName: string, subjectPart: str
   const res = await emailClient.send(command);
   return res;
 };
+
+export async function getEmailTemplates() {
+  const getTemplates = new ListTemplatesCommand({});
+  try {
+    const data = await emailClient.send(getTemplates);
+    return data;
+  } catch (err) {
+    console.log(err);
+    // handle err
+  }
+}
+
+export async function updateEmailTemplate(templateName: string, subjectPart: string, htlmPart: string) {
+  const command = new UpdateTemplateCommand({
+    Template: {
+      TemplateName: templateName,
+      SubjectPart: subjectPart,
+      HtmlPart: htlmPart,
+    },
+  });
+
+  const data = await emailClient.send(command);
+  return data;
+}
+
+export async function removeEmailTemplate(templateName: string) {
+  const command = new DeleteTemplateCommand({
+    TemplateName: templateName,
+  });
+
+  const data = await emailClient.send(command);
+  return data;
+}
 
 // export async function doesFileExistInS3(fileName: string) {
 //   const params = { Bucket: process.env.AWS_BUCKET_NAME, Key: fileName }

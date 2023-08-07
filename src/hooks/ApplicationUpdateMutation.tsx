@@ -8,7 +8,13 @@ export const useAppUpdateMutation = () => {
   const queryClient = useQueryClient();
 
   const updateApplicant = async (args: ApplicantUpdateType) => {
-    const response = await fetch(`/api/application`, {
+    if (args.email == null) {
+      throw new Error("Cannot update applicant when email is null");
+    }
+
+    console.log(args);
+
+    const response = await fetch(`/api/applications/${encodeURIComponent(args.email)}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
