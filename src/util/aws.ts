@@ -79,7 +79,7 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
   const params: SendBulkTemplatedEmailCommandInput = {
     Destinations: destinations,
     Source: "fiuoperations@weareinit.org",
-    Template: "status-accepted-template-updated-4",
+    Template: "status-accepted-template-updated-5",
     DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
   };
 
