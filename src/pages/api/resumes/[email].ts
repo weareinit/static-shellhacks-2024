@@ -20,13 +20,11 @@ async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: 
 }
 
 async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
-  const bodyParse = z.string().safeParse(req.query.email as string);
-
-  if (!bodyParse.success) {
+  if (req.query.email == null) {
     return res.status(400).json({ message: "Error. Failed to pass in email" });
   }
 
-  const email = bodyParse.data;
+  const email = req.query.email as string;
 
   const hacker = await prisma.hacker_Applications.findFirst({
     where: {
