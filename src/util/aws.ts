@@ -79,7 +79,7 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
   const params: SendBulkTemplatedEmailCommandInput = {
     Destinations: destinations,
     Source: "fiuoperations@weareinit.org",
-    Template: "status-accepted-template-08-06",
+    Template: "status-accepted-template-updated-4",
     DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
   };
 
@@ -96,7 +96,7 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
       ToAddresses: [email],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "status-confirmed-template-updated-1",
+    Template: "status-confirmed-template-updated-5",
     TemplateData: `{ \"first_name\":\"${first_name}\" }`,
   };
 
@@ -111,7 +111,7 @@ export const sendConfirmationEmail = async (toEmail: string, firstName: string) 
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "welcome-template3",
+    Template: "welcome-template-updated-3",
     TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
