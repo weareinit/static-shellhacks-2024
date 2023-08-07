@@ -18,7 +18,7 @@ async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest,
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const newApplicantInfo = {
     email: req.query.email,
-    ...req.body,
+    ...JSON.parse(req.body),
   };
 
   const parsedResult = applicantUpdateSchema.safeParse(newApplicantInfo);
@@ -34,7 +34,7 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
       const result = await prisma.hacker_Applications.updateMany({
         where: {
           email: {
-            equals: email as string,
+            equals: email,
             mode: "insensitive",
           },
         },
