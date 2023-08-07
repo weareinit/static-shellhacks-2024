@@ -28,11 +28,11 @@ async function uploadEmailTemplates(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const emailTemplateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const admin = await isAdmin(req, res);
+  const admin = await isAdmin(req, res);
 
-  // if (!admin) {
-  //   return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });
-  // }
+  if (!admin) {
+    return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });
+  }
 
   if (req.method === "GET") {
     return sendEmailTemplates(req, res);
