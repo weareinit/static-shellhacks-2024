@@ -4,6 +4,8 @@ import { Hacker_Applications, PrismaClient } from "@prisma/client";
 import { generateSignedResumeUrl } from "@/util/aws";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/util/ApiUtils";
+import { newApplicantSchema } from "@/schemas/applicantSchemas";
+import z from "zod";
 
 async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const admin = await isAdmin(req, res);
@@ -22,10 +24,12 @@ async function resumeHandler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ message: "Error. Failed to pass in email" });
   }
 
+  const email = req.query.email as string;
+
   const hacker = await prisma.hacker_Applications.findFirst({
     where: {
       email: {
-        equals: req.query.email as string,
+        equals: email,
         mode: "insensitive",
       },
     },

@@ -11,6 +11,7 @@ import {
   ListTemplatesCommand,
   UpdateTemplateCommand,
   DeleteTemplateCommand,
+  GetTemplateCommand,
 } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
@@ -143,6 +144,15 @@ export async function getEmailTemplates() {
     console.log(err);
     // handle err
   }
+}
+
+export async function getSpecificTemplate(templateName: string) {
+  const command = new GetTemplateCommand({
+    TemplateName: templateName,
+  });
+
+  const data = await emailClient.send(command);
+  return data;
 }
 
 export async function updateEmailTemplate(templateName: string, subjectPart: string, htlmPart: string) {
