@@ -20,20 +20,24 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
     email: req.query.email,
     ...req.body,
   };
-  let payload;
-  try {
-    payload = applicantUpdateSchema.parse(newApplicantInfo);
-  } catch (e) {
-    return res.status(400).json({ message: "Error. Could not parse provided update applicant information" });
+
+  const parsedResult = applicantUpdateSchema.safeParse(newApplicantInfo);
+  if (!parsedResult.success) {
+    return res.status(400).json({ message: `Error. Could not parse provided update applicant information ${JSON.stringify(parsedResult.error)}` });
   }
-  const email = payload.email;
-  delete payload?.email;
+
+  const { email, ...payload } = parsedResult.data;
 
   const admin = await isAdmin(req, res);
   if (admin) {
     try {
-      const result = await prisma.hacker_Applications.update({
-        where: { email },
+      const result = await prisma.hacker_Applications.updateMany({
+        where: {
+          email: {
+            equals: email as string,
+            mode: "insensitive",
+          },
+        },
         data: payload,
       });
       return res.status(200).json({ result });
