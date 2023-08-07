@@ -2,6 +2,7 @@ import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
 import { removeEmailTemplate, sendAcceptanceEmails, sendStatusConfirmedEmail, updateEmailTemplate } from "@/util/aws";
 import { emailTemplateSchema } from "@/schemas/emailSchemas";
+import { isAdmin } from "@/util/auth0Utils";
 
 async function deleteEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.templateName == null) {
@@ -38,6 +39,12 @@ async function putEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function emailTemplateHandler(req: NextApiRequest, res: NextApiResponse) {
+  const admin = await isAdmin(req, res);
+
+  if (!admin) {
+    return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });
+  }
+
   if (req.method === "PUT") {
     return putEmailTemplate(req, res);
   }
