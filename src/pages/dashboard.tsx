@@ -14,7 +14,7 @@ import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
 const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   const [_, email] = queryKey;
-  const response = await fetch(`/api/applications/${email}`, {
+  const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
     method: "GET",
     headers: {
       "Content-Type": "applicant/json",

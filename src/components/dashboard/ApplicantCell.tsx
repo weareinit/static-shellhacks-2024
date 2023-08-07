@@ -27,7 +27,7 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
   };
 
   const openResume = async (email: string) => {
-    const response = await fetch(`/api/resumes/${email}`, {
+    const response = await fetch(`/api/resumes/${encodeURIComponent(encodeURIComponent(email))}`, {
       method: "GET",
       headers: {
         "Content-Type": "applicant/json",

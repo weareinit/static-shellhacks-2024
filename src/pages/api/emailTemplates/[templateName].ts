@@ -1,6 +1,6 @@
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
-import { removeEmailTemplate, updateEmailTemplate } from "@/util/aws";
+import { removeEmailTemplate, sendAcceptanceEmails, sendStatusConfirmedEmail, updateEmailTemplate } from "@/util/aws";
 import { emailTemplateSchema } from "@/schemas/emailSchemas";
 
 async function deleteEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
@@ -30,7 +30,7 @@ async function putEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    const result = updateEmailTemplate(body.templateName, body.subject, body.htmlTemplate);
+    const result = await updateEmailTemplate(body.templateName, body.subject, body.htmlTemplate);
     return res.status(200).json({ result });
   } catch (e) {
     return res.status(500).json({ message: "Internal Error. Could not update email template" });
