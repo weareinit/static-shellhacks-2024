@@ -12,7 +12,9 @@ export const useAppUpdateMutation = () => {
       throw new Error("Cannot update applicant when email is null");
     }
 
-    const response = await fetch(`/api/application/${encodeURIComponent(args.email)}`, {
+    console.log(args);
+
+    const response = await fetch(`/api/applications/${encodeURIComponent(args.email)}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -18,7 +18,7 @@ async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest,
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const newApplicantInfo = {
     email: req.query.email,
-    ...JSON.parse(req.body),
+    ...req.body,
   };
 
   const parsedResult = applicantUpdateSchema.safeParse(newApplicantInfo);
@@ -52,7 +52,9 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
   }
 
   const appStatus = payload.application_status;
-  if (appStatus != null && !Object.keys(user_changeable_application_statuses).includes(appStatus)) {
+  if (appStatus != null && !user_changeable_application_statuses.includes(appStatus as any)) {
+    console.log("session user email: ", session?.user.email, "applicant email: ", applicant.email);
+    console.log("app status: ", appStatus, "user changeable statuses: ", user_changeable_application_statuses);
     return res.status(401).json({ message: "Unauthorized. You are not authorized to change your status outside of conformed and withdrawn" });
   }
 

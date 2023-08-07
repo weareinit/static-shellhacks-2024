@@ -15,7 +15,7 @@ export const useAppStatusMutation = () => {
     const response = await fetch(`/api/applications/${encodeURIComponent(args.email)}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "applicantion/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(args),
     });
