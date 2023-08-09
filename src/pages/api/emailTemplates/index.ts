@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { isAdmin } from "src/util/auth0Utils";
 import { createEmailTemplate, sendAcceptanceEmails, getEmailTemplates, sendConfirmationEmail, removeEmailTemplate, sendStatusConfirmedEmail, updateEmailTemplate } from "@/util/aws";
 import { emailTemplateSchema } from "@/schemas/emailSchemas";
-import { send } from "process";
 import fs from "fs-extra";
 import path from "path";
-import { randomBytes } from "crypto";
 
 async function sendEmailTemplates(req: NextApiRequest, res: NextApiResponse) {
   let emailTemplates = await getEmailTemplates();
@@ -39,12 +35,6 @@ async function uploadEmailTemplates(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const emailTemplateHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const admin = await isAdmin(req, res);
-
-  // if (!admin) {
-  //   return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });
-  // }
-
   //These routes should only be accessible if running in dev
   if (process.env.NODE_ENV !== "development") {
     return res.status(401).json({ error: "Unauthorized. You are not allowed to access this route." });

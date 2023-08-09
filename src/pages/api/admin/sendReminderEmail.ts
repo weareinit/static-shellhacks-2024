@@ -4,8 +4,7 @@ import { PrismaClient, application_status_enums } from "@prisma/client";
 import { isAdmin } from "src/util/auth0Utils";
 import { sendReminderEmailSchema } from "@/schemas/applicantSchemas";
 import { sendAcceptanceEmails, sendConfirmationEmail } from "@/util/aws";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/util/ApiUtils";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {

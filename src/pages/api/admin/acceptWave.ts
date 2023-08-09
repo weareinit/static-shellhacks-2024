@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
-import { PrismaClient, application_status_enums } from "@prisma/client";
+import { application_status_enums } from "@prisma/client";
 import { isAdmin } from "src/util/auth0Utils";
 import { sendAcceptanceEmails, sendConfirmationEmail } from "@/util/aws";
-const prisma = new PrismaClient();
+import { prisma } from "@/util/ApiUtils";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {

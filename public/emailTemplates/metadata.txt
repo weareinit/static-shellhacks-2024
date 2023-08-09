@@ -1,3 +1,0 @@
-acceptedTemplate:
-    SUBJECT: You've been accepted to ShellHacks 2023!
-    TEMPLATE DATA: first_name
