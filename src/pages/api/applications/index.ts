@@ -42,7 +42,7 @@ async function getApplicants(req: NextApiRequest, res: NextApiResponse) {
       ...filters,
     },
     orderBy: {
-      created_at: "desc",
+      created_at: "asc",
     },
   });
 

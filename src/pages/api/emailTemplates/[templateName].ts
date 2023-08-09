@@ -1,6 +1,6 @@
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSpecificTemplate, removeEmailTemplate, sendAcceptanceEmails, sendStatusConfirmedEmail, updateEmailTemplate } from "@/util/aws";
+import { removeEmailTemplate, sendAcceptanceEmails, sendStatusConfirmedEmail, updateEmailTemplate } from "@/util/aws";
 import { emailTemplateSchema } from "@/schemas/emailSchemas";
 import { isAdmin } from "@/util/auth0Utils";
 
@@ -15,31 +15,29 @@ async function deleteEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function putEmailTemplate(req: NextApiRequest, res: NextApiResponse) {
-  const emailTemplate = {
-    templateName: req.query.templateName,
-    ...req.body,
-  };
-
-  let body;
-  try {
-    body = emailTemplateSchema.parse(emailTemplate);
-  } catch (e) {
-    return res.status(400).json({ message: "Error. Could not parse request body to update email template" });
-  }
-
-  try {
-    const result = await updateEmailTemplate(body.templateName, body.subject, body.htmlTemplate);
-    return res.status(200).json({ result });
-  } catch (e) {
-    return res.status(500).json({ message: "Internal Error. Could not update email template" });
-  }
+  // const emailTemplate = {
+  //   templateName: req.query.templateName,
+  //   ...req.body,
+  // };
+  // let body;
+  // try {
+  //   body = emailTemplateSchema.parse(emailTemplate);
+  // } catch (e) {
+  //   return res.status(400).json({ message: "Error. Could not parse request body to update email template" });
+  // }
+  // try {
+  //   const result = await updateEmailTemplate(body.templateName, body.subject, body.htmlTemplate);
+  //   return res.status(200).json({ result });
+  // } catch (e) {
+  //   return res.status(500).json({ message: "Internal Error. Could not update email template" });
+  // }
 }
 
 async function sendSpecificTemplate(req: NextApiRequest, res: NextApiResponse) {
   const email = req.query.email as string;
   let templateInformation;
   try {
-    templateInformation = await getSpecificTemplate(email);
+    //templateInformation = await getSpecificTemplate(email);
   } catch (e) {
     return res.status(500).json({ message: "Internal Error. Failed to get specific template info" });
   }
