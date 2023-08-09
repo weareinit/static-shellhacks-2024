@@ -11,6 +11,9 @@ import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
+import Button from "@/components/input/Button";
+import HackerGuide from "@/components/sections/HackerGuide";
+import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
 
 const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   const [_, email] = queryKey;
@@ -32,6 +35,7 @@ const getApplicant = async ({ queryKey }: { queryKey: any }) => {
 const Dashboard = () => {
   const { user } = useUser();
   const { data, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
+  const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const applicantData = data?.applicant;
 
   const appUpdateMutation = useAppUpdateMutation();
@@ -83,6 +87,9 @@ const Dashboard = () => {
     case application_status_enums.withdrawn:
       applicationStatusMessage = "You have withdrawn! :(";
       break;
+    // case application_status_enums.waitlisted: //waitlisted doesnt exist as a status
+    //   applicationStatusMessage = "You are waitlisted";
+    //   break;
     default:
       applicationStatusMessage = "";
   }
@@ -116,6 +123,7 @@ const Dashboard = () => {
       </div>
 
       <div className="max-w-md mx-auto">
+        {showHackerGuide && <HackerGuide />}
         {applicantData.application_status === application_status_enums.accepted && (
           <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
             <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
@@ -134,6 +142,30 @@ const Dashboard = () => {
                 <Image src={decorationImage} alt="Umbrella Decoration" />
               </div>
               <p>{applicationStatusMessage}</p>
+              <div>
+              {applicantData.application_status === application_status_enums.confirmed && (
+                <div>
+                  <Button
+                    className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 hidden md:block"
+                    onClick={() => setShowHackerGuide(true)}
+                  >
+                    <h2 className="font-console text-sm text-center">Open Hacker Guide</h2>
+                  </Button>
+                  <Button
+                    className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 block md:hidden"
+                  >
+                    <a
+                      href="https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-console text-sm text-center no-underline text-white"
+                    >
+                      Open Hacker Guide
+                    </a>
+                  </Button>
+                </div>
+              )}
+              </div>
             </div>
           </div>
           <div className="mt-4">
