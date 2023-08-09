@@ -10,6 +10,8 @@ import { parseCSV } from "@/util/parseCSV";
 import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
 import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
 import Navbar from "../../components/dashboard/Navbar";
+import { application_status_enums } from "@prisma/client";
+import { useSendReminderEmailMutation } from "@/hooks/SendReminderEmailMutation";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
@@ -22,6 +24,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
   const appStatusMutation = useAppStatusMutation();
   const acceptWaveMutation = useAcceptWaveMutation();
+  const sendReminderEmailMutation = useSendReminderEmailMutation();
 
   const downloadCsv = async () => {
     const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
@@ -59,9 +62,18 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
             <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
               Export
             </button>
-            {filters.application_status == "in_wave" && (
+            {filters.application_status == application_status_enums.in_wave && (
               <button className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded" onClick={() => acceptWaveMutation.mutate()}>
                 Accept Wave
+              </button>
+            )}
+            {filters.application_status == application_status_enums.accepted && (
+              <button
+                title={`Last sent: ${new Date().toLocaleDateString()}`}
+                className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded"
+                onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
+              >
+                Send Confirmation
               </button>
             )}
           </div>

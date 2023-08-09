@@ -11,10 +11,10 @@ import {
   ListTemplatesCommand,
   UpdateTemplateCommand,
   DeleteTemplateCommand,
-  GetTemplateCommand,
 } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
+import { ACCEPTED_REMINDER_TEMPLATE, ACCEPTED_TEMPLATE } from "@/constants/emailConstants";
 
 const s3Configuration: S3ClientConfig = {
   credentials: {
@@ -64,7 +64,7 @@ interface EmailPayload {
   email: string;
 }
 
-export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
+export const sendAcceptanceEmails = async (applicants: EmailPayload[], reminder: boolean = false) => {
   const destinations = applicants.map((applicant) => {
     const { email, first_name } = applicant;
     const destination: BulkEmailDestination = {
@@ -77,15 +77,20 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[]) => {
     return destination;
   });
 
-  const params: SendBulkTemplatedEmailCommandInput = {
-    Destinations: destinations,
-    Source: "fiuoperations@weareinit.org",
-    Template: "status-accepted-template-accepted-5",
-    DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
-  };
+  const batchSize = 45; //AWS limit is 50
+  const numBatches = Math.ceil(destinations.length / batchSize);
 
-  const command = new SendBulkTemplatedEmailCommand(params);
-  await emailClient.send(command);
+  for (let i = 0; i < numBatches; i++) {
+    const params: SendBulkTemplatedEmailCommandInput = {
+      Destinations: destinations.slice(i * batchSize, (i + 1) * batchSize),
+      Source: "fiuoperations@weareinit.org",
+      Template: reminder ? ACCEPTED_REMINDER_TEMPLATE : ACCEPTED_TEMPLATE,
+      DefaultTemplateData: JSON.stringify({ first_name: "first_name" }),
+    };
+
+    const command = new SendBulkTemplatedEmailCommand(params);
+    await emailClient.send(command);
+  }
 };
 
 export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
@@ -144,15 +149,6 @@ export async function getEmailTemplates() {
     console.log(err);
     // handle err
   }
-}
-
-export async function getSpecificTemplate(templateName: string) {
-  const command = new GetTemplateCommand({
-    TemplateName: templateName,
-  });
-
-  const data = await emailClient.send(command);
-  return data;
 }
 
 export async function updateEmailTemplate(templateName: string, subjectPart: string, htlmPart: string) {

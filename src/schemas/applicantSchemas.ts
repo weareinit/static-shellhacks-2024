@@ -11,6 +11,9 @@ const application_statuses = [
 ] as const;
 export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
+export const sendReminderEmailSchema = z.enum([application_status_enums.accepted, application_status_enums.confirmed]);
+export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
+
 export const applicantUpdateSchema = z.object({
   email: z.string().email().optional(),
   resume_path: z.string().optional(),
@@ -21,10 +24,12 @@ export const applicantUpdateSchema = z.object({
     .optional(),
   github: z.string().url().optional(),
   linkedin: z.string().url().optional(),
+  multiple: z.number().optional(), //so that we can add multiple ppl to the wave at once. if this is null, we are only adding one person
 });
 
 export const applicantStatusChangeSchema = z.object({
   //event_id: z.string().regex(/^\d+$/).transform(Number),
+  multiple: z.number().optional(), //so that we can add multiple ppl to the wave at once. if this is null, we are only adding one person
   email: z.string(),
   application_status: z.enum(application_statuses),
 });
