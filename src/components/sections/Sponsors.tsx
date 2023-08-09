@@ -11,11 +11,17 @@ export function SponsorImage({ className, src, alt }: { className?: string; src:
 function Sponsors() {
   return (
     <section className=" m-4 p-4 pt-36 min-w-[200px] w-[70vw] max-w-[1200px] flex flex-col justify-center items-center" id="sponsors">
-      <h1 className=" text-4xl text-crate_brown text-center ">Sponsors</h1>
+      <h1 className=" text-4xl text-crate_brown text-center ">Organizer</h1>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 w-full">
         <SponsorImage src="/assets/sponsors/INIT_FIU.svg" alt="INIT FIU's Logo" className="col-span-2 md:col-span-12" />
+      </div>
+      <h1 className=" text-4xl text-crate_brown text-center pt-5">Powered By</h1>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 w-full">
         <SponsorImage src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" className="col-span-2 md:col-span-12" />
         <div className="col-span-2 md:col-span-12 min-h-[5px] bg-dark_brown rounded-lg" />
+      </div>
+      <h1 className=" text-4xl text-crate_brown text-center pt-10">Sponsors</h1>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 w-full">
         <SponsorImage src="/assets/sponsors/Xbox.svg" alt="Xbox Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Google.svg" alt="Google Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Waymo.svg" alt="Waymo Logo" className="md:col-span-4" />
@@ -33,7 +39,7 @@ function Sponsors() {
         <SponsorImage src="/assets/sponsors/GDG.svg" alt="Google Developer Student Club Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Jetbrains.svg" alt="Jet Brains IDE Logo" className="md:col-span-4" />
       </div>
-    </section>
+    </section >
   );
 }
 
