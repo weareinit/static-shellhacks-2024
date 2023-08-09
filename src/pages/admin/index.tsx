@@ -63,7 +63,11 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
               Export
             </button>
             {filters.application_status == application_status_enums.in_wave && (
-              <button className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded" onClick={() => acceptWaveMutation.mutate()}>
+              <button
+                className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded"
+                onClick={() => acceptWaveMutation.mutate()}
+                disabled={acceptWaveMutation.isLoading}
+              >
                 Accept Wave
               </button>
             )}
@@ -72,6 +76,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
                 title={`Last sent: ${new Date().toLocaleDateString()}`}
                 className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded"
                 onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
+                disabled={sendReminderEmailMutation.isLoading}
               >
                 Send Confirmation
               </button>
