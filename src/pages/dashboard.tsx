@@ -20,7 +20,7 @@ const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
     method: "GET",
     headers: {
-      "Content-Type": "applicant/json",
+      "Content-Type": "application/json",
     },
   });
 
@@ -142,28 +142,26 @@ const Dashboard = () => {
               </div>
               <p>{applicationStatusMessage}</p>
               <div>
-              {applicantData.application_status === application_status_enums.confirmed && (
-                <div>
-                  <Button
-                    className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 hidden md:block"
-                    onClick={() => setShowHackerGuide(true)}
-                  >
-                    <h2 className="font-console text-sm text-center">Open Hacker Guide</h2>
-                  </Button>
-                  <Button
-                    className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 block md:hidden"
-                  >
-                    <a
-                      href="https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-console text-sm text-center no-underline text-white"
+                {applicantData.application_status === application_status_enums.confirmed && (
+                  <div>
+                    <Button
+                      className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 hidden md:block"
+                      onClick={() => setShowHackerGuide(true)}
                     >
-                      Open Hacker Guide
-                    </a>
-                  </Button>
-                </div>
-              )}
+                      <h2 className="font-console text-sm text-center">Open Hacker Guide</h2>
+                    </Button>
+                    <Button className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 block md:hidden">
+                      <a
+                        href="https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-console text-sm text-center no-underline text-white"
+                      >
+                        Open Hacker Guide
+                      </a>
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
