@@ -8,7 +8,7 @@ export default function Document() {
           property="description"
           content="Join us for ShellHacks, Florida's Largest Hackathon! 1,000+ students from around the world will come together to learn the latest technologies, develop innovative solutions, network with top companies, and more!"
         />
-        <meta property="og:title" content="Shellhacks"></meta>
+        <meta property="og:title" content="ShellHacks"></meta>
         <meta property="og:description" content="Join us for ShellHacks, Florida's Largest Hackathon!" />
         <meta property="og:url" content="https://shellhacks.net" />
         <meta property="og:image" content="/images/Open_Graph_Cover.png"></meta>
