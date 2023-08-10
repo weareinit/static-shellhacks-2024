@@ -11,7 +11,7 @@ export default function Document() {
         <meta property="og:title" content="Shellhacks"></meta>
         <meta property="og:description" content="Join us for ShellHacks, Florida's Largest Hackathon!" />
         <meta property="og:url" content="https://shellhacks.net" />
-        <meta property="og:image" content="https://d112y698adiu2z.cloudfront.net/photos/production/challenge_thumbnails/002/214/234/datas/original.png"></meta>
+        <meta property="og:image" content="/images/Open_Graph_Cover.png"></meta>
         <link rel="shortcut icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
