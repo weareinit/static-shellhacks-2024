@@ -25,6 +25,7 @@ const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   });
 
   if (!response.ok) {
+
     throw new Error("Error fetching applicant");
   }
 
