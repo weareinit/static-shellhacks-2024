@@ -68,6 +68,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
                 title={`Last sent: ${new Date().toLocaleDateString()}`}
                 onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
                 text="Send Confirmation"
+                className="bg-lime-600 hover:bg-lime-700"
                 isLoading={sendReminderEmailMutation.isLoading}
               />
             )}
