@@ -1,14 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Prisma } from "@prisma/client";
+import { Hacker_Applications } from "@prisma/client";
+import ApplicantProperty from "./ApplicantProperty";
+import { set } from "zod";
 
 interface ApplicantCellPropType {
-  data: Prisma.Hacker_ApplicationsUncheckedCreateInput;
+  data: Hacker_Applications;
+  isEditing: boolean;
+  handleEdit: (fieldName: string, payload: string) => void;
 }
 
-export default function ApplicantCell({ data }: ApplicantCellPropType) {
+export default function ApplicantCell({ data, isEditing, handleEdit }: ApplicantCellPropType) {
   return (
     <>
-      <div className="flex flex-row justify-between gap-4">
+      <div className="flex flex-row flex-wrap md:flex-nowrap justify-between gap-4">
         <div>
           <h2 className="text-lg font-medium">Personal Information</h2>
           <p>
@@ -32,9 +36,11 @@ export default function ApplicantCell({ data }: ApplicantCellPropType) {
         </div>
         <div>
           <h2 className="text-lg font-medium">Education Information</h2>
-          <p>
-            <u>School:</u> {data.school}
-          </p>
+          <ApplicantProperty propertyName="School" editing={isEditing} handleEdit={(payload: string) => handleEdit("school", payload)} propertyValue={data.school} />
+          <ApplicantProperty propertyName="Graduation Year" editing={isEditing} handleEdit={(payload: string) => handleEdit("grad_year", payload)} propertyValue={data.grad_year} />
+          <ApplicantProperty propertyName="Major" editing={isEditing} handleEdit={(payload: string) => handleEdit("major", payload)} propertyValue={data.major} />
+          <ApplicantProperty propertyName="Level of Study" editing={isEditing} handleEdit={(payload: string) => handleEdit("level_of_study", payload)} propertyValue={data.level_of_study} />
+          {/* 
           <p>
             <u>Major:</u> {data.major}
           </p>
@@ -43,7 +49,7 @@ export default function ApplicantCell({ data }: ApplicantCellPropType) {
           </p>
           <p>
             <u>Level of Study:</u> {data.level_of_study}
-          </p>
+          </p> */}
         </div>
         <div>
           <h2 className="text-lg font-medium">Contact Information</h2>

@@ -7,14 +7,22 @@ interface ApplicantsTableProps {
   isLoading: boolean;
   error: any;
   appStatusMutation: any;
+  handleSelectApplicant: (hacker_id: number) => void;
+  selectedApplicants: Set<number>;
 }
 
-export default function ({ data, isLoading, error, appStatusMutation }: ApplicantsTableProps) {
+export default function ({ data, isLoading, error, appStatusMutation, handleSelectApplicant, selectedApplicants }: ApplicantsTableProps) {
   if (data) {
     return (
       <>
         {data.map((entry: Hacker_Applications, index: number) => (
-          <ApplicantCell data={entry} key={entry.hacker_id} handleAppStatusChange={appStatusMutation} />
+          <ApplicantCell
+            handleSelectApplicant={() => handleSelectApplicant(entry.hacker_id)}
+            isSelected={selectedApplicants.has(entry.hacker_id)}
+            data={entry}
+            key={entry.hacker_id}
+            handleAppStatusChange={appStatusMutation}
+          />
         ))}
       </>
     );
@@ -31,7 +39,7 @@ export default function ({ data, isLoading, error, appStatusMutation }: Applican
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <LoadingSpinner />
+      <LoadingSpinner size="large" />
     </div>
   );
 }

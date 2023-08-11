@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Prisma } from "@prisma/client";
+import { Hacker_Applications } from "@prisma/client";
 import ApplicantInfo from "./ApplicantInfo";
 import Button from "../input/Button";
 import type { AppStatusMutationType } from "@/hooks/ApplicationStatusMutation";
 import { applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { openApplicantResume } from "@/util/openApplicantResume";
+import PixelButton from "../misc/PixelButton";
+import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 
 interface ApplicantCellPropType {
-  data: Prisma.Hacker_ApplicationsUncheckedCreateInput;
+  data: Hacker_Applications;
   handleAppStatusChange: AppStatusMutationType;
+  handleSelectApplicant: () => void;
+  isSelected: boolean;
 }
 
 const applicationStatusColorMapping = {
@@ -19,38 +24,49 @@ const applicationStatusColorMapping = {
   withdrawn: "#ef4444",
 };
 
-export default function ApplicantCell({ data, handleAppStatusChange }: ApplicantCellPropType) {
+export default function ApplicantCell({ data, handleAppStatusChange, handleSelectApplicant, isSelected }: ApplicantCellPropType) {
   const [showItem, setShowItem] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCell, setEditedCell] = useState(data);
+
+  const applicationUpdateMutation = useAppUpdateMutation();
+
+  const handleEdit = (fieldName: string, payload: string) => {
+    if (editedCell.hasOwnProperty(fieldName)) {
+      setEditedCell({ ...editedCell, [fieldName]: payload });
+    }
+  };
 
   const toggleItem = () => {
     setShowItem((prev) => !prev);
   };
 
-  const openResume = async (email: string) => {
-    const response = await fetch(`/api/resumes/${encodeURIComponent(email)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    // Use message from response
-    if (!response.ok) {
-      throw new Error("Error fetching applicant");
-    }
-
-    const { url } = await response.json();
-    window.open(url, "_blank");
+  const setAppStatus = async (application_status: string) => {
+    const payload = applicantStatusChangeSchema.parse({ ids: [data.hacker_id], application_status });
+    await handleAppStatusChange.mutate(payload);
   };
 
-  const setAppStatus = async (application_status: string) => {
-    const payload = applicantStatusChangeSchema.parse({ email: data.email, application_status });
-    await handleAppStatusChange.mutate(payload);
+  const handleSelected = () => {
+    toggleItem();
+    handleSelectApplicant();
+  };
+
+  const toggleEditing = () => {
+    if (isEditing) {
+      console.log("saving...");
+      applicationUpdateMutation.mutate(editedCell);
+    }
+
+    setIsEditing((prev) => !prev);
   };
 
   return (
     <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full relative">
-      <h3 onClick={toggleItem} className="font-pixel font-bold text-lg decoration-blue hover:cursor-pointer grid grid-cols-8">
+      <h3 onClick={toggleItem} className="font-pixel font-bold text-lg decoration-blue hover:cursor-pointer grid grid-cols-9">
+        <span className="col-span-1">
+          <input type="checkbox" checked={isSelected} onChange={handleSelected} className="form-checkbox h-4 w-4 text-deep_blue align-middle" />
+        </span>
+
         <span className="col-span-2 truncate">
           {data.first_name} {data.last_name}
         </span>
@@ -68,46 +84,54 @@ export default function ApplicantCell({ data, handleAppStatusChange }: Applicant
       </h3>
 
       {showItem && (
-        <div className="py-4 justify-between items-center gap-3 grid grid-cols-8 px-4">
-          <div className="col-span-6">
-            <ApplicantInfo data={data} />
+        <div className="py-4 justify-between items-center gap-3 grid grid-cols-8 px-2 md:px-4">
+          <div className="col-span-8 lg:col-span-6">
+            <ApplicantInfo data={isEditing ? editedCell : data} handleEdit={handleEdit} isEditing={isEditing} />
           </div>
-          <div className="col-span-2 text-white">
-            <Button className="md:min-w-[175px] bg-deep_blue text-white hover:underline col-span-1 w-full" onClick={() => openResume(data.email)}>
-              <h2 className="font-pixel text-sm py-1">View Resume</h2>
-            </Button>
+          <div className="col-span-8 lg:col-span-2 text-white">
+            <div className="flex flex-col gap-1 justify-around items-center">
+              <PixelButton className="bg-indigo-500 hover:bg-indigo-600  hover:underline w-full" onClick={() => openApplicantResume(data.email)} text="View Resume" />
 
-            <a href={`mailto:${data.email}`}>
-              <Button className="md:min-w-[175px] mt-2 bg-deep_blue text-white hover:underline col-span-1 w-full">
-                <h2 className="font-pixel text-sm py-1">Send message</h2>
-              </Button>
-            </a>
+              <PixelButton
+                className={`${isEditing || applicationUpdateMutation.isLoading ? "bg-fuchsia-400 hover:bg-fuchsia-500" : "bg-teal-800 hover:bg-teal-900"} hover:underline w-full`}
+                isLoading={applicationUpdateMutation.isLoading}
+                onClick={toggleEditing}
+                text={isEditing ? "Save Changes" : "Edit Data"}
+              />
 
-            <div className="border-b-2 border-gray-600 mt-4" />
+              <div className="my-2" />
 
-            {["registered", "waitlisted"].includes(data.application_status!) && (
-              <Button className="md:min-w-[175px] mt-4 bg-green-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("in_wave")}>
-                <h2 className="font-pixel text-sm py-1">Add to Wave</h2>
-              </Button>
-            )}
+              {["registered", "waitlisted"].includes(data.application_status!) && (
+                <PixelButton
+                  className=" bg-green-500 hover:bg-green-600 hover:underline w-full"
+                  onClick={() => setAppStatus("in_wave")}
+                  text="Add to Wave"
+                  isLoading={handleAppStatusChange.isLoading}
+                />
+              )}
 
-            {["registered", "in_wave", "accepted"].includes(data.application_status!) && (
-              <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("waitlisted")}>
-                <h2 className="font-pixel text-sm py-1">Waitlist</h2>
-              </Button>
-            )}
+              {["registered", "in_wave", "accepted"].includes(data.application_status!) && (
+                <PixelButton className=" bg-red-500 hover:bg-red-600 hover:underline w-full" onClick={() => setAppStatus("waitlisted")} text="Waitlist" isLoading={handleAppStatusChange.isLoading} />
+              )}
 
-            {["in_wave"].includes(data.application_status!) && (
-              <Button className="md:min-w-[175px] mt-2 bg-red-500 text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("registered")}>
-                <h2 className="font-pixel text-sm py-1">Remove From Wave</h2>
-              </Button>
-            )}
+              {["in_wave"].includes(data.application_status!) && (
+                <PixelButton
+                  className=" bg-red-500 hover:bg-red-600 hover:underline w-full"
+                  onClick={() => setAppStatus("registered")}
+                  text="Remove from Wave"
+                  isLoading={handleAppStatusChange.isLoading}
+                />
+              )}
 
-            {["accepted", "confirmed"].includes(data.application_status!) && (
-              <Button className="md:min-w-[175px] mt-2 bg-pink text-white hover:underline col-span-1 w-full" onClick={() => setAppStatus("checked_in")}>
-                <h2 className="font-pixel text-sm py-1">Check in</h2>
-              </Button>
-            )}
+              {["accepted", "confirmed"].includes(data.application_status!) && (
+                <PixelButton
+                  className=" bg-fuchsia-400 hover:bg-fuchsia-500 hover:underline w-full"
+                  onClick={() => setAppStatus("checked_in")}
+                  text="Check In"
+                  isLoading={handleAppStatusChange.isLoading}
+                />
+              )}
+            </div>
           </div>
         </div>
       )}
