@@ -44,34 +44,36 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   };
 
   return (
-    <main className="bg-sand min-h-screen p-5">
-      <div className="p-5 pt-0">
+    <main className="bg-sand min-h-screen p-2 md:p-8">
+      <div className="pt-0">
         <Navbar />
 
-        <div className="flex justify-between mb-5 row flex-wrap align-middle items-center">
+        <div className="flex justify-between mb-5 flex-row flex-wrap align-middle items-center">
           <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
-          <div className="flex row justify-around">
-            <input className="border border-gray-300 font-pixel text-md pl-1" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
+          <div className="flex flex-wrap justify-left md:justify-around gap-3">
+            <input className="border border-gray-300 font-pixel text-md pl-1 max-md:flex-grow py-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
 
-            <PixelButton className="bg-indigo-500 hover:bg-indigo-600" onClick={() => setShowFilters(!showFilters)} text="Filters" />
-            <PixelButton className="bg-green-500 hover:bg-green-600 hidden sm:inline-block" onClick={() => downloadApplicantsCSV(filters)} text="Export CSV" />
+            <div className="flex justify-left gap-2">
+              <PixelButton className="bg-indigo-500 hover:bg-indigo-600" onClick={() => setShowFilters(!showFilters)} text="Filters" />
+              <PixelButton className="bg-green-500 hover:bg-green-600 max-sm:hidden" onClick={() => downloadApplicantsCSV(filters)} text="Export CSV" />
 
-            {filters.application_status == application_status_enums.registered && selectedApplicants.size > 0 && (
-              <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={addSelectedToWave} text={`Add to Wave (${selectedApplicants.size})`} isLoading={appStatusMutation.isLoading} />
-            )}
+              {filters.application_status == application_status_enums.registered && selectedApplicants.size > 0 && (
+                <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={addSelectedToWave} text={`Add to Wave (${selectedApplicants.size})`} isLoading={appStatusMutation.isLoading} />
+              )}
 
-            {filters.application_status == application_status_enums.in_wave && (
-              <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={() => acceptWaveMutation.mutate()} text="Accept Wave" isLoading={acceptWaveMutation.isLoading} />
-            )}
-            {filters.application_status == application_status_enums.accepted && (
-              <PixelButton
-                title={`Last sent: ${new Date().toLocaleDateString()}`}
-                onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
-                text="Send Confirmation"
-                className="bg-lime-600 hover:bg-lime-700"
-                isLoading={sendReminderEmailMutation.isLoading}
-              />
-            )}
+              {filters.application_status == application_status_enums.in_wave && (
+                <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={() => acceptWaveMutation.mutate()} text="Accept Wave" isLoading={acceptWaveMutation.isLoading} />
+              )}
+              {filters.application_status == application_status_enums.accepted && (
+                <PixelButton
+                  title={`Last sent: ${new Date().toLocaleDateString()}`}
+                  onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
+                  text="Send Confirmation"
+                  className="bg-lime-600 hover:bg-lime-700"
+                  isLoading={sendReminderEmailMutation.isLoading}
+                />
+              )}
+            </div>
           </div>
         </div>
 

@@ -11,7 +11,7 @@ interface PixelButtonProps {
 
 export default function PixelButton({ onClick, disabled, isLoading, title, text, className }: PixelButtonProps) {
   return (
-    <button title={title} className={`font-pixel ml-2 text-md text-white flex justify-center py-2 px-4 rounded ${className}`} onClick={onClick} disabled={disabled || isLoading}>
+    <button title={title} className={`font-pixel text-md text-white flex justify-center py-2 px-4 rounded ${className}`} onClick={onClick} disabled={disabled || isLoading}>
       {isLoading ? <LoadingSpinner size="small" /> : text}
     </button>
   );
