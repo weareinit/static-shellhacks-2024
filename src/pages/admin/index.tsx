@@ -12,6 +12,8 @@ import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
 import Navbar from "../../components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useSendReminderEmailMutation } from "@/hooks/SendReminderEmailMutation";
+import { downloadApplicantsCSV } from "@/util/downloadApplicantsCSV";
+import PixelButton from "@/components/misc/PixelButton";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" };
@@ -20,30 +22,25 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
   const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
+  const [selectedApplicants, setSelectedApplicants] = useState<Set<number>>(new Set());
 
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
-  const appStatusMutation = useAppStatusMutation();
+  const appStatusMutation = useAppStatusMutation({ onSuccess: () => setSelectedApplicants(new Set()) });
   const acceptWaveMutation = useAcceptWaveMutation();
   const sendReminderEmailMutation = useSendReminderEmailMutation();
 
-  const downloadCsv = async () => {
-    const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
-
-    const response = await fetch(`/api/applications?${params}&format=csv`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "text/csv",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Error fetching applicant");
+  const toggleSelectedApplicant = (hacker_id: number) => {
+    if (selectedApplicants.has(hacker_id)) {
+      selectedApplicants.delete(hacker_id);
+    } else {
+      selectedApplicants.add(hacker_id);
     }
 
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
-    return;
+    setSelectedApplicants(new Set(selectedApplicants));
+  };
+
+  const addSelectedToWave = async () => {
+    appStatusMutation.mutateAsync({ ids: Array.from(selectedApplicants), application_status: application_status_enums.in_wave as any });
   };
 
   return (
@@ -51,42 +48,43 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
       <div className="p-5 pt-0">
         <Navbar />
 
-        <div className="flex justify-between mb-5 row align-middle items-center">
+        <div className="flex justify-between mb-5 row flex-wrap align-middle items-center">
           <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
-          <div className="flex row">
-            <input className="border border-gray-300 font-pixel text-md pl-1 mr-2" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
+          <div className="flex row justify-around">
+            <input className="border border-gray-300 font-pixel text-md pl-1" type="text" placeholder="Search" value={name} onChange={(e: any) => setName(e.target.value)} />
 
-            <button className="bg-deep_blue font-pixel text-md hover:bg-sky-700 text-white py-2 px-4 rounded mr-2" onClick={() => setShowFilters(!showFilters)}>
-              Filters
-            </button>
-            <button className="font-pixel text-md bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded" onClick={downloadCsv}>
-              Export
-            </button>
+            <PixelButton className="bg-indigo-500 hover:bg-indigo-600" onClick={() => setShowFilters(!showFilters)} text="Filters" />
+            <PixelButton className="bg-green-500 hover:bg-green-600 hidden sm:inline-block" onClick={() => downloadApplicantsCSV(filters)} text="Export CSV" />
+
+            {filters.application_status == application_status_enums.registered && selectedApplicants.size > 0 && (
+              <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={addSelectedToWave} text={`Add to Wave (${selectedApplicants.size})`} isLoading={appStatusMutation.isLoading} />
+            )}
+
             {filters.application_status == application_status_enums.in_wave && (
-              <button
-                className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded"
-                onClick={() => acceptWaveMutation.mutate()}
-                disabled={acceptWaveMutation.isLoading}
-              >
-                Accept Wave
-              </button>
+              <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={() => acceptWaveMutation.mutate()} text="Accept Wave" isLoading={acceptWaveMutation.isLoading} />
             )}
             {filters.application_status == application_status_enums.accepted && (
-              <button
+              <PixelButton
                 title={`Last sent: ${new Date().toLocaleDateString()}`}
-                className="font-pixel ml-2 text-md bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded"
                 onClick={() => sendReminderEmailMutation.mutate(application_status_enums.accepted)}
-                disabled={sendReminderEmailMutation.isLoading}
-              >
-                Send Confirmation
-              </button>
+                text="Send Confirmation"
+                className="bg-lime-600 hover:bg-lime-700"
+                isLoading={sendReminderEmailMutation.isLoading}
+              />
             )}
           </div>
         </div>
 
         {showFilters && <FiltersModal filters={filters} setFilters={setFilters} schools={schools} />}
 
-        <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />
+        <ApplicantsTable
+          handleSelectApplicant={toggleSelectedApplicant}
+          selectedApplicants={selectedApplicants}
+          data={data}
+          isLoading={isLoading}
+          error={error}
+          appStatusMutation={appStatusMutation}
+        />
       </div>
     </main>
   );

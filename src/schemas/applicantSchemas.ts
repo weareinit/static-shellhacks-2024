@@ -22,15 +22,17 @@ export const applicantUpdateSchema = z.object({
     .string()
     .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
     .optional(),
-  github: z.string().url().optional(),
-  linkedin: z.string().url().optional(),
-  multiple: z.number().optional(), //so that we can add multiple ppl to the wave at once. if this is null, we are only adding one person
+  school: z.string().optional(),
+  major: z.string().optional(),
+  grad_year: z.number().optional(),
+  level_of_study: z.string().optional(),
+  github: z.string().url().nullable().optional(),
+  linkedin: z.string().url().nullable().optional(),
 });
 
 export const applicantStatusChangeSchema = z.object({
   //event_id: z.string().regex(/^\d+$/).transform(Number),
-  multiple: z.number().optional(), //so that we can add multiple ppl to the wave at once. if this is null, we are only adding one person
-  email: z.string(),
+  ids: z.array(z.number()),
   application_status: z.enum(application_statuses),
 });
 

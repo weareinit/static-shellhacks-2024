@@ -56,6 +56,29 @@ async function getApplicants(req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).json(filteredApplicants);
 }
 
+async function updateApplicantStatus(req: NextApiRequest, res: NextApiResponse) {
+  const admin = await isAdmin(req, res);
+
+  if (!admin) {
+    return res.status(401).json({ message: "Unauthorized. You are not allowed to update applicants without the admin role." });
+  }
+
+  const { ids, application_status } = applicantStatusChangeSchema.parse(req.body);
+
+  await prisma.hacker_Applications.updateMany({
+    where: {
+      hacker_id: {
+        in: ids,
+      },
+    },
+    data: {
+      application_status,
+    },
+  });
+
+  return res.status(200).json({ message: "Successfully updated applicants" });
+}
+
 async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
   await validateCaptcha(req, res);
 
@@ -94,6 +117,10 @@ const applicationsHandler = async (req: NextApiRequest, res: NextApiResponse) =>
 
   if (req.method === "POST") {
     return createApplicant(req, res);
+  }
+
+  if (req.method === "PUT") {
+    return updateApplicantStatus(req, res);
   }
 
   return res.status(405).json({ error: "Method not allowed" });

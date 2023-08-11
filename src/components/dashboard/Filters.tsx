@@ -22,11 +22,11 @@ const gradYears = ["any", ...gradYearOptions];
 
 const Filter = ({ label, filterName, options, filters, handleOnChange }: FilterPropType) => {
   return (
-    <div className="my-1">
-      <Label>{label}</Label>
-      <select className="cursor-pointer bg-white rounded-none p-1 ml-2" id={filterName} value={filters[filterName] || "any"} onChange={handleOnChange}>
+    <div className="flex flex-row flex-wrap gap-1">
+      <p className="font-pixel p-1">{label}</p>
+      <select className="cursor-pointer bg-white rounded-none p-1 max-w-xs overflow-ellipsis" id={filterName} value={filters[filterName] || "any"} onChange={handleOnChange}>
         {options.map((state, i) => (
-          <option key={i} value={state}>
+          <option key={i} value={state} className="truncate">
             {state}
           </option>
         ))}
@@ -63,7 +63,7 @@ export default function Filters({ filters, setFilters, schools }: FiltersPropTyp
         />
 
         <Filter
-          label="Graduation year"
+          label="Graduation year:"
           filterName="grad_year"
           options={gradYears}
           filters={filters}
@@ -71,7 +71,7 @@ export default function Filters({ filters, setFilters, schools }: FiltersPropTyp
         />
 
         <Filter
-          label="School"
+          label="School:"
           filterName="school"
           options={schoolOptions}
           filters={filters}
