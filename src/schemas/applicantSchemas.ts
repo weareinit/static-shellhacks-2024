@@ -28,6 +28,10 @@ export const applicantUpdateSchema = z.object({
   level_of_study: z.string().optional(),
   github: z.string().url().nullable().optional(),
   linkedin: z.string().url().nullable().optional(),
+  country: z.string().nonempty().optional(),
+  gender: z.string().nonempty().optional(),
+  pronouns: z.string().nonempty().optional(),
+  ethnicity: z.string().nonempty().optional(),
 });
 
 export const applicantStatusChangeSchema = z.object({

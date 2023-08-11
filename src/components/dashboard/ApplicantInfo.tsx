@@ -32,7 +32,7 @@ export default function ApplicantCell({ data, isEditing, handleEdit }: Applicant
         <div>
           <h2 className="text-lg font-medium">Contact Information</h2>
           <ApplicantProperty propertyName="Email" editing={false} propertyValue={data.email} />
-          <ApplicantProperty propertyName="Phone Number" editing={false} propertyValue={data.phone_number} />
+          <ApplicantProperty propertyName="Phone Number" editing={isEditing} handleEdit={(payload: string) => handleEdit("phone_number", payload)} propertyValue={data.phone_number} />
 
           <ApplicantProperty propertyName="Discord" editing={isEditing} handleEdit={(payload: string) => handleEdit("discord", payload)} propertyValue={data.discord} />
           <ApplicantProperty propertyName="Github" editing={isEditing} handleEdit={(payload: string) => handleEdit("github", payload)} propertyValue={data.github} />
