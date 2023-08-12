@@ -14,6 +14,9 @@ import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
 import Button from "@/components/input/Button";
 import HackerGuide from "@/components/sections/HackerGuide";
 import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
+import ApplicantInfo from "@/components/dashboard/ApplicantInfo";
+import { Hacker_Applications } from "@prisma/client";
+import PixelButton from "@/components/misc/PixelButton";
 
 const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   const [_, email] = queryKey;
@@ -29,14 +32,16 @@ const getApplicant = async ({ queryKey }: { queryKey: any }) => {
     throw new Error("Error fetching applicant");
   }
 
-  return response.json();
+  return (await response.json()) as Hacker_Applications;
 };
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { data, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
+  const { data: applicantData, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
-  const applicantData = data?.applicant;
+  const [isEditing, setIsEditing] = useState(false);
+  const applicationUpdateMutation = useAppUpdateMutation();
+  const [editedData, setEditedData] = useState<Hacker_Applications | null>(null);
 
   const appUpdateMutation = useAppUpdateMutation();
 
@@ -63,7 +68,7 @@ const Dashboard = () => {
 
   const handleConfirmClick = async () => {
     try {
-      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData.email });
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData?.email });
     } catch (error) {
       console.error("Error changing application status:", error);
     }
@@ -94,6 +99,26 @@ const Dashboard = () => {
       applicationStatusMessage = "";
   }
 
+  const openHackerGuide = () => {
+    //if on mobile, open in new tab
+    if (window.innerWidth < 768) {
+      window.open("https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4", "_blank");
+    } else {
+      setShowHackerGuide(true);
+    }
+  };
+
+  const toggleEditing = async () => {
+    if (isEditing) {
+      console.log("saving...");
+      await applicationUpdateMutation.mutateAsync(editedData!);
+    } else {
+      setEditedData(applicantData!);
+    }
+
+    setIsEditing((prev) => !prev);
+  };
+
   if (isLoading) {
     return (
       <div className="max-w-md mx-auto flex justify-center items-center h-screen">
@@ -117,14 +142,15 @@ const Dashboard = () => {
   }
 
   return (
-    <main className="bg-sand min-h-screen p-5">
-      <div className="py-2 px-6">
-        <Navbar />
-      </div>
+    <main className="bg-sand min-h-screen p-2 md:p-8">
+      <Navbar />
 
-      <div className="max-w-md mx-auto">
+      <div className="">
         {showHackerGuide && <HackerGuide />}
-        {applicantData.application_status === application_status_enums.accepted && (
+
+        <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
+
+        {/* {applicantData.application_status === application_status_enums.accepted && (
           <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
             <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
             <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
@@ -132,42 +158,38 @@ const Dashboard = () => {
               Confirm
             </button>
           </div>
-        )}
-        <div className="bg-white rounded-md shadow-md p-6">
-          <h1 className="text-xl mb-4 font-pixel text-center">Hacker Dashboard</h1>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col items-center justify-center">
-              <h2 className="text-lg font-medium mb-2">Current Application Status</h2>
-              <div>
-                <Image src={decorationImage} alt="Umbrella Decoration" />
-              </div>
-              <p>{applicationStatusMessage}</p>
-              <div>
-                {applicantData.application_status === application_status_enums.confirmed && (
-                  <div>
-                    <Button
-                      className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 hidden md:block"
-                      onClick={() => setShowHackerGuide(true)}
-                    >
-                      <h2 className="font-console text-sm text-center">Open Hacker Guide</h2>
-                    </Button>
-                    <Button className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 block md:hidden">
-                      <a
-                        href="https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-console text-sm text-center no-underline text-white"
-                      >
-                        Open Hacker Guide
-                      </a>
-                    </Button>
-                  </div>
-                )}
-              </div>
+        )} */}
+        <div className="flex flex-row flex-wrap lg:flex-nowrap gap-4">
+          <div className="bg-white rounded-md shadow-md p-5 grow-0">
+            <h2 className="text-md font-medium mb-2">Current Application Status</h2>
+            <div className="flex flex-col mt-8 items-center gap-1 justify-center">
+              <Image src={decorationImage} alt="Umbrella Decoration" />
+
+              <p className="text-md">
+                {applicantData.application_status !== application_status_enums.accepted
+                  ? applicationStatusMessage
+                  : 'Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event'}
+              </p>
+
+              {applicantData.application_status === application_status_enums.accepted && (
+                <PixelButton text="Confirm Attendence" onClick={handleConfirmClick} className="bg-deep_blue hover:bg-pink mt-2" />
+              )}
+
+              {applicantData.application_status === application_status_enums.confirmed && (
+                <PixelButton text="Open Hacker Guide" onClick={openHackerGuide} className="bg-deep_blue hover:bg-pink mt-2" />
+              )}
             </div>
           </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
+
+          <div className="bg-white rounded-md shadow-md p-5 grow">
+            <div className="flex flex-row justify-between items-center">
+              <h2 className="text-md font-medium mb-2">My Application</h2>
+              <a className="text-md font-pixel font-medium color-pink mb-2" onClick={toggleEditing}>
+                Edit
+              </a>
+            </div>
+            <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
+            {/* <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
               <h2 className="text-lg font-medium mb-2">Personal Information</h2>
               <p>
                 Name: {applicantData.first_name} {applicantData.last_name}
@@ -206,8 +228,7 @@ const Dashboard = () => {
               <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
               <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
                 <p className="mt-4">MLH Code of Conduct</p>
-              </a>
-            </div>
+              </a> */}
           </div>
         </div>
       </div>

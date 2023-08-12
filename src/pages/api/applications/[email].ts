@@ -12,7 +12,8 @@ async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest,
   if (!admin && session?.user.email.toLowerCase() !== applicant.email.toLowerCase()) {
     return res.status(401).json({ message: "Unauthorized. User does not have access to this route." });
   }
-  return res.status(200).json({ applicant });
+
+  return res.status(200).json(applicant);
 }
 
 async function updateApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
