@@ -24,7 +24,11 @@ export const applicantUpdateSchema = z.object({
     .optional(),
   school: z.string().optional(),
   major: z.string().optional(),
-  grad_year: z.number().optional(),
+  grad_year: z
+    .string()
+    .regex(/^(202[2-8])$/)
+    .transform(Number)
+    .optional(),
   level_of_study: z.string().optional(),
   github: z.string().url().nullable().optional(),
   linkedin: z.string().url().nullable().optional(),
