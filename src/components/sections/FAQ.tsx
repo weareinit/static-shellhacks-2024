@@ -17,11 +17,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
     <div className="bg-cyan_blue h-fit w-full relative rounded-sm">
       <h3
         onClick={toggleItem}
-        className={`relative font-pixel p-2 text-tan text-left hover:text-pink decoration-blue transition ease-in-out hover:cursor-pointer ${showItem && "bg-pink hover:text-tan"}`}
+        className={`relative font-pixel p-2 text-tan text-left hover:bg-pink decoration-blue transition ease-in-out flex justify-between items-center hover:cursor-pointer ${showItem && "bg-pink"}`}
       >
         {question}
         <svg
-          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} absolute right-1 top-1 opacity-50 z-10 cursor-pointer select-none`}
+          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} opacity-50 cursor-pointer select-none flex-shrink-0`}
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"

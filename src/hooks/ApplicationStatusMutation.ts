@@ -4,15 +4,15 @@ import { z } from "zod";
 
 type ApplicantStatusChangeType = z.infer<typeof applicantStatusChangeSchema>;
 
-export const useAppStatusMutation = () => {
+export const useAppStatusMutation = ({ onSuccess }: { onSuccess: () => void }) => {
   const queryClient = useQueryClient();
 
   const setAppStatus = async (args: ApplicantStatusChangeType) => {
-    if (args.email == null) {
-      throw new Error("Email is null. Cannot update user application");
+    if (!applicantStatusChangeSchema.safeParse(args).success) {
+      throw new Error("Invalid arguments");
     }
 
-    const response = await fetch(`/api/applications/${encodeURIComponent(args.email)}`, {
+    const response = await fetch(`/api/applications/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -31,6 +31,7 @@ export const useAppStatusMutation = () => {
     mutationFn: (args: ApplicantStatusChangeType) => setAppStatus(args),
     onSuccess: () => {
       queryClient.invalidateQueries("applicants");
+      onSuccess();
     },
   });
 };

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function ScheduleReminder() {
   return (
-    <div className="w-[200px] h-[250px] lg:max-w-none lg:w-full border-black border-2 p-2 flex flex-col lg:flex-row justify-center items-center lg:col-span-4 lg:h-fit text-center">
+    <div className="w-[200px] h-full lg:max-w-none lg:w-full border-black border-2 p-2 flex flex-col lg:flex-row justify-center items-center lg:col-span-3 lg:h-fit text-center">
       <Image src="/assets/decorations/pink_shell.svg" height={75} width={75} alt="Pink Shell" className="p-2" />
       <p className="font-pixel uppercase font-thin text-center text-crate_brown text-xs m-2">For our full schedule including workshops and activities, check out the hacker guide in your dashboard!</p>
     </div>
@@ -11,7 +11,7 @@ function ScheduleReminder() {
 
 function ScheduleCard({ weekDay, scheduleItems, className }: { weekDay: String; scheduleItems: String[]; className?: String }) {
   return (
-    <div className={`flex flex-col bg-caramel_brown w-[200px] h-[250px] lg:min-w-[250px] lg:h-[300px] ${className}`}>
+    <div className={`flex flex-col bg-caramel_brown w-[200px] h-full lg:min-w-[250px] ${className}`}>
       <h2 className="font-pixel py-1 text-lg text-center w-full bg-deep_blue text-white">{weekDay}</h2>
       <ul className="p-4">
         {scheduleItems.map((item, index) => (
@@ -28,7 +28,7 @@ function Schedule() {
   return (
     <section className="pt-36" id="schedule">
       <h1 className="mb-12 text-4xl text-crate_brown text-center">Schedule</h1>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-y-6 lg:grid-cols-3 w-fit justify-items-center items-center justify-center content-center place-items-center">
+      <div className="grid grid-cols-1 auto-rows-fr lg:auto-rows-auto gap-5 sm:grid-cols-2 lg:gap-y-6 lg:grid-cols-3 w-fit justify-items-center items-center justify-center content-center place-items-center">
         <ScheduleCard
           className=" justify-self-start"
           weekDay="Friday"

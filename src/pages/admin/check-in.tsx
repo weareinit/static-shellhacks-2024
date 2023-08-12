@@ -21,7 +21,7 @@ export default withPageAuthRequired(function CheckIn() {
   });
 
   const { data, isLoading, error } = useApplicantsQuery(filters);
-  const appStatusMutation = useAppStatusMutation();
+  const appStatusMutation = useAppStatusMutation({ onSuccess: () => null });
 
   const getApplicantByPhone = () => {
     setFilters({ ...filters, phone_number: phone });
@@ -54,7 +54,7 @@ export default withPageAuthRequired(function CheckIn() {
           <video ref={ref} />
         </div>
 
-        {data && <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />}
+        {/* {data && <ApplicantsTable data={data} isLoading={isLoading} error={error} appStatusMutation={appStatusMutation} />} */}
       </div>
     </main>
   );

@@ -13,7 +13,7 @@ export const useApplicantsQuery = (filters: ApplicantFilterType, name: string = 
       const response = await fetch(`/api/applications?${params}`, {
         method: "GET",
         headers: {
-          "Content-Type": "applicantion/json",
+          "Content-Type": "application/json",
         },
       });
 
