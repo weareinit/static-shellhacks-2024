@@ -11,7 +11,7 @@ async function getResume(hacker: Hacker_Applications, req: NextApiRequest, res: 
   const admin = await isAdmin(req, res);
   const session = await getSession(req, res);
 
-  if (!admin && session?.user.email !== hacker.email) {
+  if (!admin && session?.user.email.toLowerCase() !== hacker.email.toLowerCase()) {
     return res.status(403).json({ message: "Forbidden. User does not have credentials to access this route." });
   }
 

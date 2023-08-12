@@ -9,7 +9,7 @@ import { prisma } from "@/util/ApiUtils";
 async function getApplicant(applicant: Hacker_Applications, req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession(req, res);
   const admin = await isAdmin(req, res);
-  if (!admin && session?.user.email !== applicant.email) {
+  if (!admin && session?.user.email.toLowerCase() !== applicant.email.toLowerCase()) {
     return res.status(401).json({ message: "Unauthorized. User does not have access to this route." });
   }
   return res.status(200).json({ applicant });
@@ -47,7 +47,7 @@ async function updateApplicant(applicant: Hacker_Applications, req: NextApiReque
   }
 
   const session = await getSession(req, res);
-  if (session?.user.email !== applicant.email) {
+  if (session?.user.email.toLowerCase() !== applicant.email.toLowerCase()) {
     return res.status(401).json({ message: "Unauthorized. You are not authorized to change another user's application" });
   }
 

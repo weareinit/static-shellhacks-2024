@@ -90,6 +90,20 @@ async function createApplicant(req: NextApiRequest, res: NextApiResponse) {
     ...req.body,
   });
 
+  //there's no unique constraint on case insensitive emails, so we have to check manually
+  const existingApplicant = await prisma.hacker_Applications.findMany({
+    where: {
+      email: {
+        equals: validatedApplicant.email,
+        mode: "insensitive",
+      },
+    },
+  });
+
+  if (existingApplicant.length > 0) {
+    return res.status(409).json({ error: "Duplicate. User already exists with that email." });
+  }
+
   try {
     await prisma.hacker_Applications.create({
       data: validatedApplicant,
