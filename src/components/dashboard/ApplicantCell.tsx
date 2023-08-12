@@ -51,10 +51,10 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
     handleSelectApplicant();
   };
 
-  const toggleEditing = () => {
+  const toggleEditing = async () => {
     if (isEditing) {
       console.log("saving...");
-      applicationUpdateMutation.mutate(editedCell);
+      await applicationUpdateMutation.mutateAsync(editedCell);
     }
 
     setIsEditing((prev) => !prev);

@@ -1,5 +1,6 @@
 import { useQueryClient, useMutation } from "react-query";
 import { applicantUpdateSchema } from "@/schemas/applicantSchemas";
+import { Hacker_Applications } from "@prisma/client";
 import { z } from "zod";
 
 type ApplicantUpdateType = z.infer<typeof applicantUpdateSchema>;
@@ -11,8 +12,6 @@ export const useAppUpdateMutation = () => {
     if (args.email == null) {
       throw new Error("Cannot update applicant when email is null");
     }
-
-    console.log(args);
 
     const response = await fetch(`/api/applications/${encodeURIComponent(args.email)}`, {
       method: "PUT",
@@ -32,7 +31,7 @@ export const useAppUpdateMutation = () => {
   return useMutation({
     mutationFn: updateApplicant,
     onSuccess: () => {
-      queryClient.invalidateQueries("applicant");
+      queryClient.invalidateQueries(["applicants"]);
     },
   });
 };
