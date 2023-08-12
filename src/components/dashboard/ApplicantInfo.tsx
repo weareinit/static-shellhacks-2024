@@ -6,7 +6,7 @@ import { set } from "zod";
 interface ApplicantCellPropType {
   data: Hacker_Applications;
   isEditing: boolean;
-  handleEdit: (fieldName: string, payload: string) => void;
+  handleEdit: (fieldName: string, payload: string | number) => void;
 }
 
 export default function ApplicantCell({ data, isEditing, handleEdit }: ApplicantCellPropType) {
@@ -25,7 +25,7 @@ export default function ApplicantCell({ data, isEditing, handleEdit }: Applicant
         <div>
           <h2 className="text-lg font-medium">Education Information</h2>
           <ApplicantProperty propertyName="School" editing={isEditing} handleEdit={(payload: string) => handleEdit("school", payload)} propertyValue={data.school} />
-          <ApplicantProperty propertyName="Graduation Year" editing={isEditing} handleEdit={(payload: string) => handleEdit("grad_year", payload)} propertyValue={data.grad_year} />
+          <ApplicantProperty propertyName="Graduation Year" editing={isEditing} handleEdit={(payload: string) => handleEdit("grad_year", parseInt(payload))} propertyValue={data.grad_year} />
           <ApplicantProperty propertyName="Major" editing={isEditing} handleEdit={(payload: string) => handleEdit("major", payload)} propertyValue={data.major} />
           <ApplicantProperty propertyName="Level of Study" editing={isEditing} handleEdit={(payload: string) => handleEdit("level_of_study", payload)} propertyValue={data.level_of_study} />
         </div>

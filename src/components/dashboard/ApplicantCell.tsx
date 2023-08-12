@@ -31,7 +31,7 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
 
   const applicationUpdateMutation = useAppUpdateMutation();
 
-  const handleEdit = (fieldName: string, payload: string) => {
+  const handleEdit = (fieldName: string, payload: string | number) => {
     if (editedCell.hasOwnProperty(fieldName)) {
       setEditedCell({ ...editedCell, [fieldName]: payload });
     }
