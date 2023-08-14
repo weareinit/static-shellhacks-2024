@@ -1,2 +1,2 @@
-export const ACCEPTED_REMINDER_TEMPLATE = "acceptedTemplate189d8581c2f";
-export const ACCEPTED_TEMPLATE = "status-accepted-template-accepted-5";
+export const ACCEPTED_REMINDER_TEMPLATE = "acceptedTemplate189f19d63b1";
+export const ACCEPTED_TEMPLATE = "acceptedTemplate189f19cff76";
