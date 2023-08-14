@@ -4,23 +4,16 @@ import { Hacker_Applications } from "@prisma/client";
 //Note: Right now the name is filtered from the frontend, though it will proably be moved to the backend
 export const useApplicationQuery = (email: string) => {
   const getApplication = async () => {
-    try {
-      const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
+      method: "GET",
+    });
 
-      if (!response.ok) {
-        throw new Error("Error fetching applicant");
-      }
-
-      return (await response.json()) as Hacker_Applications;
-    } catch (e) {
-      throw e;
+    if (!response.ok) {
+      throw new Error(`Error fetching applicant ${response.statusText}`);
     }
+
+    return (await response.json()) as Hacker_Applications;
   };
 
-  return useQuery(["application", email], getApplication);
+  return useQuery(["application", email], getApplication, { retry: false });
 };

@@ -25,7 +25,7 @@ import { useApplicationQuery } from "@/hooks/ApplicationQuery";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { data: applicantData, isLoading, error } = useApplicationQuery(user?.email!);
+  const { data: applicantData, isLoading, isError } = useApplicationQuery(user?.email!);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -81,23 +81,9 @@ const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="max-w-md mx-auto flex justify-center items-center h-screen">
+      <main className="bg-sand min-h-screen p-2 md:p-8 text-center">
         <h1 className="text-2xl font-bold">Loading...</h1>
-      </div>
-    );
-  }
-
-  if (!applicantData || error) {
-    return (
-      <>
-        <div className="py-2 px-6">
-          <Navbar />
-        </div>
-        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-          <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
-          <p>Please login using the same account you used when registering for this event.</p>
-        </div>
-      </>
+      </main>
     );
   }
 
@@ -105,57 +91,60 @@ const Dashboard = () => {
     <main className="bg-sand min-h-screen p-2 md:p-8">
       <Navbar />
 
-      <div className="">
-        {showHackerGuide && <HackerGuide />}
+      {showHackerGuide && <HackerGuide />}
 
-        <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
-
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
-          <div className="bg-white rounded-pixel p-5">
-            <h2 className="text-md font-medium mb-2">Application Status</h2>
-            <div className="flex flex-col mt-8 items-center gap-1 justify-center">
-              <Image src={decorationImage} alt="Umbrella Decoration" />
-
-              <p className="text-md">
-                {applicantData.application_status !== application_status_enums.accepted
-                  ? APPLICATION_STATUS_DETAILS_MAPPING[applicantData.application_status]
-                  : 'Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event'}
-              </p>
-
-              {applicantData.application_status === application_status_enums.accepted && (
-                <PixelButton text="Confirm Attendence" onClick={handleConfirmClick} className="bg-deep_blue hover:bg-pink mt-2" />
-              )}
-
-              {applicantData.application_status === application_status_enums.confirmed && (
-                <PixelButton text="Open Hacker Guide" onClick={openHackerGuide} className="bg-deep_blue hover:bg-pink mt-2" />
-              )}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-pixel p-5 lg:col-span-4">
-            <h2 className="text-md font-medium mb-2">My Application</h2>
-
-            <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
-          </div>
-
-          <div className="bg-white rounded-pixel p-5 lg:col-span-2">
-            <h2 className="text-md font-medium mb-2">My Resume</h2>
-
-            <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
-
-            <input type="file" className="hidden" ref={fileInputRef} onChange={handleResumeFileChange} accept="application/pdf" />
-            <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
-          </div>
-
-          <div className="bg-white rounded-pixel p-5">
-            <h2 className="text-md font-medium mb-2">Check-In Code</h2>
-
-            <div className="flex items-center justify-center">
-              <QRCodeSVG value={applicantData.hacker_id.toString()} />
-            </div>
-          </div>
+      {!applicantData || isError ? (
+        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+          <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
+          <p>Please login using the same account you used when registering for this event.</p>
         </div>
-      </div>
+      ) : (
+        <section>
+          <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
+            <div className="bg-white rounded-pixel p-5">
+              <h2 className="text-md font-medium mb-2">Application Status</h2>
+              <div className="flex flex-col mt-8 items-center gap-1 justify-center">
+                <Image src={decorationImage} alt="Umbrella Decoration" />
+
+                <p className="text-md">{APPLICATION_STATUS_DETAILS_MAPPING[applicantData.application_status]}</p>
+
+                {applicantData.application_status === application_status_enums.accepted && (
+                  <PixelButton text="Confirm Attendence" onClick={handleConfirmClick} className="bg-deep_blue hover:bg-pink mt-2" />
+                )}
+
+                {applicantData.application_status === application_status_enums.confirmed && (
+                  <PixelButton text="Open Hacker Guide" onClick={openHackerGuide} className="bg-deep_blue hover:bg-pink mt-2" />
+                )}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-pixel p-5 lg:col-span-4">
+              <h2 className="text-md font-medium mb-2">My Application</h2>
+
+              <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
+            </div>
+
+            <div className="bg-white rounded-pixel p-5 lg:col-span-2">
+              <h2 className="text-md font-medium mb-2">My Resume</h2>
+
+              <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
+
+              <input type="file" className="hidden" ref={fileInputRef} onChange={handleResumeFileChange} accept="application/pdf" />
+              <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
+            </div>
+
+            <div className="bg-white rounded-pixel p-5">
+              <h2 className="text-md font-medium mb-2">Check-In Code</h2>
+
+              <div className="flex items-center justify-center">
+                <QRCodeSVG value={applicantData.hacker_id.toString()} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 };
