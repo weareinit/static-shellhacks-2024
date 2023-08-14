@@ -5,9 +5,10 @@ interface ApplicantPropertyProps {
   propertyValue: string | number | null;
   editing: boolean;
   handleEdit?: (e: any) => void;
+  isLink?: boolean;
 }
 
-const ApplicantProperty: React.FC<ApplicantPropertyProps> = ({ propertyName, propertyValue, editing, handleEdit }) => {
+const ApplicantProperty: React.FC<ApplicantPropertyProps> = ({ propertyName, propertyValue, editing, handleEdit, isLink }) => {
   //const [editedValue, setEditedValue] = useState(propertyValue);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +20,17 @@ const ApplicantProperty: React.FC<ApplicantPropertyProps> = ({ propertyName, pro
       <u className="whitespace-nowrap mr-2">
         <b>{propertyName}:</b>
       </u>
-      <span className="flex-grow">{editing ? <input type="text" value={propertyValue || ""} className="w-full" onChange={handleInputChange} /> : propertyValue}</span>
+      <span className="flex-grow">
+        {editing ? (
+          <input type="text" value={propertyValue || ""} className="w-full" onChange={handleInputChange} />
+        ) : isLink ? (
+          <a href={propertyValue as string} target="_blank">
+            {propertyValue}
+          </a>
+        ) : (
+          propertyValue
+        )}
+      </span>
     </p>
   );
 };

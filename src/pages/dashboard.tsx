@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -17,6 +17,9 @@ import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
 import ApplicantInfo from "@/components/dashboard/ApplicantInfo";
 import { Hacker_Applications } from "@prisma/client";
 import PixelButton from "@/components/misc/PixelButton";
+import { openApplicantResume } from "@/util/openApplicantResume";
+import { uploadResume } from "@/util/uploadResume";
+import { QRCodeSVG } from "qrcode.react";
 
 const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   const [_, email] = queryKey;
@@ -28,7 +31,6 @@ const getApplicant = async ({ queryKey }: { queryKey: any }) => {
   });
 
   if (!response.ok) {
-
     throw new Error("Error fetching applicant");
   }
 
@@ -39,9 +41,8 @@ const Dashboard = () => {
   const { user } = useUser();
   const { data: applicantData, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
-  const [isEditing, setIsEditing] = useState(false);
-  const applicationUpdateMutation = useAppUpdateMutation();
-  const [editedData, setEditedData] = useState<Hacker_Applications | null>(null);
+  const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const appUpdateMutation = useAppUpdateMutation();
 
@@ -108,15 +109,13 @@ const Dashboard = () => {
     }
   };
 
-  const toggleEditing = async () => {
-    if (isEditing) {
-      console.log("saving...");
-      await applicationUpdateMutation.mutateAsync(editedData!);
-    } else {
-      setEditedData(applicantData!);
+  const handleResumeFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setIsUploadingResume(true);
+      await uploadResume(file, applicantData?.email!);
+      setIsUploadingResume(false);
     }
-
-    setIsEditing((prev) => !prev);
   };
 
   if (isLoading) {
@@ -150,18 +149,9 @@ const Dashboard = () => {
 
         <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
 
-        {/* {applicantData.application_status === application_status_enums.accepted && (
-          <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-            <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
-            <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
-            <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
-              Confirm
-            </button>
-          </div>
-        )} */}
-        <div className="flex flex-row flex-wrap lg:flex-nowrap gap-4">
-          <div className="bg-white rounded-md shadow-md p-5 grow-0">
-            <h2 className="text-md font-medium mb-2">Current Application Status</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
+          <div className="bg-white rounded-pixel p-5">
+            <h2 className="text-md font-medium mb-2">Application Status</h2>
             <div className="flex flex-col mt-8 items-center gap-1 justify-center">
               <Image src={decorationImage} alt="Umbrella Decoration" />
 
@@ -181,54 +171,27 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-md shadow-md p-5 grow">
-            <div className="flex flex-row justify-between items-center">
-              <h2 className="text-md font-medium mb-2">My Application</h2>
-              <a className="text-md font-pixel font-medium color-pink mb-2" onClick={toggleEditing}>
-                Edit
-              </a>
-            </div>
+          <div className="bg-white rounded-pixel p-5 lg:col-span-4">
+            <h2 className="text-md font-medium mb-2">My Application</h2>
+
             <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
-            {/* <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Personal Information</h2>
-              <p>
-                Name: {applicantData.first_name} {applicantData.last_name}
-              </p>
-              <p>Age: {applicantData.age}</p>
-              <p>Country: {applicantData.country}</p>
-              <p>Gender: {applicantData.gender}</p>
-              <p>Pronouns: {applicantData.pronouns}</p>
-              <p>Ethnicity: {applicantData.ethnicity}</p>
-              <p>International: {applicantData.is_international ? "Yes" : "No"}</p>
-            </div>
           </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Education Information</h2>
-              <p>School: {applicantData.school}</p>
-              <p>Major: {applicantData.major}</p>
-              <p>Graduation Year: {applicantData.grad_year}</p>
-              <p>Level of Study: {applicantData.level_of_study}</p>
-            </div>
+
+          <div className="bg-white rounded-pixel p-5 lg:col-span-2">
+            <h2 className="text-md font-medium mb-2">My Resume</h2>
+
+            <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
+            {/*Add logic for uploading a new resume*/}
+            <input type="file" className="hidden" ref={fileInputRef} onChange={handleResumeFileChange} accept="application/pdf" />
+            <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
           </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Contact Information</h2>
-              <p>Email: {applicantData.email}</p>
-              <p>Phone Number: {applicantData.phone_number}</p>
-              <p>Discord: {applicantData.discord}</p>
-              <p>GitHub: {applicantData.github}</p>
-              <p>LinkedIn: {applicantData.linkedin}</p>
+
+          <div className="bg-white rounded-pixel p-5">
+            <h2 className="text-md font-medium mb-2">Check-In Code</h2>
+
+            <div className="flex items-center justify-center">
+              <QRCodeSVG value={applicantData.hacker_id.toString()} />
             </div>
-          </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Additional Information</h2>
-              <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
-              <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
-              <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                <p className="mt-4">MLH Code of Conduct</p>
-              </a> */}
           </div>
         </div>
       </div>
