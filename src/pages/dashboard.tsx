@@ -19,8 +19,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { APPLICATION_STATUS_DETAILS_MAPPING } from "@/constants/applicationConstants";
 import { useApplicationQuery } from "@/hooks/ApplicationQuery";
 import Link from "next/link";
-import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } from "react-icons/ai";
-import { SiDiscord } from "react-icons/si";
+import SocialButtons from "@/components/sections/SocialButtons";
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -169,24 +168,7 @@ const Dashboard = () => {
                   MLH Code of Conduct
                 </Link>
 
-                <div className="flex flex-row justify-center gap-3">
-                  <Link href="https://discord.com/invite/init" target="_blank">
-                    <SiDiscord size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-                  </Link>
-                  <Link href="https://www.instagram.com/initofficial/" target="_blank">
-                    <AiFillInstagram size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-                  </Link>
-                  <Link href="https://twitter.com/initfiu" target="_blank">
-                    <AiFillTwitterSquare size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-                  </Link>
-
-                  <Link href="https://www.facebook.com/init.fiu" target="_blank">
-                    <AiFillFacebook size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-                  </Link>
-                  <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
-                    <AiFillLinkedin size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-                  </Link>
-                </div>
+                <SocialButtons />
               </div>
             </div>
           </div>
