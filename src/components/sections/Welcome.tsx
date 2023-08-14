@@ -4,9 +4,6 @@ import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 
-import { SiDiscord } from "react-icons/si";
-import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } from "react-icons/ai";
-
 import Button from "../input/Button";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import TitleLogo from "../decorations/TitleLogo";
