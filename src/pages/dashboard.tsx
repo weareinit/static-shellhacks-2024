@@ -161,10 +161,13 @@ const Dashboard = () => {
             <div className="bg-white rounded-pixel p-4 lg:col-span-2">
               <h2 className="text-md font-medium mb-2">Resources</h2>
 
-              <div className="flex justify-center flex-col align-middle items-center gap-3">
+              <div className="flex justify-center flex-col align-middle items-center">
                 <a onClick={openHackerGuide} className="hover:text-deep_blue text-pink mt-2 font-pixel text-3xl cursor-pointer">
                   Open Hacker Guide
                 </a>
+                <Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" className="hover:text-deep_blue text-pink mt-2 font-pixel text-lg cursor-pointer mb-3">
+                  MLH Code of Conduct
+                </Link>
 
                 <div className="flex flex-row justify-center gap-3">
                   <Link href="https://discord.com/invite/init" target="_blank">
