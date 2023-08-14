@@ -15,6 +15,8 @@ export const sendReminderEmailSchema = z.enum([application_status_enums.accepted
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
 export const applicantUpdateSchema = z.object({
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
   email: z.string().email().optional(),
   resume_path: z.string().optional(),
   application_status: z.enum(application_statuses).optional(),

@@ -15,6 +15,12 @@ export default function ApplicantCell({ data, isEditing, handleEdit }: Applicant
       <div className="flex flex-row flex-wrap md:flex-nowrap justify-between gap-4">
         <div>
           <h2 className="text-lg font-medium">Personal Information</h2>
+          {isEditing && (
+            <>
+              <ApplicantProperty propertyName="First Name" editing={isEditing} handleEdit={(payload: string) => handleEdit("first_name", payload)} propertyValue={data.first_name} />
+              <ApplicantProperty propertyName="Last Name" editing={isEditing} handleEdit={(payload: string) => handleEdit("last_name", payload)} propertyValue={data.last_name} />
+            </>
+          )}
           <ApplicantProperty propertyName="Age" editing={isEditing} handleEdit={(payload: string) => handleEdit("age", payload)} propertyValue={data.age} />
           <ApplicantProperty propertyName="Country" editing={isEditing} handleEdit={(payload: string) => handleEdit("country", payload)} propertyValue={data.country} />
           <ApplicantProperty propertyName="Gender" editing={isEditing} handleEdit={(payload: string) => handleEdit("gender", payload)} propertyValue={data.gender} />
