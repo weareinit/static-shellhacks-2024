@@ -18,6 +18,9 @@ import { uploadResume } from "@/util/uploadResume";
 import { QRCodeSVG } from "qrcode.react";
 import { APPLICATION_STATUS_DETAILS_MAPPING } from "@/constants/applicationConstants";
 import { useApplicationQuery } from "@/hooks/ApplicationQuery";
+import Link from "next/link";
+import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } from "react-icons/ai";
+import { SiDiscord } from "react-icons/si";
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -54,6 +57,21 @@ const Dashboard = () => {
       await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData?.email });
     } catch (error) {
       console.error("Error changing application status:", error);
+    }
+  };
+
+  const handleWithdrawClick = async () => {
+    const confirmation = window.confirm("Are you sure you want to withdraw? This action is irreversible.");
+
+    if (confirmation) {
+      try {
+        await appUpdateMutation.mutateAsync({
+          application_status: application_status_enums.withdrawn,
+          email: applicantData?.email,
+        });
+      } catch (error) {
+        console.error("Error changing application status:", error);
+      }
     }
   };
 
@@ -99,7 +117,7 @@ const Dashboard = () => {
           <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
-            <div className="bg-white rounded-pixel p-5">
+            <div className="bg-white rounded-pixel p-4">
               <h2 className="text-md font-medium mb-2">Application Status</h2>
               <div className="flex flex-col mt-8 items-center gap-1 justify-center">
                 <Image src={decorationImage} alt="Umbrella Decoration" />
@@ -110,20 +128,19 @@ const Dashboard = () => {
                   <PixelButton text="Confirm Attendence" onClick={handleConfirmClick} className="bg-deep_blue hover:bg-pink mt-2" />
                 )}
 
-                {applicantData.application_status === application_status_enums.confirmed && (
-                  <PixelButton text="Open Hacker Guide" onClick={openHackerGuide} className="bg-deep_blue hover:bg-pink mt-2" />
-                )}
+                <PixelButton text="Withdraw application" onClick={handleWithdrawClick} className="bg-red-400 hover:bg-red-500 mt-2" />
               </div>
             </div>
 
-            <div className="bg-white rounded-pixel p-5 lg:col-span-4">
+            <div className="bg-white rounded-pixel p-4 lg:col-span-4">
               <h2 className="text-md font-medium mb-2">My Application</h2>
 
               <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
             </div>
 
-            <div className="bg-white rounded-pixel p-5 lg:col-span-2">
-              <h2 className="text-md font-medium mb-2">My Resume</h2>
+            <div className="bg-white rounded-pixel p-4 lg:col-span-2">
+              <h2 className="text-md font-medium">My Resume</h2>
+              <p className="mb-2">We share your resume with interested companies and sponsors, so make sure it's up-to-date!</p>
 
               <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
 
@@ -131,11 +148,40 @@ const Dashboard = () => {
               <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
             </div>
 
-            <div className="bg-white rounded-pixel p-5">
+            <div className="bg-white rounded-pixel p-4">
               <h2 className="text-md font-medium mb-2">Check-In Code</h2>
 
               <div className="flex items-center justify-center">
                 <QRCodeSVG value={applicantData.hacker_id.toString()} />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-pixel p-4 lg:col-span-2">
+              <h2 className="text-md font-medium mb-2">Resources</h2>
+
+              <div className="flex justify-center flex-col align-middle items-center gap-3">
+                <a onClick={openHackerGuide} className="hover:text-deep_blue text-pink mt-2 font-pixel text-3xl cursor-pointer">
+                  Open Hacker Guide
+                </a>
+
+                <div className="flex flex-row justify-center gap-3">
+                  <Link href="https://discord.com/invite/init" target="_blank">
+                    <SiDiscord size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
+                  </Link>
+                  <Link href="https://www.instagram.com/initofficial/" target="_blank">
+                    <AiFillInstagram size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
+                  </Link>
+                  <Link href="https://twitter.com/initfiu" target="_blank">
+                    <AiFillTwitterSquare size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
+                  </Link>
+
+                  <Link href="https://www.facebook.com/init.fiu" target="_blank">
+                    <AiFillFacebook size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
+                  </Link>
+                  <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
+                    <AiFillLinkedin size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
