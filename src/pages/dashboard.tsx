@@ -148,13 +148,15 @@ const Dashboard = () => {
               <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
             </div>
 
-            <div className="bg-white rounded-pixel p-4">
-              <h2 className="text-md font-medium mb-2">Check-In Code</h2>
+            {applicantData.application_status === application_status_enums.confirmed && (
+              <div className="bg-white rounded-pixel p-4">
+                <h2 className="text-md font-medium mb-2">Check-In Code</h2>
 
-              <div className="flex items-center justify-center">
-                <QRCodeSVG value={applicantData.hacker_id.toString()} />
+                <div className="flex items-center justify-center">
+                  <QRCodeSVG value={applicantData.hacker_id.toString()} />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="bg-white rounded-pixel p-4 lg:col-span-2">
               <h2 className="text-md font-medium mb-2">Resources</h2>
