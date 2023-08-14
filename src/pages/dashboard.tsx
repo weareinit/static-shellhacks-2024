@@ -20,26 +20,12 @@ import PixelButton from "@/components/misc/PixelButton";
 import { openApplicantResume } from "@/util/openApplicantResume";
 import { uploadResume } from "@/util/uploadResume";
 import { QRCodeSVG } from "qrcode.react";
-
-const getApplicant = async ({ queryKey }: { queryKey: any }) => {
-  const [_, email] = queryKey;
-  const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Error fetching applicant");
-  }
-
-  return (await response.json()) as Hacker_Applications;
-};
+import { APPLICATION_STATUS_DETAILS_MAPPING } from "@/constants/applicationConstants";
+import { useApplicationQuery } from "@/hooks/ApplicationQuery";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { data: applicantData, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
+  const { data: applicantData, isLoading, error } = useApplicationQuery(user?.email!);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,31 +60,6 @@ const Dashboard = () => {
       console.error("Error changing application status:", error);
     }
   };
-
-  let applicationStatusMessage = "";
-
-  switch (applicantData?.application_status) {
-    case application_status_enums.registered:
-      applicationStatusMessage = "You have applied!";
-      break;
-    case application_status_enums.in_wave:
-      applicationStatusMessage = "You have applied!";
-      break;
-    case application_status_enums.accepted:
-      applicationStatusMessage = "You are accepted!";
-      break;
-    case application_status_enums.confirmed:
-      applicationStatusMessage = "You are confirmed!";
-      break;
-    case application_status_enums.withdrawn:
-      applicationStatusMessage = "You have withdrawn! :(";
-      break;
-    // case application_status_enums.waitlisted: //waitlisted doesnt exist as a status
-    //   applicationStatusMessage = "You are waitlisted";
-    //   break;
-    default:
-      applicationStatusMessage = "";
-  }
 
   const openHackerGuide = () => {
     //if on mobile, open in new tab
@@ -157,7 +118,7 @@ const Dashboard = () => {
 
               <p className="text-md">
                 {applicantData.application_status !== application_status_enums.accepted
-                  ? applicationStatusMessage
+                  ? APPLICATION_STATUS_DETAILS_MAPPING[applicantData.application_status]
                   : 'Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event'}
               </p>
 
@@ -181,7 +142,7 @@ const Dashboard = () => {
             <h2 className="text-md font-medium mb-2">My Resume</h2>
 
             <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
-            {/*Add logic for uploading a new resume*/}
+
             <input type="file" className="hidden" ref={fileInputRef} onChange={handleResumeFileChange} accept="application/pdf" />
             <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
           </div>
