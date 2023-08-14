@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
 import red from "/public/assets/decorations/red_umbrella.png";
@@ -11,11 +9,9 @@ import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
-import Button from "@/components/input/Button";
 import HackerGuide from "@/components/sections/HackerGuide";
 import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
 import ApplicantInfo from "@/components/dashboard/ApplicantInfo";
-import { Hacker_Applications } from "@prisma/client";
 import PixelButton from "@/components/misc/PixelButton";
 import { openApplicantResume } from "@/util/openApplicantResume";
 import { uploadResume } from "@/util/uploadResume";
@@ -28,11 +24,11 @@ const Dashboard = () => {
   const { data: applicantData, isLoading, isError } = useApplicationQuery(user?.email!);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
+  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const appUpdateMutation = useAppUpdateMutation();
 
-  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
   useEffect(() => {
     switch (applicantData?.application_status) {
       case application_status_enums.registered:
