@@ -28,6 +28,7 @@ export const applicantUpdateSchema = z.object({
   major: z.string().optional(),
   grad_year: z.number().optional(),
   level_of_study: z.string().optional(),
+  discord: z.string().nullable().optional(),
   github: z.string().url().nullable().optional(),
   linkedin: z.string().url().nullable().optional(),
   country: z.string().nonempty().optional(),
