@@ -125,10 +125,18 @@ function RegisterForm() {
           fill_in_pronouns: "",
           ethnicity: "",
           // MLH QUESTIONS
-          agreed_sponsors: false, //required for us to send resumes to sponsors
-          agreed_mlh_conduct: false,
+
+          // agreed_international: false,
+          // agreed_liability: false,
+          // agreed_media: false,
+          // agreed_sponsors: false, //required for us to send resumes to sponsors
+          // agreed_mlh_conduct: false,
+
+
+          agreed_terms: false,
           agreed_mlh_news: false,
-          agreed_mlh_privacy: false,
+
+          // agreed_mlh_privacy: false,
           recaptcha: "",
         }}
         onSubmit={handleSubmit}
@@ -165,17 +173,18 @@ function RegisterForm() {
             <CheckboxInput
               label={
                 <p>
-                  I have read and agree to the MLH Code of Conduct.
-                  <a target="_blank" href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                    (https://static.mlh.io/docs/mlh-code-of-conduct.pdf)
+                  I have thoroughly read and agree to all policies outlined in the provided document. (
+                  <a target="_blank" href="https://docs.google.com/document/d/1QQCNz75v09EAiqE5Dg5UvubRxMYePIVZMajsA_I4GlM/edit">
+                    Terms and Conditions
                   </a>
+                  )
                 </p>
               }
-              name="agreed_mlh_conduct"
+              name="agreed_terms"
               hasInter
               isRequired
             />
-            <CheckboxInput
+            {/* <CheckboxInput
               label={
                 <p>
                   I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy
@@ -197,7 +206,7 @@ function RegisterForm() {
             <CheckboxInput
               label={
                 <p>
-                  By checking this box, you acknowledge and authorize the sharing of your registration information with corporate sponsors for the purpose of exploring potential job opportunities.
+                  I acknowledge and authorize the sharing of my registration information with corporate sponsors for the purpose of exploring potential job opportunities.
                   This sharing of information allows us to connect you with relevant corporate sponsors who may be interested in considering you for employment or related opportunities.
                 </p>
               }
@@ -205,6 +214,39 @@ function RegisterForm() {
               hasInter
               isRequired
             />
+
+            <CheckboxInput
+              label={
+                <p>
+                  I acknowledge that if I am an international non-FIU student I am not eligible for non sponsor prizes (1st, 2nd, 3rd or best first time hacker) or non sponsor social media giveaways if I do win as per FIU’s tax division policies.
+                </p>
+              }
+              name="agreed_international"
+              hasInter
+              isRequired
+            />
+
+            <CheckboxInput
+              label={
+                <p>
+                  I acknowledge that ANY organization that helped organize Shellhacks, will not be held liable for any lost or stolen property.
+                </p>
+              }
+              name="agreed_liability"
+              hasInter
+              isRequired
+            />
+
+            <CheckboxInput
+              label={
+                <p>
+                  I acknowledge and authorize the filming and recording of myself throughout the event.
+                </p>
+              }
+              name="agreed_media"
+              hasInter
+              isRequired
+            /> */}
 
             <CheckboxInput //required for us to send resumes to sponsors
               label={<p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</p>}

@@ -17,7 +17,7 @@ export const levelsOfStudy = [
 
 export const dietaryRestrictions = ["Vegetarian", "Vegan", "Celiac Disease", "Allergies", "Kosher", "Halal"];
 
-export const genderOptions = ["Male", "Female", "Non-Binary", "Prefer to self-describe", "Prefer Not to Answer"];
+export const genderOptions = ["Male", "Female", "Non-Binary", "Prefer Not to Answer"]; //Removed prefer to self describe
 
 export const pronounOptions = ["She/Her", "He/Him", "They/Them", "She/They", "He/They", "Prefer Not to Answer", "Other"];
 
@@ -87,10 +87,15 @@ export interface ApplicantValues {
   fill_in_pronouns: string;
   ethnicity: string;
   // MLH QUESTIONS
-  agreed_sponsors: boolean; //required for us to send resumes to sponsors
-  agreed_mlh_conduct: boolean;
-  agreed_mlh_privacy: boolean;
+  // agreed_media: boolean,
+  // agreed_international: boolean,
+  // agreed_liability: boolean,
+  // agreed_sponsors: boolean; //required for us to send resumes to sponsors
+  // agreed_mlh_conduct: boolean;
+  // agreed_mlh_privacy: boolean;
+
   agreed_mlh_news: boolean;
+  agreed_terms: boolean;
   recaptcha: string;
 }
 
@@ -139,9 +144,16 @@ export const formValidation = Yup.object().shape({
   fill_in_pronouns: Yup.string(),
   ethnicity: Yup.string().required("Ethnicity is a required field"),
   // MLH Questions
-  agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
-  agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
-  agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
+  agreed_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
+
+  // agreed_media: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_international: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_liability: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
+  // agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
+
+
   recaptcha: Yup.string().required("Please complete the captcha"),
   agreed_mlh_news: Yup.boolean(),
 });
