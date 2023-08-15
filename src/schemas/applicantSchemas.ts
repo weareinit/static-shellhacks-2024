@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { application_status_enums } from "@prisma/client";
 
-const application_statuses = [
+export const application_statuses = [
   application_status_enums.registered,
   application_status_enums.in_wave,
   application_status_enums.accepted,

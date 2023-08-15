@@ -4,12 +4,10 @@ import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 
-import { SiDiscord } from "react-icons/si";
-import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterSquare } from "react-icons/ai";
-
 import Button from "../input/Button";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import TitleLogo from "../decorations/TitleLogo";
+import SocialButtons from "./SocialButtons";
 
 function MicrosoftBoard() {
   return (
@@ -76,24 +74,7 @@ function Welcome() {
           </Link>
         </div>
 
-        <div className="flex flex-row space-x-3 justify-center col-span-full row-start-3 self-start p-2">
-          <Link href="https://discord.com/invite/init" target="_blank">
-            <SiDiscord size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-          </Link>
-          <Link href="https://www.instagram.com/initofficial/" target="_blank">
-            <AiFillInstagram size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-          </Link>
-          <Link href="https://twitter.com/initfiu" target="_blank">
-            <AiFillTwitterSquare size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-          </Link>
-
-          <Link href="https://www.facebook.com/init.fiu" target="_blank">
-            <AiFillFacebook size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-          </Link>
-          <Link href="https://www.linkedin.com/company/initofficial/" target="_blank">
-            <AiFillLinkedin size={40} className="hover:fill-pink hover:cursor-pointer fill-dark_brown hover:scale-125 transition ease-in-out" />
-          </Link>
-        </div>
+        <SocialButtons />
       </nav>
     </section>
   );

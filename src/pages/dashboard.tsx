@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import blue from "/public/assets/decorations/blue_umbrella.png";
 import red from "/public/assets/decorations/red_umbrella.png";
@@ -11,36 +9,28 @@ import green from "/public/assets/decorations/green_umbrella.png";
 import Navbar from "@/components/dashboard/Navbar";
 import { application_status_enums } from "@prisma/client";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
-import Button from "@/components/input/Button";
 import HackerGuide from "@/components/sections/HackerGuide";
 import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
-
-const getApplicant = async ({ queryKey }: { queryKey: any }) => {
-  const [_, email] = queryKey;
-  const response = await fetch(`/api/applications/${encodeURIComponent(email)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-
-    throw new Error("Error fetching applicant");
-  }
-
-  return response.json();
-};
+import ApplicantInfo from "@/components/dashboard/ApplicantInfo";
+import PixelButton from "@/components/misc/PixelButton";
+import { openApplicantResume } from "@/util/openApplicantResume";
+import { uploadResume } from "@/util/uploadResume";
+import { QRCodeSVG } from "qrcode.react";
+import { APPLICATION_STATUS_DETAILS_MAPPING } from "@/constants/applicationConstants";
+import { useApplicationQuery } from "@/hooks/ApplicationQuery";
+import Link from "next/link";
+import SocialButtons from "@/components/sections/SocialButtons";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { data, isLoading, error } = useQuery(["applicant", user?.email], getApplicant);
+  const { data: applicantData, isLoading, isError } = useApplicationQuery(user?.email!);
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
-  const applicantData = data?.applicant;
+  const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
+  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const appUpdateMutation = useAppUpdateMutation();
 
-  const [decorationImage, setDecorationImage] = useState<StaticImageData>(yellow);
   useEffect(() => {
     switch (applicantData?.application_status) {
       case application_status_enums.registered:
@@ -63,154 +53,127 @@ const Dashboard = () => {
 
   const handleConfirmClick = async () => {
     try {
-      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData.email });
+      await appUpdateMutation.mutateAsync({ application_status: application_status_enums.confirmed, email: applicantData?.email });
     } catch (error) {
       console.error("Error changing application status:", error);
     }
   };
 
-  let applicationStatusMessage = "";
+  const handleWithdrawClick = async () => {
+    const confirmation = window.confirm("Are you sure you want to withdraw? This action is irreversible.");
 
-  switch (applicantData?.application_status) {
-    case application_status_enums.registered:
-      applicationStatusMessage = "You have applied!";
-      break;
-    case application_status_enums.in_wave:
-      applicationStatusMessage = "You have applied!";
-      break;
-    case application_status_enums.accepted:
-      applicationStatusMessage = "You are accepted!";
-      break;
-    case application_status_enums.confirmed:
-      applicationStatusMessage = "You are confirmed!";
-      break;
-    case application_status_enums.withdrawn:
-      applicationStatusMessage = "You have withdrawn! :(";
-      break;
-    // case application_status_enums.waitlisted: //waitlisted doesnt exist as a status
-    //   applicationStatusMessage = "You are waitlisted";
-    //   break;
-    default:
-      applicationStatusMessage = "";
-  }
+    if (confirmation) {
+      try {
+        await appUpdateMutation.mutateAsync({
+          application_status: application_status_enums.withdrawn,
+          email: applicantData?.email,
+        });
+      } catch (error) {
+        console.error("Error changing application status:", error);
+      }
+    }
+  };
+
+  const openHackerGuide = () => {
+    //if on mobile, open in new tab
+    if (window.innerWidth < 768) {
+      window.open("https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4", "_blank");
+    } else {
+      setShowHackerGuide(true);
+    }
+  };
+
+  const handleResumeFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setIsUploadingResume(true);
+      await uploadResume(file, applicantData?.email!);
+      setIsUploadingResume(false);
+    }
+  };
 
   if (isLoading) {
     return (
-      <div className="max-w-md mx-auto flex justify-center items-center h-screen">
+      <main className="bg-sand min-h-screen p-2 md:p-8 text-center">
         <h1 className="text-2xl font-bold">Loading...</h1>
-      </div>
-    );
-  }
-
-  if (!applicantData || error) {
-    return (
-      <>
-        <div className="py-2 px-6">
-          <Navbar />
-        </div>
-        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
-          <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
-          <p>Please login using the same account you used when registering for this event.</p>
-        </div>
-      </>
+      </main>
     );
   }
 
   return (
-    <main className="bg-sand min-h-screen p-5">
-      <div className="py-2 px-6">
-        <Navbar />
-      </div>
+    <main className="bg-sand min-h-screen p-2 md:p-8">
+      <Navbar />
 
-      <div className="max-w-md mx-auto">
-        {showHackerGuide && <HackerGuide />}
-        {applicantData.application_status === application_status_enums.accepted && (
-          <div className="mt-4 bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-            <h2 className="text-lg font-medium mb-2">{applicationStatusMessage}</h2>
-            <p>Congratulations! Your application has been accepted. Please click the "Confirm" button below to confirm your attendance to the event.</p>
-            <button onClick={handleConfirmClick} className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md">
-              Confirm
-            </button>
-          </div>
-        )}
-        <div className="bg-white rounded-md shadow-md p-6">
-          <h1 className="text-xl mb-4 font-pixel text-center">Hacker Dashboard</h1>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col items-center justify-center">
-              <h2 className="text-lg font-medium mb-2">Current Application Status</h2>
-              <div>
-                <Image src={decorationImage} alt="Umbrella Decoration" />
-              </div>
-              <p>{applicationStatusMessage}</p>
-              <div>
-                {applicantData.application_status === application_status_enums.confirmed && (
-                  <div>
-                    <Button
-                      className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 hidden md:block"
-                      onClick={() => setShowHackerGuide(true)}
-                    >
-                      <h2 className="font-console text-sm text-center">Open Hacker Guide</h2>
-                    </Button>
-                    <Button className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink h-[40px] max-w-[250px] m-2 p-4 block md:hidden">
-                      <a
-                        href="https://weareinit.notion.site/Hacker-Guide-7deb058ff624449a98391c910f7ad0bd?pvs=4"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-console text-sm text-center no-underline text-white"
-                      >
-                        Open Hacker Guide
-                      </a>
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Personal Information</h2>
-              <p>
-                Name: {applicantData.first_name} {applicantData.last_name}
-              </p>
-              <p>Age: {applicantData.age}</p>
-              <p>Country: {applicantData.country}</p>
-              <p>Gender: {applicantData.gender}</p>
-              <p>Pronouns: {applicantData.pronouns}</p>
-              <p>Ethnicity: {applicantData.ethnicity}</p>
-              <p>International: {applicantData.is_international ? "Yes" : "No"}</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Education Information</h2>
-              <p>School: {applicantData.school}</p>
-              <p>Major: {applicantData.major}</p>
-              <p>Graduation Year: {applicantData.grad_year}</p>
-              <p>Level of Study: {applicantData.level_of_study}</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Contact Information</h2>
-              <p>Email: {applicantData.email}</p>
-              <p>Phone Number: {applicantData.phone_number}</p>
-              <p>Discord: {applicantData.discord}</p>
-              <p>GitHub: {applicantData.github}</p>
-              <p>LinkedIn: {applicantData.linkedin}</p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className="bg-white rounded-md shadow-md p-6 flex flex-col justify-center">
-              <h2 className="text-lg font-medium mb-2">Additional Information</h2>
-              <p>Agreed to MLH news: {applicantData.agreed_mlh_news ? "Yes" : "No"}</p>
-              <p>Check-In Status: {applicantData.check_in_status ? "Checked in" : "Not checked in"}</p>
-              <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                <p className="mt-4">MLH Code of Conduct</p>
-              </a>
-            </div>
-          </div>
+      {showHackerGuide && <HackerGuide />}
+
+      {!applicantData || isError ? (
+        <div className="max-w-md mx-auto bg-white rounded-md shadow-md p-6">
+          <h1 className="text-xl font-bold mb-4">You need to login to a different account</h1>
+          <p>Please login using the same account you used when registering for this event.</p>
         </div>
-      </div>
+      ) : (
+        <section>
+          <h1 className="font-pixel text-4xl text-left my-4">Welcome, {applicantData.first_name}!</h1>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
+            <div className="bg-white rounded-pixel p-4">
+              <h2 className="text-md font-medium mb-2">Application Status</h2>
+              <div className="flex flex-col mt-8 items-center gap-1 justify-center">
+                <Image src={decorationImage} alt="Umbrella Decoration" />
+
+                <p className="text-md">{APPLICATION_STATUS_DETAILS_MAPPING[applicantData.application_status]}</p>
+
+                {applicantData.application_status === application_status_enums.accepted && (
+                  <PixelButton text="Confirm Attendence" onClick={handleConfirmClick} className="bg-deep_blue hover:bg-pink mt-2" />
+                )}
+
+                <PixelButton text="Withdraw application" onClick={handleWithdrawClick} className="bg-red-400 hover:bg-red-500 mt-2" />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-pixel p-4 lg:col-span-4">
+              <h2 className="text-md font-medium mb-2">My Application</h2>
+
+              <ApplicantInfo data={applicantData} isEditing={false} handleEdit={(field, val) => null} />
+            </div>
+
+            <div className="bg-white rounded-pixel p-4 lg:col-span-2">
+              <h2 className="text-md font-medium">My Resume</h2>
+              <p className="mb-2">We share your resume with interested companies and sponsors, so make sure it's up-to-date!</p>
+
+              <PixelButton text="View Resume" onClick={() => openApplicantResume(applicantData.email)} className="bg-deep_blue hover:bg-pink mt-2" />
+
+              <input type="file" className="hidden" ref={fileInputRef} onChange={handleResumeFileChange} accept="application/pdf" />
+              <PixelButton isLoading={isUploadingResume} text="Upload New Resume" onClick={() => fileInputRef.current?.click()} className="bg-deep_blue hover:bg-pink mt-2" />
+            </div>
+
+            {applicantData.application_status === application_status_enums.confirmed && (
+              <div className="bg-white rounded-pixel p-4">
+                <h2 className="text-md font-medium mb-2">Check-In Code</h2>
+
+                <div className="flex items-center justify-center">
+                  <QRCodeSVG value={applicantData.hacker_id.toString()} />
+                </div>
+              </div>
+            )}
+
+            <div className="bg-white rounded-pixel p-4 lg:col-span-2">
+              <h2 className="text-md font-medium mb-2">Resources</h2>
+
+              <div className="flex justify-center flex-col align-middle items-center">
+                <a onClick={openHackerGuide} className="hover:text-deep_blue text-pink mt-2 font-pixel text-3xl cursor-pointer">
+                  Open Hacker Guide
+                </a>
+                <Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" className="hover:text-deep_blue text-pink mt-2 font-pixel text-lg cursor-pointer mb-3">
+                  MLH Code of Conduct
+                </Link>
+
+                <SocialButtons />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 };
