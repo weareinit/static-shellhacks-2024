@@ -60,6 +60,7 @@ module.exports = {
       dropShadow: {
         pink: "2px 2px 0 #F1A4C9",
         light_brown: "2px 2px 0 #E2D2BB",
+        light_blue : "2px 2px 0 #BFF0F1",
         white: "2px 2px 0 #FFF",
         teal: "2px 2px 0 #24B2C0",
       },
