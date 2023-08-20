@@ -35,6 +35,8 @@ module.exports = {
         light_blue: "#BFF0F1",
         white: "#FFF",
         tan: "#F9EDE3",
+        sky_purple: "#D7E2FC",
+
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
