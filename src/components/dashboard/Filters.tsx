@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
 import { gradYearOptions } from "@/util/RegistrationData";
-import Label from "../input/Label";
-import z from "zod";
-import { applicantFiltersSchema, application_statuses } from "@/schemas/applicantSchemas";
-import { application_status_enums } from "@prisma/client";
+import { application_statuses } from "@/schemas/applicantSchemas";
 
 interface FiltersPropType {
   filters: Record<string, any>;
-  setFilters: any;
+  setFilters: (filters: Record<string, any>) => void;
   schools: string[];
 }
 
