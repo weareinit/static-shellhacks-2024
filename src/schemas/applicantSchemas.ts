@@ -8,6 +8,7 @@ export const application_statuses = [
   application_status_enums.confirmed,
   application_status_enums.withdrawn,
   application_status_enums.waitlisted,
+  application_status_enums.checked_in,
 ] as const;
 export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
@@ -18,6 +19,7 @@ export const applicantUpdateSchema = z.object({
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
+  age: z.number().int().positive().optional(),
   resume_path: z.string().optional(),
   application_status: z.enum(application_statuses).optional(),
   phone_number: z

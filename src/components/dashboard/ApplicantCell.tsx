@@ -7,6 +7,7 @@ import { applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
 import { openApplicantResume } from "@/util/openApplicantResume";
 import PixelButton from "../misc/PixelButton";
 import { useAppUpdateMutation } from "@/hooks/ApplicationUpdateMutation";
+import { APPLICATION_STATUS_COLOR_MAPPING } from "@/constants/applicationConstants";
 
 interface ApplicantCellPropType {
   data: Hacker_Applications;
@@ -14,15 +15,6 @@ interface ApplicantCellPropType {
   handleSelectApplicant: () => void;
   isSelected: boolean;
 }
-
-const applicationStatusColorMapping = {
-  registered: "#facc15",
-  waitlisted: "#a8a29e",
-  in_wave: "#7c3aed",
-  confirmed: "#22c55e",
-  accepted: "#3b82f6",
-  withdrawn: "#ef4444",
-};
 
 export default function ApplicantCell({ data, handleAppStatusChange, handleSelectApplicant, isSelected }: ApplicantCellPropType) {
   const [showItem, setShowItem] = useState(false);
@@ -76,7 +68,7 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
         <span className="col-span-3 truncate"> {data.school}</span>
 
         <div className="col-span-1 flex justify-between items-center">
-          <div className={`w-4 h-4 rounded-full`} style={{ backgroundColor: applicationStatusColorMapping[data.application_status!] }} title={data.application_status} />
+          <div className={`w-4 h-4 rounded-full`} style={{ backgroundColor: APPLICATION_STATUS_COLOR_MAPPING[data.application_status!] }} title={data.application_status} />
           <svg className={`transform transition-transform ${showItem ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
             <path fill="#3182ce" d="M7 10l5 5 5-5z" />
           </svg>

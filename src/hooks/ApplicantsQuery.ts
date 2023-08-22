@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
-import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 import { z } from "zod";
+import { Hacker_Applications } from "@prisma/client";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 
@@ -24,11 +25,18 @@ export const useApplicantsQuery = (filters: ApplicantFilterType, name: string = 
       return response.json();
     } catch (e) {
       console.error(e);
-      return [];
+      throw new Error("Invalid filters");
     }
   };
 
   return useQuery(["applicants", filters], getApplicants, {
-    select: (data) => data.filter((entry: any) => (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase()) || entry.email.toLowerCase().includes(name.toLowerCase())),
+    select: (data) =>
+      data.filter(
+        (entry: Hacker_Applications) =>
+          (entry.first_name + " " + entry.last_name).toLowerCase().includes(name.toLowerCase()) ||
+          entry.email.toLowerCase().includes(name.toLowerCase()) ||
+          entry.discord?.toLowerCase().startsWith(name.toLowerCase()) ||
+          entry.phone_number.toLowerCase().startsWith(name.toLowerCase())
+      ),
   });
 };
