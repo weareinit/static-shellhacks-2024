@@ -1,7 +1,7 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import FiltersModal from "@/components/dashboard/Filters";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
 import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
@@ -28,6 +28,11 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const appStatusMutation = useAppStatusMutation({ onSuccess: () => setSelectedApplicants(new Set()) });
   const acceptWaveMutation = useAcceptWaveMutation();
   const sendReminderEmailMutation = useSendReminderEmailMutation();
+
+  useEffect(() => {
+    // Reset selected applicants when filters change
+    setSelectedApplicants(new Set());
+  }, [filters]);
 
   const toggleSelectedApplicant = (hacker_id: number) => {
     if (selectedApplicants.has(hacker_id)) {

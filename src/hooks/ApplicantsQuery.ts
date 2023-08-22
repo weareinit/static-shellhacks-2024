@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { applicantFiltersSchema, applicantStatusChangeSchema } from "@/schemas/applicantSchemas";
+import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 import { z } from "zod";
 import { Hacker_Applications } from "@prisma/client";
 
@@ -25,7 +25,7 @@ export const useApplicantsQuery = (filters: ApplicantFilterType, name: string = 
       return response.json();
     } catch (e) {
       console.error(e);
-      return [];
+      throw new Error("Invalid filters");
     }
   };
 
