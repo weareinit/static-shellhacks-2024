@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
 import { useAppStatusMutation } from "@/hooks/ApplicationStatusMutation";
 import { useApplicantsQuery } from "@/hooks/ApplicantsQuery";
-import { z } from "zod";
+import { set, z } from "zod";
 import { parseCSV } from "@/util/parseCSV";
 import ApplicantsTable from "@/components/dashboard/ApplicantsTable";
 import { useAcceptWaveMutation } from "@/hooks/AcceptWaveMutation";
@@ -19,6 +19,7 @@ const DEFAULT_FILTERS: ApplicantFilterType = { application_status: "registered" 
 
 export default withPageAuthRequired(function AdminDashboard({ schools }) {
   const [showFilters, setShowFilters] = useState(false);
+  const [isExportingCSV, setIsExportingCSV] = useState(false);
   const [name, setName] = useState("");
   const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
   const [selectedApplicants, setSelectedApplicants] = useState<Set<number>>(new Set());
@@ -47,6 +48,12 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
     appStatusMutation.mutateAsync({ ids: Array.from(selectedApplicants), application_status: application_status_enums.in_wave as any });
   };
 
+  const downloadCSV = async () => {
+    setIsExportingCSV(true);
+    await downloadApplicantsCSV(filters);
+    setIsExportingCSV(false);
+  };
+
   return (
     <main className="bg-sand min-h-screen p-2 md:p-8">
       <div className="pt-0">
@@ -59,7 +66,7 @@ export default withPageAuthRequired(function AdminDashboard({ schools }) {
 
             <div className="flex justify-left gap-2">
               <PixelButton className="bg-indigo-500 hover:bg-indigo-600" onClick={() => setShowFilters(!showFilters)} text="Filters" />
-              <PixelButton className="bg-green-500 hover:bg-green-600 max-sm:hidden" onClick={() => downloadApplicantsCSV(filters)} text="Export CSV" />
+              <PixelButton className="bg-green-500 hover:bg-green-600 max-sm:hidden" onClick={downloadCSV} isLoading={isExportingCSV} text="Export CSV" />
 
               {filters.application_status == application_status_enums.registered && selectedApplicants.size > 0 && (
                 <PixelButton className="bg-purple-500 hover:bg-purple-600" onClick={addSelectedToWave} text={`Add to Wave (${selectedApplicants.size})`} isLoading={appStatusMutation.isLoading} />
