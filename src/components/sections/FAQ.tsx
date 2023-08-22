@@ -66,7 +66,7 @@ function FAQ() {
         />
         <FAQItem
           question="Do I need a team to work on a project?"
-          answer="Not at all! You can choose to work on a solo project, or team up with up to four (4) friends or fellow students at the event. If you’re looking for a team, we’ll have a team-building activity as soon as hacking begins Friday evening to connect you with other solo hackers!"
+          answer="Not at all! You can choose to work on a solo project, or team up with up to three friends (four members total) or fellow students at the event. If you’re looking for a team, we’ll have a team-building activity as soon as hacking begins Friday evening to connect you with other solo hackers!"
         />
         <FAQItem
           question="Will food be provided?"
