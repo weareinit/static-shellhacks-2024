@@ -39,7 +39,7 @@ function FAQ() {
   return (
     <section className="flex flex-col md:flex-row m-2 justify-center items-center pt-36 w-full" id="faq">
       <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
-        <h2 className="text-center font-console font-bold text-4xl text-crate_brown mb-12">FAQs</h2>
+        <h1 className="text-center font-console font-bold text-4xl text-crate_brown mb-6">FAQs</h1>
         <FAQItem
           question="What is a hackathon?"
           answer="A hackathon is a weekend-long event where students come together to learn the latest technologies, build innovative projects, and network with top companies. ShellHacks is the largest hackathon in Florida, bringing thousands of students from around the world together since 2017!"
@@ -70,7 +70,7 @@ function FAQ() {
         />
         <FAQItem
           question="Will food be provided?"
-          answer="Yes! Breakfast, lunch, dinner, and snacks will be served to everyone attending ShellHacks from Friday evening to Sunday afternoon. We'll also have coffee, energy drinks, tea, and other beverages available to keep you energized!"
+          answer="Yes! Food will be served daily to everyone attending ShellHacks from Friday evening to Sunday afternoon. We'll also have coffee, energy drinks, tea, and other beverages available to keep you energized!"
         />
         <FAQItem
           question="Will there be a place to sleep?"
