@@ -195,3 +195,15 @@ p {
 .rounded-pixel-primary::after {
   margin: -4px;
 }
+
+@media screen and (min-width: 1280px) {
+  .text-clamp {
+    font-size: clamp(1rem, 1.25vw, 1.5rem);
+    line-height: clamp(1.5rem, 2.5vw, 2rem);
+  }
+  
+  .text-clamp-sm {
+    font-size: clamp(0.85rem, 1.25vw, 1.15rem);
+    line-height: clamp(1.5rem, 2vw, 1.75rem);
+  }
+}
