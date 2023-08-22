@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { gradYearOptions } from "@/util/RegistrationData";
 import Label from "../input/Label";
 import z from "zod";
-import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
+import { applicantFiltersSchema, application_statuses } from "@/schemas/applicantSchemas";
+import { application_status_enums } from "@prisma/client";
 
 interface FiltersPropType {
   filters: Record<string, any>;
@@ -12,7 +13,7 @@ interface FiltersPropType {
 
 interface FilterPropType {
   label: string;
-  options: string[];
+  options: readonly string[];
   filters: Record<string, any>;
   handleOnChange: any;
   filterName: string;
@@ -36,7 +37,7 @@ const Filter = ({ label, filterName, options, filters, handleOnChange }: FilterP
 };
 
 export default function Filters({ filters, setFilters, schools }: FiltersPropType) {
-  const applicationStatusOptions = ["any", "registered", "in_wave", "accepted", "withdrawn", "confirmed", "waitlisted"];
+  const applicationStatusOptions = ["any", ...application_statuses];
 
   const schoolOptions = ["any", ...schools];
 

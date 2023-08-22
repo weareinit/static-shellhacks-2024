@@ -22,6 +22,7 @@ const applicationStatusColorMapping = {
   confirmed: "#22c55e",
   accepted: "#3b82f6",
   withdrawn: "#ef4444",
+  checked_in: "#D946EF",
 };
 
 export default function ApplicantCell({ data, handleAppStatusChange, handleSelectApplicant, isSelected }: ApplicantCellPropType) {

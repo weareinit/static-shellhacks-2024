@@ -1,5 +1,4 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
 import FiltersModal from "@/components/dashboard/Filters";
 import { useEffect, useState } from "react";
 import { applicantFiltersSchema } from "@/schemas/applicantSchemas";
