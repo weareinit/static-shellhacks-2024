@@ -17,6 +17,9 @@ function CommunityPartners() {
         <SponsorImage src="/assets/sponsors/FIU_Honors.svg" alt="FIU Honors College Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/MDC.svg" alt="Miami Dade College Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/MakeItMVP.svg" alt="MakeItMVP Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/Acendi.svg" alt="Acendi Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/KnightHacks.svg" alt="KnightHacks Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/GatorVR.svg" alt="GatorVR Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/MLH.svg" alt="Major League Hacking" className="md:col-span-4" />
       </div>
       </>
