@@ -31,9 +31,12 @@ module.exports = {
         grass_green: "#8EBE6B",
         blue: "#006887",
         pink: "#FF66A4",
-        light_pink: "#F1A4C9",
+        light_pink: "#F6C7E1",
+        light_blue: "#BFF0F1",
         white: "#FFF",
         tan: "#F9EDE3",
+        sky_purple: "#D7E2FC",
+
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
@@ -59,6 +62,7 @@ module.exports = {
       dropShadow: {
         pink: "2px 2px 0 #F1A4C9",
         light_brown: "2px 2px 0 #E2D2BB",
+        light_blue : "2px 2px 0 #BFF0F1",
         white: "2px 2px 0 #FFF",
         teal: "2px 2px 0 #24B2C0",
       },
