@@ -23,12 +23,12 @@ function Workshops() {
       <NoticeBox color = {NoticeStyles.Pink} className = "mb-2 clamp-text-sm"><p>ShellHacks offers a variet of workshop tracks to introduce you to the world of technology and careers in the field! These workshops are beginner friendly and open to all.</p></NoticeBox>
       <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center space-y-12 md:space-y-0 md:gap-8 auto-rows-fr">
         <WorkshopItem src="/assets/decorations/pink_umbrella.svg" heading="Web Development" text="Develop web applications using the latest frameworks and tools" />
-        <WorkshopItem src="/assets/decorations/turtle.png" heading="Game Development" text="Create virtual experiences that bring worlds and characters to life" />
-        <WorkshopItem src="/assets/decorations/dolphin.png" heading="Hardware" text="Use computer hardware to tackle and solve real-world problems" />
-        <WorkshopItem src="/assets/decorations/papaya.png" heading="Design / Product" text="Create intuitive user experiences for your web or mobile applications" />
-        <WorkshopItem src="/assets/decorations/coconut.png" heading="Mobile Development" text="Build interactive mobile applications for iOS and Android platforms" />
-        <WorkshopItem src="/assets/decorations/coral.png" heading="AI / Machine Learning" text="Implement AI/ML algorithms to automate tasks and make predictions" />
-        <WorkshopItem src="/assets/decorations/flamingo.png" heading="IT / Cybersecurity" text="Dive into the world of cloud computing, cybersecurity, and hacking" />
+        <WorkshopItem src="/assets/decorations/turtle.svg" heading="Game Development" text="Create virtual experiences that bring worlds and characters to life" />
+        <WorkshopItem src="/assets/decorations/dolphin.svg" heading="Hardware" text="Use computer hardware to tackle and solve real-world problems" />
+        <WorkshopItem src="/assets/decorations/papaya.svg" heading="Design / Product" text="Create intuitive user experiences for your web or mobile applications" />
+        <WorkshopItem src="/assets/decorations/coconut.svg" heading="Mobile Development" text="Build interactive mobile applications for iOS and Android platforms" />
+        <WorkshopItem src="/assets/decorations/coral.svg" heading="AI / Machine Learning" text="Implement AI/ML algorithms to automate tasks and make predictions" />
+        <WorkshopItem src="/assets/decorations/flamingo.svg" heading="IT / Cybersecurity" text="Dive into the world of cloud computing, cybersecurity, and hacking" />
         <WorkshopItem src="/assets/decorations/teal_umbrella.svg" heading="Career Development" text="Explore careers in technology and how to break into the industry" />
       </div>
     </section>
