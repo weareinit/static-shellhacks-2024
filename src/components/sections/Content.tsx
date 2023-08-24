@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";
-import MLHBanner from "../decorations/MLHBanner";
 import Welcome from "./Welcome";
 import AboutUs from "./AboutUs";
-import BlurBackdrop from "../decorations/BlurBackdrop";
 import FAQ from "./FAQ";
 import Navbar from "../navigation/navBar";
 import MobileNav from "../navigation/mobileNav";
 import Schedule from "./Schedule";
 import Sponsors from "./Sponsors";
 import Workshops from "./Workshops";
-import Showcase from "./Showcase";
 import CommunityPartners from "./CommunityPartners";
+import BuildCallout from "./BuildCallout";
+import NetworkCallout from "./NetworkCallout";
+import VideoCallout from "./VideoCallout";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -48,7 +48,10 @@ function Content() {
       <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
       <Welcome />
       <AboutUs />
+      <BuildCallout/>
+      <NetworkCallout/>
       <Workshops />
+      <VideoCallout/>
       <FAQ />
       {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
