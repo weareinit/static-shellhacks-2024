@@ -18,8 +18,16 @@ function CommunityPartners() {
         <SponsorImage src="/assets/sponsors/MDC.svg" alt="Miami Dade College Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/MakeItMVP.svg" alt="MakeItMVP Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Acendi.svg" alt="Acendi Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/WiCS.svg" alt="WiCS Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/GDSCs.svg" alt="GDSCs Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/KnightHacks.svg" alt="KnightHacks Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/UCF_IT.svg" alt="UCF IT Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/Design__Code.svg" alt="Design Code Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/ACM_UF.svg" alt="ACM UF Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/SEC.svg" alt="SEC Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/Gator_Gaming.svg" alt="Gator Gaming Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GatorVR.svg" alt="GatorVR Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/inTech.svg" alt="inTech Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/MLH.svg" alt="Major League Hacking" className="md:col-span-4" />
       </div>
       </>
