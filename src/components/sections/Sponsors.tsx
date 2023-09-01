@@ -27,6 +27,7 @@ function Sponsors() {
         <SponsorImage src="/assets/sponsors/Xbox.svg" alt="Xbox Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Vanguard.svg" alt="Vanguard Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Bitstop.svg" alt="Bitstop Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/Breakthrough_Tech.svg" alt="Breakthrough Tech Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Google.svg" alt="Google Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Waymo.svg" alt="Waymo Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Capital_One.svg" alt="Capital One Logo" className="md:col-span-4" />
@@ -38,13 +39,14 @@ function Sponsors() {
         <SponsorImage src="/assets/sponsors/Lexis_Nexis.svg" alt="Lexis Nexis Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Cutting_Edge_AI.svg" alt="Cutting Edge AI Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Elfen_Software.svg" alt="Elfen Software Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/FIU_ELT.svg" alt="FIU ELT Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Miami_Dade_County.svg" alt="Miami Dade County Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Mediastream.svg" alt="Mediastream Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Adobe.svg" alt="Adobe Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/NVIDIA.svg" alt="Nvidia Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Chevron.svg" alt="Chevron Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Accenture.svg" alt="Accenture Logo" className="md:col-span-4" />
-        <SponsorImage src="/assets/sponsors/RCCL.svg" alt="RCCL Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/Wells_Fargo.svg" alt="Wells Fargo Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/FIU_SGA.svg" alt="FIU SGA Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GDG.svg" alt="Google Developer Student Club Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/CodePath.svg" alt="CodePath Logo" className="md:col-span-4" />
