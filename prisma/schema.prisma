@@ -47,7 +47,7 @@ model Hacker_Applications {
   ethnicity          String                   @db.VarChar(50)
   // STATUS
   agreed_mlh_news    Boolean
-  application_status application_status_enums @default(registered)
+  application_status application_status_enums @default(waitlisted)
   check_in_status    Boolean                  @default(false)
   event              Events                   @relation(fields: [event_id], references: [event_id])
 
