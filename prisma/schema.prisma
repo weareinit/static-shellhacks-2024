@@ -38,6 +38,8 @@ model Hacker_Applications {
   phone_number       String                   @db.VarChar(20)
   resume_path        String                   @db.VarChar(250)
   discord            String?                  @db.VarChar(250)
+  discord_id String? @db.VarChar(250)
+  discord_verification_code String? @db.VarChar(25)
   github             String?                  @db.VarChar(250)
   linkedin           String?                  @db.VarChar(250)
   // DEMOGRAPHIC INFO
