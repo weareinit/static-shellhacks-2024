@@ -33,6 +33,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       data: {
         discord_id: bodyData?.discord_id,
+        first_name: applicant?.first_name,
+        last_name: applicant?.last_name,
       },
     });
     res.status(200);
