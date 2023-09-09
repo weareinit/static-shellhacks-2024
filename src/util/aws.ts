@@ -110,6 +110,20 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
   await emailClient.send(command);
 };
 
+export const sendDiscordVerificationEmail = async (toEmail: string, hackerCode: string) => {
+  const params: SendTemplatedEmailCommandInput = {
+    Destination: {
+      ToAddresses: [toEmail],
+    },
+    Source: "fiuoperations@weareinit.org",
+    Template: "verifyDiscordTemplate18a77a3b597",
+    TemplateData: `{ \"DISCORD_CODE\":\"${hackerCode}\" }`,
+  };
+
+  const command = new SendTemplatedEmailCommand(params);
+  await emailClient.send(command);
+};
+
 export const sendConfirmationEmail = async (toEmail: string, firstName: string) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
   const params: SendTemplatedEmailCommandInput = {
