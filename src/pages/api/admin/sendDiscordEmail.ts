@@ -20,8 +20,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let bodyData;
   try {
     bodyData = sendDiscordEmailSchema.parse(req.body);
-  } catch {
-    res.status(400).json({ message: "Could not parse required email and discord_id fields" });
+  } catch (e) {
+    return res.status(400).json({ message: "Could not parse required email and discord_id fields" });
   }
 
   const applicant = await prisma.hacker_Applications.findFirst({
@@ -30,13 +30,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   if (applicant === null) {
-    res.status(404).json({ error: "No applicant found with passed in email" });
+    return res.status(404).json({ error: "No applicant found with passed in email" });
   }
 
   if (applicant?.discord_id === bodyData?.discord_id) {
-    res.status(200).json({ discord_id: applicant?.discord_id });
+    return res.status(200).json({ discord_id: applicant?.discord_id });
   } else if (applicant?.discord_id) {
-    res.status(400).json({ message: "User already has a discord id verified which is not the same as passed" });
+    return res.status(400).json({ message: "User already has a discord id verified which is not the same as passed" });
   }
 
   const hackerCode = Math.floor(Math.random() * 16777215)
@@ -50,8 +50,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     data: { discord_verification_code: hackerCode },
   });
 
-  await sendDiscordVerificationEmail(bodyData?.email as string, hackerCode);
-  res.status(200);
+  await sendDiscordVerificationEmail(bodyData.email, hackerCode);
+  return res.status(200).json({});
 };
 
 export default handler;
