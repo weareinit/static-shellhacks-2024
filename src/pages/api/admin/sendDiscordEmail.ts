@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { PrismaClient, application_status_enums } from "@prisma/client";
-import { isAdmin } from "src/util/auth0Utils";
+import { isAdmin, isGUI } from "src/util/auth0Utils";
 import { sendDiscordEmailSchema, sendReminderEmailSchema } from "@/schemas/applicantSchemas";
 import { sendAcceptanceEmails, sendConfirmationEmail, sendDiscordVerificationEmail } from "@/util/aws";
 import { prisma } from "@/util/ApiUtils";
@@ -11,9 +11,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const admin = await isAdmin(req, res);
+  const gui = await isGUI(req, res);
 
-  if (!admin) {
+  if (!gui) {
     return res.status(403).json({ error: "Forbidden" });
   }
 
@@ -54,4 +54,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200);
 };
 
-export default withApiAuthRequired(handler);
+export default handler;

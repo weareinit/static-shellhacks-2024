@@ -2,9 +2,14 @@ import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import { prisma } from "@/util/ApiUtils";
+import { isGUI } from "@/util/auth0Utils";
 
 const bodySchema = z.object({ email: z.string().nonempty(), verification_code: z.string().nonempty(), discord_id: z.string().nonempty() });
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (!isGUI(req, res)) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method not allowed" });
   }
@@ -45,4 +50,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.status(400).json({ message: "Verification codes do not match" });
 }
 
-export default withApiAuthRequired(handler);
+export default handler;
