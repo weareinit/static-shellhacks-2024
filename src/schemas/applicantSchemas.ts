@@ -38,7 +38,6 @@ export const applicantUpdateSchema = z.object({
   gender: z.string().nonempty().optional(),
   pronouns: z.string().nonempty().optional(),
   ethnicity: z.string().nonempty().optional(),
-  is_discord_verified: z.boolean().default(false),
 });
 
 export const applicantStatusChangeSchema = z.object({
