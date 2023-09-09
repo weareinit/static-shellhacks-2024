@@ -26,32 +26,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const applicant = await prisma.hacker_Applications.findFirst({
     where: { email: bodyData?.email },
-    select: { email: true, discord_id: true },
+    select: { email: true, discord_id: true, application_status: true },
   });
 
   if (applicant === null) {
     return res.status(404).json({ error: "No applicant found with passed in email" });
+  } else if (applicant.application_status !== application_status_enums.confirmed) {
+    return res.status(400).json({ message: "You must be a confirmed hacker to link your discord and ShellHacks account", ...applicant });
   }
 
   if (applicant?.discord_id === bodyData?.discord_id) {
-    return res.status(200).json({ discord_id: applicant?.discord_id });
+    return res.status(200).json({ ...applicant });
   } else if (applicant?.discord_id) {
-    return res.status(400).json({ message: "User already has a discord id verified which is not the same as passed" });
+    return res.status(400).json({ message: "User already has a discord id verified which is not the same as passed", ...applicant });
   }
 
   const hackerCode = Math.floor(Math.random() * 16777215)
     .toString(16)
-    .padStart(6, "0");
+    .padStart(4, "0");
 
   await prisma.hacker_Applications.update({
     where: {
       email: bodyData?.email as string,
     },
-    data: { discord_verification_code: hackerCode },
+    data: { discord_verification_code: hackerCode.toUpperCase() },
   });
 
   await sendDiscordVerificationEmail(bodyData.email, hackerCode);
-  return res.status(200).json({});
+  return res.status(200).json({ ...applicant });
 };
 
 export default handler;

@@ -31,7 +31,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(404).json({ message: "Could not find applicant with provided email" });
   }
 
-  if (applicant?.discord_verification_code === bodyData?.verification_code) {
+  if (applicant?.discord_verification_code?.toLowerCase() === bodyData?.verification_code.toLowerCase()) {
     await prisma.hacker_Applications.update({
       where: {
         email: bodyData?.email,
