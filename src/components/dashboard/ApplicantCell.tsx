@@ -102,7 +102,7 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
                 />
               )}
 
-              {data.application_status! !== "confirmed" && (
+              {data.application_status! !== "waitlisted" && (
                 <PixelButton className=" bg-red-500 hover:bg-red-600 hover:underline w-full" onClick={() => setAppStatus("waitlisted")} text="Waitlist" isLoading={handleAppStatusChange.isLoading} />
               )}
 
