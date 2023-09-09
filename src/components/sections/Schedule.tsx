@@ -34,7 +34,7 @@ function Schedule() {
           weekDay="Friday"
           scheduleItems={["3 PM : Check In", "6 PM : Dinner", "7 PM : Opening Ceremony", "9 PM : Sponsor Fair", "11 PM : Hacking Starts", "11 PM : Team Building", "11 PM : Snack"]}
         />
-        <ScheduleCard weekDay="Saturday" scheduleItems={["8 AM : Breakfast", "12 PM : Lunch", "6 PM : Dinner", "11 PM : Snack"]} />
+        <ScheduleCard weekDay="Saturday" scheduleItems={["12 PM : Brunch", "6 PM : Dinner", "11 PM : Snack"]} />
         <ScheduleCard
           className=" justify-self-end"
           weekDay="Sunday"
