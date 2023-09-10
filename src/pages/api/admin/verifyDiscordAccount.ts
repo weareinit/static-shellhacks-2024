@@ -11,43 +11,51 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method !== "POST") {
-    res.status(405).json({ message: "Method not allowed" });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
   let bodyData;
   try {
     bodyData = bodySchema.parse(req.body);
   } catch {
-    res.status(400).json({ message: "Could not parse required verification code and discord id for route" });
+    return res.status(400).json({ message: "Could not parse required verification code and discord id for route" });
   }
 
-  let applicant = await prisma.hacker_Applications.findFirst({
+  const applicant = await prisma.hacker_Applications.findFirst({
     where: {
-      email: bodyData?.email,
+      email: {
+        equals: bodyData.email,
+        mode: "insensitive",
+      },
     },
+    select: { email: true, discord_id: true, application_status: true, first_name: true, last_name: true, discord_verification_code: true },
   });
 
   if (applicant === null) {
-    res.status(404).json({ message: "Could not find applicant with provided email" });
+    return res.status(404).json({ message: "Could not find applicant with provided email" });
   }
 
-  if (applicant?.discord_verification_code?.toLowerCase() === bodyData?.verification_code.toLowerCase()) {
-    await prisma.hacker_Applications.update({
+  if (applicant.discord_verification_code?.toLowerCase() === bodyData.verification_code.toLowerCase()) {
+    await prisma.hacker_Applications.updateMany({
       where: {
-        email: bodyData?.email,
+        email: {
+          equals: bodyData.email,
+          mode: "insensitive",
+        },
       },
       data: {
-        discord_id: bodyData?.discord_id,
+        discord_id: bodyData.discord_id,
       },
     });
-    res.status(200).json({
-      discord_id: bodyData?.discord_id,
-      first_name: applicant?.first_name,
-      last_name: applicant?.last_name,
+
+    return res.status(200).json({
+      discord_id: bodyData.discord_id,
+      first_name: applicant.first_name,
+      last_name: applicant.last_name,
     });
   }
 
-  res.status(400).json({ message: "Verification codes do not match" });
+  return res.status(400).json({ message: "Verification codes do not match" });
 }
 
 export default handler;

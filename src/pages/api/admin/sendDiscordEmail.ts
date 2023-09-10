@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiAuthRequired } from "@auth0/nextjs-auth0";
 import { PrismaClient, application_status_enums } from "@prisma/client";
-import { isAdmin, isGUI } from "src/util/auth0Utils";
-import { sendDiscordEmailSchema, sendReminderEmailSchema } from "@/schemas/applicantSchemas";
-import { sendAcceptanceEmails, sendConfirmationEmail, sendDiscordVerificationEmail } from "@/util/aws";
+import { isGUI } from "src/util/auth0Utils";
+import { sendDiscordEmailSchema } from "@/schemas/applicantSchemas";
+import { sendDiscordVerificationEmail } from "@/util/aws";
 import { prisma } from "@/util/ApiUtils";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,10 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const gui = await isGUI(req, res);
-
-  if (!gui) {
-    return res.status(403).json({ error: "Forbidden" });
+  if (!isGUI(req, res)) {
+    return res.status(403).json({ message: "Forbidden" });
   }
 
   let bodyData;
@@ -25,13 +22,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const applicant = await prisma.hacker_Applications.findFirst({
-    where: { email: bodyData?.email },
+    where: {
+      email: {
+        equals: bodyData.email,
+        mode: "insensitive",
+      },
+    },
     select: { email: true, discord_id: true, application_status: true },
   });
 
   if (applicant === null) {
     return res.status(404).json({ error: "No applicant found with passed in email" });
-  } else if (applicant.application_status !== application_status_enums.confirmed) {
+  } else if (applicant.application_status !== application_status_enums.confirmed || application_status_enums.checked_in) {
     return res.status(400).json({ message: "You must be a confirmed hacker to link your discord and ShellHacks account", ...applicant });
   }
 
