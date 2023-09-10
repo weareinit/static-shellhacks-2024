@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       email: bodyData?.email as string,
     },
-    data: { discord_verification_code: hackerCode.toUpperCase() },
+    data: { discord_verification_code: hackerCode },
   });
 
   await sendDiscordVerificationEmail(bodyData.email, hackerCode);
