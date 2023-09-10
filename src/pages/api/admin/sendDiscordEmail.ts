@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (applicant === null) {
     return res.status(404).json({ error: "No applicant found with passed in email" });
-  } else if (applicant.application_status !== application_status_enums.confirmed || application_status_enums.checked_in) {
+  } else if (applicant.application_status !== application_status_enums.confirmed && applicant.application_status !== application_status_enums.checked_in) {
     return res.status(400).json({ message: "You must be a confirmed hacker to link your discord and ShellHacks account", ...applicant });
   }
 
