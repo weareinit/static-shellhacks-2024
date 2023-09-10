@@ -4,6 +4,7 @@ import { isGUI } from "src/util/auth0Utils";
 import { sendDiscordEmailSchema } from "@/schemas/applicantSchemas";
 import { sendDiscordVerificationEmail } from "@/util/aws";
 import { prisma } from "@/util/ApiUtils";
+import crypto from "crypto";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
@@ -43,9 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: "User already has a discord id verified which is not the same as passed", ...applicant });
   }
 
-  const hackerCode = Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(4, "0");
+  const hackerCode = crypto.randomBytes(2).toString("hex").toUpperCase();
 
   await prisma.hacker_Applications.update({
     where: {
