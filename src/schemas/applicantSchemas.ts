@@ -33,6 +33,8 @@ export const applicantUpdateSchema = z.object({
   level_of_study: z.string().optional(),
   discord: z.string().nullable().optional(),
   github: z.string().url().nullable().optional(),
+  discord_id: z.string().nullable().optional(),
+  discord_verification_code: z.string().nullable().optional(),
   linkedin: z.string().url().nullable().optional(),
   country: z.string().nonempty().optional(),
   gender: z.string().nonempty().optional(),
