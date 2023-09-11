@@ -3,8 +3,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import { prisma } from "@/util/ApiUtils";
 import { isGUI } from "@/util/auth0Utils";
+import { sendDiscordLinkedSuccessEmail } from "@/util/aws";
 
-const bodySchema = z.object({ email: z.string().nonempty(), verification_code: z.string().nonempty(), discord_id: z.string().nonempty() });
+const bodySchema = z.object({ email: z.string().nonempty(), verification_code: z.string().nonempty(), discord_id: z.string().nonempty(), discord_username: z.string().nonempty() });
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!isGUI(req, res)) {
     return res.status(403).json({ message: "Forbidden" });
@@ -45,8 +46,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       data: {
         discord_id: bodyData.discord_id,
+        discord: bodyData.discord_username,
       },
     });
+
+    await sendDiscordLinkedSuccessEmail(bodyData.email, bodyData.discord_username, applicant.first_name);
 
     return res.status(200).json({
       discord_id: bodyData.discord_id,
