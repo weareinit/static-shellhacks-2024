@@ -48,10 +48,10 @@ function Content() {
       <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
       <Welcome />
       <AboutUs />
-      <BuildCallout/>
-      <NetworkCallout/>
+      <BuildCallout />
+      <NetworkCallout />
       <Workshops />
-      <VideoCallout/>
+      <VideoCallout />
       <FAQ />
       {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
@@ -60,7 +60,7 @@ function Content() {
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Showcase> */}
-      <Schedule />
+      {/* <Schedule />s */}
       <Sponsors />
       <CommunityPartners />
       {showRegistration && (

@@ -14,7 +14,7 @@ function Navbar() {
     { id: "about", label: "ABOUT US" },
     { id: "workshops", label: "WORKSHOPS" },
     { id: "faq", label: "FAQS" },
-    { id: "schedule", label: "SCHEDULE" },
+    // { id: "schedule", label: "SCHEDULE" },
     { id: "sponsors", label: "SPONSORS" },
   ];
 

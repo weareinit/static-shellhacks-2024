@@ -52,6 +52,10 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
     setIsEditing((prev) => !prev);
   };
 
+  const toggleResetDiscordVerification = async () => {
+    await applicationUpdateMutation.mutateAsync({ ...data, discord_id: null, discord_verification_code: null });
+  };
+
   return (
     <div className="bg-white p-3 my-2 rounded-pixel h-fit w-full relative">
       <h3 onClick={toggleItem} className="font-pixel font-bold text-lg decoration-blue hover:cursor-pointer grid grid-cols-9">
@@ -86,10 +90,19 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
 
               <PixelButton
                 className={`${isEditing || applicationUpdateMutation.isLoading ? "bg-fuchsia-400 hover:bg-fuchsia-500" : "bg-teal-800 hover:bg-teal-900"} hover:underline w-full`}
-                isLoading={applicationUpdateMutation.isLoading}
+                isLoading={applicationUpdateMutation.isLoading && isEditing}
                 onClick={toggleEditing}
                 text={isEditing ? "Save Changes" : "Edit Data"}
               />
+
+              {data.discord_id && (
+                <PixelButton
+                  className="bg-violet-800 hover:bg-violet-700 hover:underline w-full"
+                  isLoading={applicationUpdateMutation.isLoading && !isEditing}
+                  onClick={toggleResetDiscordVerification}
+                  text="Reset Discord Verification"
+                />
+              )}
 
               <div className="my-2" />
 
@@ -102,7 +115,7 @@ export default function ApplicantCell({ data, handleAppStatusChange, handleSelec
                 />
               )}
 
-              {["registered", "in_wave", "accepted"].includes(data.application_status!) && (
+              {data.application_status! !== "waitlisted" && (
                 <PixelButton className=" bg-red-500 hover:bg-red-600 hover:underline w-full" onClick={() => setAppStatus("waitlisted")} text="Waitlist" isLoading={handleAppStatusChange.isLoading} />
               )}
 

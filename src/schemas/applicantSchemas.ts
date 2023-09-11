@@ -13,6 +13,7 @@ export const application_statuses = [
 export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
 export const sendReminderEmailSchema = z.enum([application_status_enums.accepted, application_status_enums.confirmed]);
+export const sendDiscordEmailSchema = z.object({ email: z.string().nonempty(), discord_id: z.string().nonempty() });
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
 export const applicantUpdateSchema = z.object({
@@ -32,6 +33,8 @@ export const applicantUpdateSchema = z.object({
   level_of_study: z.string().optional(),
   discord: z.string().nullable().optional(),
   github: z.string().url().nullable().optional(),
+  discord_id: z.string().nullable().optional(),
+  discord_verification_code: z.string().nullable().optional(),
   linkedin: z.string().url().nullable().optional(),
   country: z.string().nonempty().optional(),
   gender: z.string().nonempty().optional(),

@@ -41,6 +41,7 @@ export default function ApplicantCell({ data, isEditing, handleEdit }: Applicant
           <ApplicantProperty propertyName="Phone Number" editing={isEditing} handleEdit={(payload: string) => handleEdit("phone_number", payload)} propertyValue={data.phone_number} />
 
           <ApplicantProperty propertyName="Discord" editing={isEditing} handleEdit={(payload: string) => handleEdit("discord", payload)} propertyValue={data.discord} />
+          {data.discord_id && <ApplicantProperty propertyName="Discord ID" editing={false} propertyValue={data.discord_id} />}
           <ApplicantProperty propertyName="Github" isLink editing={isEditing} handleEdit={(payload: string) => handleEdit("github", payload)} propertyValue={data.github} />
           <ApplicantProperty propertyName="LinkedIn" isLink editing={isEditing} handleEdit={(payload: string) => handleEdit("linkedin", payload)} propertyValue={data.linkedin} />
         </div>
