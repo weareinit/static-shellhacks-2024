@@ -124,14 +124,14 @@ export const sendDiscordVerificationEmail = async (toEmail: string, hackerCode: 
   await emailClient.send(command);
 };
 
-export const sendDiscordLinkedSuccessEmail = async (toEmail: string, discordAccount: string, firstName: string) => {
+export const sendDiscordLinkedSuccessEmail = async (toEmail: string, discordUsername: string, firstName: string) => {
   const params: SendTemplatedEmailCommandInput = {
     Destination: {
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
     Template: "discordLinkedSuccessTemplate18a8270e068",
-    TemplateData: `{ \"discord_account\":\"${discordAccount}\", \"first_name\":\"${firstName}\" }`,
+    TemplateData: `{ \"discord_username\":\"${discordUsername}\", \"first_name\":\"${firstName}\" }`,
   };
 
   const command = new SendTemplatedEmailCommand(params);
