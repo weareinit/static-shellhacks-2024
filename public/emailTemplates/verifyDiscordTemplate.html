@@ -1,66 +1,40 @@
 <!--SUBJECT: Link Your Discord and ShellHacks Account-->
 <!-- TEMPLATE DATA: discord_code -->
-<div class="container" style="max-width: 600px; margin: 0 auto; padding: 20px">
-  <div
-    class="card"
-    style="
-      background-image: url('https://shellhacks.net/assets/decorations/sand_tile.png');
-      background-repeat: repeat;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      overflow: hidden;
-    "
-  >
-    <div>
-      <div
-        class="banner"
-        style="
-          background-image: url('https://shellhacks.net/assets/decorations/water.gif');
-          background-size: 65px;
-          background-repeat: repeat;
-          height: 200px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-        "
-      >
-        <div>
+<html>
+<div id="wrapper">
+<img src="https://shellhacks.net/assets/decorations/turtle.svg" style="width: 120px; height: 120px; margin: 25px;" />
           <h1
             style="
               font-size: 48px;
               font-weight: bold;
-              font-family: Arial, sans-serif;
-              color: white;
-              margin: 0;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              text-shadow: 2px 2px #333;
-              padding: 10px;
-              text-align: center;
+              font-family: Arial, Helvetica, sans-serif;
+              color: #333;
+              margin: 10;
             "
           >
             Verify Your Discord!
           </h1>
-        </div>
-      </div>
-      <div class="content" style="padding: 20px; text-align: center">
-        <div>
-          <h2 style="font-size: 24px; margin: 0; color: #333; font-weight: normal; font-family: Arial, sans-serif; text-align: center; padding: 10px">
-            Here's your confirmation code for discord: <br />{{discord_code}}
+      <div style="padding: 20px">
+          <h2 style="font-size: 24px; margin: 0; color: #333; font-weight: normal;">
+            Here's your confirmation code for discord: <br /><b>{{discord_code}}</b>
           </h2>
-          <p style="font-size: 16px; margin: 0; padding-top: 20px; padding-bottom: 20px; color: #666; font-family: Arial, sans-serif; text-align: left; text-align: center">
-            <span style="font-weight: bold"> Do not pass around this secret code as this is unique to your account! </span> Only give this code to our GUI Bot on Discord, which will link your Discord
+          <p style="font-size: 16px; margin-top: 20px;">
+            <b> Do not pass around this secret code as this is unique to your account! </b> Only give this code to our GUI Bot on Discord, which will link your Discord
             and ShellHacks accounts. Happy Hacking!
           </p>
-        </div>
-        <div class="content" style="padding: 20px; text-align: center">
-          <p style="font-size: 16px; margin: 0; margin-bottom: 20px; color: #666; font-family: Arial, sans-serif">With ❤️️, ShellHacks Organizing Team</p>
-        </div>
+
+          <p style="font-size: 16px; margin-top:40px;">With ❤️️, ShellHacks Organizing Team</p>
       </div>
-    </div>
-  </div>
 </div>
+<style>
+  #wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: #666;
+    text-align: center;
+  }
+</style>
+</html>

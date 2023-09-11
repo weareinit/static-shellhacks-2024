@@ -116,7 +116,7 @@ export const sendDiscordVerificationEmail = async (toEmail: string, hackerCode: 
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "verifyDiscordTemplate18a77a3b597",
+    Template: "verifyDiscordTemplate18a825cab5d",
     TemplateData: `{ \"discord_code\":\"${hackerCode}\" }`,
   };
 
