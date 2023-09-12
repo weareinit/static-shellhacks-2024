@@ -46,9 +46,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const hackerCode = crypto.randomBytes(2).toString("hex").toUpperCase();
 
-  await prisma.hacker_Applications.update({
+  await prisma.hacker_Applications.updateMany({
     where: {
-      email: bodyData?.email as string,
+      email: {
+        equals: bodyData.email,
+        mode: "insensitive",
+      },
     },
     data: { discord_verification_code: hackerCode },
   });
