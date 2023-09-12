@@ -8,7 +8,7 @@ import crypto from "crypto";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: `Method not allowed: ${req.method}, request parameters: ${req}`, logs: req });
+    return res.status(405).json({ message: `Invalid request type; all requests must be POST. Logs: ${req.rawHeaders}\n${req.body}\n${req.method}` });
   }
 
   if (!isGUI(req, res)) {
