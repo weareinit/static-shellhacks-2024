@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         mode: "insensitive",
       },
     },
-    select: { email: true, discord_id: true, application_status: true },
+    select: { email: true, discord_id: true, application_status: true, first_name: true, last_name: true },
   });
 
   if (applicant === null) {
