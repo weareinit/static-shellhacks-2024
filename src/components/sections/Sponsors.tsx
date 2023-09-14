@@ -38,6 +38,7 @@ function Sponsors() {
           <SponsorImage src="/assets/sponsors/Assurant.svg" alt="Assurant Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Addigy.svg" alt="Addigy Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Lexis_Nexis.svg" alt="Lexis Nexis Logo" className="md:col-span-4" />
+          <SponsorImage src="/assets/sponsors/Ford.svg" alt="Ford Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Cutting_Edge_AI.svg" alt="Cutting Edge AI Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Elfen_Software.svg" alt="Elfen Software Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/FIU_ELT.svg" alt="FIU ELT Logo" className="md:col-span-4" />
