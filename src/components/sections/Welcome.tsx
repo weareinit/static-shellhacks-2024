@@ -39,37 +39,22 @@ function Welcome() {
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Biscayne Bay Campus | Miami, Florida</h3>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">September 15-17, 2023</h3>
       </div>
-      <nav className="grid grid-cols-1 grid-rows-3 justify-center items-center my-1">
-        {finishedRegistration ? (
-          <h2 className=" text-pink font-bold text-center font-pixel text-lg m-2 col-span-full">
-            Thank you for registering!
-            <br />
-            Check your email for next steps...
-          </h2>
-        ) : (
-          <div className="w-full col-span-full flex justify-center">
-            <Button
-              className="col-span-full w-full bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]"
-              onClick={(e) => {
-                e.preventDefault();
-                user ? router.push("/dashboard") : setShowRegistration(true);
-              }}
-            >
-              <h2 className="font-console text-xl text-center hover:scale-110 transition ease-in-out">{user ? "Hacker Dashboard" : "Register Now!"}</h2>
-            </Button>
-          </div>
-        )}
-
-        <div className=" row-start-2 col-span-full space-x-2 mt-1 grid grid-cols-2">
+      <nav className="grid grid-cols-2 justify-center items-center my-1 place-content-start gap-y-3">
+        <div className="w-full col-span-full flex justify-center">
+          <Button
+            className="col-span-full w-[40vw] max-w-[500px] min-w-[300px] bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px] my-1"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/dashboard");
+            }}
+          >
+            <h2 className="font-console text-xl text-center hover:scale-110 transition ease-in-out">{"Hacker Dashboard"}</h2>
+          </Button>
+        </div>
+        <div className="w-full col-span-full flex justify-center">
           <Link href={user ? "/api/auth/logout" : "/dashboard"}>
-            <Button className="bg-dark_brown text-tan col-span-1 min-w-[150px] min-h-[40px] w-[20vw] max-w-[250px] max-h-[50px] h-[10vw] drop-shadow-light_brown">
+            <Button className="bg-dark_brown text-tan min-w-[300px] min-h-[40px] w-[40vw] max-w-[500px] max-h-[50px] h-[10vw] drop-shadow-light_brown">
               <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">{user ? "LOG OUT" : "LOG IN"}</h2>
-            </Button>
-          </Link>
-
-          <Link href="https://discord.com/invite/init">
-            <Button className="bg-dark_brown text-tan col-span-1 min-w-[150px] min-h-[40px] w-[20vw] max-w-[250px] max-h-[50px] h-[10vw] drop-shadow-light_brown">
-              <h2 className="font-pixel text-md py-1 hover:scale-110 transition ease-in-out">JOIN DISCORD</h2>
             </Button>
           </Link>
         </div>
