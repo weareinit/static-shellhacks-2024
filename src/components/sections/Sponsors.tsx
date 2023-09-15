@@ -50,6 +50,7 @@ function Sponsors() {
           <SponsorImage src="/assets/sponsors/Accenture.svg" alt="Accenture Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Wells_Fargo.svg" alt="Wells Fargo Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/Service_Now.svg" alt="Service Now Logo" className="md:col-span-4" />
+          <SponsorImage src="/assets/sponsors/Miami_Tech_Works.svg" alt="Miami Tech Works Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/FIU_SGA.svg" alt="FIU SGA Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/GDG.svg" alt="Google Developer Student Club Logo" className="md:col-span-4" />
           <SponsorImage src="/assets/sponsors/CodePath.svg" alt="CodePath Logo" className="md:col-span-4" />

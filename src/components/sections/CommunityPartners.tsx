@@ -22,6 +22,7 @@ function CommunityPartners() {
         <SponsorImage src="/assets/sponsors/Acendi.svg" alt="Acendi Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/WiCS.svg" alt="WiCS Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/GDSCs.svg" alt="GDSCs Logo" className="md:col-span-4" />
+        <SponsorImage src="/assets/sponsors/SHPE.svg" alt="SHPE Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/KnightHacks.svg" alt="KnightHacks Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/UCF_IT.svg" alt="UCF IT Logo" className="md:col-span-4" />
         <SponsorImage src="/assets/sponsors/Design__Code.svg" alt="Design Code Logo" className="md:col-span-4" />
