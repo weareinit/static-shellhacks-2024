@@ -34,7 +34,11 @@ function Welcome() {
       <div className="my-4 flex flex-col justify-center items-center">
         <h2 className="m-2 text-crate_brown text-center font-console font-bold lg:text-3xl text-2xl">{"Florida's Largest Hackathon"}</h2>
         <MicrosoftBoard />
-        <h2 className="my-4 text-deep_blue">{"ShellHacks 2023 is Over! Thanks for Hacking with Us :)"}</h2>
+        <h2 className="my-4 text-deep_blue break-normal text-center">
+          ShellHacks 2023 is Over! <br className="md:hidden" />
+          Thanks for Hacking with Us!
+          {" :)"}
+        </h2>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Florida International University</h3>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">Biscayne Bay Campus | Miami, Florida</h3>
         <h3 className="m-2 text-crate_brown text-center font-pixel md:text-lg">September 15-17, 2023</h3>
