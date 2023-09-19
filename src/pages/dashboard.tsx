@@ -20,6 +20,7 @@ import { APPLICATION_STATUS_DETAILS_MAPPING } from "@/constants/applicationConst
 import { useApplicationQuery } from "@/hooks/ApplicationQuery";
 import Link from "next/link";
 import SocialButtons from "@/components/sections/SocialButtons";
+import Button from "@/components/input/Button";
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -178,4 +179,19 @@ const Dashboard = () => {
   );
 };
 
-export default withPageAuthRequired(Dashboard);
+function DashboardRemoved() {
+  return (
+    <main className="bg-sand min-h-screen h-screen p-2 md:p-8 flex justify-center items-center">
+      <div className="w-[40vw] max-w-[600px] min-w-[200px] p-5 bg-white rounded-pixel flex justify-center items-center flex-col space-y-3">
+        <h1 className="font-console text-xl text-center ">Registration Has Ended, Thanks for Hacking!</h1>
+        <Link href="/">
+          <Button className="col-span-full w-[40vw] max-w-[500px] min-w-[300px] bg-deep_blue hover:bg-pink text-white text-center flex items-center justify-center drop-shadow-teal hover:drop-shadow-pink min-h-[50px] h-[10vw] max-h-[60px]">
+            Back to Dashboard
+          </Button>
+        </Link>
+      </div>
+    </main>
+  );
+}
+
+export default withPageAuthRequired(DashboardRemoved);
