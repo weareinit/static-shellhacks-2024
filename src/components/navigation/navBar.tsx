@@ -10,7 +10,6 @@ function Navbar() {
   };
 
   const menuOptions = [
-    { id: "welcome", label: "REGISTER" },
     { id: "about", label: "ABOUT US" },
     { id: "workshops", label: "WORKSHOPS" },
     { id: "faq", label: "FAQS" },
@@ -25,11 +24,7 @@ function Navbar() {
       </div>
       <div className="pl-5 text-md md:text-xl flex-grow flex justify-center">
         {menuOptions.map((option) => (
-          <button
-            key={option.id}
-            className="text-crate_brown font-pixel hover:text-gray-800 mx-4 focus:outline-none"
-            onClick={() => scrollToSection(option.id)}
-          >
+          <button key={option.id} className="text-crate_brown font-pixel hover:text-gray-800 mx-4 focus:outline-none" onClick={() => scrollToSection(option.id)}>
             {option.label}
           </button>
         ))}
