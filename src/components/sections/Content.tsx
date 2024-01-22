@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";

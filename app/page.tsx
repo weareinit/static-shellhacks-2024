@@ -8,13 +8,37 @@ import Content from "@/components/sections/Content";
 import MLHBanner from "@/components/decorations/MLHBanner";
 import WelcomeDecorations from "@/components/decorations/WelcomeDecorations";
 import AboutUsDecorations from "@/components/decorations/AboutUsDecorations";
+import { Metadata } from "next";
 
-interface HomeProps {
-  schools: string[];
-  countries: string[];
+export const metadata: Metadata = {
+  // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+    title: "",
+    description: "",
 }
 
-export default function Home({ schools, countries }: HomeProps) {
+const getSchoolData = async () => {
+  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+
+  const schools = schoolData
+    .map((school) => {
+      return school[0];
+    })
+    .splice(1);
+
+  const countryData: CountryDataType[] = await parseCSV<CountryDataType>("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv", true);
+
+  const countries = countryData.map((country) => {
+    return country.name;
+  });
+
+  return {
+      schools,
+      countries,
+  };
+}
+
+export default async function Home() {
+    const { schools, countries } = await getSchoolData()
   return (
     <div className="bg-sand min-h-screen min-w-screen grid grid-cols-1 md:grid-cols-12 overflow-x-hidden">
       <div className="flex flex-col col-span-10 col-start-2 row-start-1 col-end-12">
@@ -44,27 +68,4 @@ interface CountryDataType {
   "region-code": string;
   "sub-region-code": string;
   "intermediate-region-code": string;
-}
-
-export async function getStaticProps() {
-  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
-
-  const schools = schoolData
-    .map((school) => {
-      return school[0];
-    })
-    .splice(1);
-
-  const countryData: CountryDataType[] = await parseCSV<CountryDataType>("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv", true);
-
-  const countries = countryData.map((country) => {
-    return country.name;
-  });
-
-  return {
-    props: {
-      schools,
-      countries,
-    },
-  };
 }
