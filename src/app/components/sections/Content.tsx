@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";
@@ -18,7 +18,8 @@ import Showcase from "./Showcase";
 import BlurBackdrop from "../decorations/BlurBackdrop";
 
 function Content() {
-  const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
+  const { showRegistration, setShowRegistration, finishedRegistration } =
+    useShowRegistrationContext();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function Content() {
   }, [showRegistration]);
 
   return (
-    <main className="flex flex-col min-h-screen items-center md:col-span-8 md:col-start-3 row-start-1 col-span-1 z-10">
+    <main className="z-10 col-span-1 row-start-1 flex min-h-screen flex-col items-center md:col-span-8 md:col-start-3">
       <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
       <Welcome />
       <AboutUs />
@@ -56,14 +57,14 @@ function Content() {
       <Workshops />
       <VideoCallout />
       <FAQ />
-      <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
+      {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
           nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
-      </Showcase>
-      <Schedule />
+      </Showcase> */}
+      {/* <Schedule /> */}
       <Sponsors />
       <CommunityPartners />
       {showRegistration && (
