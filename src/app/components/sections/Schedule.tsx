@@ -9,7 +9,7 @@ function ScheduleReminder() {
   );
 }
 
-function ScheduleCard({ weekDay, scheduleItems, className }: { weekDay: String; scheduleItems: String[]; className?: String }) {
+function ScheduleCard({ weekDay, scheduleItems, className }: { weekDay: string; scheduleItems: string[]; className?: string }) {
   return (
     <div className={`flex flex-col bg-caramel_brown w-[200px] h-full lg:min-w-[250px] ${className}`}>
       <h2 className="font-pixel py-1 text-lg text-center w-full bg-deep_blue text-white">{weekDay}</h2>

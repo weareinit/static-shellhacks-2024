@@ -2,9 +2,18 @@ import React, { useState } from "react";
 
 import { Formik, Form, FormikProps } from "formik";
 
-import { useFormOptionContext } from "@/hooks/FormOptionContext";
-import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
-import { ethnicityOptions, genderOptions, levelsOfStudy, majorOptions, pronounOptions, ApplicantValues, formValidation, gradYearOptions } from "@/util/RegistrationData";
+import { useFormOptionContext } from "@/app//hooks/FormOptionContext";
+import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
+import {
+  ethnicityOptions,
+  genderOptions,
+  levelsOfStudy,
+  majorOptions,
+  pronounOptions,
+  ApplicantValues,
+  formValidation,
+  gradYearOptions,
+} from "@/app/util/RegistrationData";
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
@@ -18,7 +27,8 @@ function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { schools, countries } = useFormOptionContext();
-  const { setFinishedRegistration, setShowRegistration } = useShowRegistrationContext();
+  const { setFinishedRegistration, setShowRegistration } =
+    useShowRegistrationContext();
 
   // async function getResumeLink(recaptchaCode: string) {
   //   const response = await fetch(`/api/resumes/`, {
@@ -53,7 +63,9 @@ function RegisterForm() {
   }
 
   async function registerApplicant(body: Object) {
-    const filteredBody = Object.fromEntries(Object.entries(body).filter(([_, value]) => value !== ""));
+    const filteredBody = Object.fromEntries(
+      Object.entries(body).filter(([_, value]) => value !== ""),
+    );
 
     const response = await fetch(`/api/applications`, {
       headers: {
@@ -79,7 +91,8 @@ function RegisterForm() {
     setIsSubmitting(true);
 
     let { resume, fill_in_pronouns, ...body } = values;
-    body.pronouns = values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
+    body.pronouns =
+      values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
 
     try {
       // const { resumeId, url } = await getResumeLink(body.recaptcha);
@@ -132,7 +145,6 @@ function RegisterForm() {
           // agreed_sponsors: false, //required for us to send resumes to sponsors
           // agreed_mlh_conduct: false,
 
-
           agreed_terms: false,
           agreed_mlh_news: false,
 
@@ -142,39 +154,120 @@ function RegisterForm() {
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="flex flex-col my-2">
-            <TextInput label="First Name" name="first_name" type="text" isRequired />
-            <TextInput label="Last Name" name="last_name" type="text" isRequired />
-            <TextInput label="Age" name="age" type="number" min={18} max={114} isRequired />
-            <SearchInput label="School" name="school" options={schools} isRequired />
-            <SelectInput label="Major" name="major" options={majorOptions} isRequired />
+          <Form className="my-2 flex flex-col">
+            <TextInput
+              label="First Name"
+              name="first_name"
+              type="text"
+              isRequired
+            />
+            <TextInput
+              label="Last Name"
+              name="last_name"
+              type="text"
+              isRequired
+            />
+            <TextInput
+              label="Age"
+              name="age"
+              type="number"
+              min={18}
+              max={114}
+              isRequired
+            />
+            <SearchInput
+              label="School"
+              name="school"
+              options={schools}
+              isRequired
+            />
+            <SelectInput
+              label="Major"
+              name="major"
+              options={majorOptions}
+              isRequired
+            />
 
-            <SelectInput label="Graduation Year" name="grad_year" options={gradYearOptions} isRequired />
+            <SelectInput
+              label="Graduation Year"
+              name="grad_year"
+              options={gradYearOptions}
+              isRequired
+            />
 
-            <SelectInput label="Level of Study" name="level_of_study" options={levelsOfStudy} isRequired />
+            <SelectInput
+              label="Level of Study"
+              name="level_of_study"
+              options={levelsOfStudy}
+              isRequired
+            />
 
-            <SelectInput label="Country of Residency" name="country" options={countries} defaultValue="United States of America" isRequired />
+            <SelectInput
+              label="Country of Residency"
+              name="country"
+              options={countries}
+              defaultValue="United States of America"
+              isRequired
+            />
 
             <TextInput label="Email" name="email" type="email" isRequired />
-            <TextInput label="Phone Number" name="phone_number" type="tel" isRequired />
-            <FileInput label="Resume" name="resume" isRequired maxSize={1 * 1024 * 1024} />
+            <TextInput
+              label="Phone Number"
+              name="phone_number"
+              type="tel"
+              isRequired
+            />
+            <FileInput
+              label="Resume"
+              name="resume"
+              isRequired
+              maxSize={1 * 1024 * 1024}
+            />
             <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
-            <CheckboxInput label="Are you an international student (currently on a non-immigrant visa status in the US such as F-1, or others)?" name="is_international" />
+            <CheckboxInput
+              label="Are you an international student (currently on a non-immigrant visa status in the US such as F-1, or others)?"
+              name="is_international"
+            />
 
-            <SelectInput label="Gender" name="gender" options={genderOptions} isRequired />
-            <SelectInput options={pronounOptions} label="Pronouns" name="pronouns" isRequired />
-            {props.values.pronouns === "Other" && <TextInput label="Fill in your pronouns here" name="fill_in_pronouns" type="text" />}
-            <SelectInput label="Ethnicity" name="ethnicity" options={ethnicityOptions} isRequired />
+            <SelectInput
+              label="Gender"
+              name="gender"
+              options={genderOptions}
+              isRequired
+            />
+            <SelectInput
+              options={pronounOptions}
+              label="Pronouns"
+              name="pronouns"
+              isRequired
+            />
+            {props.values.pronouns === "Other" && (
+              <TextInput
+                label="Fill in your pronouns here"
+                name="fill_in_pronouns"
+                type="text"
+              />
+            )}
+            <SelectInput
+              label="Ethnicity"
+              name="ethnicity"
+              options={ethnicityOptions}
+              isRequired
+            />
 
             <div className="sm:my-3" />
 
             <CheckboxInput
               label={
                 <p>
-                  I have thoroughly read and agree to all policies outlined in the provided document. (
-                  <a target="_blank" href="https://docs.google.com/document/d/1QQCNz75v09EAiqE5Dg5UvubRxMYePIVZMajsA_I4GlM/edit">
+                  I have thoroughly read and agree to all policies outlined in
+                  the provided document. (
+                  <a
+                    target="_blank"
+                    href="https://docs.google.com/document/d/1QQCNz75v09EAiqE5Dg5UvubRxMYePIVZMajsA_I4GlM/edit"
+                  >
                     Terms and Conditions
                   </a>
                   )
@@ -249,7 +342,12 @@ function RegisterForm() {
             /> */}
 
             <CheckboxInput //required for us to send resumes to sponsors
-              label={<p>I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.</p>}
+              label={
+                <p>
+                  I authorize MLH to send me occasional emails about relevant
+                  events, career opportunities, and community announcements.
+                </p>
+              }
               name="agreed_mlh_news"
               hasInter
             />
@@ -268,16 +366,26 @@ function RegisterForm() {
               }}
             />
 
-            <Button type="submit" className="bg-pink text-white rounded-pixel-primary hover:underline mx-auto whitespace-nowrap w-56 flex justify-center items-center">
+            <Button
+              type="submit"
+              className="bg-pink rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap text-white hover:underline"
+            >
               Submit
               {isSubmitting && (
                 <span className="ml-2">
-                  <img src="/assets/decorations/shell.svg" className="animate-spin w-5" />
+                  <img
+                    src="/assets/decorations/shell.svg"
+                    className="w-5 animate-spin"
+                  />
                 </span>
               )}
             </Button>
 
-            {error != "" && <h2 className="text-lg text-center mt-1 font-pixel text-red-600">There was an error submitting, please try again later. {error}</h2>}
+            {error != "" && (
+              <h2 className="font-pixel mt-1 text-center text-lg text-red-600">
+                There was an error submitting, please try again later. {error}
+              </h2>
+            )}
           </Form>
         )}
       </Formik>

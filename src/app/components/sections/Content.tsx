@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
+import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
 import RegisterModal from "../registration/RegisterModal";
 import Welcome from "./Welcome";
 import AboutUs from "./AboutUs";
@@ -14,6 +14,8 @@ import CommunityPartners from "./CommunityPartners";
 import BuildCallout from "./BuildCallout";
 import NetworkCallout from "./NetworkCallout";
 import VideoCallout from "./VideoCallout";
+import Showcase from "./Showcase";
+import BlurBackdrop from "../decorations/BlurBackdrop";
 
 function Content() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
@@ -54,14 +56,14 @@ function Content() {
       <Workshops />
       <VideoCallout />
       <FAQ />
-      {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
+      <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
           nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
-      </Showcase> */}
-      {/* <Schedule />s */}
+      </Showcase>
+      <Schedule />
       <Sponsors />
       <CommunityPartners />
       {showRegistration && (

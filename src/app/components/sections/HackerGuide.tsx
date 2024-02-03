@@ -1,4 +1,4 @@
-import { useHackerGuideContext } from "@/hooks/ShowHackerGuideContext";
+import { useHackerGuideContext } from "@/app/hooks/ShowHackerGuideContext";
 import React from "react";
 import { createPortal } from "react-dom";
 

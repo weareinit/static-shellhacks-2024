@@ -5,7 +5,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 
 import Button from "../input/Button";
-import { useShowRegistrationContext } from "@/hooks/ShowRegistrationContext";
+import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
 import TitleLogo from "../decorations/TitleLogo";
 import SocialButtons from "./SocialButtons";
 
@@ -25,7 +25,7 @@ function MicrosoftBoard() {
 
 function Welcome() {
   const { showRegistration, setShowRegistration, finishedRegistration } = useShowRegistrationContext();
-  const { user } = useUser();
+  // const { user } = useUser();
   const router = useRouter();
 
   return (
