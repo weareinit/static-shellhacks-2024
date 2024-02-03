@@ -1,37 +1,67 @@
-import Link from "next/link";
+// import { parseCSV } from "@/util/parseCSV";
 
-export default function HomePage() {
+import { FormOptionContextProvider } from "@/app/hooks/FormOptionContext";
+import { ShowRegistrationProvider } from "@/app/hooks/ShowRegistrationContext";
+import Shoreline from "@/app/components/decorations/Shoreline";
+import GrassLine from "@/app/components/decorations/Grassline";
+import Content from "@/app/components/sections/Content";
+import MLHBanner from "@/app/components/decorations/MLHBanner";
+import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
+import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+  title: "",
+  description: "",
+};
+
+const getSchoolData = async () => {
+  // const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+  // const schools = schoolData
+  //   .map((school) => {
+  //     return school[0];
+  //   })
+  //   .splice(1);
+  // const countryData: CountryDataType[] = await parseCSV<CountryDataType>("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv", true);
+  // const countries = countryData.map((country) => {
+  //   return country.name;
+  // });
+  // return {
+  //     schools,
+  //     countries,
+  // };
+};
+
+export default async function Home() {
+  // const { schools, countries } = await getSchoolData()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
+    <div className="bg-sand min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden md:grid-cols-12">
+      <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
+        {/* <WelcomeDecorations />
+        <AboutUsDecorations /> */}
       </div>
-    </main>
+      <Shoreline />
+      <GrassLine />
+      <ShowRegistrationProvider>
+        {/* <FormOptionContextProvider schools={schools} countries={countries}> */}
+        <Content />
+        {/* </FormOptionContextProvider> */}
+      </ShowRegistrationProvider>
+    </div>
   );
+}
+
+interface CountryDataType {
+  name: string;
+  "alpha-2": string;
+  "alpha-3": string;
+  "country-code": string;
+  "iso_3166-2": string;
+  region: string;
+  "sub-region": string;
+  "intermediate-region": string;
+  "region-code": string;
+  "sub-region-code": string;
+  "intermediate-region-code": string;
 }
