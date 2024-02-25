@@ -38,7 +38,6 @@ export default async function Home() {
   return (
     <div className="bg-sand min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden md:grid-cols-12">
       <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
-        <WelcomeDecorations />
         <AboutUsDecorations />
       </div>
       <Shoreline />
