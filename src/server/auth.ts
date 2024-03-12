@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 import {
   getServerSession,
   type DefaultSession,
@@ -18,6 +19,8 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      discordID: string;
+      admin: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -36,13 +39,55 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      const access_token = account?.access_token;
+      const client = new PrismaClient()
+      const data = await fetch(
+        "https://discord.com/api/users/@me/guilds/245393533391863808/member",
+        {
+          headers: {
+            Authorization: "Bearer " + access_token,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const json = await data.json();
+      const roles = new Set(json.roles ?? [])
+
+      
+
+      //check if the user is admin
+      const ADMIN_ROLE = "1061212827785900103";
+      //modify the account field to include isAdmin, this will be passsed on to the session callback
+      account.is_admin = roles.has(ADMIN_ROLE)
+      console.log("GUILD INFO", json);
+      return true;
+    },
+    session: async ({ session, user, token }) => {
+
+      //get info on guilds from the discord API
+      // const data = await fetch(
+      //   "https://discord.com/api/users/@me/guilds/245393533391863808/member",
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       Authorization: `Bearer ${JSON.stringify(token)}`,
+      //     },
+      //   },
+      // );
+
+      // console.log("DATA FROM API", data);
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          discordID: user.id,
+          admin: session.user.admin
+        },
+      };
+    },
   },
   adapter: PrismaAdapter(db),
   providers: [
@@ -51,7 +96,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: "identity email",
+          scope: "identify guilds guilds.members.read",
         },
       },
     }),

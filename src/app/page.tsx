@@ -9,6 +9,8 @@ import MLHBanner from "@/app/components/decorations/MLHBanner";
 import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
 import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
+import { getServerAuthSession } from "@/server/auth";
+import Login from "./components/login";
 
 export const metadata: Metadata = {
   // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
@@ -17,35 +19,44 @@ export const metadata: Metadata = {
 };
 
 const getSchoolData = async () => {
-  const schoolData: string[] = await parseCSV<string>("https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv");
+  const schoolData: string[] = await parseCSV<string>(
+    "https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv",
+  );
   const schools = schoolData
     .map((school) => {
       return school[0];
     })
     .splice(1);
-  const countryData: CountryDataType[] = await parseCSV<CountryDataType>("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv", true);
+  const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
+    "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv",
+    true,
+  );
   const countries = countryData.map((country) => {
     return country.name;
   });
   return {
-      schools,
-      countries,
-  }
+    schools,
+    countries,
+  };
 };
 
 export default async function Home() {
-  const { schools, countries } = await getSchoolData()
+  const { schools, countries } = await getSchoolData();
+  const stuff = await getServerAuthSession();
+
   return (
-    <div className="bg-sand min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden md:grid-cols-12">
+    <div className="min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden bg-sand md:grid-cols-12">
       <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
         <WelcomeDecorations />
+        <div>user logged in as {JSON.stringify(stuff)}</div>
+        <Login />
         <AboutUsDecorations />
       </div>
       <Shoreline />
       <GrassLine />
       <ShowRegistrationProvider>
         <FormOptionContextProvider schools={schools} countries={countries}>
-        <Content />
+          <Content />
         </FormOptionContextProvider>
       </ShowRegistrationProvider>
     </div>
