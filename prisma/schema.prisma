@@ -21,7 +21,11 @@ model Events {
 }
 
 model Hacker_Applications {
+<<<<<<< HEAD
   userId                    String                   @id
+=======
+  userId                 String                      @id
+>>>>>>> 36b072a (auth conflict)
   event_id                  Int
   // BASIC INFO
   first_name                String                   @db.VarChar(50)
@@ -52,8 +56,12 @@ model Hacker_Applications {
   check_in_status           Boolean                  @default(false)
   created_at                DateTime                 @default(now())
   event                     Events                   @relation(fields: [event_id], references: [event_id])
+<<<<<<< HEAD
   user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+=======
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+>>>>>>> 36b072a (auth conflict)
   @@map("hacker_applications")
 }
 
@@ -95,6 +103,7 @@ model Session {
 }
 
 model User {
+<<<<<<< HEAD
   id                String               @id @default(cuid())
   name              String?
   email             String?              @unique
@@ -105,6 +114,18 @@ model User {
   shell_application Hacker_Applications?
   accounts          Account[]
   sessions          Session[]
+=======
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    discordID Int
+    admin Boolean
+    shell_application Hacker_Applications?
+    accounts      Account[]
+    sessions      Session[]
+>>>>>>> 36b072a (auth conflict)
 }
 
 model VerificationToken {

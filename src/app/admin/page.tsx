@@ -13,6 +13,8 @@ import { application_status_enums } from "@prisma/client";
 import { useSendReminderEmailMutation } from "@/app/hooks/SendReminderEmailMutation";
 import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
 import PixelButton from "@/app/components/misc/PixelButton";
+import { PrismaClient } from "@prisma/client";
+import { getServerAuthSession } from "@/server/auth";
 
 type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
 const DEFAULT_FILTERS: ApplicantFilterType = {
