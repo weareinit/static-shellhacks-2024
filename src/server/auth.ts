@@ -19,17 +19,17 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      discordID: string;
       admin: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    admin: boolean;
+    // ...other properties
+    // role: UserRole;
+  }
 }
 
 /**
@@ -39,7 +39,8 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    signIn: async ({ user, account, profile, email, credentials }) => {
+    signIn: async ({ user, account }) => {
+      // if (!account) return false;
       const access_token = account?.access_token;
       const data = await fetch(
         "https://discord.com/api/users/@me/guilds/245393533391863808/member",
@@ -51,37 +52,20 @@ export const authOptions: NextAuthOptions = {
         },
       );
       const json = await data.json();
-      const roles = new Set(json.roles ?? [])
+      const roles = new Set(json.roles ?? []);
 
-      //check if the user is admin
-      const ADMIN_ROLE = "1061212827785900103";
-      //modify the account field to include isAdmin, this will be passsed on to the session callback
-      account.is_admin = roles.has(ADMIN_ROLE)
-      console.log("GUILD INFO", json);
+      const ADMIN_ROLE = "1061212827785900103"; // fake btw
+
+      user.admin = roles.has(ADMIN_ROLE);
       return true;
     },
-    session: async ({ session, user, token }) => {
-
-      //get info on guilds from the discord API
-      // const data = await fetch(
-      //   "https://discord.com/api/users/@me/guilds/245393533391863808/member",
-      //   {
-      //     method: "GET",
-      //     headers: {
-      //       Authorization: `Bearer ${JSON.stringify(token)}`,
-      //     },
-      //   },
-      // );
-
-      // console.log("DATA FROM API", data);
-
+    session: async ({ session, user }) => {
       return {
         ...session,
         user: {
           ...session.user,
           id: user.id,
-          discordID: user.id,
-          admin: session.user.admin
+          admin: session.user.admin,
         },
       };
     },
