@@ -100,7 +100,7 @@ model User {
   email             String?              @unique
   emailVerified     DateTime?
   image             String?
-  //   discordID         String
+  discordId         String
   admin             Boolean?             @default(false)
   shell_application Hacker_Applications?
   accounts          Account[]
