@@ -19,8 +19,13 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+<<<<<<< HEAD
       admin: boolean;
       discordId: string;
+=======
+      discordID: string;
+      admin: boolean;
+>>>>>>> 36b072a (auth conflict)
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -41,9 +46,15 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
+<<<<<<< HEAD
     signIn: async ({ user, account }) => {
       // if (!account) return false;
       const access_token = account?.access_token;
+=======
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      const access_token = account?.access_token;
+      const client = new PrismaClient()
+>>>>>>> 36b072a (auth conflict)
       const data = await fetch(
         "https://discord.com/api/users/@me/guilds/245393533391863808/member",
         {
@@ -54,6 +65,7 @@ export const authOptions: NextAuthOptions = {
         },
       );
       const json = await data.json();
+<<<<<<< HEAD
       const roles = new Set(json.roles ?? []);
 
       const ADMIN_ROLE = "1061212827785900103"; // fake btw
@@ -66,13 +78,46 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     session: async ({ session, user }) => {
+=======
+      const roles = new Set(json.roles ?? [])
+
+      
+
+      //check if the user is admin
+      const ADMIN_ROLE = "1061212827785900103";
+      //modify the account field to include isAdmin, this will be passsed on to the session callback
+      account.is_admin = roles.has(ADMIN_ROLE)
+      console.log("GUILD INFO", json);
+      return true;
+    },
+    session: async ({ session, user, token }) => {
+
+      //get info on guilds from the discord API
+      // const data = await fetch(
+      //   "https://discord.com/api/users/@me/guilds/245393533391863808/member",
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       Authorization: `Bearer ${JSON.stringify(token)}`,
+      //     },
+      //   },
+      // );
+
+      // console.log("DATA FROM API", data);
+
+>>>>>>> 36b072a (auth conflict)
       return {
         ...session,
         user: {
           ...session.user,
           id: user.id,
+<<<<<<< HEAD
           admin: session.user.admin,
           discordId: user.discordId
+=======
+          discordID: user.id,
+          admin: session.user.admin
+>>>>>>> 36b072a (auth conflict)
         },
       };
     },
