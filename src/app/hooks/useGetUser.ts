@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useQuery } from "react-query";
 
 async function fetchHackerApplication() {
@@ -19,11 +18,3 @@ async function fetchHackerApplication() {
 export default function useGetUser() {
   return useQuery("getUser", fetchHackerApplication);
 }
-=======
-import getHackerApplication from "../api/auth/[...nextauth]/getHackerApplication";
-import { useQuery } from "react-query";
-
-export default function useGetUser() {
-    return useQuery("getUser", getHackerApplication)
-}
->>>>>>> 36b072a (auth conflict)
