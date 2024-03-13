@@ -21,7 +21,7 @@ model Events {
 }
 
 model Hacker_Applications {
-  userId                 String                      @id
+  userId                    String                   @id
   event_id                  Int
   // BASIC INFO
   first_name                String                   @db.VarChar(50)
@@ -52,7 +52,8 @@ model Hacker_Applications {
   check_in_status           Boolean                  @default(false)
   created_at                DateTime                 @default(now())
   event                     Events                   @relation(fields: [event_id], references: [event_id])
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("hacker_applications")
 }
 
@@ -68,48 +69,48 @@ enum application_status_enums {
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    discordID Int
-    admin Boolean
-    shell_application Hacker_Applications?
-    accounts      Account[]
-    sessions      Session[]
+  id                String               @id @default(cuid())
+  name              String?
+  email             String?              @unique
+  emailVerified     DateTime?
+  image             String?
+  //   discordID         String
+  admin             Boolean?             @default(false)
+  shell_application Hacker_Applications?
+  accounts          Account[]
+  sessions          Session[]
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
