@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }) => {
       const access_token = account?.access_token;
-      const client = new PrismaClient()
       const data = await fetch(
         "https://discord.com/api/users/@me/guilds/245393533391863808/member",
         {
@@ -53,8 +52,6 @@ export const authOptions: NextAuthOptions = {
       );
       const json = await data.json();
       const roles = new Set(json.roles ?? [])
-
-      
 
       //check if the user is admin
       const ADMIN_ROLE = "1061212827785900103";
