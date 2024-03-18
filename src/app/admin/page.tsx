@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import FiltersModal from "@/app/components/dashboard/Filters";
 import { useEffect, useState } from "react";
 import { applicantFiltersSchema } from "@/app/schemas/applicantSchemas";
@@ -39,10 +39,8 @@ const getSchoolData = async () => {
   };
 };
 
-
 export default function AdminDashboard() {
-
-    // const schools = getSchoolData() // not working
+  // const schools = getSchoolData() // not working
 
   const [showFilters, setShowFilters] = useState(false);
   const [isExportingCSV, setIsExportingCSV] = useState(false);
@@ -53,6 +51,7 @@ export default function AdminDashboard() {
   );
 
   const { data, isLoading, error } = useApplicantsQuery(filters, name);
+
   const appStatusMutation = useAppStatusMutation({
     onSuccess: () => setSelectedApplicants(new Set()),
   });
@@ -172,6 +171,5 @@ export default function AdminDashboard() {
         />
       </div>
     </main>
-  )
-        };
-
+  );
+}
