@@ -14,7 +14,7 @@ import {
 } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
-import { ACCEPTED_REMINDER_TEMPLATE, ACCEPTED_TEMPLATE } from "@/constants/emailConstants";
+import { ACCEPTED_REMINDER_TEMPLATE, ACCEPTED_TEMPLATE } from "@/app/constants/emailConstants";
 
 const s3Configuration: S3ClientConfig = {
   credentials: {

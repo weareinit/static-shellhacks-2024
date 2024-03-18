@@ -24,10 +24,11 @@ export default function ApplicantsTable({
       <>
         {data.map((entry: Hacker_Applications, index: number) => (
           <ApplicantCell
+            key={index}
             handleSelectApplicant={() => handleSelectApplicant(entry.hacker_id)}
             isSelected={selectedApplicants.has(entry.hacker_id)}
             data={entry}
-            key={entry.hacker_id}
+            // key={entry.hacker_id}
             handleAppStatusChange={appStatusMutation}
           />
         ))}
@@ -38,7 +39,7 @@ export default function ApplicantsTable({
   if (error) {
     return (
       <div className="rounded-pixel mx-auto max-w-md bg-white p-6">
-        <h1 className="font-pixel mb-4 text-xl">
+        <h1 className="mb-4 font-pixel text-xl">
           This account doesn't have admin privileges
         </h1>
         <p>You might need to login using a different account.</p>

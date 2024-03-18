@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export const prisma = new PrismaClient();
 
-export async function validateCaptcha(req: NextApiRequest, res: NextApiResponse) {
+export async function validateCaptcha(req: NextApiRequest) {
   const { recaptcha } = req.body;
   const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`, {
     headers: {
@@ -13,11 +14,11 @@ export async function validateCaptcha(req: NextApiRequest, res: NextApiResponse)
   });
 
   if (!response.ok) {
-    return res.status(400).json({ message: "Failed to make Captcha validation" });
+    return NextResponse.json({ message: "Failed to make Captcha validation" });
   }
 
   const captchaData = await response.json();
   if (!captchaData.success) {
-    return res.status(400).json({ message: "Captcha validation failed" });
+    return NextResponse.json({ message: "Captcha validation failed" });
   }
 }
