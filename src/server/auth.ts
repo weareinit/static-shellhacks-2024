@@ -19,8 +19,13 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+<<<<<<< HEAD
       admin: boolean;
       discordId: string;
+=======
+      discordID: string;
+      admin: boolean;
+>>>>>>> 4cd7a4c (auth hydration issue)
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
