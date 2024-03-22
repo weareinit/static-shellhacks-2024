@@ -1,7 +1,6 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
@@ -51,14 +50,9 @@ model Hacker_Applications {
   application_status        application_status_enums @default(waitlisted)
   check_in_status           Boolean                  @default(false)
   created_at                DateTime                 @default(now())
-<<<<<<< HEAD
   // event                     Events                   @relation(fields: [event_id], references: [event_id])
   // user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-=======
-  event                     Events                   @relation(fields: [event_id], references: [event_id])
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> 4cd7a4c (auth hydration issue)
   @@map("hacker_applications")
 }
 
@@ -100,7 +94,6 @@ model Session {
 }
 
 model User {
-<<<<<<< HEAD
   id                String               @id @default(cuid())
   name              String?
   email             String?              @unique
@@ -111,18 +104,6 @@ model User {
   // shell_application Hacker_Applications?
   accounts          Account[]
   sessions          Session[]
-=======
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    discordID Int
-    admin Boolean
-    shell_application Hacker_Applications?
-    accounts      Account[]
-    sessions      Session[]
->>>>>>> 4cd7a4c (auth hydration issue)
 }
 
 model VerificationToken {
