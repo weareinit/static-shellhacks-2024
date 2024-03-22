@@ -1,11 +1,10 @@
 import { useQuery } from "react-query";
 import type Hacker_Applications from "@prisma/client";
 
-//Note: Right now the name is filtered from the frontend, though it will proably be moved to the backend
 export const useApplicationQuery = (email: string) => {
   const getApplication = async () => {
     const response = await fetch(
-      `/api/applications/${encodeURIComponent(email)}`,
+      `/api/applications/hacker/${encodeURIComponent(email)}`,
       {
         method: "GET",
       },
@@ -15,7 +14,7 @@ export const useApplicationQuery = (email: string) => {
       throw new Error(`Error fetching applicant ${response.statusText}`);
     }
 
-    return (await response.json()) as Hacker_Applications;
+    return (await NextResponse.json()) as Hacker_Applications;
   };
 
   return useQuery(["application", email], getApplication, { retry: false });
