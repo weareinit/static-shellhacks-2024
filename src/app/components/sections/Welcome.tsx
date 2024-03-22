@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/navigation";
 
 import Button from "../input/Button";
