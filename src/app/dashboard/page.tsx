@@ -20,16 +20,23 @@ import { useApplicationQuery } from "@/app/hooks/ApplicationQuery";
 import Link from "next/link";
 import SocialButtons from "@/app/components/sections/SocialButtons";
 import Button from "@/app/components/input/Button";
-import { getSession } from "next-auth/react";
-import useGetUser from "../hooks/useGetUser";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
-  const user = useGetUser();
+  // const applicantData = useGetUser("d913b428-aead-4540-b213-c84309bc6a9c");
+  // const isLoading = false;
+  // const isError = false;
+  // const {
+  //   data: applicantData,
+  //   isLoading,
+  //   isError,
+  // } = useApplicationQuery(user?.email!);
+  
   const {
     data: applicantData,
     isLoading,
     isError,
-  } = useApplicationQuery(user?.email!);
+  } = useApplicationQuery("4f8101cf-7709-4303-9c70-457d4f52a281@gmail.com");
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
   const [decorationImage, setDecorationImage] =

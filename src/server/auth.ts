@@ -65,18 +65,15 @@ export const authOptions: NextAuthOptions = {
 
       user.admin = roles.has(ADMIN_ROLE);
       user.discordId = json.user.id
-
-      console.log("USER ", user);
-      
       return true;
     },
-    session: async ({ session, user }) => {
+    session: ({ session, user }) => {
       return {
         ...session,
         user: {
           ...session.user,
           id: user.id,
-          admin: session.user.admin,
+          admin: user.admin,
           discordId: user.discordId
         },
       };

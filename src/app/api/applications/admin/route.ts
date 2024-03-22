@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest } from "next";
 import { Prisma } from "@prisma/client";
 import { isAdmin } from "src/app/util/auth0Utils";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
@@ -26,11 +26,9 @@ import { NextResponse } from "next/server";
 //   return res.status(200).json(updatedApplicant);
 // }
 
-// const user = await getServerAuthSession()
 
 export async function GET(req: NextApiRequest) {
-  // const is_admin = user?.user.admin
-  const is_admin = true;
+  const is_admin = await isAdmin()
 
   const headers = new Headers(req.headers); // ?
 
@@ -68,13 +66,14 @@ export async function GET(req: NextApiRequest) {
     // TODO: make sure this works
     return NextResponse.json(csvData);
   }
+  
   return NextResponse.json(filteredApplicants);
 }
 
 export async function PUT(req: NextApiRequest) {
-  const admin = isAdmin(req);
+  const is_admin = await isAdmin();
 
-  if (!admin) {
+  if (!is_admin) {
     return NextResponse.json({
       message:
         "Unauthorized. You are not allowed to update applicants without the admin role.",

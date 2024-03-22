@@ -13,7 +13,7 @@ export const useApplicantsQuery = (filters: ApplicantFilterType, name = "") => {
       const params = new URLSearchParams(
         filters as unknown as Record<string, string>,
       ).toString();
-      const response = await fetch(`/api/applications?${params}`, {
+      const response = await fetch(`/api/applications/admin?${params}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

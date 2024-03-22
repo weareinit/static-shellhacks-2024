@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 async function fetchHackerApplication() {
   try {
     const response = await fetch(
-      "/api/auth/[...nextauth]/getHackerApplication",
+      "/api/applications/hacker",
     );
     if (!response.ok) {
       throw new Error("Failed to fetch user data");
