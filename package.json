@@ -10,7 +10,9 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "reset-soft": "npx prisma generate && npx prisma db push",
+    "reset-hard": "npx prisma migrate reset && npx prisma generate && npx prisma db push"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
@@ -19,9 +21,8 @@
     "@aws-sdk/s3-request-presigner": "^3.352.0",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@next/font": "13.1.6",
-    "@prisma/client": "^4.15.0",
+    "@prisma/client": "^5.11.0",
     "@t3-oss/env-nextjs": "^0.8.0",
-    "@types/node": "^18.13.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
@@ -44,13 +45,12 @@
     "react-query": "^3.39.3",
     "react-zxing": "^1.1.4",
     "tailwindcss": "^3.2.6",
-    "typescript": "4.9.5",
     "yup": "^1.1.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/eslint": "^8.44.7",
-    "@types/node": "^18.17.0",
+    "@types/node": "^18.19.24",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/react-google-recaptcha": "^2.1.9",
@@ -64,7 +64,11 @@
     "prettier-plugin-tailwindcss": "^0.5.7",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.1.6"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "ct3aMetadata": {
     "initVersion": "7.26.0"

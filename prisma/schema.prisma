@@ -15,7 +15,7 @@ model Events {
   end_date            DateTime              @db.Date
   start_time          DateTime              @db.Timestamptz(3)
   end_time            DateTime              @db.Timestamptz(3)
-  Hacker_Applications Hacker_Applications[]
+  // Hacker_Applications Hacker_Applications[]
 
   @@map("events")
 }
@@ -51,8 +51,8 @@ model Hacker_Applications {
   application_status        application_status_enums @default(waitlisted)
   check_in_status           Boolean                  @default(false)
   created_at                DateTime                 @default(now())
-  event                     Events                   @relation(fields: [event_id], references: [event_id])
-  user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // event                     Events                   @relation(fields: [event_id], references: [event_id])
+  // user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("hacker_applications")
 }
@@ -102,7 +102,7 @@ model User {
   image             String?
   discordId         String
   admin             Boolean?             @default(false)
-  shell_application Hacker_Applications?
+  // shell_application Hacker_Applications?
   accounts          Account[]
   sessions          Session[]
 }
