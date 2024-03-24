@@ -17,7 +17,7 @@ import {
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
-import SearchInput from "../input/searchInput";
+import SearchInput from "../input/SearchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
