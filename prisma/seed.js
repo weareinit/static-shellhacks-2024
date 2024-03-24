@@ -7,6 +7,7 @@ async function main() {
   const data = [];
 
   for (let i = 0; i < 500; i++) {
+    let email = i === 0 ? "theegabrielpedroza@gmail.com" : `${randomUUID()}@gmail.com`;
     data.push({
       userId: String(randomUUID()),
       event_id: i,
@@ -18,7 +19,7 @@ async function main() {
       grad_year: 2024,
       level_of_study: "Undergraduate",
       country: "USA",
-      email: String(randomUUID()) + '@gmail.com',
+      email,
       phone_number: "1234567890",
       resume_path: "/path/to/resume",
       discord: "example_discord",

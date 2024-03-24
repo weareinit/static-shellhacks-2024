@@ -1,21 +1,23 @@
 import { useQuery } from "react-query";
-import type Hacker_Applications from "@prisma/client";
 
-export const useApplicationQuery = (email: string) => {
-  const getApplication = async () => {
-    const response = await fetch(
-      `/api/applications/hacker/${encodeURIComponent(email)}`,
-      {
-        method: "GET",
-      },
-    );
+export const useApplicationQuery = () => {
+  const fetchApplication = async () => {
+    try {
+      const response = await fetch(
+        "/api/applications/hacker",
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
 
-    if (!response.ok) {
-      throw new Error(`Error fetching applicant ${response.statusText}`);
+      return response.json();
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw new Error("Failed to fetch user data");
     }
+  }
 
-    return (await NextResponse.json()) as Hacker_Applications;
-  };
-
-  return useQuery(["application", email], getApplication, { retry: false });
-};
+  return useQuery("application", fetchApplication, {
+    retry: false,
+  });
+}
