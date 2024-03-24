@@ -1,6 +1,6 @@
 import type { NextApiRequest } from "next";
 import { Prisma } from "@prisma/client";
-import { isAdmin } from "src/app/util/auth0Utils";
+import { isAdmin } from "@/app/util/isAdmin";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import {
   applicantStatusChangeSchema,
