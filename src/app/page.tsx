@@ -1,16 +1,7 @@
 import { parseCSV } from "@/app/util/parseCSV";
-
-import { FormOptionContextProvider } from "@/app/hooks/FormOptionContext";
-import { ShowRegistrationProvider } from "@/app/hooks/ShowRegistrationContext";
-import Shoreline from "@/app/components/decorations/Shoreline";
-import GrassLine from "@/app/components/decorations/Grassline";
-import Content from "@/app/components/sections/Content";
-import MLHBanner from "@/app/components/decorations/MLHBanner";
-import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
-import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
 import { getServerAuthSession } from "@/server/auth";
-import Login from "./components/login";
+import Login from "./components/Login";
 import Image from "next/image";
 import Landing from "./components/new_landing/Landing";
 
