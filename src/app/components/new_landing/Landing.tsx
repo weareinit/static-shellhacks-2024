@@ -4,25 +4,17 @@ import React from "react";
 import MLHBanner from "../decorations/MLHBanner";
 import LandingContent from "./LandingContent";
 import Logo from "./Logo";
-import Image from "next/image";
 
 const Landing = () => {
   return (
     <div className="h-screen w-screen">
-      <div className="absolute top-0 -z-20 h-screen w-screen">
-        <Image
-          src="/assets/new/background/beach/Ocean 1.png"
-          alt="beach"
-          fill
-        />
-      </div>
-      <div className="absolute top-[43.5%] -z-10 h-screen w-screen">
-        <Image
-          src="/assets/new/background/beach/Ocean 7.png"
-          alt="beach"
-          fill
-        />
-      </div>
+      <div className="absolute -top-[76.4%] -z-10 h-screen w-screen bg-[url('/assets/new/background/sky/Sky7.svg')]" />
+      <div className="absolute top-[23.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/beach/Ocean8.svg')]" />
+      <div className="absolute top-[78.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/beach/Ocean.svg')]" />
+      <div className="absolute top-[178.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/beach/Beach.svg')]" />
+      <div className="absolute top-[278.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/forest/Forest.svg')]" />
+      <div className="absolute top-[378.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/forest/Forest7.svg')]" />
+      <div className="absolute top-[478.5%] -z-10 h-screen w-screen bg-[url('/assets/new/background/forest/dirt.svg')]" />
       <MLHBanner />
       <Logo />
       <LandingContent />

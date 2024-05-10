@@ -25,6 +25,21 @@
 }
 
 @font-face {
+  font-family: "zoonaji";
+  src: url("/fonts/zoonaji.ttf")
+}
+
+@font-face {
+  font-family: "museo";
+  src: url("/fonts/museo.ttf")
+}
+
+@font-face {
+  font-family: "museo_italic";
+  src: url("/fonts/museo_italic.ttf")
+}
+
+@font-face {
   font-family: "Broken Console";
   src: url("/fonts/broken_console.woff2") format("woff2");
 }
