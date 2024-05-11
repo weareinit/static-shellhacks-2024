@@ -1,16 +1,23 @@
 import Image from "next/image";
 import LandingButtons from "./LandingButtons";
+import {
+  FaDiscord,
+  FaFacebookSquare,
+  FaLinkedin,
+  FaTwitterSquare,
+} from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
 
 const LandingContent = () => {
   return (
     <>
       <div className="text-center">
-        <p className="font-[zoonaji] text-[#005871] text-4xl mt-4">
+        <p className="font-[zoonaji] text-4xl text-[#005871]">
           The Largest Hackathon in the East Coast!
         </p>
         <div className="flex justify-center">
-          <p className="font-[museo] text-lg mt-1">Powered by </p>
-          <div className="relative top-[0.1625rem] right-3 h-8 w-28">
+          <p className="mt-1 font-[museo] text-lg">Powered by </p>
+          <div className="relative right-3 top-[0.1625rem] h-8 w-28">
             <Image
               src="/assets/new/logo/Nvidia_Logo.png"
               alt="Nvidia Logo"
@@ -18,10 +25,30 @@ const LandingContent = () => {
             />
           </div>
         </div>
-        <div className="font-[museo]">
-          <div className="font-[museo] text-3xl">September 27th - 29th, 2024</div>
-          <div className="font-[museo] text-4xl">FIU&apos;s Grahams Center - Miami, FL</div>
-          <div>INSERT SOCIAL MEDIA ICONS</div>
+        <div className="font-[museoregular]">
+          <div className="mt-5 text-[1.5rem] text-[#070D0D]">
+            September 27th - 29th, 2024
+          </div>
+          <div className="text-[1.75rem] text-[#070D0D]">
+            FIU&apos;s Grahams Center - Miami, FL
+          </div>
+          <div className="mt-1 flex justify-center gap-2 text-2xl text-[#786450]">
+            <div className="cursor-pointer">
+              <FaDiscord />
+            </div>
+            <div className="cursor-pointer">
+              <AiFillInstagram />
+            </div>
+            <div className="cursor-pointer">
+              <FaTwitterSquare />
+            </div>
+            <div className="cursor-pointer">
+              <FaFacebookSquare />
+            </div>
+            <div className="cursor-pointer">
+              <FaLinkedin />
+            </div>
+          </div>
         </div>
       </div>
       <LandingButtons />
