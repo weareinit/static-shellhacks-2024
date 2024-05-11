@@ -9,11 +9,10 @@ const Landing = () => {
   return (
     <div className="h-screen w-screen">
       <MLHBanner />
-      <div className="-z-10 h-screen w-screen bg-[url('/assets/new/background/sky/Sky.svg')]">
+      <div className="-z-10 relative h-screen w-[100.1vw] right-[1px] bg-[url('/assets/new/background/sky/Sky.svg')]">
         <Logo />
         <LandingContent />
       </div>
-      {/* <div className="-z-10 h-screen w-screen bg-[url('/assets/new/background/sky/Sky.svg')]"></div> */}
       <div className="-z-10 h-screen w-screen bg-[url('/assets/new/background/beach/Ocean.svg')]"></div>
       <div className="-z-10 h-screen w-screen bg-[url('/assets/new/background/beach/Beach.svg')]"></div>
       <div className="-z-10 h-screen w-screen bg-[url('/assets/new/background/forest/Forest.svg')]"></div>
