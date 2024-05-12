@@ -12,11 +12,11 @@ const LandingContent = () => {
   return (
     <>
       <div className="text-center">
-        <p className="font-[zoonaji] text-4xl text-[#005871]">
+        <p className="text-darker_cyan font-zoonaji text-4xl">
           The Largest Hackathon in the East Coast!
         </p>
         <div className="flex justify-center">
-          <p className="mt-1 font-[museo] text-lg">Powered by </p>
+          <p className="font-museo mt-1 text-lg">Powered by </p>
           <div className="relative right-3 top-[0.1625rem] h-8 w-28">
             <Image
               src="/assets/new/logo/Nvidia_Logo.png"
@@ -25,14 +25,14 @@ const LandingContent = () => {
             />
           </div>
         </div>
-        <div className="font-[museoregular]">
-          <div className="mt-5 text-[1.5rem] text-[#070D0D]">
+        <div className="font-museoregular">
+          <div className="mt-5 text-[1.5rem] text-[#000000]">
             September 27th - 29th, 2024
           </div>
-          <div className="text-[1.75rem] text-[#070D0D]">
+          <div className="text-[1.75rem] text-[#000000]">
             FIU&apos;s Grahams Center - Miami, FL
           </div>
-          <div className="mt-1 flex justify-center gap-2 text-2xl text-[#786450]">
+          <div className="text-ferra mt-1 flex justify-center gap-2 text-2xl">
             <div className="cursor-pointer">
               <FaDiscord />
             </div>
@@ -64,7 +64,7 @@ const LandingContent = () => {
             fill
           />
         </div>
-        <p>scroll for more!</p>
+        <p className="font-museoregular">scroll for more!</p>
       </div>
     </>
   );

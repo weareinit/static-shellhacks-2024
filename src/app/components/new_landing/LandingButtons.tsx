@@ -2,10 +2,10 @@ import Link from "next/link";
 
 const LandingButtons = () => {
   return (
-    <div className="mt-12 gap-11 flex flex-col text-center">
+    <div className="mt-12 flex flex-col gap-11 text-center">
       <div>
         <Link
-          className="w-36 text-2xl font-extrabold rounded-[1.5rem] bg-[#786450] px-16 py-4 text-stone-50 no-underline"
+          className="bg-reddish_grey w-36 rounded-[1.5rem] px-16 py-4 text-2xl font-extrabold text-stone-50 no-underline"
           href="/apply"
         >
           APPLY
@@ -13,7 +13,7 @@ const LandingButtons = () => {
       </div>
       <div>
         <Link
-          className="w-36 whitespace-nowrap font-extrabold text-2xl rounded-[1.5rem] bg-stone-50 px-16 py-4 text-[#786450] no-underline"
+          className="text-reddish_grey w-36 whitespace-nowrap rounded-[1.5rem] bg-stone-50 px-16 py-4 text-2xl font-extrabold no-underline"
           href="/dashboard"
         >
           HACKER DASHBOARD

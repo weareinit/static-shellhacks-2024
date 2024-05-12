@@ -11,13 +11,18 @@ interface RegisterModalProps {
 export default function RegisterModal({ toClose }: RegisterModalProps) {
   return (
     <Modal containerClassName="z-20 pb-24" backgroundClassName="z-10">
-      <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between m-auto">
-        <h1 className=" pt-1 row-start-2 row-span-1 font-pixel underline text-blue text-3xl">Registration</h1>
-        <Button className="font-pixel text-xl  text-white bg-blue hover:underline" onClick={toClose}>
+      <header className="relative row-span-1 row-start-1 m-auto flex h-fit flex-row justify-between">
+        <h1 className=" text-darker_cyan row-span-1 row-start-2 pt-1 font-pixel text-3xl underline">
+          Registration
+        </h1>
+        <Button
+          className="bg-blue font-pixel  text-xl text-white hover:underline"
+          onClick={toClose}
+        >
           <h1 className="text-base">CLOSE</h1>
         </Button>
       </header>
-      <div className="max-w-[800px] m-auto">
+      <div className="m-auto max-w-[800px]">
         <RegisterForm />
       </div>
     </Modal>
