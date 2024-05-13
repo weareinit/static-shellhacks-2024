@@ -10,14 +10,6 @@ import Logo from "./Logo";
 import Image from "next/image";
 
 const Landing = () => {
-  const [imageHeight, setImageHeight] = useState(0);
-
-  useEffect(() => {
-    const img = document.createElement("img");
-    img.onload = () => setImageHeight(img.height);
-    img.src = "assets/new/background/beach/Beach.png";
-  }, []);
-
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       <MLHBanner />
