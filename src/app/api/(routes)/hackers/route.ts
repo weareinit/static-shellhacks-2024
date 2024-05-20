@@ -26,6 +26,22 @@ export async function POST(request: NextRequest) {
 
   const validatedApplicant = safedata.data;
 
+  //there's no unique constraint on case insensitive emails, so we have to check manually
+  const existingApplicant = await db.hacker_Applications.findFirst({
+    where: {
+      email: {
+        equals: validatedApplicant.email,
+        mode: "insensitive",
+      },
+    },
+  });
+
+  if (existingApplicant) {
+    return NextResponse.json({
+      error: "Duplicate. User already exists with that email.",
+    });
+  }
+
   try {
     await db.hacker_Applications.create({
       data: validatedApplicant,

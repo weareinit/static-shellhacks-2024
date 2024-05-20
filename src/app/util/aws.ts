@@ -1,4 +1,11 @@
-import { DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, GetObjectCommandInput } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  DeleteObjectCommandInput,
+  PutObjectCommand,
+  PutObjectCommandInput,
+  GetObjectCommand,
+  GetObjectCommandInput,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import {
   SendTemplatedEmailCommand,
@@ -14,7 +21,10 @@ import {
 } from "@aws-sdk/client-ses";
 import { S3Client, S3ClientConfig } from "@aws-sdk/client-s3";
 import { SESClient } from "@aws-sdk/client-ses";
-import { ACCEPTED_REMINDER_TEMPLATE, ACCEPTED_TEMPLATE } from "@/app/constants/emailConstants";
+import {
+  ACCEPTED_REMINDER_TEMPLATE,
+  ACCEPTED_TEMPLATE,
+} from "@/app/constants/emailConstants";
 
 const s3Configuration: S3ClientConfig = {
   credentials: {
@@ -30,7 +40,14 @@ const emailClient = new SESClient({});
 
 export const generateSignedResumeUploadUrl = async (resumeId: string) => {
   // logger.info(`Generating signed url for resume ${resumeId}`);
-  console.log("resumeId", resumeId, "access id", process.env.AWS_SECRET_ACCESS_KEY!, "secret access", process.env.AWS_SECRET_ACCESS_KEY!);
+  console.log(
+    "resumeId",
+    resumeId,
+    "access id",
+    process.env.AWS_SECRET_ACCESS_KEY!,
+    "secret access",
+    process.env.AWS_SECRET_ACCESS_KEY!,
+  );
   const params: PutObjectCommandInput = {
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: resumeId,
@@ -64,7 +81,38 @@ interface EmailPayload {
   email: string;
 }
 
-export const sendAcceptanceEmails = async (applicants: EmailPayload[], reminder: boolean = false) => {
+/*
+ * The confirmation email a hacker get swhen they register
+ */
+export const sendConfirmationEmail = async (
+  toEmail: string,
+  firstName: string,
+) => {
+  // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
+  const params: SendTemplatedEmailCommandInput = {
+    Destination: {
+      ToAddresses: [toEmail],
+    },
+    Source: "fiuoperations@weareinit.org",
+    Template: "welcome-template-updated-3",
+    TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
+  };
+
+  const command = new SendTemplatedEmailCommand(params);
+  await emailClient.send(command);
+};
+
+/*
+ * The emails that get sent out when a hacker is accepted. This will typically be done in "waves", which is why bulk sendign is used
+ * We also need to resend the acceptance emails to remind hackers to confirm their attendance. This ia done via a button in the admin dash
+ *
+ * @param applicants - the list of applicants to send the emails to
+ * @param reminder - whether or not this is a reminder email
+ */
+export const sendAcceptanceEmails = async (
+  applicants: EmailPayload[],
+  reminder: boolean = false,
+) => {
   const destinations = applicants.map((applicant) => {
     const { email, first_name } = applicant;
     const destination: BulkEmailDestination = {
@@ -93,6 +141,9 @@ export const sendAcceptanceEmails = async (applicants: EmailPayload[], reminder:
   }
 };
 
+/*
+ * The confirmation email a hacker gets when they confirm their attendence
+ */
 export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
   const { email, first_name } = applicant;
@@ -110,7 +161,10 @@ export const sendStatusConfirmedEmail = async (applicant: EmailPayload) => {
   await emailClient.send(command);
 };
 
-export const sendDiscordVerificationEmail = async (toEmail: string, hackerCode: string) => {
+export const sendDiscordVerificationEmail = async (
+  toEmail: string,
+  hackerCode: string,
+) => {
   const params: SendTemplatedEmailCommandInput = {
     Destination: {
       ToAddresses: [toEmail],
@@ -124,7 +178,11 @@ export const sendDiscordVerificationEmail = async (toEmail: string, hackerCode: 
   await emailClient.send(command);
 };
 
-export const sendDiscordLinkedSuccessEmail = async (toEmail: string, discordUsername: string, firstName: string) => {
+export const sendDiscordLinkedSuccessEmail = async (
+  toEmail: string,
+  discordUsername: string,
+  firstName: string,
+) => {
   const params: SendTemplatedEmailCommandInput = {
     Destination: {
       ToAddresses: [toEmail],
@@ -138,22 +196,11 @@ export const sendDiscordLinkedSuccessEmail = async (toEmail: string, discordUser
   await emailClient.send(command);
 };
 
-export const sendConfirmationEmail = async (toEmail: string, firstName: string) => {
-  // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
-  const params: SendTemplatedEmailCommandInput = {
-    Destination: {
-      ToAddresses: [toEmail],
-    },
-    Source: "fiuoperations@weareinit.org",
-    Template: "welcome-template-updated-3",
-    TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
-  };
-
-  const command = new SendTemplatedEmailCommand(params);
-  await emailClient.send(command);
-};
-
-export const createEmailTemplate = async (templateName: string, subjectPart: string, htmlPart: string) => {
+export const createEmailTemplate = async (
+  templateName: string,
+  subjectPart: string,
+  htmlPart: string,
+) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/commands/CreateTemplateCommand.html
   const params: CreateTemplateCommandInput = {
     Template: {
@@ -179,7 +226,11 @@ export async function getEmailTemplates() {
   }
 }
 
-export async function updateEmailTemplate(templateName: string, subjectPart: string, htlmPart: string) {
+export async function updateEmailTemplate(
+  templateName: string,
+  subjectPart: string,
+  htlmPart: string,
+) {
   const command = new UpdateTemplateCommand({
     Template: {
       TemplateName: templateName,
