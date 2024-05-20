@@ -20,6 +20,7 @@ declare module "next-auth" {
     user: {
       id: string;
       admin: boolean;
+      email: string;
       discordId: string;
       // ...other properties
       // role: UserRole;
@@ -59,7 +60,7 @@ export const authOptions: NextAuthOptions = {
       const ADMIN_ROLE = "1061212827785900103"; // fake btw
 
       user.admin = roles.has(ADMIN_ROLE);
-      user.discordId = json.user.id
+      user.discordId = json.user.id;
       return true;
     },
     session: ({ session, user }) => {
@@ -69,7 +70,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           id: user.id,
           admin: user.admin,
-          discordId: user.discordId
+          discordId: user.discordId,
         },
       };
     },

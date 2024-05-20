@@ -1,26 +1,27 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
 }
 
 model Events {
-  event_id            Int                   @id @default(autoincrement())
-  event_name          String                @db.VarChar(100)
-  description         String                @db.VarChar(250)
-  start_date          DateTime              @db.Date
-  end_date            DateTime              @db.Date
-  start_time          DateTime              @db.Timestamptz(3)
-  end_time            DateTime              @db.Timestamptz(3)
+  event_id    Int      @id @default(autoincrement())
+  event_name  String   @db.VarChar(100)
+  description String   @db.VarChar(250)
+  start_date  DateTime @db.Date
+  end_date    DateTime @db.Date
+  start_time  DateTime @db.Timestamptz(3)
+  end_time    DateTime @db.Timestamptz(3)
   // Hacker_Applications Hacker_Applications[]
 
   @@map("events")
 }
 
 model Hacker_Applications {
-  userId                    String                   @id
+  userId                    String                   @id @default(cuid())
   event_id                  Int
   // BASIC INFO
   first_name                String                   @db.VarChar(50)
@@ -94,16 +95,16 @@ model Session {
 }
 
 model User {
-  id                String               @id @default(cuid())
-  name              String?
-  email             String?              @unique
-  emailVerified     DateTime?
-  image             String?
-  discordId         String
-  admin             Boolean?             @default(false)
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  discordId     String
+  admin         Boolean?  @default(false)
   // shell_application Hacker_Applications?
-  accounts          Account[]
-  sessions          Session[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
