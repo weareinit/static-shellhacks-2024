@@ -19,7 +19,8 @@ module.exports = {
         english_walnut: "#3E3022", // dark-brown fonts
         cotton_seed: "#C8BCB1", // unfocused buttons
         reddish_grey: "#786450", // focused buttons
-        light_brown: "#8A715C" // faq bg
+        light_brown: "#8A715C", // faq bg
+        nav_bar_brown: "#A3978E"
       },
       fontFamily: {
         'zoonaji': ['zoonaji', 'sans-serif'],

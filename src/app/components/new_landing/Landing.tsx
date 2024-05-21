@@ -8,11 +8,12 @@ import AboutUs from "./new_sections/AboutUs";
 import FAQs from "./new_sections/FAQs";
 import Organizers from "./new_sections/Organizers";
 import Sponsors from "./new_sections/Sponsors";
-
+import NavBar from "./new_sections/NavBar";
 const Landing = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       <MLHBanner />
+      <NavBar />
       <div id="landing" className="flex w-screen flex-col">
         <SkyAndOcean />
         <DinosAndNumbers />
