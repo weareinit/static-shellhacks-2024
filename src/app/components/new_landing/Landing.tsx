@@ -1,135 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import React from "react";
 import MLHBanner from "../decorations/MLHBanner";
-import LandingContent from "./LandingContent";
-import PreviousNumbers from "./PreviousNumbers";
-import BigDinos from "./BigDinos";
-import Logo from "./Logo";
-import Image from "next/image";
+import SkyAndOcean from "./new_sections/SkyAndOcean";
+import DinosAndNumbers from "./new_sections/DinosAndNumbers";
+import AboutUs from "./new_sections/AboutUs";
+import FAQs from "./new_sections/FAQs";
+import Organizers from "./new_sections/Organizers";
+import Sponsors from "./new_sections/Sponsors";
 
 const Landing = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
       <MLHBanner />
       <div id="landing" className="flex w-screen flex-col">
-        {/* Sky and Ocean > */}
-        <div className="relative">
-          <Image
-            src="/assets/new/background/sky/Sky.png"
-            layout="responsive"
-            width={1789}
-            height={697}
-            alt="Sky background"
-            className="relative z-[-10]"
-          />
-          <Image
-            src="/assets/new/background/beach/Ocean.png"
-            layout="responsive"
-            width={1730}
-            height={973}
-            alt="Ocean background"
-            className="relative z-[-10]"
-          />
-
-          {/* Content -> Absolute to the subsection, relative overall */}
-          <div className="absolute inset-0">
-            <Logo />
-            <LandingContent />
-          </div>
-        </div>
-        {/* Dinos and Numbers > */}
-        <div className="relative">
-          <Image
-            src="/assets/new/background/beach/Beach.png"
-            layout="responsive"
-            width={1730}
-            height={973}
-            alt="Beach background"
-            className="relative z-[-10]"
-          />
-
-          {/* Content -> Absolute to the subsection, relative overall */}
-          <div className="absolute inset-0">
-            <PreviousNumbers />
-            <BigDinos />
-          </div>
-        </div>
+        <SkyAndOcean />
+        <DinosAndNumbers />
       </div>
       <div id="about-us" className="flex w-screen flex-col">
-        {/* Make divs to separate relative and absolute positioning within the page -- Don't insert content immediately below  */}
-        <Image
-          src="/assets/new/background/forest/Forest.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Forest background"
-          className="relative z-[-10]"
-        />
-        <Image
-          src="/assets/new/background/forest/Forest 2.png"
-          layout="responsive"
-          width={1730}
-          height={974}
-          alt="Grass background"
-          className="relative z-[-10]"
-        />
+        <AboutUs />
       </div>
-
       <div id="faqs">
-        {/* Make divs to separate relative and absolute positioning within the page -- Don't insert content immediately below  */}
-        <Image
-          src="/assets/new/background/forest/Dirt 1.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Dirt background"
-          className="relative z-[-10]"
-        />
-        <Image
-          src="/assets/new/background/forest/Dirt 2.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Dirt background"
-          className="relative z-[-10]"
-        />
+        <FAQs />
       </div>
       <div id="organizers-and-sponsors">
-        {/* Make divs to separate relative and absolute positioning within the page -- Don't insert content immediately below  */}
-        <Image
-          src="/assets/new/background/lava/Lava1.gif"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Lava gif"
-          className="relative z-[-10]"
-        />
-        {/* <Image
-          src="/assets/new/background/lava/Lava1.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Lava background"
-          className="relative z-[-10]"
-        /> */}
-        <Image
-          src="/assets/new/background/lava/Lava2.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Lava background"
-          className="relative  z-[-10]"
-        />
-        <Image
-          src="/assets/new/background/lava/Stone.png"
-          layout="responsive"
-          width={1789}
-          height={974}
-          alt="Bedrock background"
-          className="relative z-[-10]"
-        />
+        <Organizers />
+        <Sponsors />
       </div>
 
       {/* Bedrock */}
