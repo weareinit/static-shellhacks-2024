@@ -42,6 +42,10 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(filteredApplicants);
 }
 
+/*
+ * Route for an admin to update the status of multiple applicants at once
+ * This could be used for adding applicants to the wave, waitlisting, etc.
+ */
 export async function PUT(request: NextRequest) {
   const safedata = applicantStatusChangeSchema.safeParse(request.body);
 

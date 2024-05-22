@@ -25,12 +25,7 @@ export const sendDiscordEmailSchema = z.object({
 });
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
-export const userApplicantUpdateSchema = z.object({
-  resume_path: z.string().optional(),
-  application_statuses: z.enum(user_changeable_application_statuses).optional(),
-});
-
-export const adminApplicantUpdateSchema = z.object({
+export const applicantUpdateSchema = z.object({
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
