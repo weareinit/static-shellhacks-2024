@@ -1,6 +1,10 @@
 import { db } from "@/server/db";
 import { NextRequest, NextResponse } from "next/server";
-import { applicantUpdateSchema } from "@/app/schemas/applicantSchemas";
+import {
+  adminApplicantUpdateSchema,
+  hackerApplicantUpdateSchema,
+} from "@/app/schemas/applicantSchemas";
+import { isAdmin } from "@/app/util/isAdmin";
 
 export const dynamic = "auto"; //cache
 export const revalidate = 60; //cache
@@ -27,7 +31,10 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { email: string } },
 ) {
-  const safedata = applicantUpdateSchema.safeParse(request.body);
+  const admin = await isAdmin();
+  const safedata = admin
+    ? adminApplicantUpdateSchema.safeParse(request.body)
+    : hackerApplicantUpdateSchema.safeParse(request.body);
 
   if (!safedata.success) {
     return new NextResponse(safedata.error.message, { status: 400 });

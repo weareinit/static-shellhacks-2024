@@ -25,13 +25,12 @@ export const sendDiscordEmailSchema = z.object({
 });
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
-export const applicantUpdateSchema = z.object({
+export const applicantUpdateSchemaBase = z.object({
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
   age: z.number().int().positive().optional(),
   resume_path: z.string().optional(),
-  application_status: z.enum(application_statuses).optional(),
   phone_number: z
     .string()
     .regex(
@@ -52,6 +51,14 @@ export const applicantUpdateSchema = z.object({
   gender: z.string().nonempty().optional(),
   pronouns: z.string().nonempty().optional(),
   ethnicity: z.string().nonempty().optional(),
+});
+
+export const adminApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
+  application_status: z.enum(application_statuses),
+});
+
+export const hackerApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
+  application_status: z.enum(user_changeable_application_statuses),
 });
 
 export const applicantStatusChangeSchema = z.object({
