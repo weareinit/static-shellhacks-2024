@@ -361,14 +361,14 @@ function RegisterForm() {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                marginTop: "1rem",
-                marginBottom: "1rem", // Adjust the margin top as needed
+                marginTop: "2rem",
+                marginBottom: "3rem", // Adjust the margin top as needed
               }}
             />
 
             <Button
               type="submit"
-              className="rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap bg-pink text-white hover:underline"
+              className="rounded-pixel-primary mx-auto flex w-56 border-2 py-1 rounded-lg items-center justify-center whitespace-nowrap text-black"
             >
               Submit
               {isSubmitting && (
