@@ -10,22 +10,33 @@ export const application_statuses = [
   application_status_enums.waitlisted,
   application_status_enums.checked_in,
 ] as const;
-export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
+export const user_changeable_application_statuses = [
+  application_status_enums.confirmed,
+  application_status_enums.withdrawn,
+] as const;
 
-export const sendReminderEmailSchema = z.enum([application_status_enums.accepted, application_status_enums.confirmed]);
-export const sendDiscordEmailSchema = z.object({ email: z.string().nonempty(), discord_id: z.string().nonempty() });
+export const sendReminderEmailSchema = z.enum([
+  application_status_enums.accepted,
+  application_status_enums.confirmed,
+]);
+export const sendDiscordEmailSchema = z.object({
+  email: z.string().nonempty(),
+  discord_id: z.string().nonempty(),
+});
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
-export const applicantUpdateSchema = z.object({
+export const applicantUpdateSchemaBase = z.object({
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
   age: z.number().int().positive().optional(),
   resume_path: z.string().optional(),
-  application_status: z.enum(application_statuses).optional(),
   phone_number: z
     .string()
-    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
+    .regex(
+      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+      "Invalid phone number",
+    )
     .optional(),
   school: z.string().optional(),
   major: z.string().optional(),
@@ -42,9 +53,17 @@ export const applicantUpdateSchema = z.object({
   ethnicity: z.string().nonempty().optional(),
 });
 
+export const adminApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
+  application_status: z.enum(application_statuses),
+});
+
+export const hackerApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
+  application_status: z.enum(user_changeable_application_statuses),
+});
+
 export const applicantStatusChangeSchema = z.object({
   //event_id: z.string().regex(/^\d+$/).transform(Number),
-  ids: z.array(z.number()),
+  ids: z.array(z.string()),
   application_status: z.enum(application_statuses),
 });
 
@@ -58,10 +77,13 @@ export const applicantFiltersSchema = z.object({
     .transform(Number)
     .optional(),
   school: z.string().optional(),
-  format: z.string().optional(),
+  format: z.enum(["json", "csv"]).optional(),
   phone_number: z
     .string()
-    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
+    .regex(
+      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+      "Invalid phone number",
+    )
     .optional(),
 });
 
@@ -79,7 +101,12 @@ export const newApplicantSchema = z.object({
   level_of_study: z.string(),
   country: z.string().nonempty(),
   email: z.string().email(),
-  phone_number: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number"),
+  phone_number: z
+    .string()
+    .regex(
+      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+      "Invalid phone number",
+    ),
   resume_path: z.string(),
   discord: z.string().optional(),
   github: z.string().url().optional(),
