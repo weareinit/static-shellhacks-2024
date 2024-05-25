@@ -8,16 +8,37 @@ interface ModalPropsType {
   backgroundClassName?: string;
 }
 
-function Modal({ children, containerClassName, onBgClick, backgroundClassName }: ModalPropsType) {
+function Modal({
+  children,
+  containerClassName,
+  onBgClick,
+  backgroundClassName,
+}: ModalPropsType) {
   const [isBrowser, setIsBrowser] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setIsBrowser(true);
+    setIsVisible(true);
+    return () => setIsVisible(false);
   }, []);
 
-  let modal = (
-    <div onClick={onBgClick} id="modal-background" className={`fixed top-0 left-0 grid content-center w-screen h-screen justify-center bg-black bg-opacity-20 ${backgroundClassName}`}>
-      <aside className={`p-2 sm:p-5 md:p-10 sm:m-3 bg-white sm:rounded-md overflow-y-scroll w-90 border-2 border-blue ${containerClassName}`}>{children}</aside>
+  const modal = (
+    <div
+      onClick={onBgClick}
+      id="modal-background"
+      className={`fixed left-0 top-0 grid h-screen w-screen content-center justify-center bg-black bg-opacity-20 ${backgroundClassName}`}
+      style={{
+        backdropFilter: "blur(10px)",
+        transition: "opacity 0.3s ease-in-out",
+      }}
+    >
+      <aside
+        onClick={(e) => e.stopPropagation()}
+        className={`w-90 overflow-y-scroll border-2 border-blue bg-white p-2 sm:m-3 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} transform transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+      >
+        {children}
+      </aside>
     </div>
   );
 

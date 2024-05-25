@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Formik, Form, FormikProps } from "formik";
+import { Formik, Form, type FormikProps } from "formik";
 
 import { useFormOptionContext } from "@/app//hooks/FormOptionContext";
 import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
@@ -10,7 +10,7 @@ import {
   levelsOfStudy,
   majorOptions,
   pronounOptions,
-  ApplicantValues,
+  type ApplicantValues,
   formValidation,
   gradYearOptions,
 } from "@/app/util/RegistrationData";
@@ -356,7 +356,7 @@ function RegisterForm() {
               size="normal"
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY!}
               onChange={(code: string | null) => {
-                props.setFieldValue("recaptcha", code);
+                void props.setFieldValue("recaptcha", code);
               }}
               style={{
                 display: "flex",
@@ -368,7 +368,7 @@ function RegisterForm() {
 
             <Button
               type="submit"
-              className="bg-pink rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap text-white hover:underline"
+              className="rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap bg-pink text-white hover:underline"
             >
               Submit
               {isSubmitting && (
@@ -382,7 +382,7 @@ function RegisterForm() {
             </Button>
 
             {error != "" && (
-              <h2 className="font-pixel mt-1 text-center text-lg text-red-600">
+              <h2 className="mt-1 text-center font-pixel text-lg text-red-600">
                 There was an error submitting, please try again later. {error}
               </h2>
             )}
