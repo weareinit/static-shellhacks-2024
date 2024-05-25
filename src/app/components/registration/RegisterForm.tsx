@@ -21,12 +21,13 @@ import SearchInput from "../input/SearchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
+import countriesJSON from "../../util/countries.json";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { schools, countries } = useFormOptionContext();
+  const countries = countriesJSON.map((country) => country);
   const { setFinishedRegistration, setShowRegistration } =
     useShowRegistrationContext();
 
@@ -175,12 +176,12 @@ function RegisterForm() {
               max={114}
               isRequired
             />
-            <SearchInput
+            {/* <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
-            />
+            /> */}
             <SelectInput
               label="Major"
               name="major"
@@ -368,7 +369,7 @@ function RegisterForm() {
 
             <Button
               type="submit"
-              className="rounded-pixel-primary mx-auto flex w-56 border-2 py-1 rounded-lg items-center justify-center whitespace-nowrap text-black"
+              className="rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap rounded-lg border-2 py-1 text-black"
             >
               Submit
               {isSubmitting && (
