@@ -3,9 +3,14 @@ import { application_status_enums } from "@prisma/client";
 import { sendReminderEmailSchema } from "@/app/schemas/applicantSchemas";
 import { sendAcceptanceEmails } from "@/app/util/aws";
 import { db } from "@/server/db";
+import { auth } from "@/server/auth";
 
-export async function POST(req: NextRequest) {
-  const emailType = sendReminderEmailSchema.parse(req.body);
+export const POST = auth(async (request) => {
+  if (!request.auth || !request.auth.user.admin) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+  }
+
+  const emailType = sendReminderEmailSchema.parse(request.body);
 
   const applicants = await db.hacker_Applications.findMany({
     where: { application_status: emailType },
@@ -25,4 +30,4 @@ export async function POST(req: NextRequest) {
     });
   }
   return NextResponse.json({ success: true });
-}
+})

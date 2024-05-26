@@ -9,7 +9,7 @@ import MLHBanner from "@/app/components/decorations/MLHBanner";
 import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
 import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
-import { getServerAuthSession } from "@/server/auth";
+import { auth, getServerAuthSession } from "@/server/auth";
 import Login from "./components/login";
 
 export const metadata: Metadata = {
@@ -42,14 +42,16 @@ const getSchoolData = async () => {
 
 export default async function Home() {
   const { schools, countries } = await getSchoolData();
-  const stuff = await getServerAuthSession();
+  const sess = await auth();
 
   return (
     <div className="min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden bg-sand md:grid-cols-12">
       <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
+        <div className="z-[200] my-10 bg-white">
+          <div>user logged in as {JSON.stringify(sess?.user)}</div>
+          <Login />
+        </div>
         <WelcomeDecorations />
-        <div>user logged in as {JSON.stringify(stuff)}</div>
-        <Login />
         <AboutUsDecorations />
       </div>
       <Shoreline />

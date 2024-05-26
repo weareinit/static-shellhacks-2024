@@ -8,8 +8,13 @@ import {
   sendConfirmationEmail,
 } from "@/app/util/aws";
 import { Prisma } from "@prisma/client";
+import { auth } from "@/server/auth";
 
-export async function POST(request: NextRequest) {
+export const POST = auth(async (request) => {
+  if (!request.auth) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   await validateCaptcha(request);
   const body = await request.json();
 
@@ -17,6 +22,7 @@ export async function POST(request: NextRequest) {
 
   const safedata = newApplicantSchema.safeParse({
     resume_path: resumeId,
+    userId: request.auth.user.id,
     ...body,
   });
 
@@ -25,22 +31,6 @@ export async function POST(request: NextRequest) {
   }
 
   const validatedApplicant = safedata.data;
-
-  //there's no unique constraint on case insensitive emails, so we have to check manually
-  const existingApplicant = await db.hacker_Applications.findFirst({
-    where: {
-      email: {
-        equals: validatedApplicant.email,
-        mode: "insensitive",
-      },
-    },
-  });
-
-  if (existingApplicant) {
-    return NextResponse.json({
-      error: "Duplicate. User already exists with that email.",
-    });
-  }
 
   try {
     await db.hacker_Applications.create({
@@ -56,7 +46,7 @@ export async function POST(request: NextRequest) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         NextResponse.json({
-          error: "Duplicate. User already exists with that email.",
+          error: "Duplicate. User already exists with that email / id.",
         });
       }
     }
@@ -69,4 +59,4 @@ export async function POST(request: NextRequest) {
   const url = await generateSignedResumeUploadUrl(resumeId);
 
   return NextResponse.json({ resume_url: url });
-}
+});

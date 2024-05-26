@@ -1,15 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import {
   applicantFiltersSchema,
   applicantStatusChangeSchema,
 } from "@/app/schemas/applicantSchemas";
 import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
+import { auth } from "@/server/auth";
 
 export const dynamic = "auto";
 export const revalidate = 60;
 
-export async function GET(request: NextRequest) {
+export const GET = auth(async (request) => {
+  if (!request.auth || !request.auth.user.admin) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const queryparams = Object.fromEntries(request.nextUrl.searchParams);
   const safedata = applicantFiltersSchema.safeParse(queryparams);
 
@@ -40,13 +45,17 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json(filteredApplicants);
-}
+});
 
 /*
  * Route for an admin to update the status of multiple applicants at once
  * This could be used for adding applicants to the wave, waitlisting, etc.
  */
-export async function PUT(request: NextRequest) {
+export const POST = auth(async (request) => {
+  if (!request.auth || !request.auth.user.admin) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const safedata = applicantStatusChangeSchema.safeParse(request.body);
 
   if (!safedata.success) {
@@ -67,4 +76,4 @@ export async function PUT(request: NextRequest) {
   });
 
   return NextResponse.json({ message: "Successfully updated applicants" });
-}
+});

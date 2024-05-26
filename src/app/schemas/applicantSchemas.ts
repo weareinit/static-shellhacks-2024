@@ -88,7 +88,7 @@ export const applicantFiltersSchema = z.object({
 });
 
 export const newApplicantSchema = z.object({
-  event_id: z.string().regex(/^\d+$/).transform(Number),
+  userId: z.string(),
   first_name: z.string().nonempty(),
   last_name: z.string().nonempty(),
   age: z.number().int().positive(),
@@ -100,7 +100,7 @@ export const newApplicantSchema = z.object({
     .transform(Number),
   level_of_study: z.string(),
   country: z.string().nonempty(),
-  email: z.string().email(),
+  email: z.string().email().toLowerCase(),
   phone_number: z
     .string()
     .regex(
