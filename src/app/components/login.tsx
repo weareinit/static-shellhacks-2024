@@ -8,7 +8,7 @@ const Login = () => {
       <form
         action={async () => {
           "use server";
-          await signIn();
+          await signIn("discord");
         }}
       >
         <button className="z-[100] bg-blue p-5 text-xl">Sign In</button>

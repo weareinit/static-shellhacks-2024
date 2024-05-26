@@ -48,7 +48,9 @@ export default async function Home() {
     <div className="min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden bg-sand md:grid-cols-12">
       <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
         <div className="z-[200] my-10 bg-white">
-          <div>user logged in as {JSON.stringify(sess?.user)}</div>
+          <div className="w-50 text-wrap">
+            user logged in as {JSON.stringify(sess?.user)}
+          </div>
           <Login />
         </div>
         <WelcomeDecorations />
