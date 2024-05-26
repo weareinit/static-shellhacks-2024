@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import MLHBanner from "../decorations/MLHBanner";
 import SkyAndOcean from "./new_sections/SkyAndOcean";
 import DinosAndNumbers from "./new_sections/DinosAndNumbers";
-import AboutUs from "./new_sections/AboutUs";
+import ForestBackground from "./new_sections/ForestBackground";
 import FAQs from "./new_sections/FAQs";
 import Organizers from "./new_sections/Organizers";
 import Sponsors from "./new_sections/Sponsors";
@@ -19,7 +19,7 @@ const Landing = () => {
         <DinosAndNumbers />
       </div>
       <div id="about-us" className="flex w-screen flex-col">
-        <AboutUs />
+        <ForestBackground />
       </div>
       <div id="faqs">
         <FAQs />
