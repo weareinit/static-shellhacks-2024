@@ -29,6 +29,10 @@ export const GET = auth(async (request, ctx) => {
     },
   });
 
+  if (!data) {
+    return new NextResponse("Applicant not found", { status: 404 });
+  }
+
   //should convert to DTO?
   return NextResponse.json(data);
 });
@@ -61,5 +65,5 @@ export const PUT = auth(async (request, { params }) => {
     data: safedata.data,
   });
 
-  return NextResponse.json(data);
+  return NextResponse.json({ data }, { status: 200 });
 });
