@@ -1,16 +1,9 @@
 import { parseCSV } from "@/app/util/parseCSV";
-
-import { FormOptionContextProvider } from "@/app/hooks/FormOptionContext";
-import { ShowRegistrationProvider } from "@/app/hooks/ShowRegistrationContext";
-import Shoreline from "@/app/components/decorations/Shoreline";
-import GrassLine from "@/app/components/decorations/Grassline";
-import Content from "@/app/components/sections/Content";
-import MLHBanner from "@/app/components/decorations/MLHBanner";
-import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
-import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
 import { auth } from "@/server/auth";
-import Login from "./components/login";
+import Login from "./components/Login";
+import Image from "next/image";
+import Landing from "./components/new_landing/Landing";
 
 export const metadata: Metadata = {
   // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
@@ -45,25 +38,9 @@ export default async function Home() {
   const sess = await auth();
 
   return (
-    <div className="min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden bg-sand md:grid-cols-12">
-      <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
-        <div className="z-[200] my-10 bg-white">
-          <div className="w-50 text-wrap">
-            user logged in as {JSON.stringify(sess?.user)}
-          </div>
-          <Login />
-        </div>
-        <WelcomeDecorations />
-        <AboutUsDecorations />
-      </div>
-      <Shoreline />
-      <GrassLine />
-      <ShowRegistrationProvider>
-        <FormOptionContextProvider schools={schools} countries={countries}>
-          <Content />
-        </FormOptionContextProvider>
-      </ShowRegistrationProvider>
-    </div>
+    <>
+      <Landing />
+    </>
   );
 }
 

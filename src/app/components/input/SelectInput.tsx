@@ -20,16 +20,18 @@ function SelectInput({ label, options, isRequired, ...props }: SelectInputProps)
   };
 
   return (
-    <div className="flex flex-col basis-full my-1">
+    <div className="my-1 flex basis-full flex-col">
       <Label>{isRequired ? `*${label}` : label}</Label>
       <div
-        className={`relative bg-white border-2 border-blue rounded-none p-1 font-inter ${
-          meta.touched && meta.error ? "border-red-600 focus:ring-red-600/50" : ""
+        className={`relative rounded-lg border-2 border-[#787976] border-blue bg-[#f1e9e0] p-1 py-2 font-inter ${
+          meta.touched && meta.error
+            ? "border-red-600 focus:ring-red-600/50"
+            : ""
         }`}
       >
         <select
           {...field}
-          className="w-full appearance-none outline-none cursor-pointer bg-transparent"
+          className="w-full cursor-pointer appearance-none bg-transparent outline-none"
           onClick={handleSelectToggle}
         >
           <option />
@@ -42,7 +44,7 @@ function SelectInput({ label, options, isRequired, ...props }: SelectInputProps)
           })}
         </select>
         <div
-          className={`absolute top-1/2 right-2 transform -translate-y-1/2 ${
+          className={`absolute right-2 top-1/2 -translate-y-1/2 transform ${
             isOpen ? "rotate-180" : "rotate-0"
           } transition-transform duration-200`}
         >

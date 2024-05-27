@@ -14,14 +14,14 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function TextInput({ label, isRequired, ...props }: TextInputProps) {
   const [field, meta] = useField(props);
   return (
-    <div className="basis-full flex flex-col my-1">
+    <div className="my-1 flex basis-full flex-col">
       <Label className="basis-full">{isRequired ? `*${label}` : label}</Label>
       <input
         {...field}
         {...props}
-        className={`border-blue basis-full border-2 p-1 h-8 sm:h-10 font-inter focus:ring-2 ${
+        className={`h-8 basis-full rounded-lg border-2 border-[#787976] bg-[#f1e9e0] p-1 py-2 font-inter !opacity-100 focus:ring-2 sm:h-10 ${
           meta.touched && meta.error
-            ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
+            ? `border-red-600 focus:outline-none focus:ring-red-600/50`
             : `focus:ring-blue/50`
         }`}
       />

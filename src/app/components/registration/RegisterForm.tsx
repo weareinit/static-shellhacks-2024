@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Formik, Form, FormikProps } from "formik";
+import { Formik, Form, type FormikProps } from "formik";
 
 import { useFormOptionContext } from "@/app//hooks/FormOptionContext";
 import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
@@ -10,7 +10,7 @@ import {
   levelsOfStudy,
   majorOptions,
   pronounOptions,
-  ApplicantValues,
+  type ApplicantValues,
   formValidation,
   gradYearOptions,
 } from "@/app/util/RegistrationData";
@@ -21,12 +21,13 @@ import SearchInput from "../input/SearchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
+import countriesJSON from "../../util/countries.json";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { schools, countries } = useFormOptionContext();
+  const countries = countriesJSON.map((country) => country);
   const { setFinishedRegistration, setShowRegistration } =
     useShowRegistrationContext();
 
@@ -175,12 +176,12 @@ function RegisterForm() {
               max={114}
               isRequired
             />
-            <SearchInput
+            {/* <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
-            />
+            /> */}
             <SelectInput
               label="Major"
               name="major"
@@ -356,19 +357,19 @@ function RegisterForm() {
               size="normal"
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY!}
               onChange={(code: string | null) => {
-                props.setFieldValue("recaptcha", code);
+                void props.setFieldValue("recaptcha", code);
               }}
               style={{
                 display: "flex",
                 justifyContent: "center",
-                marginTop: "1rem",
-                marginBottom: "1rem", // Adjust the margin top as needed
+                marginTop: "2rem",
+                marginBottom: "3rem", // Adjust the margin top as needed
               }}
             />
 
             <Button
               type="submit"
-              className="bg-pink rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap text-white hover:underline"
+              className="rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap rounded-lg border-2 py-1 text-black"
             >
               Submit
               {isSubmitting && (
@@ -382,7 +383,7 @@ function RegisterForm() {
             </Button>
 
             {error != "" && (
-              <h2 className="font-pixel mt-1 text-center text-lg text-red-600">
+              <h2 className="mt-1 text-center font-pixel text-lg text-red-600">
                 There was an error submitting, please try again later. {error}
               </h2>
             )}
