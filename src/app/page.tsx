@@ -9,7 +9,7 @@ import MLHBanner from "@/app/components/decorations/MLHBanner";
 import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
 import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
-import { auth, getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
 import Login from "./components/login";
 
 export const metadata: Metadata = {

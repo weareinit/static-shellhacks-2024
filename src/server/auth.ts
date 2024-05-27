@@ -71,6 +71,15 @@ export const {
 
       user.admin = roles.has(ADMIN_ROLE);
       user.discordId = json.user.id;
+
+      //Update the admin role for the user
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          admin: user.admin,
+        },
+      });
+
       console.log("user", user);
       return true;
     },
