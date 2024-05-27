@@ -7,7 +7,7 @@ import { auth } from "@/server/auth";
 
 export const POST = auth(async (request) => {
   if (!request.auth || !request.auth.user.admin) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const emailType = sendReminderEmailSchema.parse(request.body);
@@ -29,5 +29,5 @@ export const POST = auth(async (request) => {
       status: 500,
     });
   }
-  return NextResponse.json({ success: true });
-})
+  return NextResponse.json({ success: true }, { status: 200 });
+});

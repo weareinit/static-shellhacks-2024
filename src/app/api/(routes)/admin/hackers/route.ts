@@ -67,6 +67,7 @@ export const POST = auth(async (request) => {
   await db.hacker_Applications.updateMany({
     where: {
       userId: {
+        //idk if we want userid or hackerid here, we will have to see
         in: ids,
       },
     },

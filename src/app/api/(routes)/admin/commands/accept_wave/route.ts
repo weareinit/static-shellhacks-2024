@@ -6,7 +6,7 @@ import { auth } from "@/server/auth";
 
 export const POST = auth(async (request) => {
   if (!request.auth || !request.auth.user.admin) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const applicants = await db.hacker_Applications.findMany({
@@ -20,5 +20,5 @@ export const POST = auth(async (request) => {
   });
 
   await sendAcceptanceEmails(applicants);
-  return NextResponse.json({ success: true });
-})
+  return NextResponse.json({ success: true }, { status: 200 });
+});
