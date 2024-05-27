@@ -1,7 +1,6 @@
 import { parseCSV } from "@/app/util/parseCSV";
 import type { Metadata } from "next";
 import { auth } from "@/server/auth";
-import Login from "./components/Login";
 import Image from "next/image";
 import Landing from "./components/new_landing/Landing";
 
