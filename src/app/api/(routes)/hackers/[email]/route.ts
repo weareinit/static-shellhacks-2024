@@ -1,10 +1,9 @@
 import { db } from "@/server/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import {
   adminApplicantUpdateSchema,
   hackerApplicantUpdateSchema,
 } from "@/app/schemas/applicantSchemas";
-import { isAdmin } from "@/app/util/isAdmin";
 import { auth } from "@/server/auth";
 
 export const dynamic = "auto"; //cache
