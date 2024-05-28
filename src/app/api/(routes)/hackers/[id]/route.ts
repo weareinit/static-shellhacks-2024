@@ -35,10 +35,12 @@ export const PUT = auth(async (request, { params }) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
+  const jsonBody = await request.json();
+
   //since admins are allowed to change more fields (eg. application status) than the applicant
   const safedata = request.auth.user.admin
-    ? adminApplicantUpdateSchema.safeParse(request.body)
-    : hackerApplicantUpdateSchema.safeParse(request.body);
+    ? adminApplicantUpdateSchema.safeParse(jsonBody)
+    : hackerApplicantUpdateSchema.safeParse(jsonBody);
 
   if (!safedata.success) {
     return new NextResponse(safedata.error.message, { status: 400 });

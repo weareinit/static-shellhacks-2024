@@ -8,6 +8,9 @@ import {
   APPLICATION_STATUS_COLOR_MAPPING,
   APPLICATION_STATUS_NAME_MAPPING,
 } from "../../constants/applicationConstants";
+import SocialButtons from "@/app/components/sections/SocialButtons";
+import DashboardSocialButtons from "./DashboardSocialButtons";
+import WithdrawApplicationButton from "./WithdrawApplicationButton";
 
 export default async function DahsboardContent() {
   const sess = await auth();
@@ -72,19 +75,28 @@ export default async function DahsboardContent() {
         <div className="my-5 w-[90%] border-b border-black"></div>
       </div>
 
-      {/* Resume */}
-      <div className="flex flex-col items-start gap-3">
-        <p className="font-museo text-xl">Your Resume:</p>
-        <div className="border border-black bg-[#D9D9D9] p-4">
-          <Image
-            src="/assets/new/misc/resume.png"
-            width={275}
-            height={600}
-            alt="Resume"
-            draggable={false}
-          />
+      <div className="grid grid-cols-3 gap-8">
+        {/* Resume */}
+        <div className="col-span-1 flex flex-col items-start gap-3">
+          <p className="font-museo text-xl">Your Resume:</p>
+          <div className="border border-black bg-[#D9D9D9] p-4">
+            <Image
+              src="/assets/new/misc/resume.png"
+              width={275}
+              height={600}
+              alt="Resume"
+              draggable={false}
+            />
+          </div>
+          <CustomButton>Upload Another</CustomButton>
         </div>
-        <CustomButton>Upload Another</CustomButton>
+
+        {/* Resources */}
+        <div className="col-span-2 flex flex-col items-start gap-3">
+          <p className="font-museo text-xl">Resources:</p>
+          <DashboardSocialButtons />
+          <WithdrawApplicationButton userId={sess!.user.id} />
+        </div>
       </div>
     </div>
   );

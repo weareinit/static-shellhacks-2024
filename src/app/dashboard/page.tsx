@@ -318,7 +318,7 @@ const NewDashboard = () => {
               Jacob's Hacker Dashboard
             </p>
           </div>
-          <div className="h-[1000px] w-full rounded-lg bg-white bg-opacity-50">
+          <div className="w-full rounded-lg bg-white bg-opacity-50">
             <DahsboardContent />
           </div>
         </div>
