@@ -12,16 +12,12 @@ import SocialButtons from "@/app/components/sections/SocialButtons";
 import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 
-export default async function DahsboardContent() {
+export default async function DahsboardContent({
+  user,
+}: {
+  user: Hacker_Applications;
+}) {
   const sess = await auth();
-
-  const userRaw = await getUserFromId(sess!.user.id);
-
-  if (!userRaw.ok) {
-    return <div>Failed to fetch user</div>;
-  }
-
-  const user = (await userRaw.json()) as Hacker_Applications;
 
   return (
     <div className="flex w-full flex-col gap-4 p-5">

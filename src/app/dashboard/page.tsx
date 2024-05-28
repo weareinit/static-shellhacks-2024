@@ -32,6 +32,8 @@ import Link from "next/link";
 import { CustomButton } from "./components/CustomButton";
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
+import { getUserFromId } from "../api/(logic)/getUserFromId";
+import { Hacker_Applications } from "@prisma/client";
 
 // const Dashboard = () => {
 //   const { data: applicantData, isLoading, isError } = useApplicationQuery();
@@ -276,6 +278,14 @@ const NewDashboard = async () => {
     redirect("/api/auth/signin");
   }
 
+  const userRaw = await getUserFromId(sess!.user.id);
+
+  if (!userRaw.ok) {
+    return <div>Failed to fetch user</div>;
+  }
+
+  const user = (await userRaw.json()) as Hacker_Applications;
+
   return (
     <div className="w-100 bg-blue-500">
       {/* The dashboard section (and image container) */}
@@ -324,11 +334,11 @@ const NewDashboard = async () => {
               </CustomButton>
             </Link>
             <p className="font-zoonaji text-darker_cyan col-span-8 mt-4 text-5xl">
-              Jacob's Hacker Dashboard
+              {user.first_name}'s Hacker Dashboard
             </p>
           </div>
           <div className="w-full rounded-lg bg-white bg-opacity-50">
-            <DahsboardContent />
+            <DahsboardContent user={user} />
           </div>
         </div>
       </div>
