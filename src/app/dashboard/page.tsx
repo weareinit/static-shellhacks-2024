@@ -1,3 +1,4 @@
+"use server";
 // "use client";
 import React, {
   // useState,
@@ -29,6 +30,8 @@ import Image, { StaticImageData } from "next/image";
 import DahsboardContent from "./components/DashboardContent";
 import Link from "next/link";
 import { CustomButton } from "./components/CustomButton";
+import { auth } from "@/server/auth";
+import { redirect } from "next/navigation";
 
 // const Dashboard = () => {
 //   const { data: applicantData, isLoading, isError } = useApplicationQuery();
@@ -266,7 +269,13 @@ import { CustomButton } from "./components/CustomButton";
 //   );
 // }
 
-const NewDashboard = () => {
+const NewDashboard = async () => {
+  const sess = await auth();
+
+  if (!sess?.user) {
+    redirect("/api/auth/signin");
+  }
+
   return (
     <div className="w-100 bg-blue-500">
       {/* The dashboard section (and image container) */}
