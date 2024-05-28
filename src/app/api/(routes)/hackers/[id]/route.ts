@@ -5,6 +5,7 @@ import {
   hackerApplicantUpdateSchema,
 } from "@/app/schemas/applicantSchemas";
 import { auth } from "@/server/auth";
+import { getUserFromId } from "@/app/api/(logic)/getUserFromId";
 
 export const dynamic = "auto"; //cache
 export const revalidate = 60; //cache
@@ -13,28 +14,16 @@ export const revalidate = 60; //cache
  * Route to get an applicant's information. For a hacker, this route is only accessable if they own the id. For an admin, they can get any applicant. This is enforced in the middleware
  */
 export const GET = auth(async (request, ctx) => {
+  console.log(request.auth);
   if (!request.auth) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  //yes, the types on ctx are terrible... https://auth0.github.io/nextjs-auth0/types/helpers_with_api_auth_required.AppRouteHandlerFnContext.html
-  const id = (ctx.params?.id as string) || "";
+  const id = request.auth.user.admin
+    ? (ctx?.params?.id as string)
+    : request.auth.user.id;
 
-  const data = await db.hacker_Applications.findUnique({
-    where: {
-      userId: request.auth.user.admin ? id : request.auth.user.id,
-    },
-    include: {
-      user: true,
-    },
-  });
-
-  if (!data) {
-    return new NextResponse("Applicant not found", { status: 404 });
-  }
-
-  //should convert to DTO?
-  return NextResponse.json(data);
+  return await getUserFromId(id);
 });
 
 /*
