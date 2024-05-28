@@ -1,13 +1,13 @@
 import { Hacker_Applications } from "@prisma/client";
 import UserInfo from "./UserInfo";
-import { CustomButton } from "./page";
+import { CustomButton } from "./CustomButton";
 import Image from "next/image";
-import { getUserFromId } from "../api/(logic)/getUserFromId";
-import { auth } from "@/server/auth";
+import { getUserFromId } from "../../api/(logic)/getUserFromId";
+import { auth, signOut } from "@/server/auth";
 import {
   APPLICATION_STATUS_COLOR_MAPPING,
   APPLICATION_STATUS_NAME_MAPPING,
-} from "../constants/applicationConstants";
+} from "../../constants/applicationConstants";
 
 export default async function DahsboardContent() {
   const sess = await auth();
@@ -23,7 +23,14 @@ export default async function DahsboardContent() {
   return (
     <div className="flex w-full flex-col gap-4 p-5">
       <div className="flex justify-end">
-        <CustomButton colorVariant={2}>Logout</CustomButton>
+        <form
+          action={async () => {
+            "use server";
+            await signOut();
+          }}
+        >
+          <CustomButton colorVariant={2}>Logout</CustomButton>
+        </form>
       </div>
 
       <div className="grid grid-cols-8 gap-8">
@@ -32,9 +39,10 @@ export default async function DahsboardContent() {
           <div className="flex flex-col justify-center gap-4">
             <Image
               src="/assets/new/misc/Shell 1.svg"
-              alt="Nvidia Logo"
+              alt="test image"
               width={275}
               height={200}
+              draggable={false}
             />
             <CustomButton>Change Avatar</CustomButton>
           </div>
@@ -73,6 +81,7 @@ export default async function DahsboardContent() {
             width={275}
             height={600}
             alt="Resume"
+            draggable={false}
           />
         </div>
         <CustomButton>Upload Another</CustomButton>

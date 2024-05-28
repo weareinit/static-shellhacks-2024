@@ -26,7 +26,9 @@ import Image, { StaticImageData } from "next/image";
 // import SocialButtons from "@/app/components/sections/SocialButtons";
 // import Button from "@/app/components/input/Button";
 // import { useApplicationQuery } from "../hooks/ApplicationQuery";
-import DahsboardContent from "./DashboardContent";
+import DahsboardContent from "./components/DashboardContent";
+import Link from "next/link";
+import { CustomButton } from "./components/CustomButton";
 
 // const Dashboard = () => {
 //   const { data: applicantData, isLoading, isError } = useApplicationQuery();
@@ -264,37 +266,6 @@ import DahsboardContent from "./DashboardContent";
 //   );
 // }
 
-export const CustomButton = ({
-  onClick,
-  colorVariant,
-  border,
-  children,
-}: PropsWithChildren<{
-  onClick?: () => void | null;
-  colorVariant?: number;
-  border?: boolean;
-}>) => {
-  const color =
-    colorVariant === 1
-      ? "bg-[#E9DBCC] hover:bg-[#E9DBCC]/90 text-black"
-      : colorVariant === 2
-        ? "bg-[#CDC2BE] hover:bg-[#CDC2BE]/90 text-blach"
-        : "bg-[#78644F] hover:bg-[#78644F]/90 text-white";
-
-  return (
-    <button
-      onClick={onClick}
-      className={
-        "font-zoonaji text-md rounded-lg border-[#000000] p-2 " +
-        color +
-        (border ? " border" : "")
-      }
-    >
-      {children}
-    </button>
-  );
-};
-
 const NewDashboard = () => {
   return (
     <div className="w-100 bg-blue-500">
@@ -322,25 +293,27 @@ const NewDashboard = () => {
         </div>
         <div className="relative z-10 h-[1000px] w-full">
           <div className="mb-10 grid w-full grid-cols-10 items-start text-center">
-            <CustomButton colorVariant={1} border>
-              <div className="flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={3}
-                  stroke="currentColor"
-                  className="mr-2 h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
-                </svg>
-                <span className="mt-1">Home</span>
-              </div>
-            </CustomButton>
+            <Link href="/">
+              <CustomButton colorVariant={1} border>
+                <div className="flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={3}
+                    stroke="currentColor"
+                    className="mr-2 h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                  <span className="mt-1">Home</span>
+                </div>
+              </CustomButton>
+            </Link>
             <p className="font-zoonaji text-darker_cyan col-span-8 mt-4 text-5xl">
               Jacob's Hacker Dashboard
             </p>

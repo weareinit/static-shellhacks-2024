@@ -1,7 +1,7 @@
 "use server";
 import { Hacker_Applications } from ".prisma/client";
 import { auth } from "@/server/auth";
-import { getUserFromId } from "../api/(logic)/getUserFromId";
+import { getUserFromId } from "../../api/(logic)/getUserFromId";
 
 const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
   first_name: "First Name",
