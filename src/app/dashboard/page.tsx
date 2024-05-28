@@ -297,7 +297,7 @@ export const CustomButton = ({
 
 const NewDashboard = () => {
   return (
-    <div className="w-100">
+    <div className="w-100 bg-blue-500">
       {/* The dashboard section (and image container) */}
       <div className="relative flex justify-center p-12">
         <div className="absolute inset-0 flex flex-col justify-center">
@@ -358,6 +358,15 @@ const NewDashboard = () => {
             objectFit="cover"
             alt="Beach"
             className="object-cover"
+          />
+        </div>
+        <div className="absolute left-[150px] top-1/4">
+          <Image
+            src="/assets/new/dinosaurs/megalodon.svg"
+            className="opacity-40"
+            width={300}
+            height={200}
+            alt="Dino"
           />
         </div>
       </div>
