@@ -2,13 +2,11 @@ import { Hacker_Applications, application_status_enums } from "@prisma/client";
 import UserInfo from "./UserInfo";
 import { CustomButton } from "./CustomButton";
 import Image from "next/image";
-import { getUserFromId } from "../../api/(logic)/getUserFromId";
 import { auth, signOut } from "@/server/auth";
 import {
   APPLICATION_STATUS_COLOR_MAPPING,
   APPLICATION_STATUS_NAME_MAPPING,
 } from "../../constants/applicationConstants";
-import SocialButtons from "@/app/components/sections/SocialButtons";
 import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 import ResumeView from "./ResumeView";
@@ -76,17 +74,32 @@ export default async function DahsboardContent({
         {/* Resume */}
         <ResumeView userId={sess!.user.id} />
 
-        {/* Resources */}
-        <div className="col-span-2 flex flex-col items-start gap-3">
-          <p className="font-museo text-xl">Resources:</p>
-          <DashboardSocialButtons />
-          {user.application_status === application_status_enums.withdrawn ? (
-            <p className="font-zoonaji text-2xl text-red-600">
-              You have withdrawn your application
+        {/* Contact / resources */}
+        <div className="col-span-2 flex flex-col items-start gap-4">
+          <div>
+            <p className="font-museo text-xl">Contact:</p>
+            <p className="text-md font-museo">
+              If you have any questions about the hackathon, please post them in
+              the <i>#ask-an-organizer</i> channel in Discord, and we'll be in
+              touch as soon as possible. Or if you prefer, you may reach out to
+              an organizer privately on Discord or send an email to
+              <i> shellhacks@fiu.weareinit.org</i>.
             </p>
-          ) : (
-            <WithdrawApplicationButton userId={sess!.user.id} />
-          )}
+          </div>
+
+          <div>
+            <p className="font-museo text-xl">Resources:</p>
+            <div className="my-3">
+              <DashboardSocialButtons />
+            </div>
+            {user.application_status === application_status_enums.withdrawn ? (
+              <p className="font-zoonaji text-2xl text-red-600">
+                You have withdrawn your application
+              </p>
+            ) : (
+              <WithdrawApplicationButton userId={sess!.user.id} />
+            )}
+          </div>
         </div>
       </div>
     </div>
