@@ -4,7 +4,7 @@ import React from "react";
 const Organizers = () => {
   return (
     <div className="relative">
-      {/* <Image
+      {/* <Image priority
         src="/assets/new/background/lava/Lava1.gif"
         layout="responsive"
         width={1789}
@@ -13,6 +13,7 @@ const Organizers = () => {
         className="relative z-[-10]"
       /> */}
       <Image
+        priority
         src="/assets/new/background/lava/Lava1.png"
         layout="responsive"
         width={1789}
@@ -21,6 +22,7 @@ const Organizers = () => {
         className="relative z-[-10]"
       />
       <Image
+        priority
         src="/assets/new/background/lava/Lava2.png"
         layout="responsive"
         width={1789}
@@ -34,6 +36,7 @@ const Organizers = () => {
           Organized By
         </h1>
         <Image
+          priority
           src="/assets/sponsors/INIT_FIU.svg"
           width={617}
           height={136}

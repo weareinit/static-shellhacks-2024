@@ -8,6 +8,7 @@ const BigDinos = () => {
       <div className="absolute inset-0 flex flex-row items-baseline justify-between">
         <div>
           <Image
+            priority
             src="assets/new/plants/Tree 2.svg"
             width={750}
             height={750}
@@ -15,6 +16,7 @@ const BigDinos = () => {
             className="absolute bottom-0 left-[-250px] z-[-3]"
           />
           <Image
+            priority
             src="/assets/new/dinosaurs/Brachiosaurus.svg"
             width={1063}
             height={1143}
@@ -24,6 +26,7 @@ const BigDinos = () => {
         </div>
         <div>
           <Image
+            priority
             src="assets/new/plants/Tree 2.svg"
             width={600}
             height={600}
@@ -31,6 +34,7 @@ const BigDinos = () => {
             className="absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform"
           />
           <Image
+            priority
             src="/assets/new/dinosaurs/Trex_1.svg"
             width={723}
             height={844}

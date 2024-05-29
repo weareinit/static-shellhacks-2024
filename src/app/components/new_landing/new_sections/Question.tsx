@@ -30,6 +30,7 @@ const Question: React.FC<QuestionProps> = ({ Q, A }) => {
         <div className="flex w-full items-center justify-between bg-cotton_seed px-4 py-5">
           <h2 className="text-left font-museo text-[30px]">{Q}?</h2>
           <Image
+            priority
             src="assets/new/misc/arrow_up.svg"
             alt="Toggle Arrow"
             width={40}

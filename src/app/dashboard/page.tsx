@@ -23,7 +23,7 @@ import { useApplicationQuery } from "../hooks/ApplicationQuery";
 
 const Dashboard = () => {
   const { data: applicantData, isLoading, isError } = useApplicationQuery();
-  
+
   const { showHackerGuide, setShowHackerGuide } = useHackerGuideContext();
   const [isUploadingResume, setIsUploadingResume] = useState<boolean>(false);
   const [decorationImage, setDecorationImage] =
@@ -105,14 +105,14 @@ const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-sand p-2 text-center md:p-8">
+      <main className="bg-sand min-h-screen p-2 text-center md:p-8">
         <h1 className="text-2xl font-bold">Loading...</h1>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-sand p-2 md:p-8">
+    <main className="bg-sand min-h-screen p-2 md:p-8">
       <Navbar />
 
       {showHackerGuide && <HackerGuide />}
@@ -129,7 +129,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <section>
-          <h1 className="my-4 text-left font-pixel text-4xl">
+          <h1 className="font-pixel my-4 text-left text-4xl">
             Welcome, {applicantData.first_name}!
           </h1>
 
@@ -152,7 +152,7 @@ const Dashboard = () => {
                   <PixelButton
                     text="Confirm Attendence"
                     onClick={handleConfirmClick}
-                    className="mt-2 bg-deep_blue hover:bg-pink"
+                    className="bg-deep_blue hover:bg-pink mt-2"
                   />
                 )}
 
@@ -184,7 +184,7 @@ const Dashboard = () => {
               <PixelButton
                 text="View Resume"
                 onClick={() => openApplicantResume(applicantData.email)}
-                className="mt-2 bg-deep_blue hover:bg-pink"
+                className="bg-deep_blue hover:bg-pink mt-2"
               />
 
               <input
@@ -198,7 +198,7 @@ const Dashboard = () => {
                 isLoading={isUploadingResume}
                 text="Upload New Resume"
                 onClick={() => fileInputRef.current?.click()}
-                className="mt-2 bg-deep_blue hover:bg-pink"
+                className="bg-deep_blue hover:bg-pink mt-2"
               />
             </div>
 
@@ -219,13 +219,13 @@ const Dashboard = () => {
               <div className="flex flex-col items-center justify-center align-middle">
                 <a
                   onClick={openHackerGuide}
-                  className="mt-2 cursor-pointer font-pixel text-3xl text-pink hover:text-deep_blue"
+                  className="font-pixel text-pink hover:text-deep_blue mt-2 cursor-pointer text-3xl"
                 >
                   Open Hacker Guide
                 </a>
                 <Link
                   href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
-                  className="mb-3 mt-2 cursor-pointer font-pixel text-lg text-pink hover:text-deep_blue"
+                  className="font-pixel text-pink hover:text-deep_blue mb-3 mt-2 cursor-pointer text-lg"
                 >
                   MLH Code of Conduct
                 </Link>
@@ -242,13 +242,13 @@ const Dashboard = () => {
 
 function DashboardRemoved() {
   return (
-    <main className="flex h-screen min-h-screen items-center justify-center bg-sand p-2 md:p-8">
+    <main className="bg-sand flex h-screen min-h-screen items-center justify-center p-2 md:p-8">
       <div className="rounded-pixel flex w-[40vw] min-w-[200px] max-w-[600px] flex-col items-center justify-center space-y-3 bg-white p-5">
-        <h1 className="text-center font-console text-xl ">
+        <h1 className="font-console text-center text-xl ">
           Registration Has Ended, Thanks for Hacking!
         </h1>
         <Link href="/">
-          <Button className="col-span-full flex h-[10vw] max-h-[60px] min-h-[50px] w-[40vw] min-w-[300px] max-w-[500px] items-center justify-center bg-deep_blue text-center text-white drop-shadow-teal hover:bg-pink hover:drop-shadow-pink">
+          <Button className="bg-deep_blue drop-shadow-teal hover:bg-pink hover:drop-shadow-pink col-span-full flex h-[10vw] max-h-[60px] min-h-[50px] w-[40vw] min-w-[300px] max-w-[500px] items-center justify-center text-center text-white">
             Back to Dashboard
           </Button>
         </Link>

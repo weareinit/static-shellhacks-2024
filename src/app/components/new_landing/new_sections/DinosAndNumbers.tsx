@@ -7,6 +7,7 @@ const DinosAndNumbers = () => {
   return (
     <div className="relative">
       <Image
+        priority
         src="/assets/new/background/beach/Beach.png"
         layout="responsive"
         width={1730}
