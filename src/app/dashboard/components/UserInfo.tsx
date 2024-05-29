@@ -38,11 +38,11 @@ export default async function UserInfo({
   user: Hacker_Applications;
 }) {
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-1 md:grid-cols-2">
       {Object.entries(user).map(([key, value]) => {
         if (PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]) {
           return (
-            <div key={key} className="font-museo flex">
+            <div key={key} className="flex font-museo">
               <h2 className="mr-2 font-bold">
                 {PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]}:
               </h2>

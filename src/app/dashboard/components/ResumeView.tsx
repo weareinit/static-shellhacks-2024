@@ -23,7 +23,7 @@ export default function ResumeView({ userId }: { userId: string }) {
   return (
     <div className="col-span-1 flex flex-col items-start gap-3">
       <p className="font-museo text-xl">Your Resume:</p>
-      <div className="flex min-h-[200px] min-w-[150px] flex-col items-center justify-between border border-black bg-white p-4">
+      <div className="flex min-h-[220px] min-w-[225px] flex-col items-center justify-between border border-black bg-white p-4">
         <Link href={`/api/hackers/${userId}/resume`} target="_blank">
           <CustomButton colorVariant={2}>
             <div className="flex items-center gap-2">

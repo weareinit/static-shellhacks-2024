@@ -33,7 +33,7 @@ export default async function DahsboardContent({
 
       <div className="grid grid-cols-8 gap-8">
         {/* Avatar container */}
-        <div className="col-span-2 flex flex-col items-start justify-between">
+        <div className="col-span-8 flex flex-col items-center justify-between lg:col-span-2 lg:items-start">
           <div className="flex flex-col justify-center gap-4">
             <Image
               src="/assets/new/misc/Shell 1.svg"
@@ -45,7 +45,7 @@ export default async function DahsboardContent({
             <CustomButton>Change Avatar</CustomButton>
           </div>
 
-          <div>
+          <div className="mt-2">
             <p className="font-zoonaji text-2xl">
               Status:{" "}
               <span
@@ -61,7 +61,7 @@ export default async function DahsboardContent({
         </div>
 
         {/* User info */}
-        <div className="col-span-6">
+        <div className="col-span-8 lg:col-span-6">
           <UserInfo user={user} />
         </div>
       </div>
@@ -75,7 +75,7 @@ export default async function DahsboardContent({
         <ResumeView userId={sess!.user.id} />
 
         {/* Contact / resources */}
-        <div className="col-span-2 flex flex-col items-start gap-4">
+        <div className="col-span-3 flex flex-col items-start gap-4 lg:col-span-2">
           <div>
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">

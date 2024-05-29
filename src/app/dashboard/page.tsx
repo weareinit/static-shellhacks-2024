@@ -34,24 +34,24 @@ const NewDashboard = async () => {
         <div className="absolute inset-0 flex flex-col justify-center">
           <div className="relative flex-grow">
             <Image
-              src="/assets/new/background/sky/Sky 2.svg"
+              src="/assets/new/background/sky/Sky 5.svg"
               layout="fill"
               objectFit="cover"
               alt="Sky"
               className="object-cover"
             />
           </div>
-          <div className="relative h-[500px]">
+          <div className="relative h-[250px]">
             <Image
               src="/assets/new/background/sky/sky.png"
               layout="fill"
               objectFit="cover"
               alt="Sky Continuation"
-              className="object-cover"
+              className="object-cover object-bottom"
             />
           </div>
         </div>
-        <div className="relative z-10 h-[1000px] w-full">
+        <div className="relative z-10  w-full">
           <div className="mb-10 grid w-full grid-cols-10 items-start text-center">
             <Link href="/">
               <CustomButton colorVariant={1} border>
@@ -84,7 +84,7 @@ const NewDashboard = async () => {
         </div>
       </div>
       <div className="relative">
-        <div className="relative h-[300px]">
+        <div className="relative h-[200px]">
           <Image
             src="/assets/new/background/beach/Ocean 5.svg"
             layout="fill"
@@ -97,7 +97,7 @@ const NewDashboard = async () => {
           <Image
             src="/assets/new/dinosaurs/megalodon.svg"
             className="opacity-40"
-            width={300}
+            width={200}
             height={200}
             alt="Dino"
           />
