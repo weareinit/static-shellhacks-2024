@@ -6,6 +6,7 @@ const FAQs = () => {
   return (
     <div className="relative">
       <Image
+        priority
         src="/assets/new/background/forest/Dirt 1.png"
         layout="responsive"
         width={1789}
@@ -14,6 +15,7 @@ const FAQs = () => {
         className="relative z-[-10]"
       />
       <Image
+        priority
         src="/assets/new/background/forest/Dirt 2.png"
         layout="responsive"
         width={1789}
@@ -22,6 +24,7 @@ const FAQs = () => {
         className="relative z-[-10]"
       />
       <Image
+        priority
         src="/assets/new/background/forest/Dirt 2.png"
         layout="responsive"
         width={1789}
@@ -30,6 +33,7 @@ const FAQs = () => {
         className="relative z-[-10]"
       />
       <Image
+        priority
         src="/assets/new/background/forest/Dirt 2.png"
         layout="responsive"
         width={1789}
@@ -37,7 +41,7 @@ const FAQs = () => {
         alt="Dirt background"
         className="relative z-[-10]"
       />
-      {/* <Image
+      {/* <Image priority
         src="/assets/new/background/forest/Dirt 2.png"
         layout="responsive"
         width={1789}

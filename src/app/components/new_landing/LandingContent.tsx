@@ -19,6 +19,7 @@ const LandingContent = () => {
           <p className="mt-1 font-museo text-lg">Powered by </p>
           <div className="relative right-3 top-[0.1625rem] h-8 w-28">
             <Image
+              priority
               src="/assets/new/logo/Nvidia_Logo.png"
               alt="Nvidia Logo"
               fill
@@ -59,6 +60,7 @@ const LandingContent = () => {
       <div className="mt-7 flex justify-center">
         <div className="relative bottom-3 h-11 w-11">
           <Image
+            priority
             src="/assets/new/animation/scroll_for_more.gif"
             alt="scroll for more"
             fill

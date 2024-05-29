@@ -28,9 +28,23 @@ module.exports = {
         'museoregular': ['museoregular', 'sans-serif'],
         'museoitalic': ['museoitalic', 'sans-serif'],
       },
-
       screens: {
         xs: "400px",
+      },
+      animation: {
+        'fish-slide': 'slide 15s linear infinite',
+        'cloud-slide': 'slide 80s linear infinite',
+        'right-cloud-slide': 'right_slide 90s linear infinite',
+      },
+      keyframes: {
+        slide: {
+          '0%': { transform: 'translateX(100vw)' },
+          '100%': { transform: 'translateX(-100vw)' },
+        },
+        right_slide: {
+          '0%': { transform: 'translateX(-100vw)' },
+          '100%': { transform: 'translateX(100vw)' },
+        }
       },
     },
   },
