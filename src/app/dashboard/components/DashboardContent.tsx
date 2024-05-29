@@ -1,7 +1,6 @@
 import { Hacker_Applications, application_status_enums } from "@prisma/client";
 import UserInfo from "./UserInfo";
 import { CustomButton } from "./CustomButton";
-import Image from "next/image";
 import { auth, signOut } from "@/server/auth";
 import {
   APPLICATION_STATUS_COLOR_MAPPING,
@@ -10,6 +9,7 @@ import {
 import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 import ResumeView from "./ResumeView";
+import DashboardAvatar from "./DashboardAvatar";
 
 export default async function DahsboardContent({
   user,
@@ -35,14 +35,7 @@ export default async function DahsboardContent({
         {/* Avatar container */}
         <div className="col-span-8 flex flex-col items-center justify-between lg:col-span-2 lg:items-start">
           <div className="flex flex-col justify-center gap-4">
-            <Image
-              src="/assets/new/misc/Shell 1.svg"
-              alt="test image"
-              width={275}
-              height={200}
-              draggable={false}
-            />
-            <CustomButton>Change Avatar</CustomButton>
+            <DashboardAvatar user={user} />
           </div>
 
           <div className="mt-2">

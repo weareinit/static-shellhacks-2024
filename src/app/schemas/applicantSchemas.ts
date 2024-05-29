@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { application_status_enums } from "@prisma/client";
+import { dinosaurNames } from "../constants/dinosaurNames";
 
 export const application_statuses = [
   application_status_enums.registered,
@@ -51,14 +52,18 @@ export const applicantUpdateSchemaBase = z.object({
   gender: z.string().nonempty().optional(),
   pronouns: z.string().nonempty().optional(),
   ethnicity: z.string().nonempty().optional(),
+  dinosaur_avatar: z
+    .number()
+    .refine((i) => i >= 0 && i <= dinosaurNames.length)
+    .optional(),
 });
 
 export const adminApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
-  application_status: z.enum(application_statuses),
+  application_status: z.enum(application_statuses).optional(),
 });
 
 export const hackerApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
-  application_status: z.enum(user_changeable_application_statuses),
+  application_status: z.enum(user_changeable_application_statuses).optional(),
 });
 
 export const applicantStatusChangeSchema = z.object({

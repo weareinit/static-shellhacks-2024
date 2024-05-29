@@ -11,8 +11,12 @@ import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { getUserFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
+import { dinosaurNames } from "../constants/dinosaurNames";
+import ChangeAvatarModal from "./components/ChangeAvatarModal";
 
 const Dashboard = async () => {
+  const randomDino =
+    dinosaurNames[Math.floor(Math.random() * dinosaurNames.length)];
   const sess = await auth();
 
   if (!sess?.user) {
@@ -84,7 +88,7 @@ const Dashboard = async () => {
         </div>
       </div>
       <div className="relative">
-        <div className="relative h-[200px]">
+        <div className="relative h-[200px] overflow-hidden">
           <Image
             src="/assets/new/background/beach/Ocean 5.svg"
             layout="fill"
@@ -92,15 +96,15 @@ const Dashboard = async () => {
             alt="Beach"
             className="object-cover"
           />
-        </div>
-        <div className="absolute left-[150px] top-1/4">
-          <Image
-            src="/assets/new/dinosaurs/megalodon.svg"
-            className="opacity-40"
-            width={200}
-            height={200}
-            alt="Dino"
-          />
+          <div className="absolute left-[150px] top-1/4 max-w-full">
+            <Image
+              src={`/assets/new/dinosaurs/${randomDino}.svg`}
+              height={100}
+              width={200}
+              alt="Dino"
+              className="overflow-hidden opacity-20"
+            />
+          </div>
         </div>
       </div>
     </div>

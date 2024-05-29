@@ -34,6 +34,7 @@ model Hacker_Applications {
   pronouns                  String                   @db.VarChar(50)
   ethnicity                 String                   @db.VarChar(50)
   // STATUS
+  dinosaur_avatar           Int                      @default(0)
   agreed_mlh_news           Boolean
   application_status        application_status_enums @default(waitlisted)
   check_in_status           Boolean                  @default(false)

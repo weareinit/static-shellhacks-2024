@@ -30,6 +30,7 @@ const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
   ethnicity: "Ethnicity",
   agreed_mlh_news: null,
   check_in_status: null,
+  dinosaur_avatar: null,
 };
 
 export default async function UserInfo({
