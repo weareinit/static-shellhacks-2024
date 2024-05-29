@@ -1,4 +1,4 @@
-import { Hacker_Applications } from "@prisma/client";
+import { Hacker_Applications, application_status_enums } from "@prisma/client";
 import UserInfo from "./UserInfo";
 import { CustomButton } from "./CustomButton";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import {
 import SocialButtons from "@/app/components/sections/SocialButtons";
 import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
+import ResumeView from "./ResumeView";
 
 export default async function DahsboardContent({
   user,
@@ -73,25 +74,19 @@ export default async function DahsboardContent({
 
       <div className="grid grid-cols-3 gap-8">
         {/* Resume */}
-        <div className="col-span-1 flex flex-col items-start gap-3">
-          <p className="font-museo text-xl">Your Resume:</p>
-          <div className="border border-black bg-[#D9D9D9] p-4">
-            <Image
-              src="/assets/new/misc/resume.png"
-              width={275}
-              height={600}
-              alt="Resume"
-              draggable={false}
-            />
-          </div>
-          <CustomButton>Upload Another</CustomButton>
-        </div>
+        <ResumeView userId={sess!.user.id} />
 
         {/* Resources */}
         <div className="col-span-2 flex flex-col items-start gap-3">
           <p className="font-museo text-xl">Resources:</p>
           <DashboardSocialButtons />
-          <WithdrawApplicationButton userId={sess!.user.id} />
+          {user.application_status === application_status_enums.withdrawn ? (
+            <p className="font-zoonaji text-2xl text-red-600">
+              You have withdrawn your application
+            </p>
+          ) : (
+            <WithdrawApplicationButton userId={sess!.user.id} />
+          )}
         </div>
       </div>
     </div>

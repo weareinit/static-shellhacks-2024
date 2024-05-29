@@ -4,6 +4,7 @@ import { validateCaptcha } from "@/app/util/captcha";
 import {
   generateSignedResumeUploadUrl,
   generateSignedResumeUrl,
+  uploadResume,
 } from "@/app/util/aws";
 import { auth } from "@/server/auth";
 
@@ -31,7 +32,7 @@ export const GET = auth(async (request, ctx) => {
   }
 
   const signedUrl = await generateSignedResumeUrl(resume.resume_path);
-  return NextResponse.json({ url: signedUrl });
+  return NextResponse.redirect(signedUrl);
 });
 
 /*
@@ -42,11 +43,11 @@ export const PUT = auth(async (request, ctx) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  try {
-    await validateCaptcha(request);
-  } catch (e) {
-    return new NextResponse("Invalid captcha", { status: 400 });
-  }
+  // try {
+  //   await validateCaptcha(request);
+  // } catch (e) {
+  //   return new NextResponse("Invalid captcha", { status: 400 });
+  // }
 
   const id = (ctx.params?.id as string) || "";
 
@@ -63,6 +64,18 @@ export const PUT = auth(async (request, ctx) => {
     return new NextResponse("Applicant not found", { status: 404 });
   }
 
-  const signedUrl = await generateSignedResumeUploadUrl(resume.resume_path);
-  return NextResponse.json({ url: signedUrl });
+  const formData = await request.formData();
+  const file = formData.get("resume");
+
+  if (!file || !(file instanceof File)) {
+    return new NextResponse("No file provided or invalid file", {
+      status: 400,
+    });
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  const res = await uploadResume(resume.resume_path, buffer);
+  return NextResponse.json({ res }, { status: 200 });
 });

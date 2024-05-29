@@ -1,4 +1,4 @@
-export const uploadResume = async (file: File, email: string) => {
+export const uploadResume = async (file: File, userId: string) => {
   //Verify the file details
   if (!file) {
     throw new Error("No file provided");
@@ -10,27 +10,22 @@ export const uploadResume = async (file: File, email: string) => {
     throw new Error("File type not supported");
   }
 
-  const response = await fetch(`/api/resumes/${encodeURIComponent(email)}`, {
-    method: "PUT",
-  });
+  const formData = new FormData();
+  formData.append("resume", file);
 
-  // Use message from response
+  const response = await fetch(
+    `/api/hackers/${encodeURIComponent(userId)}/resume`,
+    {
+      method: "PUT",
+      body: formData,
+    },
+  );
+
+  console.log(response);
+
   if (!response.ok) {
     throw new Error("Error uploading resume");
   }
 
-  const { url } = await response.json();
-
-  //upload the file to aws
-  const uploadResponse = await fetch(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/pdf",
-    },
-    body: file,
-  });
-
-  if (!uploadResponse.ok) {
-    throw new Error("Error uploading resume");
-  }
+  return await response.json();
 };

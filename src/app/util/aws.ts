@@ -33,10 +33,71 @@ const s3Configuration: S3ClientConfig = {
   },
   region: process.env.AWS_REGION!,
 };
-//logger.info(`Creating S3 client with configuration: ${JSON.stringify(s3Configuration)}`)
 
 const s3Client = new S3Client(s3Configuration);
 const emailClient = new SESClient({});
+
+/*
+ * Uploads a resume to the S3 bucket and generates a thumbnail image
+ */
+export const uploadResume = async (resumeId: string, resume: Buffer) => {
+  //print some details about the buffer for debugging
+  console.log("Buffer length:", resume.length);
+  console.log("Buffer type:", typeof resume);
+  console.log("Buffer:", resume);
+  try {
+    // Upload the original resume
+    const params: PutObjectCommandInput = {
+      Bucket: process.env.AWS_BUCKET_NAME!,
+      Key: resumeId,
+      Body: resume,
+      ContentType: "application/pdf",
+    };
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+
+    // Generate thumbnail image from the first page of the resume
+    // gm(resume)
+    //   .selectFrame(0)
+    //   .setFormat("jpg")
+    //   .resize(200) // Resize to fixed 200px width, maintaining aspect ratio
+    //   .quality(75) // Quality from 0 to 100
+    //   .toBuffer("jpg", async (err: any, buffer: any) => {
+    //     if (err) {
+    //       console.error("Error generating thumbnail image:", err, buffer);
+    //       throw err;
+    //     }
+
+    // Upload the thumbnail image to a different bucket
+    // const thumbnailParams: PutObjectCommandInput = {
+    //   Bucket: process.env.AWS_THUMBNAIL_BUCKET_NAME!,
+    //   Key: `${resumeId}.png`,
+    //   Body: buffer,
+    //   ContentType: "image/png",
+    // };
+    // const thumbnailCommand = new PutObjectCommand(thumbnailParams);
+    // await s3Client.send(thumbnailCommand);
+    // });
+
+    return { message: "Resume uploaded successfully" };
+  } catch (error) {
+    console.error("Error uploading resume:", error);
+    throw error;
+  }
+};
+
+/*
+ * Generates a signed URL to get  a resume in the S3 bucket
+ */
+export const generateSignedResumeUrl = async (resumeId: string) => {
+  // logger.info(`Generating signed url for resume ${resumeId}`);
+  const params: GetObjectCommandInput = {
+    Bucket: process.env.AWS_BUCKET_NAME!,
+    Key: resumeId,
+  };
+  const command = new GetObjectCommand(params);
+  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 });
+};
 
 export const generateSignedResumeUploadUrl = async (resumeId: string) => {
   // logger.info(`Generating signed url for resume ${resumeId}`);
@@ -54,16 +115,6 @@ export const generateSignedResumeUploadUrl = async (resumeId: string) => {
     ContentType: "application/pdf",
   };
   const command = new PutObjectCommand(params);
-  return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 });
-};
-
-export const generateSignedResumeUrl = async (resumeId: string) => {
-  // logger.info(`Generating signed url for resume ${resumeId}`);
-  const params: GetObjectCommandInput = {
-    Bucket: process.env.AWS_BUCKET_NAME!,
-    Key: resumeId,
-  };
-  const command = new GetObjectCommand(params);
   return await getSignedUrl(s3Client, command, { expiresIn: 60 * 30 });
 };
 
