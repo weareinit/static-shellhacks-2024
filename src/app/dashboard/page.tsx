@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import { getUserFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
 
-const NewDashboard = async () => {
+const Dashboard = async () => {
   const sess = await auth();
 
   if (!sess?.user) {
@@ -107,4 +107,4 @@ const NewDashboard = async () => {
   );
 };
 
-export default NewDashboard;
+export default Dashboard;
