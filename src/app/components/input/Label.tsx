@@ -11,7 +11,7 @@ function Label({ children, className, hasInter }: LabelPropType) {
     <label
       className={`${
         hasInter ? "font-inter" : "font-pixel"
-      } text-lg ${className} max-sm:w-full`}
+      } text-lg ${className} font-bold max-sm:w-full`}
     >
       {children}
     </label>

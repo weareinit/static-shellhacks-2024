@@ -22,6 +22,7 @@ import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
 import countriesJSON from "../../util/countries.json";
+import { useQuery } from "react-query";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
@@ -30,6 +31,16 @@ function RegisterForm() {
   const countries = countriesJSON.map((country) => country);
   const { setFinishedRegistration, setShowRegistration } =
     useShowRegistrationContext();
+
+  const { data: schoolsData } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch(
+        "https://raw.githubusercontent.com/GabrielPedroza/universities/master/university_data.csv",
+      ).then((res) => res.text()),
+  });
+
+  const schools = schoolsData?.split("|");
 
   // async function getResumeLink(recaptchaCode: string) {
   //   const response = await fetch(`/api/resumes/`, {
@@ -155,7 +166,7 @@ function RegisterForm() {
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="my-2 flex flex-col">
+          <Form className="my-2 flex flex-col ">
             <TextInput
               label="First Name"
               name="first_name"
@@ -176,12 +187,12 @@ function RegisterForm() {
               max={114}
               isRequired
             />
-            {/* <SearchInput
+            <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
-            /> */}
+            />
             <SelectInput
               label="Major"
               name="major"

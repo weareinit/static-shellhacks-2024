@@ -63,7 +63,7 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
           filteredOptions &&
           filteredOptions.length > 0 &&
           !isOptionSelected && (
-            <ul className="absolute left-0 right-0 z-10 mt-2 max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-md">
+            <ul className="absolute left-0 right-0 font-bold z-10 mt-2 max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-md">
               {filteredOptions.map((option, index) => (
                 <li
                   key={index}
