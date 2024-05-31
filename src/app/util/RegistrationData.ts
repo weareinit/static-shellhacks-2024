@@ -119,11 +119,11 @@ export interface ApplicantValues {
   // agreed_international: boolean,
   // agreed_liability: boolean,
   // agreed_sponsors: boolean; //required for us to send resumes to sponsors
-  // agreed_mlh_conduct: boolean;
-  // agreed_mlh_privacy: boolean;
+  agreed_mlh_conduct: boolean;
+  agreed_mlh_terms: boolean;
 
   agreed_mlh_news: boolean;
-  agreed_terms: boolean;
+  // agreed_terms: boolean;
   recaptcha: string;
 }
 

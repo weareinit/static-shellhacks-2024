@@ -110,9 +110,9 @@ function RegisterForm() {
           // agreed_liability: false,
           // agreed_media: false,
           // agreed_sponsors: false, //required for us to send resumes to sponsors
-          // agreed_mlh_conduct: false,
+          agreed_mlh_conduct: false,
 
-          agreed_terms: false,
+          agreed_mlh_terms: false,
           agreed_mlh_news: false,
 
           // agreed_mlh_privacy: false,
@@ -236,18 +236,49 @@ function RegisterForm() {
             <CheckboxInput
               label={
                 <p>
-                  I have thoroughly read and agree to all policies outlined in
-                  the provided document:
-                  <a
-                    target="_blank"
-                    className="ml-2 text-blue-500"
-                    href="https://docs.google.com/document/d/1QQCNz75v09EAiqE5Dg5UvubRxMYePIVZMajsA_I4GlM/edit"
-                  >
-                    Terms and Conditions
+                  I have read and agree to the MLH Code of Conduct. (
+                  <a href="" target="_blank" className="text-blue-500">
+                    https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md
                   </a>
+                  )
                 </p>
               }
-              name="agreed_terms"
+              name="agreed_mlh_conduct"
+              hasInter
+              isRequired
+            />
+
+            <CheckboxInput
+              label={
+                <p>
+                  I authorize you to share my application/registration
+                  information with Major League Hacking for event
+                  administration, ranking, and MLH administration in-line with
+                  the
+                  <a
+                    href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                    className="ml-2 text-blue-500"
+                  >
+                    MLH Privacy Policy
+                  </a>
+                  . I further agree to the terms of both the
+                  <a
+                    href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                    className="ml-2 text-blue-500"
+                  >
+                    MLH Contest Terms and Conditions
+                  </a>
+                  and the
+                  <a
+                    href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                    className="ml-2 text-blue-500"
+                  >
+                    MLH Privacy Policy
+                  </a>
+                  .
+                </p>
+              }
+              name="agreed_mlh_terms"
               hasInter
               isRequired
             />

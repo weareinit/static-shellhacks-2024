@@ -20,7 +20,9 @@ export const CustomButton: React.FC<PropsWithChildren<CustomButtonProps>> = ({
       ? "bg-[#E9DBCC] hover:bg-[#E9DBCC]/90 text-black"
       : colorVariant === 2
         ? "bg-[#CDC2BE] hover:bg-[#CDC2BE]/90 text-black"
-        : "bg-[#78644F] hover:bg-[#78644F]/90 text-white";
+        : colorVariant === 3
+          ? "bg-[#E9DBCC] hover:bg-[#E9DBCC]/90"
+          : "bg-[#78644F] hover:bg-[#78644F]/90 text-white";
 
   const borderClass = border ? " border" : "";
 

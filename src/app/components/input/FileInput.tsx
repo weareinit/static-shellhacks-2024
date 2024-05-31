@@ -46,7 +46,7 @@ const FileInput = ({
       />
       <CustomButton
         onClick={() => fileInputRef.current?.click()}
-        colorVariant={2}
+        colorVariant={3}
       >
         <div className="flex items-center gap-2">
           <svg
