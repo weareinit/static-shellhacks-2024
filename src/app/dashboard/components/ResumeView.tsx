@@ -23,7 +23,7 @@ export default function ResumeView({ userId }: { userId: string }) {
   return (
     <div className="col-span-1 flex flex-col items-start gap-3">
       <p className="font-museo text-xl">Your Resume:</p>
-      <div className="flex min-h-[220px] min-w-[225px] flex-col items-center justify-between border border-black bg-white p-4">
+      <div className="flex flex-col gap-2">
         <Link href={`/api/hackers/${userId}/resume`} target="_blank">
           <CustomButton colorVariant={2}>
             <div className="flex items-center gap-2">
@@ -71,16 +71,6 @@ export default function ResumeView({ userId }: { userId: string }) {
           </CustomButton>
         </div>
       </div>
-      {/* <input
-        type="file"
-        className="hidden"
-        ref={fileInputRef}
-        onChange={handleResumeFileChange}
-        accept="application/pdf"
-      />
-      <CustomButton onClick={() => fileInputRef.current?.click()}>
-        {isUploadingResume ? "Uploading..." : "Upload Another"}
-      </CustomButton> */}
     </div>
   );
 }
