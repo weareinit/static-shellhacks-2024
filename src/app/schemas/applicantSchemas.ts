@@ -94,17 +94,17 @@ export const applicantFiltersSchema = z.object({
 
 export const newApplicantSchema = z.object({
   userId: z.string(),
-  first_name: z.string().nonempty(),
-  last_name: z.string().nonempty(),
+  first_name: z.string().min(1),
+  last_name: z.string().min(1),
   age: z.number().int().positive(),
-  school: z.string(),
-  major: z.string(),
+  school: z.string().min(1),
+  major: z.string().min(1),
   grad_year: z
     .string()
-    .regex(/^(202[2-8])$/)
+    .regex(/^(202[2-9])$/)
     .transform(Number),
   level_of_study: z.string(),
-  country: z.string().nonempty(),
+  country: z.string().min(1),
   email: z.string().email().toLowerCase(),
   phone_number: z
     .string()
@@ -113,12 +113,11 @@ export const newApplicantSchema = z.object({
       "Invalid phone number",
     ),
   resume_path: z.string(),
-  discord: z.string().optional(),
   github: z.string().url().optional(),
   linkedin: z.string().url().optional(),
   is_international: z.boolean(),
-  gender: z.string().nonempty(),
-  pronouns: z.string().nonempty(),
-  ethnicity: z.string().nonempty(),
+  gender: z.string().min(1),
+  pronouns: z.string().min(1),
+  ethnicity: z.string().min(1),
   agreed_mlh_news: z.boolean(),
 });

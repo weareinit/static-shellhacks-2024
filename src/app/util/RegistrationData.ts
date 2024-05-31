@@ -105,7 +105,6 @@ export interface ApplicantValues {
   email: string;
   phone_number: string;
   resume: File;
-  discord: string;
   github: string;
   linkedin: string;
   // DEMOGRAPHICS
@@ -177,7 +176,7 @@ export const formValidation = Yup.object().shape({
         }
       }
     }),
-  discord: Yup.string(),
+
   github: Yup.string().url(),
   linkedin: Yup.string().url(),
   // DEMOGRAPHICS
@@ -187,13 +186,13 @@ export const formValidation = Yup.object().shape({
   fill_in_pronouns: Yup.string(),
   ethnicity: Yup.string().required("Ethnicity is a required field"),
   // MLH Questions
-  agreed_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
 
-  agreed_media: Yup.boolean().oneOf([true], "Must Be Checked"),
+  // agreed_media: Yup.boolean().oneOf([true], "Must Be Checked"),
   // agreed_international: Yup.boolean().oneOf([true], "Must Be Checked"),
   // agreed_liability: Yup.boolean().oneOf([true], "Must Be Checked"),
   // agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
-  agreed_mlh_privacy: Yup.boolean().oneOf([true], "Must Be Checked"),
+  agreed_mlh_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
   agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
 
   recaptcha: Yup.string().required("Please complete the captcha"),

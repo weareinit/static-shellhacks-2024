@@ -81,7 +81,7 @@ function RegisterForm() {
     <>
       <Formik
         validateOnChange
-        // validationSchema={formValidation}
+        validationSchema={formValidation}
         initialValues={{
           first_name: "",
           last_name: "",
@@ -95,7 +95,6 @@ function RegisterForm() {
           email: "",
           phone_number: "",
           resume: new File([], ""),
-          discord: "",
           github: "",
           linkedin: "",
           // DEMOGRAPHICS
@@ -191,7 +190,6 @@ function RegisterForm() {
               isRequired
               maxSize={1 * 1024 * 1024}
             />
-            <TextInput label="Discord" name="discord" type="text" />
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
             <CheckboxInput
