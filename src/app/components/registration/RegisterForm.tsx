@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 
 import { Formik, Form, type FormikProps } from "formik";
@@ -17,89 +18,53 @@ import {
 import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
-import SearchInput from "../input/SearchInput";
+import SearchInput from "../input/searchInput";
 import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
-import countriesJSON from "../../util/countries.json";
+import schools from "../../../../public/registration_data/schools.json";
+import countries from "../../../../public/registration_data/countries.json";
+import { CustomButton } from "@/app/dashboard/components/CustomButton";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const countries = countriesJSON.map((country) => country);
-  const { setFinishedRegistration, setShowRegistration } =
-    useShowRegistrationContext();
-
-  // async function getResumeLink(recaptchaCode: string) {
-  //   const response = await fetch(`/api/resumes/`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ recaptcha: recaptchaCode }),
-  //   });
-
-  //   if (!response.ok) {
-  //     throw new Error("Error Fetching Resume Link");
-  //   }
-
-  //   return await response.json();
-  // }
-
-  async function uploadResume(resume: File, url: string) {
-    const response = await fetch(url, {
-      method: "PUT",
-      body: resume,
-      headers: {
-        "Content-Type": "application/pdf",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Error Uploading Resume");
-    }
-
-    return response;
-  }
-
-  async function registerApplicant(body: Object) {
-    const filteredBody = Object.fromEntries(
-      Object.entries(body).filter(([_, value]) => value !== ""),
-    );
-
-    const response = await fetch(`/api/applications`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(filteredBody),
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      console.log(data);
-      throw new Error(data.error);
-    }
-
-    const content = await response.json();
-    return content;
-  }
+  // const { setFinishedRegistration, setShowRegistration } =
+  //   useShowRegistrationContext();
 
   const handleSubmit = async (values: ApplicantValues) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+    console.log("VALUES", values);
 
-    let { resume, fill_in_pronouns, ...body } = values;
+    let { fill_in_pronouns, ...body } = values;
     body.pronouns =
       values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
 
     try {
-      // const { resumeId, url } = await getResumeLink(body.recaptcha);
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([_, value]) => value !== ""),
+      );
 
-      const { resume_url } = await registerApplicant(body);
-      await uploadResume(resume, resume_url);
+      const response = await fetch(`/api/applications`, {
+        headers: {
+          Accept: "application/json",
+          // "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(filteredBody),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.log(data);
+        throw new Error(data.error);
+      }
+
+      const content = await response.json();
+      console.log(content);
+
       setIsSubmitting(false);
     } catch (e: any) {
       setError(e.message);
@@ -107,15 +72,16 @@ function RegisterForm() {
       return;
     }
 
-    setFinishedRegistration(true);
-    setShowRegistration(false);
+    //redirect to dashboard...
+    // setFinishedRegistration(true);
+    // setShowRegistration(false);
   };
 
   return (
     <>
       <Formik
         validateOnChange
-        validationSchema={formValidation}
+        // validationSchema={formValidation}
         initialValues={{
           first_name: "",
           last_name: "",
@@ -168,6 +134,7 @@ function RegisterForm() {
               type="text"
               isRequired
             />
+            <TextInput label="Email" name="email" type="email" isRequired />
             <TextInput
               label="Age"
               name="age"
@@ -176,12 +143,12 @@ function RegisterForm() {
               max={114}
               isRequired
             />
-            {/* <SearchInput
+            <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
-            /> */}
+            />
             <SelectInput
               label="Major"
               name="major"
@@ -260,87 +227,30 @@ function RegisterForm() {
 
             <div className="sm:my-3" />
 
+            <p className="font-museo">
+              We are currently in the process of partnering with MLH. The
+              following 3 checkboxes are for this partnership. If we do not end
+              up partnering with MLH, your information will not be shared
+            </p>
+
             <CheckboxInput
               label={
                 <p>
                   I have thoroughly read and agree to all policies outlined in
-                  the provided document. (
+                  the provided document:
                   <a
                     target="_blank"
+                    className="ml-2 text-blue-500"
                     href="https://docs.google.com/document/d/1QQCNz75v09EAiqE5Dg5UvubRxMYePIVZMajsA_I4GlM/edit"
                   >
                     Terms and Conditions
                   </a>
-                  )
                 </p>
               }
               name="agreed_terms"
               hasInter
               isRequired
             />
-            {/* <CheckboxInput
-              label={
-                <p>
-                  I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy
-                  Policy (https://mlh.io/privacy). I further agree to the terms of both the MLH Contest Terms and Conditions (
-                  <a target="_blank" href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md">
-                    https://github.com/MLH/mlh-policies/blob/main/contest-terms.md
-                  </a>
-                  ) and the MLH Privacy Policy (
-                  <a target="_blank" href="https://mlh.io/privacy">
-                    https://mlh.io/privacy
-                  </a>
-                  ).
-                </p>
-              }
-              name="agreed_mlh_privacy"
-              hasInter
-            />
-
-            <CheckboxInput
-              label={
-                <p>
-                  I acknowledge and authorize the sharing of my registration information with corporate sponsors for the purpose of exploring potential job opportunities.
-                  This sharing of information allows us to connect you with relevant corporate sponsors who may be interested in considering you for employment or related opportunities.
-                </p>
-              }
-              name="agreed_sponsors"
-              hasInter
-              isRequired
-            />
-
-            <CheckboxInput
-              label={
-                <p>
-                  I acknowledge that if I am an international non-FIU student I am not eligible for non sponsor prizes (1st, 2nd, 3rd or best first time hacker) or non sponsor social media giveaways if I do win as per FIU’s tax division policies.
-                </p>
-              }
-              name="agreed_international"
-              hasInter
-              isRequired
-            />
-
-            <CheckboxInput
-              label={
-                <p>
-                  I acknowledge that ANY organization that helped organize Shellhacks, will not be held liable for any lost or stolen property.
-                </p>
-              }
-              name="agreed_liability"
-              hasInter
-              isRequired
-            />
-
-            <CheckboxInput
-              label={
-                <p>
-                  I acknowledge and authorize the filming and recording of myself throughout the event.
-                </p>
-              }
-              name="agreed_media"
-              hasInter
-              isRequired
-            /> */}
 
             <CheckboxInput //required for us to send resumes to sponsors
               label={
@@ -367,23 +277,22 @@ function RegisterForm() {
               }}
             />
 
-            <Button
-              type="submit"
-              className="rounded-pixel-primary mx-auto flex w-56 items-center justify-center whitespace-nowrap rounded-lg border-2 py-1 text-black"
-            >
-              Submit
-              {isSubmitting && (
-                <span className="ml-2">
-                  <img
-                    src="/assets/decorations/shell.svg"
-                    className="w-5 animate-spin"
-                  />
-                </span>
-              )}
-            </Button>
+            <div className="flex justify-end">
+              <CustomButton type="submit">
+                Submit
+                {isSubmitting && (
+                  <span className="ml-2">
+                    <img
+                      src="/assets/decorations/shell.svg"
+                      className="w-5 animate-spin"
+                    />
+                  </span>
+                )}
+              </CustomButton>
+            </div>
 
             {error != "" && (
-              <h2 className="mt-1 text-center font-pixel text-lg text-red-600">
+              <h2 className="font-pixel mt-1 text-center text-lg text-red-600">
                 There was an error submitting, please try again later. {error}
               </h2>
             )}

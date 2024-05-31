@@ -1,16 +1,20 @@
 "use client";
 import React, { PropsWithChildren } from "react";
 
-export const CustomButton = ({
+interface CustomButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  onClick?: () => void;
+  colorVariant?: number;
+  border?: boolean;
+}
+
+export const CustomButton: React.FC<PropsWithChildren<CustomButtonProps>> = ({
   onClick = () => {},
   colorVariant,
   border,
   children,
-}: PropsWithChildren<{
-  onClick?: () => void;
-  colorVariant?: number;
-  border?: boolean;
-}>) => {
+  ...btnProps
+}) => {
   const color =
     colorVariant === 1
       ? "bg-[#E9DBCC] hover:bg-[#E9DBCC]/90 text-black"
@@ -18,16 +22,17 @@ export const CustomButton = ({
         ? "bg-[#CDC2BE] hover:bg-[#CDC2BE]/90 text-black"
         : "bg-[#78644F] hover:bg-[#78644F]/90 text-white";
 
+  const borderClass = border ? " border" : "";
+
   return (
     <button
       onClick={onClick}
-      className={
-        "font-zoonaji text-md rounded-lg border-[#000000] p-2 " +
-        color +
-        (border ? " border" : "")
-      }
+      className={`text-md rounded-lg border-[#000000] p-2 font-zoonaji ${color}${borderClass}`}
+      {...btnProps}
     >
       {children}
     </button>
   );
 };
+
+export default CustomButton;

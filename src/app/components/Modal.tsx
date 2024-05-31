@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -23,23 +24,6 @@ function Modal({
     setIsBrowser(true);
     setShouldRender(true);
     setTimeout(() => setIsVisible(true), 10); // Trigger transition
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onBgClick &&
-          onBgClick(
-            event as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>,
-          );
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, [onBgClick]);
 
   const handleClose = () => {
@@ -49,7 +33,7 @@ function Modal({
 
   const modal = (
     <div
-      className={`fixed left-0 top-0 grid h-screen w-screen content-center justify-center bg-slate-400 bg-opacity-20 ${backgroundClassName}`}
+      className={`fixed inset-0 z-50 grid h-screen w-screen content-center justify-center bg-white bg-opacity-50`}
       style={{
         backdropFilter: "blur(10px)",
         transition: "opacity 0.3s ease-in-out",
@@ -59,7 +43,7 @@ function Modal({
       <aside
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className={`w-90 overflow-y-scroll border-2 border-blue bg-white p-2 sm:m-3 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        className={`w-90  overflow-y-scroll  p-2 sm:m-3 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         style={{
           transition: "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
         }}

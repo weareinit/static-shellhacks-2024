@@ -23,28 +23,20 @@ function CheckboxInput({
   return (
     <div className="flex flex-col">
       <div className="my-3 flex basis-full flex-col sm:flex-row sm:items-center sm:justify-between">
-        <Label hasInter={hasInter}>{label}</Label>
+        <Label hasInter={hasInter} className="font-museo font-bold">
+          {label}
+        </Label>
 
         <input {...field} {...props} type="checkbox" className="sr-only" />
         <div className="relative sm:mx-5">
           <div
-            className={`h-5 w-5 border-2 border-[#787976] ${
-              meta.value ? "bg-blue" : "bg-white"
+            className={`h-5 w-5 border border-black ${
+              meta.value ? "bg-[#3E3022]" : "bg-white"
             } flex cursor-pointer items-center justify-center`}
             onClick={() => {
               helpers.setValue(!meta.value);
             }}
-          >
-            {meta.value && (
-              <Image
-                src="/assets/checkmark.webp"
-                alt="asdf"
-                width={75}
-                height={75}
-              />
-              // <div>asdf</div>
-            )}
-          </div>
+          ></div>
         </div>
       </div>
 
