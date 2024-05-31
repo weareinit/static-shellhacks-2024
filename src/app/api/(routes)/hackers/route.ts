@@ -6,19 +6,33 @@ import { randomBytes } from "crypto";
 import {
   generateSignedResumeUploadUrl,
   sendConfirmationEmail,
+  uploadResume,
 } from "@/app/util/aws";
 import { Prisma } from "@prisma/client";
 import { auth } from "@/server/auth";
+import crypto from "crypto";
 
 export const POST = auth(async (request) => {
   if (!request.auth) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  await validateCaptcha(request);
   const body = await request.json();
+  await validateCaptcha(body);
 
-  const resumeId = randomBytes(16).toString("hex"); //generate unique resume name for each user
+  //Handle uploading the resume
+  if (!body.resume) {
+    return new NextResponse("No resume provided", { status: 400 });
+  }
+
+  const resumeId = crypto.randomBytes(16).toString("hex");
+
+  try {
+    await uploadResume(resumeId, body.resume);
+  } catch (e) {
+    console.log(e);
+    return new NextResponse("Error uploading resume", { status: 500 });
+  }
 
   const safedata = newApplicantSchema.safeParse({
     resume_path: resumeId,
