@@ -114,10 +114,10 @@ export interface ApplicantValues {
   fill_in_pronouns: string;
   ethnicity: string;
   // MLH QUESTIONS
-  // agreed_media: boolean,
+  agreed_media: boolean;
   // agreed_international: boolean,
-  // agreed_liability: boolean,
-  // agreed_sponsors: boolean; //required for us to send resumes to sponsors
+  agreed_liability: boolean;
+  agreed_sponsors: boolean; //required for us to send resumes to sponsors
   agreed_mlh_conduct: boolean;
   agreed_mlh_terms: boolean;
 
@@ -188,10 +188,10 @@ export const formValidation = Yup.object().shape({
   // MLH Questions
   // agreed_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
 
-  // agreed_media: Yup.boolean().oneOf([true], "Must Be Checked"),
+  agreed_media: Yup.boolean().oneOf([true], "Must Be Checked"),
   // agreed_international: Yup.boolean().oneOf([true], "Must Be Checked"),
-  // agreed_liability: Yup.boolean().oneOf([true], "Must Be Checked"),
-  // agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
+  agreed_liability: Yup.boolean().oneOf([true], "Must Be Checked"),
+  agreed_sponsors: Yup.boolean().oneOf([true], "Must Be Checked"), //required for us to send resumes to sponsors
   agreed_mlh_terms: Yup.boolean().oneOf([true], "Must Be Checked"),
   agreed_mlh_conduct: Yup.boolean().oneOf([true], "Must Be Checked"),
 

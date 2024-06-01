@@ -106,9 +106,9 @@ function RegisterForm() {
           // MLH QUESTIONS
 
           // agreed_international: false,
-          // agreed_liability: false,
-          // agreed_media: false,
-          // agreed_sponsors: false, //required for us to send resumes to sponsors
+          agreed_liability: false,
+          agreed_media: false,
+          agreed_sponsors: false, //required for us to send resumes to sponsors
           agreed_mlh_conduct: false,
 
           agreed_mlh_terms: false,
@@ -224,6 +224,41 @@ function RegisterForm() {
             />
 
             <div className="sm:my-3" />
+            <CheckboxInput //required for us to send resumes to sponsors
+              label={
+                <p>
+                  I acknowledge and authorize the sharing of my registration
+                  information with corporate sponsors for the purpose of
+                  exploring potential job opportunities. This sharing of
+                  information allows us to connect you with relevant corporate
+                  sponsors who may be interested in considering you for
+                  employment or related opportunities.
+                </p>
+              }
+              name="agreed_sponsors"
+              hasInter
+            />
+            <CheckboxInput //required for us to send resumes to sponsors
+              label={
+                <p>
+                  I acknowledge and authorize the filming and recording of
+                  myself throughout the event.
+                </p>
+              }
+              name="agreed_media"
+              hasInter
+            />
+            <CheckboxInput //required for us to send resumes to sponsors
+              label={
+                <p>
+                  ShellHacks and its organizing organizations will not be held
+                  liable for any lost or stolen property.
+                </p>
+              }
+              name="agreed_liability"
+              hasInter
+            />
+            <div className="mt-1 sm:mb-4" />
 
             <p className="font-museo">
               We are currently in the process of partnering with MLH. The
