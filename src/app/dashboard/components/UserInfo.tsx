@@ -44,10 +44,12 @@ export default async function UserInfo({
         if (PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]) {
           return (
             <div key={key} className="flex font-museo">
-              <h2 className="mr-2 font-bold">
+              <h2 className="mr-2 text-nowrap font-bold">
                 {PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]}:
               </h2>
-              <p>{value as string}</p>
+              <p className="text-ellipsis" title={value as string}>
+                {value as string}
+              </p>
             </div>
           );
         }

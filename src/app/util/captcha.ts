@@ -5,8 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
  * @param request - the request object
  * @returns a response object
  */
-export async function validateCaptcha(request: NextRequest) {
-  const { recaptcha } = await request.json();
+export async function validateCaptcha(body: any) {
+  const { recaptcha } = body;
 
   const response = await fetch(
     `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`,

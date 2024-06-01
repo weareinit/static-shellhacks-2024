@@ -17,18 +17,26 @@ export const POST = auth(async (request) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json();
+  const formData = await request.formData();
+
+  const body = JSON.parse(
+    formData.get("json_application") as unknown as string,
+  );
+  console.log(body);
   await validateCaptcha(body);
 
   //Handle uploading the resume
-  if (!body.resume) {
+  const resume = formData.get("resume") as File;
+  if (!resume) {
     return new NextResponse("No resume provided", { status: 400 });
   }
 
   const resumeId = crypto.randomBytes(16).toString("hex");
 
   try {
-    await uploadResume(resumeId, body.resume);
+    const arrayBuffer = await resume.arrayBuffer();
+    const resumeBuffer = Buffer.from(arrayBuffer);
+    await uploadResume(resumeId, resumeBuffer);
   } catch (e) {
     console.log(e);
     return new NextResponse("Error uploading resume", { status: 500 });
@@ -51,26 +59,33 @@ export const POST = auth(async (request) => {
       data: validatedApplicant,
     });
 
-    await sendConfirmationEmail(
-      validatedApplicant.email,
-      validatedApplicant.first_name,
-    );
+    // await sendConfirmationEmail(
+    //   validatedApplicant.email,
+    //   validatedApplicant.first_name,
+    // );
   } catch (e) {
     console.log("Error occured!", e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        NextResponse.json({
-          error: "Duplicate. User already exists with that email / id.",
-        });
+        return NextResponse.json(
+          {
+            error: "Duplicate. User already exists with that email / id.",
+          },
+          { status: 400 },
+        );
       }
     }
-    return NextResponse.json({
-      error:
-        "Internal Error. Could not create applicant and send confirmation email.",
-    });
+    return NextResponse.json(
+      {
+        error:
+          "Internal Error. Could not create applicant and send confirmation email.",
+      },
+      { status: 500 },
+    );
   }
 
-  const url = await generateSignedResumeUploadUrl(resumeId);
-
-  return NextResponse.json({ resume_url: url });
+  return NextResponse.json(
+    { message: "Application created successfully" },
+    { status: 200 },
+  );
 });

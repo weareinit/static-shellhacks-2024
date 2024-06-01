@@ -3,8 +3,6 @@ import React, { useState } from "react";
 
 import { Formik, Form, type FormikProps } from "formik";
 
-import { useFormOptionContext } from "@/app//hooks/FormOptionContext";
-import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
 import {
   ethnicityOptions,
   genderOptions,
@@ -19,41 +17,40 @@ import TextInput from "../input/TextInput";
 import SelectInput from "../input/SelectInput";
 import CheckboxInput from "../input/CheckboxInput";
 import SearchInput from "../input/searchInput";
-import Button from "../input/Button";
 import FileInput from "../input/FileInput";
 import ReCAPTCHA from "react-google-recaptcha";
 import schools from "../../../../public/registration_data/schools.json";
 import countries from "../../../../public/registration_data/countries.json";
 import { CustomButton } from "@/app/dashboard/components/CustomButton";
+import { redirect } from "next/navigation";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // const { setFinishedRegistration, setShowRegistration } =
-  //   useShowRegistrationContext();
-
   const handleSubmit = async (values: ApplicantValues) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
-    console.log("VALUES", values);
 
     let { fill_in_pronouns, ...body } = values;
     body.pronouns =
       values.pronouns === "Other" ? values.fill_in_pronouns : values.pronouns;
 
     try {
+      const { resume, ...fields } = body;
+
+      //why exactly do we need this?
       const filteredBody = Object.fromEntries(
-        Object.entries(body).filter(([_, value]) => value !== ""),
+        Object.entries(fields).filter(([_, value]) => value !== ""),
       );
 
-      const response = await fetch(`/api/applications`, {
-        headers: {
-          Accept: "application/json",
-          // "Content-Type": "application/json",
-        },
+      const formData = new FormData();
+      formData.append("json_application", JSON.stringify(filteredBody));
+      formData.append("resume", resume);
+
+      const response = await fetch(`/api/hackers`, {
         method: "POST",
-        body: JSON.stringify(filteredBody),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -62,9 +59,6 @@ function RegisterForm() {
         throw new Error(data.error);
       }
 
-      const content = await response.json();
-      console.log(content);
-
       setIsSubmitting(false);
     } catch (e: any) {
       setError(e.message);
@@ -72,9 +66,7 @@ function RegisterForm() {
       return;
     }
 
-    //redirect to dashboard...
-    // setFinishedRegistration(true);
-    // setShowRegistration(false);
+    return redirect("/dashboard");
   };
 
   return (
@@ -135,6 +127,12 @@ function RegisterForm() {
             />
             <TextInput label="Email" name="email" type="email" isRequired />
             <TextInput
+              label="Phone Number"
+              name="phone_number"
+              type="tel"
+              isRequired
+            />
+            <TextInput
               label="Age"
               name="age"
               type="number"
@@ -177,13 +175,6 @@ function RegisterForm() {
               isRequired
             />
 
-            <TextInput label="Email" name="email" type="email" isRequired />
-            <TextInput
-              label="Phone Number"
-              name="phone_number"
-              type="tel"
-              isRequired
-            />
             <FileInput
               label="Resume"
               name="resume"
@@ -242,7 +233,9 @@ function RegisterForm() {
               label={
                 <p>
                   I acknowledge and authorize the filming and recording of
-                  myself throughout the event.
+                  myself throughout the event. I understand that any photos or
+                  videos taken may be used by INIT for marketing and social
+                  media purposes.
                 </p>
               }
               name="agreed_media"
@@ -343,7 +336,17 @@ function RegisterForm() {
 
             <div className="flex justify-end">
               <CustomButton type="submit">
-                Submit
+                <div className="flex items-center gap-2">
+                  {isSubmitting && (
+                    <img
+                      src="/assets/decorations/shell.svg"
+                      className="w-5 animate-spin"
+                    />
+                  )}
+
+                  <span className="mt-1">Submit</span>
+                </div>
+                {/* Submit
                 {isSubmitting && (
                   <span className="ml-2">
                     <img
@@ -351,7 +354,7 @@ function RegisterForm() {
                       className="w-5 animate-spin"
                     />
                   </span>
-                )}
+                )} */}
               </CustomButton>
             </div>
 
