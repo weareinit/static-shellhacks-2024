@@ -45,10 +45,10 @@ const CarouselSlides: React.FC<CarouselSlidesProps> = ({ slideTitles }) => {
           );
         })}
       </div>
-      <div className="relative top-0 flex h-full min-w-full items-center justify-center gap-10 px-10 font-zoonaji text-3xl text-english_walnut ">
+      <div className="xxl:text-4xl xxl:mt-4 relative top-0 flex h-full min-w-full items-center justify-center gap-10 px-10 font-zoonaji text-3xl text-english_walnut ">
         {slideTitles.map((title, index) => (
           <button
-            className={`rounded-[20px] px-5 pb-3 pt-4 hover:bg-reddish_grey ${index === current ? "bg-reddish_grey" : "bg-cotton_seed"}`}
+            className={`xxl:rounded-[30px] xxl:px-10 xxl:pb-5 xxl:pt-6 rounded-[20px] px-5 pb-3 pt-4 hover:bg-reddish_grey ${index === current ? "bg-reddish_grey" : "bg-cotton_seed"}`}
             key={index}
             onClick={() => goToSlide(index)}
           >

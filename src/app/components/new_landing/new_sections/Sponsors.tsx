@@ -43,10 +43,10 @@ const Sponsors = () => {
       ))} */}
 
       <div className="absolute inset-0 flex flex-col items-center justify-start">
-        <h1 className="mt-10 font-zoonaji text-[60px] text-pastel_orange">
+        <h1 className="xxl:mb-12 xxl:mt-[100px] xxl:text-[80px] mb-6 mt-4 font-zoonaji text-[60px] text-pastel_orange">
           Sponsored By
         </h1>
-        <p className="m-5 font-museo text-2xl text-white">
+        <p className="xxl:text-[30px] m-5 font-museo text-2xl text-white">
           Sponsors to be revealed soon...
         </p>
       </div>

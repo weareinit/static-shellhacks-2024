@@ -10,11 +10,11 @@ const StatsComponent: React.FC<StatsComponentProps> = ({
   Description,
 }) => {
   return (
-    <div className="text-darker_cyan font-museo flex h-full flex-col items-center justify-center">
+    <div className="flex h-full flex-col items-center justify-center font-museo text-darker_cyan">
       <b>
-        <h1 className="text-[60px]">{Number}</h1>
+        <h1 className="xxl:text-[80px] text-[60px]">{Number}</h1>
       </b>
-      <h4 className="text-[30px]">{Description}</h4>
+      <h4 className="xxl:text-[40px] text-[30px]">{Description}</h4>
     </div>
   );
 };

@@ -6,10 +6,10 @@ interface SlideProps {
 const SlideComponent: React.FC<SlideProps> = ({ title }) => {
   const AboutUsComponent = () => (
     <div>
-      <div className="flex justify-center py-3 font-zoonaji text-[60px] text-white">
+      <div className="xxl:py-6 xxl:text-[80px] flex justify-center py-3 font-zoonaji text-[60px] text-white">
         About Us
       </div>
-      <div className="grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="xxl:gap-10 grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
         <div className="pb-full relative col-span-1 md:col-span-1 lg:col-span-2">
           <Image
             priority
@@ -21,13 +21,13 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className=" xxl:text-[30px] font-museo text-[20px] text-white">
             {`
     Ready to immerse yourself in the ultimate tech experience? Join us
     for ShellHacks, Florida&apos;s Largest Hackathon! Over 1,000 students
     from across the state and around the world will come together to: \n`}
           </h3>
-          <ul className="list-disc pl-4 font-museo text-[20px] text-white">
+          <ul className="xxl:pl-8 xxl:text-[30px] list-disc pl-4 font-museo text-[20px] text-white">
             <li>Build: Develop innovative projects</li>
             <li>Network: Network with top companies, and more!</li>
             <li>
@@ -35,7 +35,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
               attending our technical workshops.
             </li>
           </ul>
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo text-[20px] text-white">
             Gain experience by building hands-on projects with fellow students.
             Land your next internship or job by meeting recruiters at our career
             fair. Win amazing prizes, participate in fun activities, get tons of
@@ -48,10 +48,10 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
 
   const ProjectsComponent = () => (
     <div>
-      <div className="flex justify-center py-3 font-zoonaji text-[60px] text-white">
+      <div className="xxl:py-6 xxl:text-[80px] flex justify-center py-3 font-zoonaji text-[60px] text-white">
         Projects
       </div>
-      <div className="grid h-full grid-cols-1 justify-center md:grid-cols-2 md:gap-6 lg:grid-cols-5 lg:gap-8">
+      <div className="xxl:gap-10 grid h-full grid-cols-1 justify-center md:grid-cols-2 md:gap-6 lg:grid-cols-5 lg:gap-8">
         <div className="pb-full relative col-span-1 md:col-span-1 lg:col-span-2">
           <Image
             priority
@@ -63,7 +63,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo  text-[20px] text-white">
             Get ready to unleash your creativity! At ShellHacks, you&apos;ll
             have access to a range of tools, resources, and mentors to help you
             develop and refine your project. You&apos;ll be able to collaborate
@@ -71,7 +71,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
             shared goal.
           </h3>
           <br />
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo  text-[20px] text-white">
             Build your project using any technology you like! Whether
             you&apos;re interested in web development, AI/ML, hardware, or
             anything in between, there’s always something to create. As you work
@@ -85,10 +85,10 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
   );
   const WorkshopsComponent = () => (
     <div>
-      <div className="flex justify-center py-3 font-zoonaji text-[60px] text-white">
+      <div className="xxl:py-6 xxl:text-[80px] flex justify-center py-3 font-zoonaji text-[60px] text-white">
         Workshops
       </div>
-      <div className="grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="xxl:gap-10 grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
         <div className="pb-full relative col-span-1 md:col-span-1 lg:col-span-2">
           <Image
             priority
@@ -100,12 +100,12 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo text-[20px] text-white">
             Ready to immerse yourself in the ultimate tech experience? Join us
             for ShellHacks, Florida&aposs Largest Hackathon! Over 1,000 students
             from across the state and around the world will come together to:
           </h3>
-          <ul className="list-disc pl-4 font-museo text-[20px] text-white">
+          <ul className="xxl:pl-8 xxl:text-[30px] list-disc pl-4 font-museo text-[20px] text-white">
             <li>Build: Develop innovative projects</li>
             <li>Network: Network with top companies, and more!</li>
             <li>
@@ -113,7 +113,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
               attending our technical workshops.
             </li>
           </ul>
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo  text-[20px] text-white">
             Gain experience by building hands-on projects with fellow students.
             Land your next internship or job by meeting recruiters at our career
             fair. Win amazing prizes, participate in fun activities, get tons of
@@ -125,10 +125,10 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
   );
   const CareerFairComponent = () => (
     <div>
-      <div className="flex justify-center py-3 font-zoonaji text-[60px] text-white">
+      <div className="xxl:py-6 xxl:text-[80px] flex justify-center py-3 font-zoonaji text-[60px] text-white">
         Career Fair
       </div>
-      <div className="grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="xxl:gap-10 grid h-full grid-cols-1 justify-center gap-6 md:grid-cols-2 lg:grid-cols-5">
         <div className="pb-full relative col-span-1 md:col-span-1 lg:col-span-2">
           <Image
             priority
@@ -140,7 +140,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo  text-[20px] text-white">
             Looking for your next internship or job opportunity? Our career fair
             is the perfect place for you to connect with recruiters and
             professionals from leading tech companies! You&apos;ll have the
@@ -148,7 +148,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
             open internship and job opportunities.
           </h3>
           <br />
-          <h3 className="font-museo text-[20px] text-white">
+          <h3 className="xxl:text-[30px] font-museo  text-[20px] text-white">
             This is your chance to make connections and land interviews early in
             the recruiting season. Make sure to bring your resume, enthusiasm,
             and curiosity as you explore the diverse opportunities available at

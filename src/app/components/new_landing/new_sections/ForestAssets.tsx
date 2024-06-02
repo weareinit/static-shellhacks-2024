@@ -17,7 +17,7 @@ const ForestAssets = () => {
         height={600}
         width={700}
         alt="tree"
-        className="relative left-[-40px] top-[-200px] z-[-2]"
+        className="xxl:w-[60rem] xxl:h-[120rem] xxl:top-[-500px] xxl:left-[50px] relative left-[-40px] top-[-200px]  z-[-2]"
       ></Image>
       <Image
         priority
@@ -25,7 +25,7 @@ const ForestAssets = () => {
         height={100}
         width={100}
         alt="rock"
-        className="absolute left-[25%] top-[5%] z-[-2]"
+        className="xxl:w-[12rem] xxl:h-[12rem] xxl:top-0  absolute left-[25%] top-[5%] z-[-2]"
       ></Image>
       <Image
         priority

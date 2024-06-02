@@ -22,13 +22,13 @@ const FAQSlider = () => {
   });
 
   return (
-    <div className="bg-light_brown scrollbar-hide z-10 mb-16 flex max-h-full w-4/5 justify-center overflow-hidden rounded-xl">
-      {/* <div className="mb-2 ml-5 mr-3 mt-2 grid w-full gap-10 overflow-y-auto pl-5 pr-10 md:grid-cols-2">
+    <div className="scrollbar-hide z-10 mb-16 flex max-h-full w-4/5 justify-center overflow-hidden rounded-xl bg-light_brown">
+      {/* <div className="mb-2 ml-5 mr-3   mt-2 grid w-full gap-10 overflow-y-auto pl-5 pr-10 md:grid-cols-2">
         {faqs.map((faq, index) => (
           <Question key={index} Q={faq.Q} A={faq.A} />
         ))}
       </div> */}
-      <div className=" ml-5 mr-3 mt-2 flex flex-wrap justify-between overflow-y-auto">
+      <div className="ml-5 mr-3 mt-2 flex flex-wrap justify-between overflow-y-auto">
         <div className="w-full space-y-4 pr-2 md:w-1/2">
           {faqs.slice(0, Math.ceil(faqs.length / 2)).map((faq, index) => (
             <Question key={index} Q={faq.Q} A={faq.A} />
