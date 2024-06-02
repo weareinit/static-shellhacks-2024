@@ -35,12 +35,17 @@ module.exports = {
         'fish-slide': 'slide 15s linear infinite',
         'cloud-slide': 'slide 80s linear infinite',
         'right-cloud-slide': 'right_slide 90s linear infinite',
+        'slide-diagonal': 'slide_diagonal 3.5s linear infinite',
       },
       keyframes: {
         slide: {
           '0%': { transform: 'translateX(100vw)' },
           '100%': { transform: 'translateX(-100vw)' },
         },
+      slide_diagonal: {
+        '0%': { transform: 'translate(100vw, 100vh)' },
+        '100%': { transform: 'translate(-100vw, -150vh)' },
+      },
         right_slide: {
           '0%': { transform: 'translateX(-100vw)' },
           '100%': { transform: 'translateX(100vw)' },

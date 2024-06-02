@@ -39,7 +39,30 @@ const SkyAndOcean = () => {
         alt="Sky background"
         className="relative z-[-10]"
       />
-
+      <Image
+        priority
+        src="/assets/new/misc/Shell 2.svg"
+        width={50}
+        height={50}
+        alt="Shell"
+        className="absolute right-[10%] top-[60%] z-[-3]"
+      />
+      <Image
+        priority
+        src="/assets/new/misc/Shell 1.svg"
+        width={100}
+        height={50}
+        alt="Shell"
+        className="absolute left-[10%] top-[80%] z-[-3]"
+      />
+      <Image
+        priority
+        src="/assets/new/dinosaurs/Pterodactyl.svg"
+        width={300}
+        height={200}
+        alt="Pterodactyl"
+        className="animate-slide-diagonal absolute right-0 z-[3]"
+      />
       <Image
         priority
         src="/assets/new/background/beach/Ocean.png"
