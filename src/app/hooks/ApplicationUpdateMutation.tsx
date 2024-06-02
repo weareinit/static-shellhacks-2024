@@ -1,9 +1,9 @@
 import { useQueryClient, useMutation } from "react-query";
-import { applicantUpdateSchema } from "@/app/schemas/applicantSchemas";
+import { adminApplicantUpdateSchema } from "@/app/schemas/applicantSchemas";
 import type Hacker_Applications from "@prisma/client";
 import type { z } from "zod";
 
-type ApplicantUpdateType = z.infer<typeof applicantUpdateSchema>;
+type ApplicantUpdateType = z.infer<typeof adminApplicantUpdateSchema>;
 
 export const useAppUpdateMutation = () => {
   const queryClient = useQueryClient();

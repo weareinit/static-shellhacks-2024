@@ -1,7 +1,6 @@
 import { parseCSV } from "@/app/util/parseCSV";
 import type { Metadata } from "next";
-import { getServerAuthSession } from "@/server/auth";
-import Login from "./components/Login";
+import { auth } from "@/server/auth";
 import Image from "next/image";
 import Landing from "./components/new_landing/Landing";
 
@@ -35,7 +34,7 @@ const getSchoolData = async () => {
 
 export default async function Home() {
   const { schools, countries } = await getSchoolData();
-  const stuff = await getServerAuthSession();
+  const sess = await auth();
 
   return (
     <>
