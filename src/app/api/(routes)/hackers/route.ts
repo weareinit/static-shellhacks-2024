@@ -22,8 +22,12 @@ export const POST = auth(async (request) => {
   const body = JSON.parse(
     formData.get("json_application") as unknown as string,
   );
-  console.log(body);
-  await validateCaptcha(body);
+
+  try {
+    await validateCaptcha(body);
+  } catch (e) {
+    return new NextResponse("Invalid captcha", { status: 400 });
+  }
 
   //Handle uploading the resume
   const resume = formData.get("resume") as File;
