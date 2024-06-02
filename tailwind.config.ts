@@ -29,7 +29,13 @@ module.exports = {
         'museoitalic': ['museoitalic', 'sans-serif'],
       },
       screens: {
-        xs: "400px",
+        xxs: "400px",
+        xsm: "500px",
+        sm: "750px",
+        md: "900px",
+        lg: "1100px",
+        xlg: "1400px",
+        xxl: "1900px"
       },
       animation: {
         'fish-slide': 'slide 15s linear infinite',
