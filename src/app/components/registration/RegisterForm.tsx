@@ -141,12 +141,10 @@ function RegisterForm() {
               isRequired
             />
             <SearchInput
-            <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
-            />
             />
             <SelectInput
               label="Major"
