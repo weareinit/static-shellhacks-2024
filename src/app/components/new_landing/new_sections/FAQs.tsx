@@ -50,7 +50,7 @@ const FAQs = () => {
         className="relative z-[-10]"
       /> */}
       <div className="absolute inset-0 top-[600px] flex w-full flex-col items-center justify-start text-center">
-        <h1 className="z-10 w-full font-zoonaji text-[60px] text-white">
+        <h1 className="xxl:text-[80px] z-10 w-full font-zoonaji text-[60px] text-white">
           The ShellHacks Experience
         </h1>
         <div className="h-[630px]">
@@ -62,10 +62,10 @@ const FAQs = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
-            className="z-10 mt-[50px]"
+            className="xxl:w-[1400px] xxl:h-[800px] z-10 mt-[50px]"
           ></iframe>
         </div>
-        <h1 className="z-[20] mb-[50px] mt-[100px] font-zoonaji text-[60px] text-white">
+        <h1 className="xxl:text-[80px] xxl:mt-[300px] z-[20] mb-[50px] mt-[100px] font-zoonaji text-[60px] text-white">
           FAQs
         </h1>
         <FAQSlider />

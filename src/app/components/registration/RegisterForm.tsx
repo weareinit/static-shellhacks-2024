@@ -112,7 +112,7 @@ function RegisterForm() {
         onSubmit={handleSubmit}
       >
         {(props: FormikProps<ApplicantValues>) => (
-          <Form className="my-2 flex flex-col">
+          <Form className="my-2 flex flex-col ">
             <TextInput
               label="First Name"
               name="first_name"
@@ -141,10 +141,12 @@ function RegisterForm() {
               isRequired
             />
             <SearchInput
+            <SearchInput
               label="School"
               name="school"
               options={schools}
               isRequired
+            />
             />
             <SelectInput
               label="Major"

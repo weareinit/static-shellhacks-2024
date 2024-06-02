@@ -13,7 +13,7 @@ function NavBar() {
   const content = (
     <div className="flex w-full justify-center">
       <div
-        className={`bg-nav_bar_brown fixed top-5 z-[100] flex w-[75%] flex-col justify-center rounded-[40px] border border-gray-700 px-4 pt-1 ${
+        className={`xxl:top-10 xxl:w-[70%] xxl:px-8 xxl:pt-5 xxl:pb-4 fixed top-5 z-[100] flex w-[75%] flex-col justify-center rounded-[40px] border border-gray-700 bg-nav_bar_brown px-4 pt-1 ${
           isActive ? "fixed" : "fixed opacity-0"
         }`}
         onMouseEnter={() => setActive(true)}
@@ -28,26 +28,26 @@ function NavBar() {
       >
         <div className="flex justify-between">
           <div className="justify-left flex items-center">
-            <button className="delay-80 font-zoonaji text-english_walnut px-4 py-2 text-xl transition ease-in-out hover:-translate-y-1 md:text-base">
+            <button className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 sm:text-lg md:text-base lg:text-base">
               About Us
             </button>
-            <button className="delay-80 font-zoonaji text-english_walnut px-4 py-2 text-xl transition ease-in-out hover:-translate-y-1 md:text-base">
+            <button className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 sm:text-lg md:text-base lg:text-base">
               Events & Workshops
             </button>
-            <button className="delay-80 font-zoonaji text-english_walnut px-4 py-2 text-xl transition ease-in-out hover:-translate-y-1 md:text-base">
+            <button className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 sm:text-lg md:text-base lg:text-base">
               FAQs
             </button>
-            <button className="delay-80 font-zoonaji text-english_walnut px-4 py-2 text-xl transition ease-in-out hover:-translate-y-1 md:text-base">
+            <button className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 sm:text-lg md:text-base lg:text-base">
               Sponsors
             </button>
           </div>
           <div className="flex justify-between">
-            <button className="delay-80 font-zoonaji px-4 py-2 text-xl text-white transition ease-in-out hover:-translate-y-1 md:text-base">
+            <button className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1 md:text-base">
               Hacker Dashboard
             </button>
             <button
               onClick={openModal}
-              className="delay-80 font-zoonaji text-darker_cyan px-4 py-2 text-xl underline transition ease-in-out hover:-translate-y-1 md:text-base"
+              className="delay-80 xxs:text-sm xsm:text-lg xlg:text-base xxl:text-[30px] px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1 md:text-base"
             >
               Apply!
             </button>
