@@ -70,10 +70,11 @@ export const {
       const ADMIN_ROLE = "1061212827785900103"; // fake btw
 
       user.admin = roles.has(ADMIN_ROLE);
-      user.discordId = json.user.id;
 
       //Update the admin role for the user
       try {
+        user.discordId = json.user.id;
+
         await db.user.update({
           where: { id: user.id },
           data: {
