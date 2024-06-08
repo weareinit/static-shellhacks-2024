@@ -1,12 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-
 /*
  * Helper function to validate the captcha from the client
  * @param request - the request object
  * @returns a response object
  */
-export async function validateCaptcha(request: NextRequest) {
-  const { recaptcha } = await request.json();
+export async function validateCaptcha(body: any) {
+  const { recaptcha } = body;
 
   const response = await fetch(
     `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.PRIVATE_RECAPTCHA_KEY}&response=${recaptcha}`,
@@ -19,11 +17,11 @@ export async function validateCaptcha(request: NextRequest) {
   );
 
   if (!response.ok) {
-    return NextResponse.json({ message: "Failed to make Captcha validation" });
+    throw new Error("Failed to fetch captcha verification data");
   }
 
   const captchaData = await response.json();
   if (!captchaData.success) {
-    return NextResponse.json({ message: "Captcha validation failed" });
+    throw new Error("Invalid captcha");
   }
 }

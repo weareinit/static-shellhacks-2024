@@ -10,12 +10,17 @@ interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options?: string[];
 }
 
-function SearchInput({ label, isRequired, options, ...props }: SearchInputProps) {
+function SearchInput({
+  label,
+  isRequired,
+  options,
+  ...props
+}: SearchInputProps) {
   const [field, meta] = useField(props);
   const [searchValue, setSearchValue] = useState("");
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const filteredOptions = options?.filter(option =>
-    option.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredOptions = options?.filter((option) =>
+    option.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +49,9 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
 
   return (
     <div className="relative my-1 flex basis-full flex-col">
-      <Label className="basis-full">{isRequired ? `*${label}` : label}</Label>
+      <Label className="basis-full font-museo font-bold">
+        {isRequired ? `*${label}` : label}
+      </Label>
       <div className="relative">
         <input
           {...field}
@@ -53,7 +60,7 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
           value={searchValue}
           onChange={handleSearchChange}
           onBlur={handleInputBlur}
-          className={`h-8 w-full basis-full rounded-lg border-2 border-[#787976] border-blue bg-[#f1e9e0] p-1 py-2 font-inter focus:ring-2 sm:h-10 ${
+          className={`font-inter h-8 w-full basis-full rounded-lg border border-black bg-[#E9DBCC] p-3 focus:ring-2 sm:h-10 ${
             showError
               ? `border-red-600 focus:outline-none focus:ring-red-600/50`
               : `focus:ring-blue/50`
@@ -67,7 +74,7 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
               {filteredOptions.map((option, index) => (
                 <li
                   key={index}
-                  className="hover:bg-blue-200 cursor-pointer px-2 py-1"
+                  className="cursor-pointer px-2 py-1 hover:bg-blue-200"
                   onClick={() => handleOptionClick(option)}
                 >
                   {option}

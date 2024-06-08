@@ -4,14 +4,20 @@ import { useField } from "formik";
 import Error from "./Error";
 import Label from "./Label";
 
-interface SelectInputProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectInputProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
   options: string[];
   isRequired?: boolean;
   name: string;
 }
 
-function SelectInput({ label, options, isRequired, ...props }: SelectInputProps) {
+function SelectInput({
+  label,
+  options,
+  isRequired,
+  ...props
+}: SelectInputProps) {
   const [field, meta, helpers] = useField(props);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,9 +27,11 @@ function SelectInput({ label, options, isRequired, ...props }: SelectInputProps)
 
   return (
     <div className="my-1 flex basis-full flex-col">
-      <Label>{isRequired ? `*${label}` : label}</Label>
+      <Label className="font-museo font-bold">
+        {isRequired ? `*${label}` : label}
+      </Label>
       <div
-        className={`relative rounded-lg border-2 border-[#787976] border-blue bg-[#f1e9e0] p-1 py-2 font-inter ${
+        className={`border-blue font-inter relative rounded-lg border border-black bg-[#E9DBCC] p-3 ${
           meta.touched && meta.error
             ? "border-red-600 focus:ring-red-600/50"
             : ""
@@ -32,7 +40,8 @@ function SelectInput({ label, options, isRequired, ...props }: SelectInputProps)
         <select
           {...field}
           className="w-full cursor-pointer appearance-none bg-transparent outline-none"
-          onClick={handleSelectToggle}
+          onBlur={() => setIsOpen(false)}
+          onFocus={() => setIsOpen(true)}
         >
           <option />
           {options.map((option, index) => {
@@ -50,11 +59,15 @@ function SelectInput({ label, options, isRequired, ...props }: SelectInputProps)
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
             viewBox="0 0 24 24"
+            fill="currentColor"
+            className="size-6"
           >
-            <path d="M7 10l5 5 5-5z" />
+            <path
+              fillRule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-.53 14.03a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V8.25a.75.75 0 0 0-1.5 0v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3Z"
+              clipRule="evenodd"
+            />
           </svg>
         </div>
       </div>
