@@ -73,12 +73,19 @@ export const {
       user.discordId = json.user.id;
 
       //Update the admin role for the user
-      await db.user.update({
-        where: { id: user.id },
-        data: {
-          admin: user.admin,
-        },
-      });
+      try {
+        await db.user.update({
+          where: { id: user.id },
+          data: {
+            admin: user.admin,
+          },
+        });
+      } catch (error) {
+        console.error(
+          "Error updating user admin role. This could be because the account isn't yet created",
+          error,
+        );
+      }
 
       console.log("user", user);
       return true;

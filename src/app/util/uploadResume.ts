@@ -1,3 +1,5 @@
+import { join } from "path";
+
 export const uploadResume = async (file: File, userId: string) => {
   //Verify the file details
   if (!file) {
