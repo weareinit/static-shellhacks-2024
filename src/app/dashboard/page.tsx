@@ -26,7 +26,7 @@ const Dashboard = async () => {
   const userRaw = await getUserFromId(sess!.user.id);
 
   if (!userRaw.ok) {
-    return <div>Failed to fetch user</div>;
+    return redirect("/?show_register=true");
   }
 
   const user = (await userRaw.json()) as Hacker_Applications;

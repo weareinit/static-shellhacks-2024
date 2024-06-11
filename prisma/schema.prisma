@@ -90,6 +90,7 @@ model User {
   admin              Boolean?             @default(false)
   accounts           Account[]
   sessions           Session[]
+  isRegistered       Boolean              @default(false) //this ia a bit of a hack to add whether the user has registered to the nextauth session
   hacker_application Hacker_Applications?
 }
 

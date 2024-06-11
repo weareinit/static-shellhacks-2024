@@ -60,13 +60,12 @@ function RegisterForm() {
       }
 
       setIsSubmitting(false);
+      return redirect("/dashboard");
     } catch (e: any) {
       setError(e.message);
       setIsSubmitting(false);
       return;
     }
-
-    return redirect("/dashboard");
   };
 
   return (

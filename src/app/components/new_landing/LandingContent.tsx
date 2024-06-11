@@ -7,16 +7,19 @@ import {
   FaTwitterSquare,
 } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
+import { useSession } from "next-auth/react";
 
 const LandingContent = () => {
+  const { data: session, status } = useSession();
+
   return (
     <>
       <div className="text-center">
-        <p className="xxl:text-[60px] xxl:mt-10 font-zoonaji text-4xl text-darker_cyan">
+        <p className="font-zoonaji text-4xl text-darker_cyan xxl:mt-10 xxl:text-[60px]">
           The Largest Hackathon in the East Coast!
         </p>
-        <div className="xxl:mt-5 flex items-center  justify-center">
-          <p className="xxl:text-[30px] font-museo text-lg">Powered by </p>
+        <div className="flex items-center justify-center  xxl:mt-5">
+          <p className="font-museo text-lg xxl:text-[30px]">Powered by </p>
           <div className=" relative right-3 flex h-[3rem] w-[12rem]">
             <Image
               priority
@@ -27,13 +30,13 @@ const LandingContent = () => {
           </div>
         </div>
         <div className="font-museoregular">
-          <div className="xxl:text-[40px] mt-5 text-[1.5rem] text-[#000000]">
+          <div className="mt-5 text-[1.5rem] text-[#000000] xxl:text-[40px]">
             September 27th - 29th, 2024
           </div>
-          <div className="xxl:text-[40px] text-[1.5rem] text-[#000000]">
+          <div className="text-[1.5rem] text-[#000000] xxl:text-[40px]">
             FIU&apos;s Graham Center - Miami, FL
           </div>
-          <div className="xxl:text-5xl xxl:gap-4 mt-1 flex justify-center gap-2 text-2xl text-ferra">
+          <div className="mt-1 flex justify-center gap-2 text-2xl text-ferra xxl:gap-4 xxl:text-5xl">
             <div className="cursor-pointer">
               <FaDiscord />
             </div>
@@ -58,7 +61,7 @@ const LandingContent = () => {
         // https://app.lottiefiles.com/animation/49b666a1-2cde-4881-971c-376b26b09ce9?channel=web&source=public-animation&panel=download
       }
       <div className="mt-7 flex justify-center">
-        <div className="xxl:text-2xl relative bottom-3 h-11 w-11">
+        <div className="relative bottom-3 h-11 w-11 xxl:text-2xl">
           <Image
             priority
             src="/assets/new/animation/scroll_for_more.gif"
@@ -66,7 +69,7 @@ const LandingContent = () => {
             fill
           />
         </div>
-        <p className="xxl:text-2xl font-museoregular">scroll for more!</p>
+        <p className="font-museoregular xxl:text-2xl">scroll for more!</p>
       </div>
     </>
   );

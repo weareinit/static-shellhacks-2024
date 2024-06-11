@@ -17,6 +17,7 @@ declare module "next-auth" {
       admin: boolean;
       email: string;
       discordId: string;
+      isRegistered: boolean; // if the user has registered for the hackathon
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -25,6 +26,7 @@ declare module "next-auth" {
   interface User {
     admin: boolean;
     discordId: string;
+    isRegistered: boolean;
     // ...other properties
     // role: UserRole;
   }
@@ -52,6 +54,27 @@ export const {
     }),
   ],
   callbacks: {
+    session: async ({ session, user }) => {
+      session.user.id = user.id;
+      session.user.email = user.email;
+      session.user.admin = user.admin;
+      session.user.discordId = user.discordId;
+
+      try {
+        //Add the isRegistered field to the session
+        const isRegistered = await db.hacker_Applications.findUnique({
+          where: { userId: user.id },
+        });
+
+        console.log("isRegistered", isRegistered);
+        user.isRegistered = !!isRegistered;
+        session.user.isRegistered = user.isRegistered;
+      } catch (error) {
+        console.error("Error getting user registration status", error);
+      }
+
+      return session;
+    },
     signIn: async ({ user, account }) => {
       // if (!account) return false;
       const access_token = account?.access_token;
@@ -70,11 +93,10 @@ export const {
       const ADMIN_ROLE = "1061212827785900103"; // fake btw
 
       user.admin = roles.has(ADMIN_ROLE);
+      user.discordId = json.user?.id;
 
-      //Update the admin role for the user
       try {
-        user.discordId = json.user.id;
-
+        //Update the admin role for the user
         await db.user.update({
           where: { id: user.id },
           data: {

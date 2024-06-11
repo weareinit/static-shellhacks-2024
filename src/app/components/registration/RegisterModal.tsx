@@ -1,12 +1,30 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import Modal from "../Modal";
 import RegisterForm from "./RegisterForm";
+import { redirect } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 interface RegisterModalProps {
   toClose: any;
 }
 
 export default function RegisterModal({ toClose }: RegisterModalProps) {
+  const { data: session, update } = useSession();
+
+  if (!session) {
+    signIn("discord");
+  } else if (session.user.isRegistered) {
+    redirect("/dashboard");
+  }
+
+  // useEffect(() => {
+  //   update();
+  // }, []);
+
+  useEffect(() => {
+    console.log("session", session);
+  }, [session]);
+
   return (
     <Modal containerClassName="z-20 pb-24">
       <div className="relative row-span-1 row-start-1 m-auto flex h-fit flex-col justify-center rounded-lg bg-transparent p-4">
