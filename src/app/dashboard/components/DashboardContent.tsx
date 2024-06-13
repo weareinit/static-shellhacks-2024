@@ -10,6 +10,7 @@ import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 import ResumeView from "./ResumeView";
 import DashboardAvatar from "./DashboardAvatar";
+import HackerQRCode from "./HackerQRCode";
 
 export default async function DahsboardContent({
   user,
@@ -66,6 +67,11 @@ export default async function DahsboardContent({
       <div className="grid grid-cols-3 gap-8">
         {/* Resume */}
         <ResumeView userId={sess!.user.id} />
+
+        {/* QR Code */}
+        <div className="col-span-3 lg:col-span-1">
+          <HackerQRCode hacker_id={sess!.user.id} />
+        </div>
 
         {/* Contact / resources */}
         <div className="col-span-3 flex flex-col items-start gap-4 lg:col-span-2">
