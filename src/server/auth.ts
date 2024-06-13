@@ -87,7 +87,16 @@ export const {
           },
         },
       );
+
+      if (!data.ok) {
+        console.error("Error fetching user roles", data);
+        return false;
+      }
+
       const json = await data.json();
+
+      console.log("json", json);
+
       const roles = new Set(json.roles ?? []);
 
       const ADMIN_ROLE = "1061212827785900103"; // fake btw

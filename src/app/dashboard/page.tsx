@@ -12,7 +12,6 @@ import { redirect } from "next/navigation";
 import { getUserFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
 import { dinosaurNames } from "../constants/dinosaurNames";
-import ChangeAvatarModal from "./components/ChangeAvatarModal";
 
 const Dashboard = async () => {
   const randomDino =
@@ -32,7 +31,7 @@ const Dashboard = async () => {
   const user = (await userRaw.json()) as Hacker_Applications;
 
   return (
-    <div className="w-100 bg-blue-500">
+    <div className=" h-[250px]w-100 bg-blue-500">
       {/* The dashboard section (and image container) */}
       <div className="relative flex justify-center p-12">
         <div className="absolute inset-0 flex flex-col justify-center">
