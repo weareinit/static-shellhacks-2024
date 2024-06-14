@@ -32,7 +32,6 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
           <div
             onClick={toClose}
             className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
-            className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

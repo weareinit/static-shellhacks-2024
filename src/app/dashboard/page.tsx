@@ -9,7 +9,7 @@ import Link from "next/link";
 import { CustomButton } from "./components/CustomButton";
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
-import { getUserFromId } from "../api/(logic)/getUserFromId";
+import { getHackerApplicationFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
 import { dinosaurNames } from "../constants/dinosaurNames";
 
@@ -22,13 +22,13 @@ const Dashboard = async () => {
     redirect("/api/auth/signin");
   }
 
-  const userRaw = await getUserFromId(sess!.user.id);
+  const hackerAppRaw = await getHackerApplicationFromId(sess!.user.id);
 
-  if (!userRaw.ok) {
+  if (!hackerAppRaw.ok) {
     return redirect("/?show_register=true");
   }
 
-  const user = (await userRaw.json()) as Hacker_Applications;
+  const application = (await hackerAppRaw.json()) as Hacker_Applications;
 
   return (
     <div className=" h-[250px]w-100 bg-blue-500">
@@ -78,11 +78,11 @@ const Dashboard = async () => {
               </CustomButton>
             </Link>
             <p className="col-span-8 mt-4 font-zoonaji text-5xl text-darker_cyan">
-              {user.first_name}'s Hacker Dashboard
+              {application.first_name}'s Hacker Dashboard
             </p>
           </div>
           <div className="w-full rounded-lg bg-white bg-opacity-50">
-            <DahsboardContent user={user} />
+            <DahsboardContent application={application} />
           </div>
         </div>
       </div>
