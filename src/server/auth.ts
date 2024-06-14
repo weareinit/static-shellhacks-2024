@@ -110,6 +110,7 @@ export const {
 
         try {
           //Update the admin role for the user. This way, whenever the user logs in again we can update their status from the API
+          //Note: This code will fail on first run because the user isn't created in the db until *after* the first login
           await db.user.update({
             where: { id: user.id },
             data: {
@@ -117,7 +118,7 @@ export const {
             },
           });
         } catch (error) {
-          console.error(
+          console.info(
             "Error updating user admin role. This could be because the account isn't yet created",
             error,
           );
