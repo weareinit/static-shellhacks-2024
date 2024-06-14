@@ -4,6 +4,10 @@ import DiscordProvider from "next-auth/providers/discord";
 
 import { env } from "@/env";
 import { db } from "@/server/db";
+
+const INIT_DISCORD_ID = "245393533391863808";
+//maybe we want to update this with a specific 'shellhacks-only' role in the future
+const INIT_EBOARD_ROLE = "1061212827785900103";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -16,7 +20,7 @@ declare module "next-auth" {
       id: string;
       admin: boolean;
       email: string;
-      discordId: string;
+      discordUsername: string;
       isRegistered: boolean; // if the user has registered for the hackathon
       // ...other properties
       // role: UserRole;
@@ -25,7 +29,7 @@ declare module "next-auth" {
 
   interface User {
     admin: boolean;
-    discordId: string;
+    discordUsername: string;
     isRegistered: boolean;
     // ...other properties
     // role: UserRole;
@@ -58,7 +62,7 @@ export const {
       session.user.id = user.id;
       session.user.email = user.email;
       session.user.admin = user.admin;
-      session.user.discordId = user.discordId;
+      session.user.discordUsername = user.discordUsername;
 
       try {
         //Add the isRegistered field to the session
@@ -76,10 +80,12 @@ export const {
       return session;
     },
     signIn: async ({ user, account }) => {
-      // if (!account) return false;
-      const access_token = account?.access_token;
+      if (!account) return false;
+      console.log("account", account);
+
+      const access_token = account.access_token;
       const data = await fetch(
-        "https://discord.com/api/users/@me/guilds/245393533391863808/member",
+        `https://discord.com/api/users/@me/guilds/${INIT_DISCORD_ID}/member`,
         {
           headers: {
             Authorization: "Bearer " + access_token,
@@ -94,32 +100,32 @@ export const {
       }
 
       const json = await data.json();
+      console.log("User roles", json);
 
-      console.log("json", json);
+      if (json) {
+        const roles = new Set(json.roles ?? []);
 
-      const roles = new Set(json.roles ?? []);
+        user.admin = roles.has(INIT_EBOARD_ROLE);
+        user.discordUsername = json.user?.username;
 
-      const ADMIN_ROLE = "1061212827785900103"; // fake btw
-
-      user.admin = roles.has(ADMIN_ROLE);
-      user.discordId = json.user?.id;
-
-      try {
-        //Update the admin role for the user
-        await db.user.update({
-          where: { id: user.id },
-          data: {
-            admin: user.admin,
-          },
-        });
-      } catch (error) {
-        console.error(
-          "Error updating user admin role. This could be because the account isn't yet created",
-          error,
-        );
+        try {
+          //Update the admin role for the user. This way, whenever the user logs in again we can update their status from the API
+          await db.user.update({
+            where: { id: user.id },
+            data: {
+              admin: user.admin,
+            },
+          });
+        } catch (error) {
+          console.error(
+            "Error updating user admin role. This could be because the account isn't yet created",
+            error,
+          );
+        }
+      } else {
+        //the user isn't in the discord server, we might want to make them join...
       }
 
-      console.log("user", user);
       return true;
     },
   },
