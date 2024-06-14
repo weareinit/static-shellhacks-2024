@@ -14,14 +14,15 @@ function FAQItem({ question, answer }: FAQItemProps) {
   };
 
   return (
-    <div className="bg-cyan_blue h-fit w-full relative rounded-sm">
+    <div className="bg-cyan_blue relative h-fit w-full rounded-sm">
       <h3
         onClick={toggleItem}
-        className={`relative font-pixel p-2 text-tan text-left hover:bg-pink decoration-blue transition ease-in-out flex justify-between items-center hover:cursor-pointer ${showItem && "bg-pink"}`}
+        className={`font-pixel text-tan hover:bg-pink decoration-blue relative flex items-center justify-between
+           p-2 text-left transition ease-in-out hover:cursor-pointer sm:text-[20px] ${showItem && "bg-pink"}`}
       >
         {question}
         <svg
-          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} opacity-50 cursor-pointer select-none flex-shrink-0`}
+          className={`transform fill-white transition-transform ${showItem && " rotate-180 "} flex-shrink-0 cursor-pointer select-none opacity-50`}
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
@@ -30,16 +31,27 @@ function FAQItem({ question, answer }: FAQItemProps) {
           <path d="M7 10l5 5 5-5z" />
         </svg>
       </h3>
-      {showItem && <p className={`text-crate_brown bg-navbar_background p-4 transition ease-in-out delay-150 ${showItem && " bg-caramel_brown "}`}>{answer}</p>}
+      {showItem && (
+        <p
+          className={`text-crate_brown bg-navbar_background p-4 transition delay-150 ease-in-out ${showItem && " bg-caramel_brown "}`}
+        >
+          {answer}
+        </p>
+      )}
     </div>
   );
 }
 
 function FAQ() {
   return (
-    <section className="flex flex-col md:flex-row m-2 justify-center items-center pt-36 w-full" id="faq">
-      <article className="space-y-2 w-full p-2 rounded-pixel max-w-[900px]">
-        <h1 className="text-center font-console font-bold text-4xl text-crate_brown mb-6">FAQs</h1>
+    <section
+      className="top-0 m-2 flex w-full flex-col items-center justify-center pt-36 md:flex-row"
+      id="faq"
+    >
+      <article className="rounded-pixel w-full max-w-[900px] space-y-2 p-2">
+        <h1 className="font-console text-crate_brown mb-6 text-center text-4xl font-bold">
+          FAQs
+        </h1>
         <FAQItem
           question="What is a hackathon?"
           answer="A hackathon is a weekend-long event where students come together to learn the latest technologies, build innovative projects, and network with top companies. ShellHacks is the largest hackathon in Florida, bringing thousands of students from around the world together since 2017!"
@@ -84,7 +96,10 @@ function FAQ() {
           question="How much does it cost?"
           answer="Nothing! That’s right, ShellHacks is completely free for all students accepted to the event. We provide everything you need to help you focus on learning the latest technologies, building innovative projects, and networking with top companies- all thanks to the generous donations from our sponsors!"
         />
-        <FAQItem question="How can I become a sponsor?" answer="Please reach out to our team at fiu@weareinit.org and we’ll get back to you promptly!" />
+        <FAQItem
+          question="How can I become a sponsor?"
+          answer="Please reach out to our team at fiu@weareinit.org and we’ll get back to you promptly!"
+        />
         <FAQItem
           question={`Why "ShellHacks"?`}
           answer="Well, it started off as a joke about what a turtle-themed hackathon would be called. Later on, we actually started thinking about organizing a hackathon, but instead of turtles, we decided to focus on diversity in Miami. Since the city has an abundance of seashells on its beaches, the name stuck! It's also a play on words about computer shells, but that’s just to draw attention away from all the turtle puns."

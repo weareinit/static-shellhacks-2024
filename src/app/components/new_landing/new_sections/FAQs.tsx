@@ -41,16 +41,17 @@ const FAQs = () => {
         alt="Dirt background"
         className="relative z-[-10]"
       />
-      {/* <Image priority
+      <Image
+        priority
         src="/assets/new/background/forest/Dirt 2.png"
         layout="responsive"
         width={1789}
         height={974}
         alt="Dirt background"
-        className="relative z-[-10]"
-      /> */}
-      <div className="absolute inset-0 top-[600px] flex w-full flex-col items-center justify-start text-center">
-        <h1 className="xxl:text-[80px] z-10 w-full font-zoonaji text-[60px] text-white">
+        className="relative z-[-10] md:hidden"
+      />
+      <div className="absolute inset-0 top-[600px] flex w-full flex-col items-center justify-start text-center sm:top-[250px] md:top-[400px]">
+        <h1 className="z-10 w-full font-zoonaji text-white sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:text-[80px]">
           The ShellHacks Experience
         </h1>
         <div className="h-[630px]">
@@ -62,10 +63,10 @@ const FAQs = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
-            className="xxl:w-[1400px] xxl:h-[800px] z-10 mt-[50px]"
+            className="z-10 mt-[50px] sm:h-[400px] sm:w-[600px] md:h-[400px] md:w-[600px] lg:h-[500px] lg:w-[900px] xlg:h-[600px] xlg:w-[1100px] xxl:h-[800px] xxl:w-[1400px]"
           ></iframe>
         </div>
-        <h1 className="xxl:text-[80px] xxl:mt-[300px] z-[20] mb-[50px] mt-[100px] font-zoonaji text-[60px] text-white">
+        <h1 className="z-[20] mb-[50px] mt-[100px] font-zoonaji text-[60px] text-white sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:mt-[300px] xxl:text-[80px]">
           FAQs
         </h1>
         <FAQSlider />

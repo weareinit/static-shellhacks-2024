@@ -40,15 +40,16 @@ const CarouselSlides: React.FC<CarouselSlidesProps> = ({ slideTitles }) => {
                 setCurrent(i);
               }}
               key={"circle" + i}
-              className={`h-4 w-4 cursor-pointer rounded-full ${i == current ? "bg-english_walnut" : "bg-cotton_seed"}`}
+              className={`h-4 w-4 cursor-pointer rounded-full sm:h-3 sm:w-3 ${i == current ? "bg-english_walnut" : "bg-cotton_seed"}`}
             ></div>
           );
         })}
       </div>
-      <div className="xxl:text-4xl xxl:mt-4 relative top-0 flex h-full min-w-full items-center justify-center gap-10 px-10 font-zoonaji text-3xl text-english_walnut ">
+      <div className="relative top-0 flex h-full min-w-full items-center justify-center gap-10 px-10 text-english_walnut sm:gap-3 xxl:mt-4 xxl:text-4xl ">
         {slideTitles.map((title, index) => (
           <button
-            className={`xxl:rounded-[30px] xxl:px-10 xxl:pb-5 xxl:pt-6 rounded-[20px] px-5 pb-3 pt-4 hover:bg-reddish_grey ${index === current ? "bg-reddish_grey" : "bg-cotton_seed"}`}
+            className={`rounded-[20px] px-5 pb-3 pt-4 font-zoonaji hover:bg-reddish_grey sm:pb-2 sm:pt-3 lg:rounded-[20px] lg:px-8 lg:pb-3 lg:pt-4 lg:text-xl xlg:rounded-[30px] xlg:px-10 xlg:pb-5 xlg:pt-6 xlg:text-3xl
+               xxl:rounded-[30px] xxl:px-10 xxl:pb-5 xxl:pt-6 xxl:text-3xl ${index === current ? "bg-reddish_grey" : "bg-cotton_seed"}`}
             key={index}
             onClick={() => goToSlide(index)}
           >

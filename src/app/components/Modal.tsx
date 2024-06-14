@@ -35,7 +35,7 @@ function Modal({
     <div
       className={`fixed inset-0 z-50 grid h-screen w-screen content-center justify-center bg-white bg-opacity-50`}
       style={{
-        backdropFilter: "blur(10px)",
+        backdropFilter: "blur(20px)",
         transition: "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
         opacity: isVisible ? 1 : 0,
       }}

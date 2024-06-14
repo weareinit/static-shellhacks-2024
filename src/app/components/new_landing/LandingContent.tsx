@@ -15,12 +15,14 @@ const LandingContent = () => {
   return (
     <>
       <div className="text-center">
-        <p className="font-zoonaji text-4xl text-darker_cyan xxl:mt-10 xxl:text-[60px]">
+        <p className="font-zoonaji text-4xl text-darker_cyan sm:mt-3 sm:text-[23px] md:mt-4 md:text-[25px] lg:mt-8 lg:text-[30px] xlg:mt-9 xlg:text-[40px] xxl:mt-10 xxl:text-[60px]">
           The Largest Hackathon in the East Coast!
         </p>
         <div className="flex items-center justify-center  xxl:mt-5">
-          <p className="font-museo text-lg xxl:text-[30px]">Powered by </p>
-          <div className=" relative right-3 flex h-[3rem] w-[12rem]">
+          <p className="mt-2 font-museo text-lg xxs:text-[14px] md:text-[15px] lg:text-[20px] xlg:text-[20px] xxl:text-[30px]">
+            Powered by
+          </p>
+          <div className="relative right-3 mt-2 flex sm:h-[1.5rem] sm:w-[6rem] md:h-[2rem] md:w-[8rem] lg:h-[3rem] lg:w-[12rem]">
             <Image
               priority
               src="/assets/new/logo/Nvidia_Logo.png"
@@ -30,13 +32,13 @@ const LandingContent = () => {
           </div>
         </div>
         <div className="font-museoregular">
-          <div className="mt-5 text-[1.5rem] text-[#000000] xxl:text-[40px]">
-            September 27th - 29th, 2024
+          <div className="text-[1.5rem] text-[#000000] xxs:text-[18px] md:text-[18px] lg:text-[23px] xlg:mt-3 xlg:text-[20px] xxl:mt-5 xxl:text-[40px]">
+            September 27th - 29th, 2024s
           </div>
-          <div className="text-[1.5rem] text-[#000000] xxl:text-[40px]">
+          <div className="text-[1.5rem] text-[#000000] xxs:text-[18px] md:text-[18px] lg:text-[23px] xlg:text-[20px] xxl:text-[40px]">
             FIU&apos;s Graham Center - Miami, FL
           </div>
-          <div className="mt-1 flex justify-center gap-2 text-2xl text-ferra xxl:gap-4 xxl:text-5xl">
+          <div className="mt-1 flex justify-center gap-2 text-2xl text-ferra sm:mt-4 lg:gap-3 lg:text-[3xl] xlg:gap-3 xlg:text-3xl xxl:gap-4 xxl:text-5xl">
             <div className="cursor-pointer">
               <FaDiscord />
             </div>
@@ -61,7 +63,7 @@ const LandingContent = () => {
         // https://app.lottiefiles.com/animation/49b666a1-2cde-4881-971c-376b26b09ce9?channel=web&source=public-animation&panel=download
       }
       <div className="mt-7 flex justify-center">
-        <div className="relative bottom-3 h-11 w-11 xxl:text-2xl">
+        <div className="xlg:1xl relative bottom-3 h-11 w-11 xxl:text-2xl">
           <Image
             priority
             src="/assets/new/animation/scroll_for_more.gif"
@@ -69,7 +71,9 @@ const LandingContent = () => {
             fill
           />
         </div>
-        <p className="font-museoregular xxl:text-2xl">scroll for more!</p>
+        <p className="xlg:text-1xl md:text-md font-museoregular xxs:text-[14px] xxl:text-2xl">
+          scroll for more!
+        </p>
       </div>
     </>
   );

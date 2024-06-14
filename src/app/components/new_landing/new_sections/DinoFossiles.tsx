@@ -26,7 +26,7 @@ const DinoFossiles = () => {
         width={120.03}
         height={120.03}
         alt="Fossil Shell"
-        className="absolute left-0 top-0 -z-[9]"
+        className="absolute left-0 top-0 -z-[9] sm:left-4 sm:h-[80px] sm:w-[80px]"
       />
     </div>
   );

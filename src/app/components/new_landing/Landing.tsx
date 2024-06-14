@@ -12,7 +12,7 @@ import NavBar from "./new_sections/NavBar";
 const Landing = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
-      <MLHBanner />
+      {/* <MLHBanner /> */}
       <NavBar />
       <div id="landing" className="flex w-screen flex-col">
         <SkyAndOcean />

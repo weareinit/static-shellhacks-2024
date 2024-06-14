@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Carousel from "./Carousel";
 import Challenges from "./Challenges";
@@ -15,6 +16,16 @@ const AboutUs = () => {
         alt="Forest background"
         className="relative z-[-10]"
       />
+      <Image
+        priority
+        src="/assets/new/background/forest/Forest 2.png"
+        layout="responsive"
+        width={1789}
+        height={974}
+        alt="Forest background"
+        className="relative z-[-10] lg:hidden"
+      />
+      <div className={`bg-[#889648]`} style={{ height: 50 }}></div>
       <Image
         priority
         src="/assets/new/background/forest/Forest 2.png"

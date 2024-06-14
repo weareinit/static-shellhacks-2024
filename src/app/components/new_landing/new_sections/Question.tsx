@@ -24,11 +24,11 @@ const Question: React.FC<QuestionProps> = ({ Q, A }) => {
   return (
     <div className="w-full">
       <div
-        className="xxl:my-4 my-2 cursor-pointer overflow-hidden rounded-xl"
+        className="my-2 cursor-pointer overflow-hidden rounded-xl xlg:my-3 xxl:my-4"
         onClick={toggleExpand}
       >
-        <div className="xxl:px-6 xxl:py-8 flex w-full items-center justify-between bg-cotton_seed px-4 py-5">
-          <h2 className="xxl:text-[45px] text-left font-museo text-[30px]">
+        <div className="flex w-full items-center justify-between bg-cotton_seed sm:px-4 sm:py-3 md:px-4 md:py-5 xlg:px-5 xlg:py-8 xxl:px-6 xxl:py-8">
+          <h2 className="text-left font-museo sm:text-[20px] md:text-[30px] xlg:text-[35px] xxl:text-[45px]">
             {Q}?
           </h2>
           <Image
@@ -37,7 +37,7 @@ const Question: React.FC<QuestionProps> = ({ Q, A }) => {
             alt="Toggle Arrow"
             width={40}
             height={40}
-            className={`xxl:w-[80px] xxl:h-[80px] transform transition-transform duration-300 ${expanded ? "rotate-180" : "rotate-0"}`}
+            className={`transform transition-transform duration-300 xlg:h-[60px] xlg:w-[60px] xxl:h-[80px] xxl:w-[80px] ${expanded ? "rotate-180" : "rotate-0"}`}
           />
         </div>
         <div
@@ -45,8 +45,8 @@ const Question: React.FC<QuestionProps> = ({ Q, A }) => {
           style={{ height }}
           className="overflow-hidden transition-all duration-300"
         >
-          <div className="xxl:p-8 bg-cotton_seed p-4">
-            <h3 className="xxl:text-[2rem] xxl:leading-[40px] text-left font-museoregular text-base">
+          <div className="bg-cotton_seed p-4 xlg:p-6 xxl:p-8">
+            <h3 className="text-left font-museoregular text-base xlg:text-[1.5rem] xlg:leading-[30px] xxl:text-[2rem] xxl:leading-[40px]">
               {A}
             </h3>
           </div>

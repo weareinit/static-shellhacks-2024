@@ -41,12 +41,20 @@ const Sponsors = () => {
           className="relative z-[-10]"
         />
       ))} */}
+      <Image
+        src="/assets/new/background/lava/Stone.png"
+        layout="responsive"
+        width={1789}
+        height={974}
+        alt="Bedrock background"
+        className="relative z-[-10]"
+      />
 
       <div className="absolute inset-0 flex flex-col items-center justify-start">
-        <h1 className="xxl:mb-12 xxl:mt-[100px] xxl:text-[80px] mb-6 mt-4 font-zoonaji text-[60px] text-pastel_orange">
+        <h1 className="mb-6 mt-4 font-zoonaji text-[60px] text-pastel_orange sm:mb-1 sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:mb-12 xxl:mt-[100px] xxl:text-[80px]">
           Sponsored By
         </h1>
-        <p className="xxl:text-[30px] m-5 font-museo text-2xl text-white">
+        <p className="m-5 font-museo text-2xl text-white sm:text-[15px] md:text-[20px] lg:text-[25px] xxl:text-[30px]">
           Sponsors to be revealed soon...
         </p>
       </div>

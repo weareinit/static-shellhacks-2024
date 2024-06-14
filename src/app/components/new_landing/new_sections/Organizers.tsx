@@ -28,11 +28,11 @@ const Organizers = () => {
         width={1789}
         height={974}
         alt="Lava background"
-        className="relative  z-[-10]"
+        className="relative z-[-10]"
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-start">
-        <div id="empty_space" className="p-20"></div>
-        <h1 className="xxl:mb-12 xxl:mt-[100px] xxl:text-[80px] mb-6 mt-4 font-zoonaji text-[60px] text-pastel_orange">
+      <div className="absolute inset-0 flex flex-col items-center justify-start md:top-[-40px]">
+        <div id="empty_space" className="sm:p-10 md:p-20"></div>
+        <h1 className="mb-6 mt-4 font-zoonaji text-[60px] text-pastel_orange sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:mb-12 xxl:mt-[100px] xxl:text-[80px]">
           Organized By
         </h1>
         <Image
@@ -41,6 +41,7 @@ const Organizers = () => {
           width={617}
           height={136}
           alt="INIT FIU"
+          className="sm:h-[60px] sm:w-[450px] md:h-[70px] md:w-[400px]"
         ></Image>
       </div>
     </div>

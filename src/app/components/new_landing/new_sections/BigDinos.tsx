@@ -13,7 +13,7 @@ const BigDinos = () => {
             width={750}
             height={750}
             alt="Tree"
-            className="xxl:w-[60rem] xxl:h-[90rem] absolute  bottom-0 left-[-250px] z-[-3]"
+            className="absolute bottom-0 left-[-250px] z-[-3] sm:bottom-[40px] sm:left-[-120px] sm:w-[450px] md:left-[-150px] md:w-[500px] xxl:h-[90rem] xxl:w-[60rem]"
           />
           <Image
             priority
@@ -31,7 +31,7 @@ const BigDinos = () => {
             width={600}
             height={600}
             alt="Tree"
-            className="xxl:w-[50rem] xxl:h-[75rem] absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform"
+            className="absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform sm:bottom-[70px] sm:right-[-80px] sm:w-[400px] md:right-[-100px] md:w-[450px] xxl:h-[75rem] xxl:w-[50rem]"
           />
           <Image
             priority
