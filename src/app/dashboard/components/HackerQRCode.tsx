@@ -7,7 +7,7 @@ interface HackerQRCode {
 
 export default function HackerQRCode({ hacker_id }: HackerQRCode) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <p className="font-museo text-xl">Your QR Code:</p>
       <p className="text-md font-museo">
         Scan this QR Code to check in at the event.
