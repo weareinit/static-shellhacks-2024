@@ -5,7 +5,7 @@ import {
   hackerApplicantUpdateSchema,
 } from "@/app/schemas/applicantSchemas";
 import { auth } from "@/server/auth";
-import { getUserFromId } from "@/app/api/(logic)/getUserFromId";
+import { getHackerApplicationFromId } from "@/app/api/(logic)/getUserFromId";
 
 export const dynamic = "auto"; //cache
 export const revalidate = 60; //cache
@@ -23,7 +23,7 @@ export const GET = auth(async (request, ctx) => {
     ? (ctx?.params?.id as string)
     : request.auth.user.id;
 
-  return await getUserFromId(id);
+  return await getHackerApplicationFromId(id);
 });
 
 /*
@@ -31,7 +31,7 @@ export const GET = auth(async (request, ctx) => {
  * For a hacker, this route is only accessable if they own the id. For an admin, they can update any applicant. This is enforced in the middleware
  */
 export const PUT = auth(async (request, { params }) => {
-  if (!request.auth) {
+  if (!request.auth || !request.auth.user.hacker_id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
@@ -46,12 +46,14 @@ export const PUT = auth(async (request, { params }) => {
     return new NextResponse(safedata.error.message, { status: 400 });
   }
 
+  // delete safedata.data.id; //make sure the id can't be updated
+
   //make sure a normal hacker can't update anyone's profile other than their own
   const data = await db.hacker_Applications.update({
     where: {
-      userId: request.auth.user.admin
-        ? (params?.id as string)
-        : request.auth.user.id,
+      id: request.auth.user.admin
+        ? (params?.id as unknown as number)
+        : request.auth.user.hacker_id,
     },
     data: safedata.data,
   });

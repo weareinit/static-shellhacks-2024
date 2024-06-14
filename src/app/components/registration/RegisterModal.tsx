@@ -13,7 +13,7 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
 
   if (!session) {
     signIn("discord");
-  } else if (session.user.isRegistered) {
+  } else if (session.user.hacker_id) {
     redirect("/dashboard");
   }
 

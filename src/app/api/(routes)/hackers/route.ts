@@ -88,8 +88,5 @@ export const POST = auth(async (request) => {
     );
   }
 
-  return NextResponse.json(
-    { message: "Application created successfully" },
-    { status: 200 },
-  );
+  return new NextResponse("Application created successfully", { status: 200 });
 });

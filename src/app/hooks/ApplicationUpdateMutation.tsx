@@ -1,7 +1,6 @@
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { adminApplicantUpdateSchema } from "@/app/schemas/applicantSchemas";
-import type Hacker_Applications from "@prisma/client";
-import type { z } from "zod";
+import { z } from "zod";
 
 type ApplicantUpdateType = z.infer<typeof adminApplicantUpdateSchema>;
 
@@ -9,12 +8,12 @@ export const useAppUpdateMutation = () => {
   const queryClient = useQueryClient();
 
   const updateApplicant = async (args: ApplicantUpdateType) => {
-    if (args.email == null) {
-      throw new Error("Cannot update applicant when email is null");
+    if (args.id == null) {
+      throw new Error("Cannot update applicant when id is null");
     }
 
     const response = await fetch(
-      `/api/applications/${encodeURIComponent(args.email)}`,
+      `/api/hackers/${encodeURIComponent(args.id)}`,
       {
         method: "PUT",
         headers: {
@@ -34,7 +33,7 @@ export const useAppUpdateMutation = () => {
   return useMutation({
     mutationFn: updateApplicant,
     onSuccess: () => {
-      queryClient.invalidateQueries(["applicants"]);
+      queryClient.invalidateQueries({ queryKey: ["applicants"] });
     },
   });
 };
