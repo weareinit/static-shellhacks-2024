@@ -10,6 +10,7 @@ import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 import ResumeView from "./ResumeView";
 import DashboardAvatar from "./DashboardAvatar";
+import HackerQRCode from "./HackerQRCode";
 
 export default async function DahsboardContent({
   user,
@@ -63,13 +64,22 @@ export default async function DahsboardContent({
         <div className="my-5 w-[90%] border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-8 gap-4">
         {/* Resume */}
-        <ResumeView userId={sess!.user.id} />
+        <div className="col-span-8 lg:col-span-2">
+          <ResumeView userId={sess!.user.id} />
+        </div>
+
+        {/* QR Code */}
+        {user.application_status === application_status_enums.confirmed && (
+          <div className="col-span-8 lg:col-span-2">
+            <HackerQRCode hacker_id={sess!.user.id} />
+          </div>
+        )}
 
         {/* Contact / resources */}
-        <div className="col-span-3 flex flex-col items-start gap-4 lg:col-span-2">
-          <div>
+        <div className="col-span-8 lg:col-span-4">
+          <div className="flex flex-col items-start gap-2">
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">
               If you have any questions about the hackathon, please post them in
@@ -78,20 +88,21 @@ export default async function DahsboardContent({
               an organizer privately on Discord or send an email to
               <i> shellhacks@fiu.weareinit.org</i>.
             </p>
-          </div>
 
-          <div>
-            <p className="font-museo text-xl">Resources:</p>
-            <div className="my-3">
-              <DashboardSocialButtons />
+            <div>
+              <p className="font-museo text-xl">Resources:</p>
+              <div className="my-3">
+                <DashboardSocialButtons />
+              </div>
+              {user.application_status ===
+              application_status_enums.withdrawn ? (
+                <p className="font-zoonaji text-2xl text-red-600">
+                  You have withdrawn your application
+                </p>
+              ) : (
+                <WithdrawApplicationButton userId={sess!.user.id} />
+              )}
             </div>
-            {user.application_status === application_status_enums.withdrawn ? (
-              <p className="font-zoonaji text-2xl text-red-600">
-                You have withdrawn your application
-              </p>
-            ) : (
-              <WithdrawApplicationButton userId={sess!.user.id} />
-            )}
           </div>
         </div>
       </div>

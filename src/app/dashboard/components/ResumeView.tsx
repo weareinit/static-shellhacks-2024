@@ -21,7 +21,7 @@ export default function ResumeView({ userId }: { userId: string }) {
   };
 
   return (
-    <div className="col-span-1 flex flex-col items-start gap-3">
+    <div className="flex flex-col items-start gap-2">
       <p className="font-museo text-xl">Your Resume:</p>
       <div className="flex flex-col gap-2">
         <Link href={`/api/hackers/${userId}/resume`} target="_blank">
