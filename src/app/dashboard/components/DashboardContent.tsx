@@ -64,18 +64,20 @@ export default async function DahsboardContent({
         <div className="my-5 w-[90%] border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-8 gap-4">
         {/* Resume */}
-        <ResumeView userId={sess!.user.id} />
+        <div className="col-span-8 lg:col-span-2">
+          <ResumeView userId={sess!.user.id} />
+        </div>
 
         {/* QR Code */}
-        <div className="col-span-3 lg:col-span-1">
+        <div className="col-span-8 lg:col-span-2">
           <HackerQRCode hacker_id={sess!.user.id} />
         </div>
 
         {/* Contact / resources */}
-        <div className="col-span-3 flex flex-col items-start gap-4 lg:col-span-2">
-          <div>
+        <div className="col-span-8 lg:col-span-4">
+          <div className="flex flex-col items-start gap-4">
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">
               If you have any questions about the hackathon, please post them in

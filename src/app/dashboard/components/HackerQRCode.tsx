@@ -10,8 +10,7 @@ export default function HackerQRCode({ hacker_id }: HackerQRCode) {
     <div className="flex flex-col gap-4">
       <p className="font-museo text-xl">Your QR Code:</p>
       <p className="text-md font-museo">
-        Scan this QR Code to check in at the event. If you have any trouble with
-        this QR code, please reach out to an organizer.
+        Scan this QR Code to check in at the event.
       </p>
       <QRCode
         value={hacker_id}
