@@ -3,7 +3,7 @@
 import FiltersButton from "./ApplicantSearch/FiltersButton";
 import SearchBar from "./ApplicantSearch/SearchBar";
 import { useEffect, useState } from "react";
-import useApplicantsInfiniteQuery from "./ApplicantSearch/useApplicantsInfiniteQuery";
+import useApplicantsInfiniteQuery from "@/app/hooks/useApplicantsInfiniteQuery";
 import ApplicantCell from "./ApplicantSearch/ApplicantCell";
 import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
 

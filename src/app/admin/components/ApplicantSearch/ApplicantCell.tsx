@@ -144,41 +144,45 @@ export default function ApplicantCell({
               {["registered", "waitlisted"].includes(
                 applicant.application_status,
               ) && (
-                <PixelButton
-                  className=" w-full bg-green-500 hover:bg-green-600 hover:underline"
+                <button
                   onClick={() => setAppStatus("in_wave")}
-                  text="Add to Wave"
-                  isLoading={handleAppStatusChange.isPending}
-                />
+                  className="w-full rounded-md bg-green-500 p-2 text-center font-museo text-white no-underline hover:bg-green-600 hover:underline"
+                >
+                  {handleAppStatusChange.isPending
+                    ? "Loading..."
+                    : "Add to Wave"}
+                </button>
               )}
 
               {applicant.application_status! !== "waitlisted" && (
-                <PixelButton
-                  className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
+                <button
                   onClick={() => setAppStatus("waitlisted")}
-                  text="Waitlist"
-                  isLoading={handleAppStatusChange.isPending}
-                />
+                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                >
+                  {handleAppStatusChange.isPending ? "Loading..." : "Waitlist"}
+                </button>
               )}
 
               {["in_wave"].includes(applicant.application_status!) && (
-                <PixelButton
-                  className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
+                <button
                   onClick={() => setAppStatus("registered")}
-                  text="Remove from Wave"
-                  isLoading={handleAppStatusChange.isPending}
-                />
+                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                >
+                  {handleAppStatusChange.isPending
+                    ? "Loading..."
+                    : "Remove from Wave"}
+                </button>
               )}
 
               {["accepted", "confirmed"].includes(
                 applicant.application_status!,
               ) && (
-                <PixelButton
-                  className=" w-full bg-fuchsia-400 hover:bg-fuchsia-500 hover:underline"
+                <button
                   onClick={() => setAppStatus("checked_in")}
-                  text="Check In"
-                  isLoading={handleAppStatusChange.isPending}
-                />
+                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                >
+                  {handleAppStatusChange.isPending ? "Loading..." : "Check In"}
+                </button>
               )}
             </div>
           </div>
