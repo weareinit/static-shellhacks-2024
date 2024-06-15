@@ -53,51 +53,55 @@ export default function ApplicantCell({
   };
 
   return (
-    <div className="my-2 flex h-fit w-full flex-row rounded-md bg-white p-3">
-      <div className="flex-shrink-0 px-2">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={handleSelectApplicant}
-          className="form-checkbox text-deep_blue h-4 w-4 align-middle"
-        />
-      </div>
-
-      <div
-        className="grid flex-grow grid-cols-8 gap-3 hover:cursor-pointer"
-        onClick={toggleApplicationDetails}
-      >
-        <p className="col-span-2 truncate">
-          {applicant.first_name} {applicant.last_name}
-        </p>
-
-        <p className="col-span-2 truncate">
-          {" "}
-          {new Date(applicant.created_at!).toLocaleDateString()}
-        </p>
-
-        <p className="col-span-3 truncate"> {applicant.school}</p>
-
-        <div className="col-span-1 flex items-center justify-between">
-          <div
-            className={`h-4 w-4 rounded-full`}
-            style={{
-              backgroundColor:
-                APPLICATION_STATUS_COLOR_MAPPING[applicant.application_status],
-            }}
-            title={applicant.application_status}
+    <div className="my-2 flex h-fit w-full rounded-md bg-white p-3">
+      <div className="flex-row">
+        <div className="flex-shrink-0 px-2">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={handleSelectApplicant}
+            className="form-checkbox text-deep_blue h-4 w-4 align-middle"
           />
+        </div>
 
-          {/* Arrow down */}
-          <svg
-            className={`transform transition-transform ${showApplicationDetails ? "rotate-180" : ""}`}
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-          >
-            <path fill="#3182ce" d="M7 10l5 5 5-5z" />
-          </svg>
+        <div
+          className="grid flex-grow grid-cols-8 gap-3 hover:cursor-pointer"
+          onClick={toggleApplicationDetails}
+        >
+          <p className="col-span-2 truncate">
+            {applicant.first_name} {applicant.last_name}
+          </p>
+
+          <p className="col-span-2 truncate">
+            {" "}
+            {new Date(applicant.created_at!).toLocaleDateString()}
+          </p>
+
+          <p className="col-span-3 truncate"> {applicant.school}</p>
+
+          <div className="col-span-1 flex items-center justify-between">
+            <div
+              className={`h-4 w-4 rounded-full`}
+              style={{
+                backgroundColor:
+                  APPLICATION_STATUS_COLOR_MAPPING[
+                    applicant.application_status
+                  ],
+              }}
+              title={applicant.application_status}
+            />
+
+            {/* Arrow down */}
+            <svg
+              className={`transform transition-transform ${showApplicationDetails ? "rotate-180" : ""}`}
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+            >
+              <path fill="#3182ce" d="M7 10l5 5 5-5z" />
+            </svg>
+          </div>
         </div>
       </div>
 

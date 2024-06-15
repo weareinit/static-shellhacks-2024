@@ -121,7 +121,7 @@ export default function ApplicantInfo({
             propertyValue={applicant.phone_number}
           />
 
-          <ApplicantProperty
+          {/* <ApplicantProperty
             propertyName="Discord"
             editing={isEditing}
             handleEdit={(payload: string) => handleEdit("discord", payload)}
@@ -133,7 +133,7 @@ export default function ApplicantInfo({
               editing={false}
               propertyValue={applicant.discord_id}
             />
-          )}
+          )} */}
           <ApplicantProperty
             propertyName="Github"
             isLink
@@ -147,6 +147,11 @@ export default function ApplicantInfo({
             editing={isEditing}
             handleEdit={(payload: string) => handleEdit("linkedin", payload)}
             propertyValue={applicant.linkedin}
+          />
+          <ApplicantProperty
+            propertyName="Agreed MLH News"
+            editing={false}
+            propertyValue={applicant.agreed_mlh_news ? "Yes" : "No"}
           />
         </div>
       </div>
