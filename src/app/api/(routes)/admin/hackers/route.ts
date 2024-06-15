@@ -22,7 +22,7 @@ export const GET = auth(async (request) => {
     return new NextResponse(safedata.error.message, { status: 400 });
   }
 
-  const { format, cursor, ...filters } = safedata.data;
+  const { format, cursor, searchParams, ...filters } = safedata.data;
 
   const filteredApplicants = await db.hacker_Applications.findMany({
     where: {
@@ -34,10 +34,19 @@ export const GET = auth(async (request) => {
       ...(filters.application_status != "any" && {
         application_status: filters.application_status,
       }),
+      ...(searchParams && {
+        OR: [
+          { phone_number: { startsWith: searchParams } },
+          { email: { startsWith: searchParams } },
+          { first_name: { startsWith: searchParams } },
+          { last_name: { startsWith: searchParams } },
+        ],
+      }),
     },
     orderBy: {
       created_at: "asc",
     },
+    take: 20,
   });
 
   if (format === "csv") {

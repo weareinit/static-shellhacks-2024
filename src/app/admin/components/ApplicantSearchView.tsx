@@ -22,7 +22,7 @@ export default function ApplicantSearchView() {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useApplicantsInfiniteQuery({ filters });
+  } = useApplicantsInfiniteQuery({ filters, searchParams: searchVal });
 
   const appStatusMutation = useAppStatusMutation({
     onSuccess: () => setSelectedApplicants(new Set()),

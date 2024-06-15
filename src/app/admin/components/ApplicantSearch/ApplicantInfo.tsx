@@ -15,7 +15,9 @@ export default function ApplicantInfo({
     <>
       <div className="flex flex-row flex-wrap justify-between gap-4 md:flex-nowrap">
         <div>
-          <h2 className="text-lg font-medium">Personal Information</h2>
+          <h2 className="font-zoonaji text-lg font-bold">
+            Personal Information
+          </h2>
           {isEditing && (
             <>
               <ApplicantProperty
@@ -75,7 +77,9 @@ export default function ApplicantInfo({
           />
         </div>
         <div>
-          <h2 className="text-lg font-medium">Education Information</h2>
+          <h2 className="font-zoonaji text-lg font-bold">
+            Education Information
+          </h2>
           <ApplicantProperty
             propertyName="School"
             editing={isEditing}
@@ -106,10 +110,13 @@ export default function ApplicantInfo({
           />
         </div>
         <div>
-          <h2 className="text-lg font-medium">Contact Information</h2>
+          <h2 className="font-zoonaji text-lg font-bold">
+            Contact Information
+          </h2>
           <ApplicantProperty
             propertyName="Email"
-            editing={false}
+            editing={isEditing}
+            handleEdit={(payload: string) => handleEdit("email", payload)}
             propertyValue={applicant.email}
           />
           <ApplicantProperty
@@ -120,20 +127,6 @@ export default function ApplicantInfo({
             }
             propertyValue={applicant.phone_number}
           />
-
-          {/* <ApplicantProperty
-            propertyName="Discord"
-            editing={isEditing}
-            handleEdit={(payload: string) => handleEdit("discord", payload)}
-            propertyValue={applicant.discord}
-          />
-          {applicant.discord_id && (
-            <ApplicantProperty
-              propertyName="Discord ID"
-              editing={false}
-              propertyValue={applicant.discord_id}
-            />
-          )} */}
           <ApplicantProperty
             propertyName="Github"
             isLink

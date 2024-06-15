@@ -22,16 +22,14 @@ const ApplicantProperty: React.FC<ApplicantPropertyProps> = ({
   };
 
   return (
-    <p className="font-pixel flex flex-wrap items-center">
-      <u className="mr-2 whitespace-nowrap">
-        <b>{propertyName}:</b>
-      </u>
+    <p className="flex flex-wrap items-center font-museo">
+      <u className="mr-2 whitespace-nowrap font-bold">{propertyName}:</u>
       <span className="flex-grow">
         {editing ? (
           <input
             type="text"
             value={propertyValue || ""}
-            className="w-full"
+            className="w-full font-museo"
             onChange={handleInputChange}
           />
         ) : isLink ? (

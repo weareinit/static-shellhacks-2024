@@ -33,7 +33,7 @@ export const sendDiscordEmailSchema = z.object({
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
 export const applicantUpdateSchemaBase = z.object({
-  id: z.number().int(), //only requied to find the user, this is not actually updatable
+  //id: z.string().regex(/^\d+$/).transform(Number), //only requied to find the user, this is not actually updatable
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
@@ -91,6 +91,7 @@ export const applicantFiltersSchema = z.object({
 export type ApplicantFilters = z.infer<typeof applicantFiltersSchema>;
 
 export const adminFetchApplicantsSchema = applicantFiltersSchema.extend({
+  searchParams: z.string().optional(),
   format: z.enum(["json", "csv"]).optional(),
   cursor: z.string().regex(/^\d+$/).transform(Number).optional(),
 });

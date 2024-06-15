@@ -35,6 +35,7 @@ export const PUT = auth(async (request, { params }) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
+  const id = parseInt(params?.id as string);
   const jsonBody = await request.json();
 
   //since admins are allowed to change more fields (eg. application status) than the applicant
@@ -46,13 +47,11 @@ export const PUT = auth(async (request, { params }) => {
     return new NextResponse(safedata.error.message, { status: 400 });
   }
 
-  // delete safedata.data.id; //make sure the id can't be updated
-
   //make sure a normal hacker can't update anyone's profile other than their own
   const data = await db.hacker_Applications.update({
     where: {
       id: request.auth.user.admin
-        ? (params?.id as unknown as number)
+        ? (id as unknown as number)
         : request.auth.user.hacker_id,
     },
     data: safedata.data,

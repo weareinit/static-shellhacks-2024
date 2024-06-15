@@ -8,10 +8,12 @@ interface ApplicantsInfiniteQueryResponse extends Array<Hacker_Applications> {
 
 interface ApplicantsInfiniteQueryProps {
   filters: ApplicantFilters;
+  searchParams?: string;
 }
 
 export default function useApplicantsInfiniteQuery({
   filters,
+  searchParams,
 }: ApplicantsInfiniteQueryProps) {
   const fetchApplicants = async (pageParam: number) => {
     //do something with filters here...
@@ -26,6 +28,7 @@ export default function useApplicantsInfiniteQuery({
     }
 
     urlOptions.append("cursor", pageParam.toString());
+    urlOptions.append("searchParams", searchParams || "");
     urlOptions.append("format", "json");
 
     const res = await fetch("/api/admin/hackers?" + urlOptions.toString());
@@ -41,7 +44,7 @@ export default function useApplicantsInfiniteQuery({
     isFetchingNextPage,
     status,
   } = useInfiniteQuery<ApplicantsInfiniteQueryResponse>({
-    queryKey: ["applicants", filters],
+    queryKey: ["applicants", filters, searchParams],
     queryFn: ({ pageParam }) => fetchApplicants(pageParam as number),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => lastPage.nextCursor,

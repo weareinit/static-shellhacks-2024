@@ -2,7 +2,9 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { adminApplicantUpdateSchema } from "@/app/schemas/applicantSchemas";
 import { z } from "zod";
 
-type ApplicantUpdateType = z.infer<typeof adminApplicantUpdateSchema>;
+type ApplicantUpdateType = z.infer<typeof adminApplicantUpdateSchema> & {
+  id: number;
+};
 
 export const useAppUpdateMutation = () => {
   const queryClient = useQueryClient();

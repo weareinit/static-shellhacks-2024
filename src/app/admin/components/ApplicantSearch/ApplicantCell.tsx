@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useAppUpdateMutation } from "@/app/hooks/ApplicationUpdateMutation";
 import { APPLICATION_STATUS_COLOR_MAPPING } from "@/app/constants/applicationConstants";
 import ApplicantInfo from "./ApplicantInfo";
+import Link from "next/link";
+import PixelButton from "@/app/components/misc/PixelButton";
 
 interface ApplicantCellProps {
   applicant: Hacker_Applications;
@@ -40,12 +42,11 @@ export default function ApplicantCell({
       ids: [applicant.id],
       application_status,
     });
-    await handleAppStatusChange.mutate(payload);
+    handleAppStatusChange.mutate(payload);
   };
 
   const toggleEditing = async () => {
     if (isEditing) {
-      console.log("saving...");
       await applicationUpdateMutation.mutateAsync(editedCell);
     }
 
@@ -53,35 +54,34 @@ export default function ApplicantCell({
   };
 
   return (
-    <div className="my-2 flex h-fit w-full rounded-md bg-white p-3">
-      <div className="flex-row">
-        <div className="flex-shrink-0 px-2">
+    <div className="my-2 h-fit w-full rounded-md bg-white p-3">
+      <div className="flex w-full items-center">
+        <div className="mr-4 flex-shrink-0">
           <input
             type="checkbox"
             checked={isSelected}
             onChange={handleSelectApplicant}
-            className="form-checkbox text-deep_blue h-4 w-4 align-middle"
+            className="text-deep_blue mt-2 h-4 w-4"
           />
         </div>
 
         <div
-          className="grid flex-grow grid-cols-8 gap-3 hover:cursor-pointer"
+          className="grid flex-grow grid-cols-8 items-center gap-3 hover:cursor-pointer"
           onClick={toggleApplicationDetails}
         >
-          <p className="col-span-2 truncate">
+          <p className="col-span-2 truncate font-museo">
             {applicant.first_name} {applicant.last_name}
           </p>
 
-          <p className="col-span-2 truncate">
-            {" "}
+          <p className="col-span-2 truncate font-museo">
             {new Date(applicant.created_at!).toLocaleDateString()}
           </p>
 
-          <p className="col-span-3 truncate"> {applicant.school}</p>
+          <p className="col-span-3 truncate font-museo">{applicant.school}</p>
 
           <div className="col-span-1 flex items-center justify-between">
             <div
-              className={`h-4 w-4 rounded-full`}
+              className="h-4 w-4 rounded-full"
               style={{
                 backgroundColor:
                   APPLICATION_STATUS_COLOR_MAPPING[
@@ -93,7 +93,9 @@ export default function ApplicantCell({
 
             {/* Arrow down */}
             <svg
-              className={`transform transition-transform ${showApplicationDetails ? "rotate-180" : ""}`}
+              className={`transform transition-transform ${
+                showApplicationDetails ? "rotate-180" : ""
+              }`}
               xmlns="http://www.w3.org/2000/svg"
               width="32"
               height="32"
@@ -106,8 +108,8 @@ export default function ApplicantCell({
       </div>
 
       {showApplicationDetails && (
-        <div className="grid grid-cols-8 items-center justify-between gap-3 px-2 py-4 md:px-4">
-          <div className="col-span-8 lg:col-span-6">
+        <div className="flex items-start justify-between gap-4 px-2 py-4 md:px-4">
+          <div className="flex-grow">
             <ApplicantInfo
               applicant={isEditing ? editedCell : applicant}
               handleEdit={handleEdit}
@@ -115,70 +117,70 @@ export default function ApplicantCell({
             />
             <p>Applicant details</p>
           </div>
-          <div className="col-span-8 text-white lg:col-span-2">
-            {/* <div className="flex flex-col items-center justify-around gap-1">
-            <PixelButton
-              className="w-full bg-indigo-500  hover:bg-indigo-600 hover:underline"
-              onClick={() => openApplicantResume(data.email)}
-              text="View Resume"
-            />
+          <div className="min-w-[250px]">
+            <div className="flex flex-col items-center justify-around gap-1">
+              <Link
+                href={`/api/hackers/${applicant.id}/resume`}
+                target="_blank"
+                className="w-full rounded-md  bg-indigo-500 p-2 text-center font-museo text-white no-underline hover:bg-indigo-600 hover:underline"
+              >
+                View Resume
+              </Link>
 
-            <PixelButton
-              className={`${isEditing || applicationUpdateMutation.isLoading ? "bg-fuchsia-400 hover:bg-fuchsia-500" : "bg-teal-800 hover:bg-teal-900"} w-full hover:underline`}
-              isLoading={applicationUpdateMutation.isLoading && isEditing}
-              onClick={toggleEditing}
-              text={isEditing ? "Save Changes" : "Edit Data"}
-            />
+              <button
+                onClick={toggleEditing}
+                className="w-full rounded-md bg-fuchsia-400 p-2 text-center font-museo text-white no-underline hover:bg-fuchsia-500 hover:underline"
+              >
+                {applicationUpdateMutation.isPending && isEditing
+                  ? "Loading..."
+                  : isEditing
+                    ? "Save Changes"
+                    : "Edit Data"}
+              </button>
 
-            {data.discord_id && (
-              <PixelButton
-                className="w-full bg-violet-800 hover:bg-violet-700 hover:underline"
-                isLoading={applicationUpdateMutation.isLoading && !isEditing}
-                onClick={toggleResetDiscordVerification}
-                text="Reset Discord Verification"
-              />
-            )}
+              <div className="my-2" />
+              {/*TODO: update the other buttons*/}
 
-            <div className="my-2" />
+              {["registered", "waitlisted"].includes(
+                applicant.application_status,
+              ) && (
+                <PixelButton
+                  className=" w-full bg-green-500 hover:bg-green-600 hover:underline"
+                  onClick={() => setAppStatus("in_wave")}
+                  text="Add to Wave"
+                  isLoading={handleAppStatusChange.isPending}
+                />
+              )}
 
-            {["registered", "waitlisted"].includes(
-              data.application_status!,
-            ) && (
-              <PixelButton
-                className=" w-full bg-green-500 hover:bg-green-600 hover:underline"
-                onClick={() => setAppStatus("in_wave")}
-                text="Add to Wave"
-                isLoading={handleAppStatusChange.isLoading}
-              />
-            )}
+              {applicant.application_status! !== "waitlisted" && (
+                <PixelButton
+                  className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
+                  onClick={() => setAppStatus("waitlisted")}
+                  text="Waitlist"
+                  isLoading={handleAppStatusChange.isPending}
+                />
+              )}
 
-            {data.application_status! !== "waitlisted" && (
-              <PixelButton
-                className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
-                onClick={() => setAppStatus("waitlisted")}
-                text="Waitlist"
-                isLoading={handleAppStatusChange.isLoading}
-              />
-            )}
+              {["in_wave"].includes(applicant.application_status!) && (
+                <PixelButton
+                  className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
+                  onClick={() => setAppStatus("registered")}
+                  text="Remove from Wave"
+                  isLoading={handleAppStatusChange.isPending}
+                />
+              )}
 
-            {["in_wave"].includes(data.application_status!) && (
-              <PixelButton
-                className=" w-full bg-red-500 hover:bg-red-600 hover:underline"
-                onClick={() => setAppStatus("registered")}
-                text="Remove from Wave"
-                isLoading={handleAppStatusChange.isLoading}
-              />
-            )}
-
-            {["accepted", "confirmed"].includes(data.application_status!) && (
-              <PixelButton
-                className=" w-full bg-fuchsia-400 hover:bg-fuchsia-500 hover:underline"
-                onClick={() => setAppStatus("checked_in")}
-                text="Check In"
-                isLoading={handleAppStatusChange.isLoading}
-              />
-            )}
-          </div> */}
+              {["accepted", "confirmed"].includes(
+                applicant.application_status!,
+              ) && (
+                <PixelButton
+                  className=" w-full bg-fuchsia-400 hover:bg-fuchsia-500 hover:underline"
+                  onClick={() => setAppStatus("checked_in")}
+                  text="Check In"
+                  isLoading={handleAppStatusChange.isPending}
+                />
+              )}
+            </div>
           </div>
         </div>
       )}
