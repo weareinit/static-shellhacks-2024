@@ -44,7 +44,7 @@ const Organizers = () => {
           alt="INIT FIU"
           className="sm:h-[60px] sm:w-[450px] md:h-[70px] md:w-[400px]"
         />
-      <SkullLavaSection />
+        <SkullLavaSection />
       </div>
     </div>
   );

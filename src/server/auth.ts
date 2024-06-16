@@ -50,15 +50,14 @@ export const {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
-      authorization: {
-        params: {
-          scope: "identify guilds guilds.members.read",
-        },
-      },
+      authorization: `https://discord.com/oauth2/authorize?client_id=${env.DISCORD_CLIENT_ID}&scope=identify+guilds.join+guilds.members.read`,
     }),
   ],
   callbacks: {
     session: async ({ session, user }) => {
+      console.log("session", session);
+      console.log("user", user);
+
       session.user.id = user.id;
       session.user.email = user.email;
       session.user.admin = user.admin;
@@ -80,51 +79,43 @@ export const {
       return session;
     },
     signIn: async ({ user, account }) => {
+      console.log("Authorization URL:", account); // Add this line
+
       if (!account) return false;
-      console.log("account", account);
 
       const access_token = account.access_token;
-      const data = await fetch(
+      const response = await fetch(
         `https://discord.com/api/users/@me/guilds/${INIT_DISCORD_ID}/member`,
         {
           headers: {
-            Authorization: "Bearer " + access_token,
+            Authorization: `Bearer ${access_token}`,
             "Content-Type": "application/json",
           },
         },
       );
 
-      if (!data.ok) {
-        console.error("Error fetching user roles", data);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error fetching user roles", response.status, errorText);
         return false;
       }
 
-      const json = await data.json();
-      console.log("User roles", json);
+      const json = await response.json();
+      const roles = new Set(json.roles ?? []);
 
-      if (json) {
-        const roles = new Set(json.roles ?? []);
+      user.admin = roles.has(INIT_EBOARD_ROLE);
+      user.discordUsername = json.user?.username;
 
-        user.admin = roles.has(INIT_EBOARD_ROLE);
-        user.discordUsername = json.user?.username;
-
-        try {
-          //Update the admin role for the user. This way, whenever the user logs in again we can update their status from the API
-          //Note: This code will fail on first run because the user isn't created in the db until *after* the first login
-          await db.user.update({
-            where: { id: user.id },
-            data: {
-              admin: user.admin,
-            },
-          });
-        } catch (error) {
-          console.info(
-            "Error updating user admin role. This could be because the account isn't yet created",
-            error,
-          );
-        }
-      } else {
-        //the user isn't in the discord server, we might want to make them join...
+      try {
+        await db.user.update({
+          where: { id: user.id },
+          data: { admin: user.admin },
+        });
+      } catch (error) {
+        console.info(
+          "Error updating user admin role. This could be because the account isn't yet created",
+          error,
+        );
       }
 
       return true;
