@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import SkullLavaSection from "./SkullsSection";
 
 const Organizers = () => {
   return (
@@ -42,7 +43,8 @@ const Organizers = () => {
           height={136}
           alt="INIT FIU"
           className="sm:h-[60px] sm:w-[450px] md:h-[70px] md:w-[400px]"
-        ></Image>
+        />
+      <SkullLavaSection />
       </div>
     </div>
   );
