@@ -245,8 +245,13 @@ const SkullLavaSection: React.FC = () => {
               transform: `rotate(${getRandomRotation()}deg)`,
             }}
           />
-          <div className="z-50 hidden rounded bg-black p-1 text-white group-hover:block">
-            <a href={pos.data.link} target="_blank" rel="noopener noreferrer">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <a
+              href={pos.data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="whitespace-nowrap rounded bg-black bg-opacity-50 px-2 py-1 font-bold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            >
               {pos.data.name}
             </a>
           </div>
