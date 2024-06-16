@@ -22,11 +22,13 @@ import ReCAPTCHA from "react-google-recaptcha";
 import schools from "../../../../public/registration_data/schools.json";
 import countries from "../../../../public/registration_data/countries.json";
 import { CustomButton } from "@/app/dashboard/components/CustomButton";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (values: ApplicantValues) => {
     if (isSubmitting) return;
@@ -62,7 +64,7 @@ function RegisterForm() {
       setError(e.message);
     } finally {
       setIsSubmitting(false);
-      redirect("/dashboard");
+      router.push("/dashboard");
     }
   };
 
