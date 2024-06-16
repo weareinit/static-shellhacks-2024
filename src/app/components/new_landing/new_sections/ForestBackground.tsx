@@ -25,6 +25,24 @@ const AboutUs = () => {
         alt="Forest background"
         className="relative z-[-10] lg:hidden"
       />
+      <Image
+        priority
+        src="/assets/new/background/forest/Forest 2.png"
+        layout="responsive"
+        width={1789}
+        height={974}
+        alt="Forest background"
+        className="relative z-[-10] sm:hidden"
+      />
+      <Image
+        priority
+        src="/assets/new/background/forest/Forest 2.png"
+        layout="responsive"
+        width={1789}
+        height={974}
+        alt="Forest background"
+        className="relative z-[-10] xsm:hidden"
+      />
       <div className={`bg-[#889648]`} style={{ height: 50 }}></div>
       <Image
         priority
@@ -38,7 +56,7 @@ const AboutUs = () => {
       <div className="absolute inset-0 z-10 mt-[30%] h-full w-full">
         <ForestAssets />
         <Carousel />
-        <div className="my-20"></div>
+        <div className="xxs:my-8 sm:my-20"></div>
         <Challenges />
       </div>
     </div>

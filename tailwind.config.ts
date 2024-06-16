@@ -29,7 +29,7 @@ module.exports = {
         'museoitalic': ['museoitalic', 'sans-serif'],
       },
       screens: {
-        xxs: "400px",
+        xxs: "320px",
         xsm: "500px",
         sm: "750px",
         md: "900px",
