@@ -12,7 +12,7 @@ const SkyAndOcean = () => {
         width={100}
         height={115}
         alt="Fish"
-        className="absolute left-[10%] z-[-5] animate-fish-slide xxs:top-[63%] xxs:h-[40px] xxs:w-[30px] xsm:h-[40px] xsm:w-[30px] sm:top-[43%] sm:h-[40px] sm:w-[30px] md:h-[115px] md:w-[100px] lg:top-[42%] xxl:h-[180px] xxl:w-[150px]"
+        className="absolute left-[10%] z-[-5] animate-fish-slide xxs:top-[63%] xxs:h-[40px] xxs:w-[30px] xsm:h-[40px] xsm:w-[30px] sm:top-[63%] sm:h-[40px] sm:w-[30px] md:h-[115px] md:w-[100px] lg:top-[42%] xxl:h-[180px] xxl:w-[150px]"
       />
       <Image
         priority
@@ -70,7 +70,7 @@ const SkyAndOcean = () => {
         width={300}
         height={200}
         alt="Pterodactyl"
-        className="absolute right-0 z-[3] animate-slide-diagonal xxs:h-[100px] xxs:w-[150px] sm:h-[300px] sm:w-[400px]"
+        className="absolute right-0 z-[3] animate-slide-diagonal xxs:hidden xxs:h-[100px] xxs:w-[150px] sm:block sm:h-[300px] sm:w-[400px]"
       />
       <Image
         priority
