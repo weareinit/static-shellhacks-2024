@@ -1,4 +1,4 @@
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const useAcceptWaveMutation = () => {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export const useAcceptWaveMutation = () => {
   return useMutation({
     mutationFn: acceptWave,
     onSuccess: () => {
-      queryClient.invalidateQueries("applicants");
+      queryClient.invalidateQueries({ queryKey: ["applicants"] });
     },
   });
 };
