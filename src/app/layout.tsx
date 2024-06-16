@@ -22,6 +22,53 @@ export default function RootLayout({
   return (
     <QueryClientComponent>
       <html lang="en">
+        <head>
+          <title>ShellHacks 2024 ﹣ The Largest Hackathon in Florida!</title>
+          <meta
+            name="title"
+            content="ShellHacks 2024 ﹣ The Largest Hackathon in Florida!"
+          />
+          <meta
+            name="description"
+            content="Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to:
+            Build: Develop innovative projects
+            Network: Network with top companies, and more!
+            Learn: Learn the latest technologies Develop new skills by attending our technical workshops.
+            Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!"
+          />
+
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://dev.shellhacks.net/" />
+          <meta
+            property="og:title"
+            content="ShellHacks 2024 ﹣ The Largest Hackathon in Florida!"
+          />
+          <meta
+            property="og:description"
+            content="Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to:
+            Build: Develop innovative projects
+            Network: Network with top companies, and more!
+            Learn: Learn the latest technologies Develop new skills by attending our technical workshops.
+            Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!"
+          />
+          <meta property="og:image" content="/assets/new/meta.png" />
+
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:url" content="https://dev.shellhacks.net/" />
+          <meta
+            property="twitter:title"
+            content="ShellHacks 2024 ﹣ The Largest Hackathon in Florida!"
+          />
+          <meta
+            property="twitter:description"
+            content="Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to:
+            Build: Develop innovative projects
+            Network: Network with top companies, and more!
+            Learn: Learn the latest technologies Develop new skills by attending our technical workshops.
+            Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!"
+          />
+          <meta property="twitter:image" content="/assets/new/meta.png" />
+        </head>
         <body className={`font-sans ${inter.variable}`}>{children}</body>
       </html>
     </QueryClientComponent>
