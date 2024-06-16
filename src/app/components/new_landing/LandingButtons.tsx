@@ -35,12 +35,14 @@ const LandingButtons = () => {
         </div>
       )}
       {isModalOpen && <RegisterModal toClose={closeModal} />}
-      <div
-        className="m-0 flex w-96 transform cursor-pointer items-center justify-center rounded-[1.5rem] bg-stone-50
+      <Link href="/dashboard">
+        <div
+          className="m-0 flex w-96 transform cursor-pointer items-center justify-center rounded-[1.5rem] bg-stone-50
        pb-2 pt-4 text-center font-zoonaji text-2xl text-reddish_grey no-underline transition-all  duration-200 ease-in-out  hover:scale-105 xxs:w-[14rem] xxs:rounded-[20px] xxs:text-[18px] xsm:h-[4rem] xsm:w-[18rem] xsm:rounded-[25px] xsm:text-[20px] md:h-[3rem] md:w-[20rem] md:text-xl lg:h-[4rem] lg:w-[25rem] lg:text-2xl xlg:h-[4rem] xlg:w-[25rem] xlg:rounded-[2rem] xlg:text-2xl xxl:h-[7rem] xxl:w-[45rem] xxl:rounded-[3rem] xxl:text-5xl"
-      >
-        <Link href="/dashboard">HACKER DASHBOARD</Link>
-      </div>
+        >
+          HACKER DASHBOARD
+        </div>
+      </Link>
 
       {session && (
         <div
