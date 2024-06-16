@@ -26,7 +26,7 @@ const StatsComponent: React.FC<StatsComponentProps> = ({
 const PreviousNumbers = () => {
   return (
     // TODO: Find a way to be able to not have to call top-[-80px] to center it with the ocean bg/sand bg transition
-    <div className="relative top-[-80px] z-10  flex flex-col items-center justify-end gap-10 xxs:mt-[10rem] xxs:gap-3 xsm:mt-[10rem] xsm:gap-10 sm:gap-8">
+    <div className="relative top-[-80px] z-10  flex flex-col items-center justify-end gap-10 xxs:mt-[10rem] xxs:gap-3 xsm:mt-[10rem] xsm:gap-10 sm:mt-0 sm:gap-8">
       <StatsComponent Number="1300+" Description="HACKERS" />
       <StatsComponent Number="40+" Description="SPONSORS" />
       <StatsComponent Number="$20,000+" Description="IN PRIZES" />
