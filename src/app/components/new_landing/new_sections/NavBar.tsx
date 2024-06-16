@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import RegisterModal from "../../registration/RegisterModal";
+import Image from "next/image";
 
 function NavBar() {
   const [isActive, setActive] = useState(false);
@@ -10,7 +11,21 @@ function NavBar() {
   const closeModal = () => setModalOpen(false);
 
   const content = (
-    <div className="flex w-full justify-center">
+    <div className="w-full justify-center xxs:hidden sm:flex">
+      <div className="fixed right-2 top-2 z-[100] hover:cursor-pointer">
+        <button
+          onClick={() => {
+            setActive((isActive) => !isActive);
+          }}
+        >
+          <Image
+            src="assets/new/logo/Menu Icon.svg"
+            height={40}
+            width={40}
+            alt="navbar"
+          ></Image>
+        </button>
+      </div>
       <div
         className={`fixed top-5 z-[100] flex w-[75%] flex-col justify-center rounded-[40px] 
           border 
