@@ -59,7 +59,7 @@ const ForestAssets = () => {
         alt="Flamingo"
         className="absolute z-[-2] scale-x-[-1] transform xxs:bottom-[12%] xxs:right-[-20px] xxs:h-[120px] xxs:w-[120px] xsm:right-[-40px] xsm:h-[200px] xsm:w-[200px] sm:bottom-[12%] sm:h-[200px] sm:w-[150px] md:bottom-[18%] md:right-[10%] md:h-[400px] md:w-[300px]"
       ></Image>
-      <div className="absolute z-[15] flex h-full min-w-[100vw] justify-center xxs:top-[42%] sm:top-[38%] md:top-[40%] xlg:top-[32%] xxl:top-[32%]">
+      <div className="absolute z-[15] flex hidden h-full min-w-[100vw] justify-center xxs:top-[42%] sm:top-[38%] md:top-[40%] xlg:top-[32%] xxl:top-[32%]">
         <Image
           priority
           src="/assets/new/plants/Grasses.svg"
