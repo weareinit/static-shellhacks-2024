@@ -50,11 +50,7 @@ export const {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
-      authorization: {
-        params: {
-          scope: "identify guilds guilds.members.read",
-        },
-      },
+      authorization: "https://discord.com/oauth2/authorize?scope=identify+guilds+guilds.members.read",
     }),
   ],
   callbacks: {
