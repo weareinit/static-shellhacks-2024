@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Button({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+function Button({ children, className = "", ...props }: ButtonProps) {
   return (
-    <button {...props} className={`text-center py-1 px-3 font-pixel sm:text-lg ${className}`}>
+    <button
+      {...props}
+      className={`transform border-[#787976] px-3 py-1 text-center font-pixel no-underline transition hover:scale-105 hover:bg-[#6c757d] hover:text-white sm:text-lg ${className}`}
+    >
       {children}
     </button>
   );

@@ -1,0 +1,87 @@
+import React, { useState, useEffect } from "react";
+import RegisterModal from "../../registration/RegisterModal";
+import Image from "next/image";
+
+function SideBar() {
+  const [isActive, setActive] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  const handleOverlayClick = (e) => {
+    if (e.target.id === "sidebar-overlay") {
+      setActive(false);
+    }
+  };
+
+  // Disable scrolling when sidebar is active
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isActive]);
+
+  return (
+    <div className="xxs:flex xsm:flex sm:hidden">
+      <div className="fixed right-2 top-2 z-[100] hover:cursor-pointer">
+        <button
+          onClick={() => {
+            setActive(!isActive);
+          }}
+        >
+          <Image
+            src="assets/new/logo/Menu Icon.svg"
+            height={40}
+            width={40}
+            alt="sidebar"
+          />
+        </button>
+      </div>
+      {isActive && (
+        <div
+          id="sidebar-overlay"
+          className="fixed inset-0 z-[90] bg-black bg-opacity-50"
+          onClick={handleOverlayClick}
+        ></div>
+      )}
+      <div
+        className={`fixed left-0 top-0 z-[100] h-full w-[75%] max-w-xs bg-nav_bar_brown p-4 transition-transform duration-300 ease-in-out ${
+          isActive ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col items-start">
+          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+            About Us
+          </button>
+          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+            Events & Workshops
+          </button>
+          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+            FAQs
+          </button>
+          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+            Sponsors
+          </button>
+          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1">
+            Hacker Dashboard
+          </button>
+          <button
+            onClick={openModal}
+            className="px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1"
+          >
+            Apply!
+          </button>
+          {isModalOpen && <RegisterModal toClose={closeModal} />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SideBar;

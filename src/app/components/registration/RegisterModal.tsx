@@ -1,23 +1,58 @@
-import React from "react";
-
+import React, { use, useEffect } from "react";
 import Modal from "../Modal";
-import Button from "../input/Button";
 import RegisterForm from "./RegisterForm";
+import { redirect } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 interface RegisterModalProps {
-  toClose: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  toClose: any;
 }
 
 export default function RegisterModal({ toClose }: RegisterModalProps) {
+  const { data: session, update } = useSession();
+
+  if (!session) {
+    signIn("discord");
+  } else if (session.user.isRegistered) {
+    redirect("/dashboard");
+  }
+
+  // useEffect(() => {
+  //   update();
+  // }, []);
+
+  useEffect(() => {
+    console.log("session", session);
+  }, [session]);
+
   return (
-    <Modal containerClassName="z-20 pb-24" backgroundClassName="z-10">
-      <header className="relative row-start-1 row-span-1 h-fit flex flex-row justify-between m-auto">
-        <h1 className=" pt-1 row-start-2 row-span-1 font-pixel underline text-blue text-3xl">Registration</h1>
-        <Button className="font-pixel text-xl  text-white bg-blue hover:underline" onClick={toClose}>
-          <h1 className="text-base">CLOSE</h1>
-        </Button>
-      </header>
-      <div className="max-w-[800px] m-auto">
+    <Modal containerClassName="z-20 pb-24">
+      <div className="relative row-span-1 row-start-1 m-auto flex h-fit flex-col justify-center rounded-lg bg-transparent p-4">
+        <header className="relative row-span-1 row-start-1 flex h-fit flex-row justify-between">
+          <div
+            onClick={toClose}
+            className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
+            className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.8}
+              stroke="currentColor"
+              className="size-10"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <h1 className="font-pixel row-span-1 row-start-2 mx-auto mt-4 pt-1 font-zoonaji text-4xl text-darker_cyan">
+            ShellHacks 2024 Application
+          </h1>
+        </header>
         <RegisterForm />
       </div>
     </Modal>

@@ -1,16 +1,9 @@
 import { parseCSV } from "@/app/util/parseCSV";
-
-import { FormOptionContextProvider } from "@/app/hooks/FormOptionContext";
-import { ShowRegistrationProvider } from "@/app/hooks/ShowRegistrationContext";
-import Shoreline from "@/app/components/decorations/Shoreline";
-import GrassLine from "@/app/components/decorations/Grassline";
-import Content from "@/app/components/sections/Content";
-import MLHBanner from "@/app/components/decorations/MLHBanner";
-import WelcomeDecorations from "@/app/components/decorations/WelcomeDecorations";
-import AboutUsDecorations from "@/app/components/decorations/AboutUsDecorations";
 import type { Metadata } from "next";
-import { getServerAuthSession } from "@/server/auth";
-import Login from "./components/login";
+import { auth } from "@/server/auth";
+import Image from "next/image";
+import Landing from "./components/new_landing/Landing";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
@@ -18,61 +11,49 @@ export const metadata: Metadata = {
   description: "",
 };
 
-const getSchoolData = async () => {
-  const schoolData: string[] = await parseCSV<string>(
-    "https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv",
-  );
-  const schools = schoolData
-    .map((school) => {
-      return school[0];
-    })
-    .splice(1);
-  const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
-    "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv",
-    true,
-  );
-  const countries = countryData.map((country) => {
-    return country.name;
-  });
-  return {
-    schools,
-    countries,
-  };
-};
+// const getSchoolData = async () => {
+//   const schoolData: string[] = await parseCSV<string>(
+//     "https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv",
+//   );
+//   const schools = schoolData
+//     .map((school) => {
+//       return school[0];
+//     })
+//     .splice(1);
+//   const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
+//     "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv",
+//     true,
+//   );
+//   const countries = countryData.map((country) => {
+//     return country.name;
+//   });
+//   return {
+//     schools,
+//     countries,
+//   };
+// };
 
 export default async function Home() {
-  const { schools, countries } = await getSchoolData();
-  const stuff = await getServerAuthSession();
+  // const { schools, countries } = await getSchoolData();
+  const sess = await auth();
 
   return (
-    <div className="min-w-screen grid min-h-screen grid-cols-1 overflow-x-hidden bg-sand md:grid-cols-12">
-      <div className="col-span-10 col-start-2 col-end-12 row-start-1 flex flex-col">
-        <WelcomeDecorations />
-        <div>user logged in as {JSON.stringify(stuff)}</div>
-        <Login />
-        <AboutUsDecorations />
-      </div>
-      <Shoreline />
-      <GrassLine />
-      <ShowRegistrationProvider>
-        <FormOptionContextProvider schools={schools} countries={countries}>
-          <Content />
-        </FormOptionContextProvider>
-      </ShowRegistrationProvider>
-    </div>
+    <SessionProvider session={sess}>
+      <Landing />
+    </SessionProvider>
   );
 }
 
-interface CountryDataType {
-  name: string;
-  "alpha-2": string;
-  "alpha-3": string;
-  "country-code": string;
-  "iso_3166-2": string;
-  region: string;
-  "sub-region": string;
-  "intermediate-region": string;
-  "region-code": string;
-  "sub-region-code": string;
-  "intermediate-region-code": string;
-}
+// interface CountryDataType {
+//   name: string;
+//   "alpha-2": string;
+//   "alpha-3": string;
+//   "country-code": string;
+//   "iso_3166-2": string;
+//   region: string;
+//   "sub-region": string;
+//   "intermediate-region": string;
+//   "region-code": string;
+//   "sub-region-code": string;
+//   "intermediate-region-code": string;
+// }

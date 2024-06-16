@@ -10,12 +10,17 @@ interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options?: string[];
 }
 
-function SearchInput({ label, isRequired, options, ...props }: SearchInputProps) {
+function SearchInput({
+  label,
+  isRequired,
+  options,
+  ...props
+}: SearchInputProps) {
   const [field, meta] = useField(props);
   const [searchValue, setSearchValue] = useState("");
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const filteredOptions = options?.filter(option =>
-    option.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredOptions = options?.filter((option) =>
+    option.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +48,10 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
   const showError = meta.touched && meta.error && !isOptionSelected;
 
   return (
-    <div className="basis-full flex flex-col my-1 relative">
-      <Label className="basis-full">{isRequired ? `*${label}` : label}</Label>
+    <div className="relative my-1 flex basis-full flex-col">
+      <Label className="basis-full font-museo font-bold">
+        {isRequired ? `*${label}` : label}
+      </Label>
       <div className="relative">
         <input
           {...field}
@@ -53,24 +60,28 @@ function SearchInput({ label, isRequired, options, ...props }: SearchInputProps)
           value={searchValue}
           onChange={handleSearchChange}
           onBlur={handleInputBlur}
-          className={`border-blue w-full basis-full border-2 p-1 h-8 sm:h-10 font-inter focus:ring-2 ${showError
-            ? `border-red-600 focus:ring-red-600/50 focus:outline-none`
-            : `focus:ring-blue/50`
-            }`}
+          className={`font-inter h-8 w-full basis-full rounded-lg border border-black bg-[#E9DBCC] p-3 focus:ring-2 sm:h-10 ${
+            showError
+              ? `border-red-600 focus:outline-none focus:ring-red-600/50`
+              : `focus:ring-blue/50`
+          }`}
         />
-        {searchValue && filteredOptions && filteredOptions.length > 0 && !isOptionSelected && (
-          <ul className="absolute z-10 left-0 right-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md max-h-36 overflow-y-auto">
-            {filteredOptions.map((option, index) => (
-              <li
-                key={index}
-                className="px-2 py-1 cursor-pointer hover:bg-blue-200"
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
+        {searchValue &&
+          filteredOptions &&
+          filteredOptions.length > 0 &&
+          !isOptionSelected && (
+            <ul className="absolute left-0 right-0 font-bold z-10 mt-2 max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-md">
+              {filteredOptions.map((option, index) => (
+                <li
+                  key={index}
+                  className="cursor-pointer px-2 py-1 hover:bg-blue-200"
+                  onClick={() => handleOptionClick(option)}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
       </div>
       {showError && <Error>{meta.error}</Error>}
     </div>

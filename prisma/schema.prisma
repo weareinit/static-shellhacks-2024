@@ -1,27 +1,15 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
 }
 
-model Events {
-  event_id            Int                   @id @default(autoincrement())
-  event_name          String                @db.VarChar(100)
-  description         String                @db.VarChar(250)
-  start_date          DateTime              @db.Date
-  end_date            DateTime              @db.Date
-  start_time          DateTime              @db.Timestamptz(3)
-  end_time            DateTime              @db.Timestamptz(3)
-  // Hacker_Applications Hacker_Applications[]
-
-  @@map("events")
-}
-
 model Hacker_Applications {
-  userId                    String                   @id
-  event_id                  Int
+  id                        String                   @id @default(cuid())
+  userId                    String                   @unique //foreign key to User
   // BASIC INFO
   first_name                String                   @db.VarChar(50)
   last_name                 String                   @db.VarChar(50)
@@ -46,12 +34,12 @@ model Hacker_Applications {
   pronouns                  String                   @db.VarChar(50)
   ethnicity                 String                   @db.VarChar(50)
   // STATUS
+  dinosaur_avatar           Int                      @default(0)
   agreed_mlh_news           Boolean
-  application_status        application_status_enums @default(waitlisted)
+  application_status        application_status_enums @default(registered)
   check_in_status           Boolean                  @default(false)
   created_at                DateTime                 @default(now())
-  // event                     Events                   @relation(fields: [event_id], references: [event_id])
-  // user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("hacker_applications")
 }
@@ -68,7 +56,6 @@ enum application_status_enums {
 
 // Necessary for Next auth
 model Account {
-  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -94,16 +81,17 @@ model Session {
 }
 
 model User {
-  id                String               @id @default(cuid())
-  name              String?
-  email             String?              @unique
-  emailVerified     DateTime?
-  image             String?
-  discordId         String
-  admin             Boolean?             @default(false)
-  // shell_application Hacker_Applications?
-  accounts          Account[]
-  sessions          Session[]
+  id                 String               @id @default(cuid())
+  name               String?
+  email              String?              @unique
+  emailVerified      DateTime?
+  image              String?
+  discordUsername    String
+  admin              Boolean?             @default(false)
+  accounts           Account[]
+  sessions           Session[]
+  isRegistered       Boolean              @default(false) //this ia a bit of a hack to add whether the user has registered to the nextauth session
+  hacker_application Hacker_Applications?
 }
 
 model VerificationToken {

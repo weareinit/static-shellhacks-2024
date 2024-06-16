@@ -10,9 +10,10 @@ export async function generateApplicantCSV(data: Prisma.Hacker_Applications[]) {
   for (const applicant of data) {
     applicantsWithResume.push({
       ...applicant,
-      resume_url: await generateSignedResumeUrl(
-        applicant.resume_path as string
-      ),
+      resume_url: "", //we cannot be generating a signed url for each applicant, its too expensive. Maybe some custom api route + kv store can take care of this??
+      // resume_url: await generateSignedResumeUrl(
+      //   applicant.resume_path as string
+      // ),
     });
   }
 
