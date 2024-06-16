@@ -7,7 +7,9 @@
 /* @layer components {
   // not sure what this was for, somebody cooked tho
 } */
-
+body {
+  background-color: #6a9cb0;
+}
 @font-face {
   font-family: "zoonaji";
   src: url("/fonts/zoonaji.ttf");
