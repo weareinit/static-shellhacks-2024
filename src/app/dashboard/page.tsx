@@ -46,7 +46,7 @@ const Dashboard = async () => {
           </div>
           <div className="relative h-[250px]">
             <Image
-              src="/assets/new/background/sky/sky.png"
+              src="/assets/new/background/sky/Sky.png"
               layout="fill"
               objectFit="cover"
               alt="Sky Continuation"
