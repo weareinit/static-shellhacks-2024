@@ -11,3 +11,10 @@ export const dinosaurNames = [
   "Seagull",
   "Trex_1",
 ];
+
+export const underwaterDinosaurNames = [
+  "Manatee",
+  "Megalodon",
+  "Plesiosaurus",
+  "Spinosaurus"
+];

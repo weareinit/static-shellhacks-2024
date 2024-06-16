@@ -11,11 +11,16 @@ import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { getUserFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
-import { dinosaurNames } from "../constants/dinosaurNames";
+import {
+  dinosaurNames,
+  underwaterDinosaurNames,
+} from "../constants/dinosaurNames";
 
 const Dashboard = async () => {
   const randomDino =
-    dinosaurNames[Math.floor(Math.random() * dinosaurNames.length)];
+    underwaterDinosaurNames[
+      Math.floor(Math.random() * underwaterDinosaurNames.length)
+    ];
   const sess = await auth();
 
   if (!sess?.user) {
