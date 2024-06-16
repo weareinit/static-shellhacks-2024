@@ -58,13 +58,11 @@ function RegisterForm() {
         console.log(data);
         throw new Error(data.error);
       }
-
-      setIsSubmitting(false);
-      return redirect("/dashboard");
     } catch (e: any) {
       setError(e.message);
+    } finally {
       setIsSubmitting(false);
-      return;
+      redirect("/dashboard");
     }
   };
 

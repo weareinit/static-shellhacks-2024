@@ -17,21 +17,12 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
     redirect("/dashboard");
   }
 
-  // useEffect(() => {
-  //   update();
-  // }, []);
-
-  useEffect(() => {
-    console.log("session", session);
-  }, [session]);
-
   return (
     <Modal containerClassName="z-20 pb-24">
       <div className="relative row-span-1 row-start-1 m-auto flex h-fit flex-col justify-center rounded-lg bg-transparent p-4">
         <header className="relative row-span-1 row-start-1 flex h-fit flex-row justify-between">
           <div
             onClick={toClose}
-            className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
             className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
           >
             <svg
