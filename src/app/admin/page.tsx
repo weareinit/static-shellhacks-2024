@@ -1,175 +1,112 @@
-"use client";
-import FiltersModal from "@/app/components/dashboard/Filters";
-import { useEffect, useState } from "react";
-import { applicantFiltersSchema } from "@/app/schemas/applicantSchemas";
-import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
-import { useApplicantsQuery } from "@/app/hooks/ApplicantsQuery";
-import { set, z } from "zod";
-import { parseCSV } from "@/app/util/parseCSV";
-import ApplicantsTable from "@/app/components/dashboard/ApplicantsTable";
-import { useAcceptWaveMutation } from "@/app/hooks/AcceptWaveMutation";
-import Navbar from "../../app/components/dashboard/Navbar";
-import { application_status_enums } from "@prisma/client";
-import { useSendReminderEmailMutation } from "@/app/hooks/SendReminderEmailMutation";
-import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
-import PixelButton from "@/app/components/misc/PixelButton";
-import { PrismaClient } from "@prisma/client";
-import { getServerAuthSession } from "@/server/auth";
+"use server";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { CustomButton } from "@/app/dashboard/components/CustomButton";
+import { auth } from "@/server/auth";
+import { redirect } from "next/navigation";
+import ApplicantSearchView from "./components/ApplicantSearchView";
+import Statistics from "./components/Statistics";
 
-type ApplicantFilterType = z.infer<typeof applicantFiltersSchema>;
-const DEFAULT_FILTERS: ApplicantFilterType = {
-  application_status: "registered",
-};
+const AdminDashboard = async () => {
+  const sess = await auth();
 
-const getSchoolData = async () => {
-  const schoolData: string[] = await parseCSV<string>(
-    "https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv",
-  );
-
-  const schools = schoolData
-    .map((school) => {
-      return school[0];
-    })
-    .splice(1);
-
-  return {
-    props: {
-      schools,
-    },
-  };
-};
-
-export default function AdminDashboard() {
-  // const schools = getSchoolData() // not working
-
-  const [showFilters, setShowFilters] = useState(false);
-  const [isExportingCSV, setIsExportingCSV] = useState(false);
-  const [name, setName] = useState("");
-  const [filters, setFilters] = useState<ApplicantFilterType>(DEFAULT_FILTERS);
-  const [selectedApplicants, setSelectedApplicants] = useState<Set<number>>(
-    new Set(),
-  );
-
-  const { data, isLoading, error } = useApplicantsQuery(filters, name);
-
-  const appStatusMutation = useAppStatusMutation({
-    onSuccess: () => setSelectedApplicants(new Set()),
-  });
-  const acceptWaveMutation = useAcceptWaveMutation();
-  const sendReminderEmailMutation = useSendReminderEmailMutation();
-
-  useEffect(() => {
-    // Reset selected applicants when filters change
-    setSelectedApplicants(new Set());
-  }, [filters]);
-
-  const toggleSelectedApplicant = (hacker_id: number) => {
-    if (selectedApplicants.has(hacker_id)) {
-      selectedApplicants.delete(hacker_id);
-    } else {
-      selectedApplicants.add(hacker_id);
-    }
-
-    setSelectedApplicants(new Set(selectedApplicants));
-  };
-
-  const addSelectedToWave = async () => {
-    void appStatusMutation.mutateAsync({
-      ids: Array.from(selectedApplicants),
-      application_status: application_status_enums.in_wave as unknown,
-    });
-  };
-
-  const downloadCSV = async () => {
-    setIsExportingCSV(true);
-    await downloadApplicantsCSV(filters);
-    setIsExportingCSV(false);
-  };
+  if (!sess?.user) {
+    redirect("/api/auth/signin");
+  } else if (!sess.user.admin) {
+    return (
+      <p>
+        Not admin. If you recently recieved the role, log out and log in again.
+      </p>
+    );
+  }
 
   return (
-    <main className="min-h-screen bg-sand p-2 md:p-8">
-      <div className="pt-0">
-        <Navbar />
-
-        <div className="mb-5 flex flex-row flex-wrap items-center justify-between align-middle">
-          <h2 className="text-2xl">Showing {data?.length} Applicants</h2>
-          <div className="justify-left flex flex-wrap gap-3 md:justify-around">
-            <input
-              className="text-md border border-gray-300 py-2 pl-1 font-pixel max-md:flex-grow"
-              type="text"
-              placeholder="Search"
-              value={name}
-              onChange={(e: any) => setName(e.target.value)}
+    <div className=" h-[250px]w-100 bg-blue-500">
+      {/* The dashboard section (and image container) */}
+      <div className="relative flex justify-center p-12">
+        <div className="absolute inset-0 flex flex-col justify-center">
+          <div className="relative flex-grow">
+            <Image
+              src="/assets/new/background/sky/Sky 5.svg"
+              layout="fill"
+              objectFit="cover"
+              alt="Sky"
+              className="object-cover"
             />
-
-            <div className="justify-left flex gap-2">
-              <PixelButton
-                className="bg-indigo-500 hover:bg-indigo-600"
-                onClick={() => setShowFilters(!showFilters)}
-                text="Filters"
-              />
-              <PixelButton
-                className="bg-green-500 hover:bg-green-600 max-sm:hidden"
-                onClick={downloadCSV}
-                isLoading={isExportingCSV}
-                text="Export CSV"
-              />
-
-              {filters.application_status ==
-                application_status_enums.registered &&
-                selectedApplicants.size > 0 && (
-                  <PixelButton
-                    className="bg-purple-500 hover:bg-purple-600"
-                    onClick={addSelectedToWave}
-                    text={`Add to Wave (${selectedApplicants.size})`}
-                    isLoading={appStatusMutation.isLoading}
-                  />
-                )}
-
-              {filters.application_status ==
-                application_status_enums.in_wave && (
-                <PixelButton
-                  className="bg-purple-500 hover:bg-purple-600"
-                  onClick={() => acceptWaveMutation.mutate()}
-                  text="Accept Wave"
-                  isLoading={acceptWaveMutation.isLoading}
-                />
-              )}
-              {filters.application_status ==
-                application_status_enums.accepted && (
-                <PixelButton
-                  title={`Last sent: ${new Date().toLocaleDateString()}`}
-                  onClick={() =>
-                    sendReminderEmailMutation.mutate(
-                      application_status_enums.accepted,
-                    )
-                  }
-                  text="Send Confirmation"
-                  className="bg-lime-600 hover:bg-lime-700"
-                  isLoading={sendReminderEmailMutation.isLoading}
-                />
-              )}
-            </div>
+          </div>
+          <div className="relative h-[250px]">
+            <Image
+              src="/assets/new/background/sky/sky.png"
+              layout="fill"
+              objectFit="cover"
+              alt="Sky Continuation"
+              className="object-cover object-bottom"
+            />
           </div>
         </div>
+        <div className="relative z-10 w-full">
+          {/* Header */}
+          <div className="mb-10 grid w-full grid-cols-10 items-start text-center">
+            <Link href="/">
+              <CustomButton colorVariant={1} border>
+                <div className="flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={3}
+                    stroke="currentColor"
+                    className="mr-2 h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                  <span className="mt-1">Home</span>
+                </div>
+              </CustomButton>
+            </Link>
+            <p className="col-span-8 mt-4 font-zoonaji text-5xl text-darker_cyan">
+              Admin Dashboard
+            </p>
+          </div>
 
-        {showFilters && (
-          <FiltersModal
-            filters={filters}
-            setFilters={setFilters}
-            schools={schools}
-          />
-        )}
+          {/* Statistics */}
+          <div className="w-full">
+            <Statistics />
+          </div>
 
-        <ApplicantsTable
-          handleSelectApplicant={toggleSelectedApplicant}
-          selectedApplicants={selectedApplicants}
-          data={data}
-          isLoading={isLoading}
-          error={error}
-          appStatusMutation={appStatusMutation}
-        />
+          {/* Main content */}
+          <div className="mt-5 w-full rounded-lg bg-white bg-opacity-50 p-3">
+            <ApplicantSearchView />
+          </div>
+        </div>
       </div>
-    </main>
+      <div className="relative">
+        <div className="relative h-[200px] overflow-hidden">
+          <Image
+            src="/assets/new/background/beach/Ocean 5.svg"
+            layout="fill"
+            objectFit="cover"
+            alt="Beach"
+            className="object-cover"
+          />
+          <div className="absolute left-[150px] top-1/4 max-w-full">
+            <Image
+              src={`/assets/new/dinosaurs/Manatee.svg`}
+              height={100}
+              width={200}
+              alt="Dino"
+              className="overflow-hidden opacity-20"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default AdminDashboard;

@@ -1,6 +1,6 @@
-import { useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { applicantStatusChangeSchema } from "@/app/schemas/applicantSchemas";
-import type { z } from "zod";
+import { z } from "zod";
 
 type ApplicantStatusChangeType = z.infer<typeof applicantStatusChangeSchema>;
 
@@ -16,7 +16,7 @@ export const useAppStatusMutation = ({
       throw new Error("Invalid arguments");
     }
 
-    const response = await fetch(`/api/applications/`, {
+    const response = await fetch(`/api/admin/hackers`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const useAppStatusMutation = ({
   return useMutation({
     mutationFn: (args: ApplicantStatusChangeType) => setAppStatus(args),
     onSuccess: () => {
-      queryClient.invalidateQueries("applicants");
+      queryClient.invalidateQueries({ queryKey: ["applicants"] });
       onSuccess();
     },
   });

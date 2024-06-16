@@ -11,6 +11,12 @@ export const application_statuses = [
   application_status_enums.waitlisted,
   application_status_enums.checked_in,
 ] as const;
+
+export const application_status_with_any = [
+  ...application_statuses,
+  "any",
+] as const;
+
 export const user_changeable_application_statuses = [
   application_status_enums.confirmed,
   application_status_enums.withdrawn,
@@ -27,6 +33,7 @@ export const sendDiscordEmailSchema = z.object({
 export type sendReminderEmailType = z.infer<typeof sendReminderEmailSchema>;
 
 export const applicantUpdateSchemaBase = z.object({
+  //id: z.string().regex(/^\d+$/).transform(Number), //only requied to find the user, this is not actually updatable
   first_name: z.string().optional(),
   last_name: z.string().optional(),
   email: z.string().email().optional(),
@@ -73,23 +80,20 @@ export const applicantStatusChangeSchema = z.object({
 });
 
 export const applicantFiltersSchema = z.object({
-  //event_id: z.string().nonempty().regex(/^\d+$/).transform(Number),
-  hacker_id: z.number().optional(),
-  application_status: z.enum(application_statuses).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
+  application_status: z.enum(application_status_with_any).optional(), //z.string().refine((i: string) => i in application_status_enums).optional(),
   grad_year: z
     .string()
-    .regex(/^(202[2-8])$/)
+    .regex(/^(202[2-9])$/)
     .transform(Number)
     .optional(),
   school: z.string().optional(),
+});
+export type ApplicantFilters = z.infer<typeof applicantFiltersSchema>;
+
+export const adminFetchApplicantsSchema = applicantFiltersSchema.extend({
+  searchParams: z.string().optional(),
   format: z.enum(["json", "csv"]).optional(),
-  phone_number: z
-    .string()
-    .regex(
-      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-      "Invalid phone number",
-    )
-    .optional(),
+  cursor: z.string().regex(/^\d+$/).transform(Number).optional(),
 });
 
 export const newApplicantSchema = z.object({

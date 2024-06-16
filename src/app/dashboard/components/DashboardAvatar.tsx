@@ -7,9 +7,9 @@ import ChangeAvatarModal from "./ChangeAvatarModal";
 import { Hacker_Applications } from "@prisma/client";
 
 export default function DashboardAvatar({
-  user,
+  application,
 }: {
-  user: Hacker_Applications;
+  application: Hacker_Applications;
 }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const toggleAvatarModal = () => setIsAvatarModalOpen(!isAvatarModalOpen);
@@ -17,7 +17,7 @@ export default function DashboardAvatar({
   const handleDinoChange = async (dino: number) => {
     toggleAvatarModal();
 
-    await fetch(`/api/hackers/${user.userId}`, {
+    await fetch(`/api/hackers/${application.userId}`, {
       method: "PUT",
       body: JSON.stringify({ dinosaur_avatar: dino }),
       headers: {
@@ -28,12 +28,12 @@ export default function DashboardAvatar({
     window.location.reload();
   };
 
-  console.log(user.dinosaur_avatar);
+  console.log(application.dinosaur_avatar);
 
   return (
     <>
       <Image
-        src={`/assets/new/dinosaurs/${dinosaurNames[user.dinosaur_avatar]}.svg`}
+        src={`/assets/new/dinosaurs/${dinosaurNames[application.dinosaur_avatar]}.svg`}
         alt="Dinosaur Avatar"
         width={225}
         height={200}

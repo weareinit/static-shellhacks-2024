@@ -13,9 +13,9 @@ import DashboardAvatar from "./DashboardAvatar";
 import HackerQRCode from "./HackerQRCode";
 
 export default async function DahsboardContent({
-  user,
+  application,
 }: {
-  user: Hacker_Applications;
+  application: Hacker_Applications;
 }) {
   const sess = await auth();
 
@@ -36,7 +36,7 @@ export default async function DahsboardContent({
         {/* Avatar container */}
         <div className="col-span-8 flex flex-col items-center justify-between lg:col-span-2 lg:items-start">
           <div className="flex flex-col justify-center gap-4">
-            <DashboardAvatar user={user} />
+            <DashboardAvatar application={application} />
           </div>
 
           <div className="mt-2">
@@ -45,10 +45,16 @@ export default async function DahsboardContent({
               <span
                 style={{
                   color:
-                    APPLICATION_STATUS_COLOR_MAPPING[user.application_status],
+                    APPLICATION_STATUS_COLOR_MAPPING[
+                      application.application_status
+                    ],
                 }}
               >
-                {APPLICATION_STATUS_NAME_MAPPING[user.application_status]}
+                {
+                  APPLICATION_STATUS_NAME_MAPPING[
+                    application.application_status
+                  ]
+                }
               </span>
             </p>
           </div>
@@ -56,7 +62,7 @@ export default async function DahsboardContent({
 
         {/* User info */}
         <div className="col-span-8 lg:col-span-6">
-          <UserInfo user={user} />
+          <UserInfo user={application} />
         </div>
       </div>
 
@@ -71,7 +77,8 @@ export default async function DahsboardContent({
         </div>
 
         {/* QR Code */}
-        {user.application_status === application_status_enums.confirmed && (
+        {application.application_status ===
+          application_status_enums.confirmed && (
           <div className="col-span-8 lg:col-span-2">
             <HackerQRCode hacker_id={sess!.user.id} />
           </div>
@@ -94,7 +101,7 @@ export default async function DahsboardContent({
               <div className="my-3">
                 <DashboardSocialButtons />
               </div>
-              {user.application_status ===
+              {application.application_status ===
               application_status_enums.withdrawn ? (
                 <p className="font-zoonaji text-2xl text-red-600">
                   You have withdrawn your application

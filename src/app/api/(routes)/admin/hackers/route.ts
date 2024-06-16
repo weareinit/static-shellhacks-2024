@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import {
-  applicantFiltersSchema,
+  adminFetchApplicantsSchema,
   applicantStatusChangeSchema,
 } from "@/app/schemas/applicantSchemas";
 import { db } from "@/server/db";
@@ -16,21 +16,37 @@ export const GET = auth(async (request) => {
   }
 
   const queryparams = Object.fromEntries(request.nextUrl.searchParams);
-  const safedata = applicantFiltersSchema.safeParse(queryparams);
+  const safedata = adminFetchApplicantsSchema.safeParse(queryparams);
 
   if (!safedata.success) {
     return new NextResponse(safedata.error.message, { status: 400 });
   }
 
-  const { format, ...filters } = safedata.data;
+  const { format, cursor, searchParams, ...filters } = safedata.data;
 
   const filteredApplicants = await db.hacker_Applications.findMany({
     where: {
-      ...filters,
+      id: {
+        gt: cursor || 0,
+      },
+      ...(filters.school && { school: filters.school }),
+      ...(filters.grad_year && { grad_year: filters.grad_year }),
+      ...(filters.application_status != "any" && {
+        application_status: filters.application_status,
+      }),
+      ...(searchParams && {
+        OR: [
+          { phone_number: { startsWith: searchParams } },
+          { email: { startsWith: searchParams } },
+          { first_name: { startsWith: searchParams } },
+          { last_name: { startsWith: searchParams } },
+        ],
+      }),
     },
     orderBy: {
       created_at: "asc",
     },
+    take: 20,
   });
 
   if (format === "csv") {

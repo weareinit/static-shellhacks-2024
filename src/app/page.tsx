@@ -4,6 +4,7 @@ import { auth } from "@/server/auth";
 import Image from "next/image";
 import Landing from "./components/new_landing/Landing";
 import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const metadata: Metadata = {
   // https://nextjs.org/docs/app/building-your-application/optimizing/metadata

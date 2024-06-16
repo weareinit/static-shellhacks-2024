@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Hacker_Applications {
-  id                        String                   @id @default(cuid())
+  id                        Int                      @id @default(autoincrement())
   userId                    String                   @unique //foreign key to User
   // BASIC INFO
   first_name                String                   @db.VarChar(50)
@@ -90,7 +90,7 @@ model User {
   admin              Boolean?             @default(false)
   accounts           Account[]
   sessions           Session[]
-  isRegistered       Boolean              @default(false) //this ia a bit of a hack to add whether the user has registered to the nextauth session
+  hackerId           Int? //this ia a bit of a hack to add whether the user has registered to the nextauth session
   hacker_application Hacker_Applications?
 }
 

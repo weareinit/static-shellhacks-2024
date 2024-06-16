@@ -21,7 +21,7 @@ declare module "next-auth" {
       admin: boolean;
       email: string;
       discordUsername: string;
-      isRegistered: boolean; // if the user has registered for the hackathon
+      hacker_id?: number; // if the user has registered for the hackathon
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -30,7 +30,7 @@ declare module "next-auth" {
   interface User {
     admin: boolean;
     discordUsername: string;
-    isRegistered: boolean;
+    hacker_id?: number;
     // ...other properties
     // role: UserRole;
   }
@@ -61,14 +61,14 @@ export const {
       session.user.discordUsername = user.discordUsername;
 
       try {
-        //Add the isRegistered field to the session
-        const isRegistered = await db.hacker_Applications.findUnique({
+        //Add the hackerId field to the session
+        const hackerId = await db.hacker_Applications.findUnique({
           where: { userId: user.id },
+          select: { id: true },
         });
 
-        console.log("isRegistered", isRegistered);
-        user.isRegistered = !!isRegistered;
-        session.user.isRegistered = user.isRegistered;
+        user.hacker_id = hackerId?.id;
+        session.user.hacker_id = user.hacker_id;
       } catch (error) {
         console.error("Error getting user registration status", error);
       }

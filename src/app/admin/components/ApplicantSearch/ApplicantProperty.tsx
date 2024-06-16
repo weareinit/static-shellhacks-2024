@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 interface ApplicantPropertyProps {
   propertyName: string;
   propertyValue: string | number | null;
-  editing: boolean;
+  editing?: boolean;
   handleEdit?: (e: any) => void;
   isLink?: boolean;
 }
@@ -17,23 +17,19 @@ const ApplicantProperty: React.FC<ApplicantPropertyProps> = ({
   handleEdit,
   isLink,
 }) => {
-  //const [editedValue, setEditedValue] = useState(propertyValue);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleEdit && handleEdit(event.target.value);
   };
 
   return (
-    <p className="font-pixel flex flex-wrap items-center">
-      <u className="mr-2 whitespace-nowrap">
-        <b>{propertyName}:</b>
-      </u>
+    <p className="flex flex-wrap items-center font-museo">
+      <u className="mr-2 whitespace-nowrap font-bold">{propertyName}:</u>
       <span className="flex-grow">
         {editing ? (
           <input
             type="text"
             value={propertyValue || ""}
-            className="w-full"
+            className="w-full font-museo"
             onChange={handleInputChange}
           />
         ) : isLink ? (
