@@ -1,9 +1,14 @@
 "use server";
 import { Hacker_Applications } from ".prisma/client";
-import { auth } from "@/server/auth";
-import { getUserFromId } from "../../api/(logic)/getUserFromId";
 
-const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
+interface HackerApplicationWithDiscord extends Hacker_Applications {
+  discord: string;
+}
+
+const PRETTY_FIELD_MAPPING: Record<
+  keyof HackerApplicationWithDiscord,
+  string | null
+> = {
   first_name: "First Name",
   last_name: "Last Name",
   email: "Email",
@@ -19,10 +24,8 @@ const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
   application_status: null,
   created_at: null,
   id: null,
-  discord: null,
-  discord_id: "Discord ID",
+  discord: "Discord",
   pronouns: "Pronouns",
-  discord_verification_code: null,
   is_international: "Is international",
   github: "Github",
   linkedin: "Linkedin",
@@ -36,20 +39,26 @@ const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
 export default async function UserInfo({
   user,
 }: {
-  user: Hacker_Applications;
+  user: HackerApplicationWithDiscord;
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       {Object.entries(user).map(([key, value]) => {
-        if (PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]) {
+        if (value && PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]) {
           return (
             <div key={key} className="flex font-museo">
-              <h2 className="mr-2 text-nowrap font-bold">
-                {PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]}:
+              <h2>
+                <span className="font-bold">
+                  {PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]}:
+                </span>
+                {key === "github" || key === "linkedin" ? (
+                  <a href={(" " + value) as string}>
+                    {(" " + value) as string}
+                  </a>
+                ) : (
+                  <span>{(" " + value) as string}</span>
+                )}
               </h2>
-              <p className="text-ellipsis" title={value as string}>
-                {value as string}
-              </p>
             </div>
           );
         }

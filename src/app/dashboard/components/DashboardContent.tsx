@@ -18,6 +18,10 @@ export default async function DahsboardContent({
   application: Hacker_Applications;
 }) {
   const sess = await auth();
+  const applicationWithDiscord = {
+    ...application,
+    discord: sess?.user.discordUsername as string,
+  };
 
   return (
     <div className="flex w-full flex-col gap-4 p-5">
@@ -62,7 +66,7 @@ export default async function DahsboardContent({
 
         {/* User info */}
         <div className="col-span-8 lg:col-span-6">
-          <UserInfo user={application} />
+          <UserInfo user={applicationWithDiscord} />
         </div>
       </div>
 

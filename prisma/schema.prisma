@@ -8,38 +8,35 @@ datasource db {
 }
 
 model Hacker_Applications {
-  id                        Int                      @id @default(autoincrement())
-  userId                    String                   @unique //foreign key to User
+  id                 Int                      @id @default(autoincrement())
+  userId             String                   @unique //foreign key to User
   // BASIC INFO
-  first_name                String                   @db.VarChar(50)
-  last_name                 String                   @db.VarChar(50)
-  age                       Int
-  school                    String                   @db.VarChar(250)
-  major                     String                   @db.VarChar(250)
-  grad_year                 Int
-  level_of_study            String                   @db.VarChar(250)
-  country                   String                   @db.VarChar(50)
+  first_name         String                   @db.VarChar(50)
+  last_name          String                   @db.VarChar(50)
+  age                Int
+  school             String                   @db.VarChar(250)
+  major              String                   @db.VarChar(250)
+  grad_year          Int
+  level_of_study     String                   @db.VarChar(250)
+  country            String                   @db.VarChar(50)
   // SOCIALS
-  email                     String                   @unique @db.VarChar(60)
-  phone_number              String                   @db.VarChar(20)
-  resume_path               String                   @db.VarChar(250)
-  discord                   String?                  @db.VarChar(250)
-  discord_id                String?                  @db.VarChar(50)
-  discord_verification_code String?                  @db.VarChar(25)
-  github                    String?                  @db.VarChar(250)
-  linkedin                  String?                  @db.VarChar(250)
+  email              String                   @unique @db.VarChar(60)
+  phone_number       String                   @db.VarChar(20)
+  resume_path        String                   @db.VarChar(250)
+  github             String?                  @db.VarChar(250)
+  linkedin           String?                  @db.VarChar(250)
   // DEMOGRAPHIC INFO
-  is_international          Boolean
-  gender                    String                   @db.VarChar(50)
-  pronouns                  String                   @db.VarChar(50)
-  ethnicity                 String                   @db.VarChar(50)
+  is_international   Boolean
+  gender             String                   @db.VarChar(50)
+  pronouns           String                   @db.VarChar(50)
+  ethnicity          String                   @db.VarChar(50)
   // STATUS
-  dinosaur_avatar           Int                      @default(0)
-  agreed_mlh_news           Boolean
-  application_status        application_status_enums @default(registered)
-  check_in_status           Boolean                  @default(false)
-  created_at                DateTime                 @default(now())
-  user                      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dinosaur_avatar    Int                      @default(0)
+  agreed_mlh_news    Boolean
+  application_status application_status_enums @default(registered)
+  check_in_status    Boolean                  @default(false)
+  created_at         DateTime                 @default(now())
+  user               User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("hacker_applications")
 }

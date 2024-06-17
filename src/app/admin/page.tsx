@@ -22,9 +22,9 @@ const AdminDashboard = async () => {
   }
 
   return (
-    <div className=" h-[250px]w-100 bg-blue-500">
+    <div className=" w-100 h-screen bg-blue-500">
       {/* The dashboard section (and image container) */}
-      <div className="relative flex justify-center p-12">
+      <div className="relative flex h-screen justify-center p-12">
         <div className="absolute inset-0 flex flex-col justify-center">
           <div className="relative flex-grow">
             <Image
@@ -69,7 +69,7 @@ const AdminDashboard = async () => {
                 </div>
               </CustomButton>
             </Link>
-            <p className="col-span-8 mt-4 font-zoonaji text-5xl text-darker_cyan">
+            <p className="col-span-10 mt-4 font-zoonaji text-4xl text-darker_cyan sm:col-span-8 md:text-5xl lg:text-6xl">
               Admin Dashboard
             </p>
           </div>
@@ -85,7 +85,7 @@ const AdminDashboard = async () => {
           </div>
         </div>
       </div>
-      <div className="relative">
+      <div className="relative hidden md:block">
         <div className="relative h-[200px] overflow-hidden">
           <Image
             src="/assets/new/background/beach/Ocean 5.svg"
