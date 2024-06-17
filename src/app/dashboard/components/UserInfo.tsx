@@ -1,7 +1,14 @@
 "use server";
 import { Hacker_Applications } from ".prisma/client";
 
-const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
+interface HackerApplicationWithDiscord extends Hacker_Applications {
+  discord: string;
+}
+
+const PRETTY_FIELD_MAPPING: Record<
+  keyof HackerApplicationWithDiscord,
+  string | null
+> = {
   first_name: "First Name",
   last_name: "Last Name",
   email: "Email",
@@ -19,7 +26,6 @@ const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
   id: null,
   discord: "Discord",
   pronouns: "Pronouns",
-  discord_verification_code: null,
   is_international: "Is international",
   github: "Github",
   linkedin: "Linkedin",
@@ -33,7 +39,7 @@ const PRETTY_FIELD_MAPPING: Record<keyof Hacker_Applications, string | null> = {
 export default async function UserInfo({
   user,
 }: {
-  user: Hacker_Applications & { discord: string };
+  user: HackerApplicationWithDiscord;
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
