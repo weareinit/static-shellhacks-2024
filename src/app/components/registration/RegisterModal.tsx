@@ -18,18 +18,21 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
   }
 
   return (
-    <Modal containerClassName="z-20 pb-24">
-      <div className="relative row-span-1 row-start-1 m-auto flex h-fit flex-col justify-center rounded-lg bg-transparent p-4">
-        <header className="relative row-span-1 row-start-1 flex h-fit flex-row justify-between">
+    <Modal>
+      <div className="row-span-1 flex flex-col justify-center rounded-lg">
+        <header>
+          <h1 className="mt-10 text-center font-zoonaji text-3xl text-darker_cyan sm:mt-0 sm:text-4xl">
+            ShellHacks 2024 Application
+          </h1>
           <div
             onClick={toClose}
-            className="font-pixel absolute right-0 z-50 w-20 cursor-pointer text-center text-xl text-black"
+            className="absolute right-0 top-0 mr-2 mt-2 cursor-pointer text-xl text-black"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.8}
+              strokeWidth={2}
               stroke="currentColor"
               className="size-10"
             >
@@ -40,9 +43,6 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
               />
             </svg>
           </div>
-          <h1 className="font-pixel row-span-1 row-start-2 mx-auto mt-4 pt-1 font-zoonaji text-4xl text-darker_cyan">
-            ShellHacks 2024 Application
-          </h1>
         </header>
         <RegisterForm />
       </div>

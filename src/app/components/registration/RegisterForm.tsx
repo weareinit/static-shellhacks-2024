@@ -334,27 +334,23 @@ function RegisterForm() {
             />
 
             <div className="flex justify-end">
-              <CustomButton type="submit">
-                <div className="flex items-center gap-2">
+              <button
+                type="submit"
+                className="min-w-full rounded-md bg-[#78644F] p-2 hover:bg-[#78644F]/80 sm:min-w-[200px] sm:rounded-lg"
+              >
+                <div className="flex items-center justify-center gap-2">
                   {isSubmitting && (
                     <img
-                      src="/assets/decorations/shell.svg"
-                      className="w-5 animate-spin"
+                      src="assets/new/misc/Shell_1.svg"
+                      className="w-7 animate-spin"
                     />
                   )}
 
-                  <span className="mt-1">Submit</span>
-                </div>
-                {/* Submit
-                {isSubmitting && (
-                  <span className="ml-2">
-                    <img
-                      src="/assets/decorations/shell.svg"
-                      className="w-5 animate-spin"
-                    />
+                  <span className="mt-1 font-zoonaji text-xl text-white">
+                    Apply
                   </span>
-                )} */}
-              </CustomButton>
+                </div>
+              </button>
             </div>
 
             {error != "" && (

@@ -60,7 +60,7 @@ function SearchInput({
           value={searchValue}
           onChange={handleSearchChange}
           onBlur={handleInputBlur}
-          className={`font-inter h-8 w-full basis-full rounded-lg border border-black bg-[#E9DBCC] p-3 focus:ring-2 sm:h-10 ${
+          className={`font-inter w-full basis-full rounded-lg border border-black bg-[#E9DBCC] p-3 focus:ring-2 ${
             showError
               ? `border-red-600 focus:outline-none focus:ring-red-600/50`
               : `focus:ring-blue/50`
@@ -70,7 +70,7 @@ function SearchInput({
           filteredOptions &&
           filteredOptions.length > 0 &&
           !isOptionSelected && (
-            <ul className="absolute left-0 right-0 font-bold z-10 mt-2 max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white shadow-md">
+            <ul className="absolute left-0 right-0 z-10 mt-2 max-h-36 overflow-y-auto rounded-md border border-gray-300 bg-white font-bold shadow-md">
               {filteredOptions.map((option, index) => (
                 <li
                   key={index}

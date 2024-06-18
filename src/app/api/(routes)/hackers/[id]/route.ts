@@ -7,8 +7,9 @@ import {
 import { auth } from "@/server/auth";
 import { getHackerApplicationFromId } from "@/app/api/(logic)/getUserFromId";
 
-export const dynamic = "auto"; //cache
-export const revalidate = 60; //cache
+// export const dynamic = "auto"; //cache
+// export const revalidate = 60; //cache
+export const dynamic = "force-dynamic"; //cache
 
 /*
  * Route to get an applicant's information. For a hacker, this route is only accessable if they own the id. For an admin, they can get any applicant. This is enforced in the middleware

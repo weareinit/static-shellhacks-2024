@@ -33,9 +33,10 @@ function Modal({
 
   const modal = (
     <div
-      className={`fixed inset-0 z-50 grid h-screen w-screen content-center justify-center bg-white bg-opacity-50`}
+      className={`fixed inset-0 z-[101] grid h-screen w-screen content-center justify-center bg-white bg-opacity-50`}
       style={{
         backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
         transition: "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
         opacity: isVisible ? 1 : 0,
       }}
@@ -43,7 +44,7 @@ function Modal({
       <aside
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className={`w-90  overflow-y-scroll  p-2 sm:m-3 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        className={`w-95 md:w-90 overflow-y-scroll p-2 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         style={{
           transition: "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
         }}
