@@ -44,7 +44,7 @@ function Modal({
       <aside
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className={`w-90  overflow-y-scroll  p-2 sm:m-3 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        className={`w-95 md:w-90 overflow-y-scroll p-2 sm:rounded-md sm:p-5 md:p-10 ${containerClassName} ${isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         style={{
           transition: "transform 0.3s ease-in-out, opacity 0.3s ease-in-out",
         }}
