@@ -7,21 +7,20 @@ import {
 import { auth } from "@/server/auth";
 import { getHackerApplicationFromId } from "@/app/api/(logic)/getUserFromId";
 
-// export const dynamic = "auto"; //cache
-// export const revalidate = 60; //cache
-export const dynamic = "force-dynamic"; //cache
+export const dynamic = "auto"; //cache
+export const revalidate = 60; //cache
 
 /*
  * Route to get an applicant's information. For a hacker, this route is only accessable if they own the id. For an admin, they can get any applicant. This is enforced in the middleware
  */
-export const GET = auth(async (request, ctx) => {
+export const GET = auth(async (request, { params }) => {
   console.log(request.auth);
   if (!request.auth) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const id = request.auth.user.admin
-    ? (ctx?.params?.id as string)
+    ? (params?.id as string)
     : request.auth.user.id;
 
   return await getHackerApplicationFromId(id);

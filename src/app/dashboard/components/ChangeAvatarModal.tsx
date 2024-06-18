@@ -16,7 +16,7 @@ export default function ChangeAvatarModal({
 }) {
   return isOpen
     ? createPortal(
-        <div className="fixed inset-0 z-10 flex h-screen w-screen flex-col items-center justify-center bg-black bg-opacity-80">
+        <div className="fixed inset-0 z-10 flex h-full w-full flex-col items-center justify-center bg-black bg-opacity-80">
           <div className="min-h-screen overflow-y-scroll bg-white p-3 md:min-h-0 md:w-[90%] md:rounded-lg md:p-5">
             <div className="flex flex-row items-center justify-between">
               <h1 className="mt-2 font-zoonaji text-2xl font-bold">

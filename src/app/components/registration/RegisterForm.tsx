@@ -23,8 +23,11 @@ import schools from "../../../../public/registration_data/schools.json";
 import countries from "../../../../public/registration_data/countries.json";
 import { CustomButton } from "@/app/dashboard/components/CustomButton";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 function RegisterForm() {
+  const { data: session, update } = useSession();
+
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -63,6 +66,7 @@ function RegisterForm() {
     } catch (e: any) {
       setError(e.message);
     } finally {
+      update(); //update the nextauth session with the hacker id
       setIsSubmitting(false);
       router.push("/dashboard");
     }

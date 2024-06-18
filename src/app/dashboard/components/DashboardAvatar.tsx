@@ -17,7 +17,7 @@ export default function DashboardAvatar({
   const handleDinoChange = async (dino: number) => {
     toggleAvatarModal();
 
-    await fetch(`/api/hackers/${application.userId}`, {
+    await fetch(`/api/hackers/${application.id}`, {
       method: "PUT",
       body: JSON.stringify({ dinosaur_avatar: dino }),
       headers: {
