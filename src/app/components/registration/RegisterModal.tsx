@@ -18,7 +18,7 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
   }
 
   return (
-    <Modal containerClassName="z-20 pb-24">
+    <Modal containerClassName="z-[101]">
       <div className="relative row-span-1 row-start-1 m-auto flex h-fit flex-col justify-center rounded-lg bg-transparent p-4">
         <header className="relative row-span-1 row-start-1 flex h-fit flex-row justify-between">
           <div
