@@ -21,12 +21,12 @@ export default function RegisterModal({ toClose }: RegisterModalProps) {
     <Modal>
       <div className="row-span-1 flex flex-col justify-center rounded-lg">
         <header>
-          <h1 className="text-center font-zoonaji text-4xl text-darker_cyan">
+          <h1 className="mt-10 text-center font-zoonaji text-3xl text-darker_cyan sm:mt-0 sm:text-4xl">
             ShellHacks 2024 Application
           </h1>
           <div
             onClick={toClose}
-            className="absolute right-0 top-0 mr-2 mt-2 w-20 cursor-pointer text-xl text-black"
+            className="absolute right-0 top-0 mr-2 mt-2 cursor-pointer text-xl text-black"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
