@@ -63,10 +63,7 @@ export const POST = auth(async (request) => {
       data: validatedApplicant,
     });
 
-    // await sendConfirmationEmail(
-    //   validatedApplicant.email,
-    //   validatedApplicant.first_name,
-    // );
+    await sendConfirmationEmail(validatedApplicant.email);
   } catch (e) {
     console.log("Error occured!", e);
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

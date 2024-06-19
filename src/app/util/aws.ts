@@ -24,6 +24,7 @@ import { SESClient } from "@aws-sdk/client-ses";
 import {
   ACCEPTED_REMINDER_TEMPLATE,
   ACCEPTED_TEMPLATE,
+  APPLICATION_CONFIRMATION_TEMPLATE,
 } from "@/app/constants/emailConstants";
 
 const s3Configuration: S3ClientConfig = {
@@ -35,7 +36,7 @@ const s3Configuration: S3ClientConfig = {
 };
 
 const s3Client = new S3Client(s3Configuration);
-const emailClient = new SESClient({});
+const emailClient = new SESClient({ region: process.env.AWS_REGION! });
 
 /*
  * Uploads a resume to the S3 bucket and generates a thumbnail image
@@ -137,7 +138,7 @@ interface EmailPayload {
  */
 export const sendConfirmationEmail = async (
   toEmail: string,
-  firstName: string,
+  // firstName: string,
 ) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/preview/client/ses/command/SendTemplatedEmailCommand/
   const params: SendTemplatedEmailCommandInput = {
@@ -145,8 +146,8 @@ export const sendConfirmationEmail = async (
       ToAddresses: [toEmail],
     },
     Source: "fiuoperations@weareinit.org",
-    Template: "welcome-template-updated-3",
-    TemplateData: `{ \"FIRST_NAME\":\"${firstName}\" }`,
+    Template: APPLICATION_CONFIRMATION_TEMPLATE,
+    TemplateData: "", //`{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
   const command = new SendTemplatedEmailCommand(params);
