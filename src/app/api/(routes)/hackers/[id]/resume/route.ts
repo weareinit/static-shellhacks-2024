@@ -16,11 +16,15 @@ export const GET = auth(async (request, ctx) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const id = (ctx.params?.id as string) || "";
+  if (!ctx.params?.id) {
+    return new NextResponse("No id provided", { status: 400 });
+  }
+
+  const id = parseInt(ctx.params.id as string);
 
   const resume = await db.hacker_Applications.findUnique({
     where: {
-      userId: request.auth.user.admin ? id : request.auth.user.id,
+      id: request.auth.user.admin ? id : request.auth.user.hacker_id,
     },
     select: {
       resume_path: true,
@@ -43,17 +47,15 @@ export const PUT = auth(async (request, ctx) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  // try {
-  //   await validateCaptcha(request);
-  // } catch (e) {
-  //   return new NextResponse("Invalid captcha", { status: 400 });
-  // }
+  if (!ctx.params?.id) {
+    return new NextResponse("No id provided", { status: 400 });
+  }
 
-  const id = (ctx.params?.id as string) || "";
+  const id = parseInt(ctx.params.id as string);
 
   const resume = await db.hacker_Applications.findUnique({
     where: {
-      userId: request.auth.user.admin ? id : request.auth.user.id,
+      id: request.auth.user.admin ? id : request.auth.user.hacker_id,
     },
     select: {
       resume_path: true,
