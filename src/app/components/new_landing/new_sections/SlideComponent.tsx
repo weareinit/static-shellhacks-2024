@@ -21,23 +21,23 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="sm:col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className=" font-museo text-[20px] text-white   xxs:text-[13px] xsm:text-[15px] md:text-[18px]  xlg:text-[25px] xxl:text-[30px]">
+          <h3 className=" font-museo text-[20px] text-white xxs:text-[13px] xsm:text-[15px] md:text-[18px] xlg:text-[25px] xxl:text-[30px]">
             Ready to immerse yourself in the ultimate tech experience? Join us
-            for ShellHacks, Florida&apos;s Largest Hackathon! Over 1,000
+            for ShellHacks, Florida&apos;s Largest Hackathon! Over 1,200
             students from across the state and around the world will come
             together to:
           </h3>
+          <br />
           <ul className="list-disc pl-4 font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] sm:grid-cols-2 md:text-[18px] xlg:text-[25px] xxl:pl-8 xxl:text-[30px]">
             <li>Build: Develop innovative projects</li>
             <li>Network: Network with top companies, and more!</li>
-            <li>
-              Learn: Learn the latest technologies Develop new skills by
-              attending our technical workshops.
-            </li>
+            <li>Learn: Learn the latest technologies</li>
+            <br />
           </ul>
           <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] xlg:text-[25px]  xxl:text-[30px]">
-            Gain experience by building hands-on projects with fellow students.
-            Land your next internship or job by meeting recruiters at our career
+            Develop new skills by attending our technical workshops. Gain
+            experience by building hands-on projects with fellow students. Land
+            your next internship or job by meeting recruiters at our career
             fair. Win amazing prizes, participate in fun activities, get tons of
             cool swag, enjoy great food, and much more - all at ShellHacks!
           </h3>
@@ -74,10 +74,10 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] md:text-[18px]  xlg:text-[25px] xxl:text-[30px]">
             Build your project using any technology you like! Whether
             you&apos;re interested in web development, AI/ML, hardware, or
-            anything in between, there’s always something to create. As you work
-            hard, you&apos;ll have the opportunity to showcase your creativity,
-            problem-solving skills, and technical knowledge to top companies
-            looking to hire talented students!
+            anything in between, there&apos;s always something to create. As you
+            work hard, you&apos;ll have the opportunity to showcase your
+            creativity, problem-solving skills, and technical knowledge to top
+            companies looking to hire talented students!
           </h3>
         </div>
       </div>
@@ -92,7 +92,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
         <div className="pb-full relative xxs:mx-[40px] xxs:h-[200px] xsm:mx-[80px] sm:col-span-1 sm:mx-0 sm:h-full md:col-span-1 lg:col-span-2">
           <Image
             priority
-            src={"/images/hackers_pic.jpg"}
+            src={"/images/peeps.jpg"}
             objectFit="cover"
             layout="fill"
             alt="hackers"
@@ -100,25 +100,22 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
           />
         </div>
         <div className="sm:col-span-1 md:col-span-1 lg:col-span-3">
-          <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] md:text-[18px]  xlg:text-[25px] xxl:text-[30px]">
-            Ready to immerse yourself in the ultimate tech experience? Join us
-            for ShellHacks, Florida&aposs Largest Hackathon! Over 1,000 students
-            from across the state and around the world will come together to:
+          <h3 className="font-museo text-[20px] text-white xxs:text-[13px] xsm:text-[15px] md:text-[18px] xlg:text-[25px] xxl:text-[30px]">
+            ShellHacks offers a variety of workshop tracks to introduce you to
+            the world of technology and careers in the field! These workshops
+            are beginner friendly and open to all.
           </h3>
-          <ul className="xsm:text-[15px]md:text-[18px] list-disc pl-4 font-museo text-[20px] text-white xxs:text-[13px] xlg:text-[25px] xxl:pl-8 xxl:text-[30px]">
-            <li>Build: Develop innovative projects</li>
-            <li>Network: Network with top companies, and more!</li>
-            <li>
-              Learn: Learn the latest technologies Develop new skills by
-              attending our technical workshops.
-            </li>
+          <br />
+          <ul className="list-disc pl-4 font-museo text-[20px] text-white xxs:text-[13px] xsm:text-[15px] md:text-[18px] xlg:text-[25px] xxl:pl-8 xxl:text-[30px]">
+            <li>Mobile Development</li>
+            <li>Career Development</li>
+            <li>AI/Machine Learning</li>
+            <li>Game Development</li>
+            <li>IT & Cybersecurity</li>
+            <li>Web Development</li>
+            <li>Design & Product</li>
+            <li>Hardware</li>
           </ul>
-          <h3 className="font-museo text-[20px] text-white   xxs:text-[13px] xsm:text-[15px] md:text-[18px] xlg:text-[25px] xxl:text-[30px]">
-            Gain experience by building hands-on projects with fellow students.
-            Land your next internship or job by meeting recruiters at our career
-            fair. Win amazing prizes, participate in fun activities, get tons of
-            cool swag, enjoy great food, and much more - all at ShellHacks!
-          </h3>
         </div>
       </div>
     </div>
@@ -144,7 +141,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
             Looking for your next internship or job opportunity? Our career fair
             is the perfect place for you to connect with recruiters and
             professionals from leading tech companies! You&apos;ll have the
-            chance to learn about each company’s culture, interview process, and
+            chance to learn about each company&apos;s culture, interview process, and
             open internship and job opportunities.
           </h3>
           <br />
