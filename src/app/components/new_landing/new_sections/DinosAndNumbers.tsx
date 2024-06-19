@@ -24,6 +24,15 @@ const DinosAndNumbers = () => {
         alt="Beach background"
         className="relative z-[-10] sm:hidden"
       />
+      <Image
+        priority
+        src="/assets/new/background/beach/Beach.png"
+        layout="responsive"
+        width={1730}
+        height={973}
+        alt="Beach background"
+        className="relative z-[-10] xsm:hidden"
+      />
       {/* Content -> Absolute to the subsection, relative overall */}
       <div className="absolute inset-0">
         <PreviousNumbers />

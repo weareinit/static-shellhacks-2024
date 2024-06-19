@@ -49,30 +49,38 @@ function NavBar() {
       >
         <div className="flex justify-between">
           <div className="justify-left flex items-center">
-            <button
-              className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out 
+            <a href="#about-us">
+              <button
+                className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out 
             hover:-translate-y-1 sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
-            >
-              About Us
-            </button>
-            <button
-              className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 
+              >
+                About Us
+              </button>
+            </a>
+            <a href="#faqs">
+              <button
+                className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 
               sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
-            >
-              Events & Workshops
-            </button>
-            <button
-              className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 
+              >
+                FAQs
+              </button>
+            </a>
+            <a href="#organizers">
+              <button
+                className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1 
               sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
-            >
-              FAQs
-            </button>
-            <button
-              className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1  
+              >
+                Organizers
+              </button>
+            </a>
+            <a href="#sponsors">
+              <button
+                className="delay-80 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1  
               sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
-            >
-              Sponsors
-            </button>
+              >
+                Sponsors
+              </button>
+            </a>
           </div>
           <div className="flex justify-between">
             <Link href="/dashboard">

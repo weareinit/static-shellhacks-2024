@@ -13,7 +13,7 @@ const BigDinos = () => {
             width={750}
             height={750}
             alt="Tree"
-            className="absolute bottom-0 left-[-250px] z-[-3] xxs:hidden sm:bottom-[40px] sm:left-[-120px] sm:block sm:w-[450px] md:left-[-150px] md:w-[500px] xxl:h-[90rem] xxl:w-[60rem]"
+            className="absolute bottom-0 left-[-250px] z-[-3] xxs:hidden sm:bottom-[2px] sm:left-[-150px] sm:block sm:w-[450px] md:left-[-150px] md:w-[500px] xxl:h-[90rem] xxl:w-[60rem]"
           />
           <Image
             priority
@@ -30,7 +30,7 @@ const BigDinos = () => {
             width={500}
             height={500}
             alt="Tree"
-            className="absolute z-[-3] xxs:bottom-0 xxs:left-[-150px] xxs:block xxs:h-[300px] xsm:bottom-0 xsm:left-[-200px] xsm:h-[500px] sm:hidden"
+            className="absolute z-[-3] xxs:bottom-0 xxs:left-[-150px] xxs:block xxs:h-[300px] xsm:bottom-0 xsm:left-[-250px] xsm:h-[500px] sm:hidden"
           />
           <Image
             priority
@@ -48,7 +48,7 @@ const BigDinos = () => {
             width={600}
             height={600}
             alt="Tree"
-            className="absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform xxs:hidden sm:bottom-[70px] sm:right-[-80px] sm:block sm:w-[400px] md:right-[-100px] md:w-[450px] xxl:h-[75rem] xxl:w-[50rem]"
+            className="absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform xxs:hidden sm:bottom-[50px] sm:right-[-100px] sm:block sm:w-[400px] md:right-[-100px] md:w-[450px] xxl:h-[75rem] xxl:w-[50rem]"
           />
           <Image
             priority

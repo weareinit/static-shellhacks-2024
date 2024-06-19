@@ -74,7 +74,10 @@ const Sponsors = () => {
         className="relative z-[-10] xsm:hidden"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-start">
-        <h1 className="xss:my-0 mt-4 font-zoonaji text-[60px] text-pastel_orange xxs:text-[25px] xsm:text-[30px] sm:mb-1 sm:text-[40px] md:text-[50px] lg:mb-6 lg:text-[60px] xxl:mb-12 xxl:mt-[100px] xxl:text-[80px]">
+        <h1
+          id="sponsors"
+          className="xss:my-0 mt-4  font-zoonaji text-[60px] text-pastel_orange xxs:text-[25px] xsm:text-[30px] sm:mb-1 sm:text-[40px] md:text-[50px] lg:mb-6 lg:text-[60px] xxl:mb-12 xxl:mt-[100px] xxl:text-[80px]"
+        >
           Sponsored By
         </h1>
         <p className="m-5 font-museo text-2xl text-white xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px] lg:text-[25px] xxl:text-[30px]">

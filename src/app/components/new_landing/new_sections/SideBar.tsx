@@ -60,18 +60,26 @@ function SideBar() {
         }`}
       >
         <div className="flex flex-col items-start">
-          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
-            About Us
-          </button>
-          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
-            Events & Workshops
-          </button>
-          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
-            FAQs
-          </button>
-          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
-            Sponsors
-          </button>
+          <a href="about-us">
+            <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+              About Us
+            </button>
+          </a>
+          <a href="faqs">
+            <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+              FAQs
+            </button>
+          </a>
+          <a href="#organizers">
+            <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+              Organizers
+            </button>
+          </a>
+          <a href="#sponsors">
+            <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
+              Sponsors
+            </button>
+          </a>
 
           <Link href="/dashboard">
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1">

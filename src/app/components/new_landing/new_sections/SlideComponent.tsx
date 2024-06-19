@@ -6,7 +6,10 @@ interface SlideProps {
 const SlideComponent: React.FC<SlideProps> = ({ title }) => {
   const AboutUsComponent = () => (
     <div>
-      <div className="flex justify-center font-zoonaji text-[60px] text-white xxs:mb-2 xxs:text-[25px] xsm:text-[40px] sm:py-3 sm:text-[40px] md:text-[50px] lg:py-4 lg:text-[45px] xlg:py-5 xlg:text-[60px] xxl:py-6 xxl:text-[80px]">
+      <div
+        id="about-us"
+        className="flex justify-center font-zoonaji text-[60px] text-white xxs:mb-2 xxs:text-[25px] xsm:text-[40px] sm:py-3 sm:text-[40px] md:text-[50px] lg:py-4 lg:text-[45px] xlg:py-5 xlg:text-[60px] xxl:py-6 xxl:text-[80px]"
+      >
         About Us
       </div>
       <div className="h-full justify-center gap-6 xxs:flex xxs:flex-col xxs:gap-y-3 sm:grid sm:grid-cols-2 sm:gap-6 md:grid-cols-2 lg:grid-cols-5 xlg:gap-8 xxl:gap-10">
@@ -141,8 +144,8 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
             Looking for your next internship or job opportunity? Our career fair
             is the perfect place for you to connect with recruiters and
             professionals from leading tech companies! You&apos;ll have the
-            chance to learn about each company&apos;s culture, interview process, and
-            open internship and job opportunities.
+            chance to learn about each company&apos;s culture, interview
+            process, and open internship and job opportunities.
           </h3>
           <br />
           <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] md:text-[18px]  xlg:text-[25px] xxl:text-[30px]">

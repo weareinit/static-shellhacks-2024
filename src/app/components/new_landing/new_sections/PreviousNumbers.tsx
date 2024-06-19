@@ -16,7 +16,7 @@ const StatsComponent: React.FC<StatsComponentProps> = ({
           {Number}
         </h1>
       </b>
-      <h4 className="text-[30px] xxs:text-[15px] xsm:text-[18px] sm:text-[18px] md:text-[20px] lg:text-[25px] xlg:text-[40px] xxl:text-[40px]">
+      <h4 className="text-[30px] xxs:text-[13px] xsm:text-[15px] sm:text-[18px] md:text-[20px] lg:text-[25px] xlg:text-[40px] xxl:text-[40px]">
         {Description}
       </h4>
     </div>
@@ -26,14 +26,14 @@ const StatsComponent: React.FC<StatsComponentProps> = ({
 const PreviousNumbers = () => {
   return (
     // TODO: Find a way to be able to not have to call top-[-80px] to center it with the ocean bg/sand bg transition
-    <div className="relative top-[-80px] z-10  flex flex-col items-center justify-end gap-10 xxs:mt-[10rem] xxs:gap-3 xsm:mt-[10rem] xsm:gap-10 sm:mt-0 sm:gap-8">
-      <p className="relative bottom-16 whitespace-nowrap font-museo text-6xl font-extrabold text-darker_cyan sm:text-3xl md:text-4xl lg:text-5xl xlg:text-6xl">
-        Last Years Numbers
+    <div className="relative top-[-150px] z-10  flex flex-col items-center justify-end gap-10 xxs:mt-[15rem] xxs:gap-3 xsm:mt-[10rem] xsm:gap-5 sm:mt-0 sm:gap-8">
+      <p className="relative whitespace-nowrap font-museo text-6xl font-extrabold text-darker_cyan xxs:mt-10 xxs:text-[20px] xsm:text-[30px] sm:text-2xl md:text-4xl lg:text-5xl xlg:text-6xl">
+        Last Year&apos;s Numbers
       </p>
       <StatsComponent Number="1200+" Description="HACKERS" />
       <StatsComponent Number="50+" Description="PARTNERS & SPONSORS" />
-      <StatsComponent Number="20+" Description="WORKSHOPS" />
       <StatsComponent Number="230+" Description="PROJECTS" />
+      <StatsComponent Number="20+" Description="WORKSHOPS" />
     </div>
   );
 };

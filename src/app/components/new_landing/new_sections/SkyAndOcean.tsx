@@ -12,7 +12,7 @@ const SkyAndOcean = () => {
         width={100}
         height={115}
         alt="Fish"
-        className="absolute left-[10%] z-[-5] animate-fish-slide xxs:top-[63%] xxs:h-[40px] xxs:w-[30px] xsm:h-[40px] xsm:w-[30px] sm:top-[63%] sm:h-[40px] sm:w-[30px] md:h-[115px] md:w-[100px] lg:top-[42%] xxl:h-[180px] xxl:w-[150px]"
+        className="absolute left-[10%] z-[-5] animate-fish-slide xxs:top-[63%] xxs:h-[40px] xxs:w-[30px] xsm:h-[40px] xsm:w-[30px] sm:top-[63%] sm:h-[40px]  sm:w-[30px] md:top-[40%] md:h-[115px] md:w-[100px] lg:top-[42%] xxl:h-[180px] xxl:w-[150px]"
       />
       <Image
         priority
