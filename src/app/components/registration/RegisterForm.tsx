@@ -62,7 +62,7 @@ function RegisterForm() {
     } catch (e: any) {
       setError(e.message);
     } finally {
-      setIsSubmitting(false);
+      // setIsSubmitting(false);
       router.push("/dashboard");
     }
   };
