@@ -7,32 +7,39 @@ import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const metadata: Metadata = {
-  // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
-  title: "",
-  description: "",
+  title: "ShellHacks 2024",
+  description:
+    "Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to: Build: Develop innovative projects, Network: Network with top companies, and more! Learn: Learn the latest technologies Develop new skills by attending our technical workshops. Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!",
+  icons: {
+    icon: "/favicon.png",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://dev.shellhacks.net/",
+    title: "ShellHacks 2024 ﹣ The Largest Hackathon in Florida!",
+    description:
+      "Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to: Build: Develop innovative projects, Network: Network with top companies, and more! Learn: Learn the latest technologies Develop new skills by attending our technical workshops. Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!",
+    images: [
+      {
+        url: "/assets/new/meta.png",
+        alt: "ShellHacks 2024 Meta Image",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    url: "https://dev.shellhacks.net/",
+    title: "ShellHacks 2024 ﹣ The Largest Hackathon in Florida!",
+    description:
+      "Ready to immerse yourself in the ultimate tech experience? Join us for ShellHacks, Florida's Largest Hackathon! Over 1,000 students from across the state and around the world will come together to: Build: Develop innovative projects, Network: Network with top companies, and more! Learn: Learn the latest technologies Develop new skills by attending our technical workshops. Gain experience by building hands-on projects with fellow students. Land your next internship or job by meeting recruiters at our career fair. Win amazing prizes, participate in fun activities, get tons of cool swag, enjoy great food, and much more - all at ShellHacks!",
+    images: [
+      {
+        url: "/assets/new/meta.png",
+        alt: "ShellHacks 2024 Meta Image",
+      },
+    ],
+  },
 };
-
-// const getSchoolData = async () => {
-//   const schoolData: string[] = await parseCSV<string>(
-//     "https://raw.githubusercontent.com/quigongian/probable-octo-parakeet/main/schools.csv",
-//   );
-//   const schools = schoolData
-//     .map((school) => {
-//       return school[0];
-//     })
-//     .splice(1);
-//   const countryData: CountryDataType[] = await parseCSV<CountryDataType>(
-//     "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv",
-//     true,
-//   );
-//   const countries = countryData.map((country) => {
-//     return country.name;
-//   });
-//   return {
-//     schools,
-//     countries,
-//   };
-// };
 
 export default async function Home() {
   // const { schools, countries } = await getSchoolData();
@@ -44,17 +51,3 @@ export default async function Home() {
     </SessionProvider>
   );
 }
-
-// interface CountryDataType {
-//   name: string;
-//   "alpha-2": string;
-//   "alpha-3": string;
-//   "country-code": string;
-//   "iso_3166-2": string;
-//   region: string;
-//   "sub-region": string;
-//   "intermediate-region": string;
-//   "region-code": string;
-//   "sub-region-code": string;
-//   "intermediate-region-code": string;
-// }
