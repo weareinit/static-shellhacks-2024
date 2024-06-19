@@ -50,9 +50,7 @@ export const PUT = auth(async (request, { params }) => {
   //make sure a normal hacker can't update anyone's profile other than their own
   const data = await db.hacker_Applications.update({
     where: {
-      id: request.auth.user.admin
-        ? (id as unknown as number)
-        : request.auth.user.hacker_id,
+      id: request.auth.user.admin ? id : request.auth.user.hacker_id,
     },
     data: safedata.data,
   });
