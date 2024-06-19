@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import RegisterModal from "../../registration/RegisterModal";
 import Image from "next/image";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 
 function SideBar() {
   const [isActive, setActive] = useState(false);
@@ -9,7 +11,9 @@ function SideBar() {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const handleOverlayClick = (e) => {
+  const { data: session } = useSession();
+
+  const handleOverlayClick = (e: any) => {
     if (e.target.id === "sidebar-overlay") {
       setActive(false);
     }
@@ -68,15 +72,28 @@ function SideBar() {
           <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
             Sponsors
           </button>
-          <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1">
-            Hacker Dashboard
-          </button>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1"
-          >
-            Apply!
-          </button>
+
+          <Link href="/dashboard">
+            <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1">
+              Hacker Dashboard
+            </button>
+          </Link>
+          {(!session || !session.user.hacker_id) && (
+            <button
+              onClick={
+                session
+                  ? openModal
+                  : () =>
+                      signIn("discord", {
+                        callbackUrl: "/?show_register=true",
+                      })
+              }
+              className="px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1"
+            >
+              Apply!
+            </button>
+          )}
+
           {isModalOpen && <RegisterModal toClose={closeModal} />}
         </div>
       </div>
