@@ -219,15 +219,15 @@ function RegisterForm() {
                   I acknowledge and authorize the sharing of my registration
                   information with corporate sponsors for the purpose of
                   exploring potential job opportunities. This sharing of
-                  information allows us to connect you with relevant corporate
-                  sponsors who may be interested in considering you for
+                  information allows them to connect me with relevant corporate
+                  sponsors who may be interested in considering me for
                   employment or related opportunities.
                 </p>
               }
               name="agreed_sponsors"
               hasInter
             />
-            <CheckboxInput //required for us to send resumes to sponsors
+            <CheckboxInput //required to allow filming
               label={
                 <p>
                   I acknowledge and authorize the filming and recording of
@@ -239,11 +239,11 @@ function RegisterForm() {
               name="agreed_media"
               hasInter
             />
-            <CheckboxInput //required for us to send resumes to sponsors
+            <CheckboxInput //required for liability
               label={
                 <p>
-                  ShellHacks and its organizing organizations will not be held
-                  liable for any lost or stolen property.
+                  I acknowledge that ShellHacks and its organizing team will not
+                  be held liable for any lost or stolen property.
                 </p>
               }
               name="agreed_liability"
@@ -251,10 +251,10 @@ function RegisterForm() {
             />
             <div className="mt-1 sm:mb-4" />
 
-            <p className="font-museo">
-              We are currently in the process of partnering with MLH. The
-              following 3 checkboxes are for this partnership. If we do not end
-              up partnering with MLH, your information will not be shared
+            <p className="mb-3 font-museo text-xl">
+              We are partnered with MLH, the official collegiate hackathon
+              league in the United States. The disclaimers below pertain to this
+              partnership.
             </p>
 
             <CheckboxInput
