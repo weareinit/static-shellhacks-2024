@@ -24,7 +24,7 @@ export default function ResumeView({ hackerId }: { hackerId: number }) {
     <div className="flex flex-col items-start gap-2">
       <p className="font-museo text-xl">Your Resume:</p>
       <div className="flex flex-col gap-2">
-        <Link href={`/api/hackers/${userId}/resume`} target="_blank">
+        <Link href={`/api/hackers/${hackerId}/resume`} target="_blank">
           <CustomButton colorVariant={2}>
             <div className="flex items-center gap-2">
               <svg
