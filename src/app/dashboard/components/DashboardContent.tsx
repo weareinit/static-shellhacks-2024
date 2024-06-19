@@ -111,7 +111,7 @@ export default async function DahsboardContent({
                   You have withdrawn your application
                 </p>
               ) : (
-                <WithdrawApplicationButton userId={sess!.user.id} />
+                <WithdrawApplicationButton id={application.id} />
               )}
             </div>
           </div>

@@ -1,15 +1,11 @@
 "use client";
-export default function WithdrawApplicationButton({
-  userId,
-}: {
-  userId: string;
-}) {
+export default function WithdrawApplicationButton({ id }: { id: number }) {
   const handleWithdrawApplication = async () => {
     const confirmation = confirm(
       "Are you sure you want to withdraw your application?",
     );
     if (confirmation) {
-      await fetch(`/api/hackers/${userId}`, {
+      await fetch(`/api/hackers/${id}`, {
         //can put a random field for the user id, cause the server will check the auth (since not admin)
         method: "PUT",
         body: JSON.stringify({ application_status: "withdrawn" }),
@@ -24,7 +20,7 @@ export default function WithdrawApplicationButton({
 
   return (
     <p
-      className="font-zoonaji cursor-pointer text-2xl text-red-600 underline"
+      className="cursor-pointer font-zoonaji text-2xl text-red-600 underline"
       onClick={handleWithdrawApplication}
     >
       Withdraw Applicatiion
