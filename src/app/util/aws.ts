@@ -147,7 +147,7 @@ export const sendConfirmationEmail = async (
     },
     Source: "fiuoperations@weareinit.org",
     Template: APPLICATION_CONFIRMATION_TEMPLATE,
-    TemplateData: "", //`{ \"FIRST_NAME\":\"${firstName}\" }`,
+    TemplateData: "{}", //`{ \"FIRST_NAME\":\"${firstName}\" }`,
   };
 
   const command = new SendTemplatedEmailCommand(params);

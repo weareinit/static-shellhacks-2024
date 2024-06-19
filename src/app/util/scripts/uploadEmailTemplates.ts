@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config({ path: "../../../../.env", override: true });
 
 import { CreateTemplateCommandInput } from "@aws-sdk/client-ses";
-import { createEmailTemplate } from "../aws";
+import { createEmailTemplate, sendConfirmationEmail } from "../aws";
 /*
  * INSTRUCTIOSN: This script will upload all email templates to the database.
  */
@@ -24,6 +24,9 @@ const TEMPLATES: CreateTemplateCommandInput[] = [
 
 for (const template of TEMPLATES) {
   try {
+    // console.log(JSON.stringify(template, null, 2));
+    // await sendConfirmationEmail("jschuster8765@gmail.com");
+
     await createEmailTemplate(
       template.Template!.TemplateName!,
       template.Template!.SubjectPart!,
