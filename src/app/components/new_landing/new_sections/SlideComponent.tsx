@@ -37,7 +37,7 @@ const SlideComponent: React.FC<SlideProps> = ({ title }) => {
             <li>Learn: Learn the latest technologies</li>
             <br />
           </ul>
-          <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] xlg:text-[25px]  xxl:text-[30px]">
+          <h3 className="font-museo text-[20px] text-white  xxs:text-[13px] xsm:text-[15px] md:text-[18px] xlg:text-[25px]  xxl:text-[30px]">
             Develop new skills by attending our technical workshops. Gain
             experience by building hands-on projects with fellow students. Land
             your next internship or job by meeting recruiters at our career

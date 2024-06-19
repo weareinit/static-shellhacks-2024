@@ -14,7 +14,7 @@ const Challenges = () => {
         href="https://shellhacks-2023.devpost.com/"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-8 xxl:mt-12"
+        className="xxs:mt-4 sm:mt-8 xxl:mt-12"
       >
         <button
           className="m-0 flex transform cursor-pointer items-center justify-center rounded-[1.5rem] 

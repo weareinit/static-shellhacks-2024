@@ -17,7 +17,7 @@ const LandingButtons = () => {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   return (
-    <div className="flex flex-col items-center gap-5 text-center xxs:mt-7 sm:mt-6 md:mt-4 lg:mt-8 xlg:mt-10 xxl:mt-12 ">
+    <div className="flex flex-col items-center gap-5 text-center xxs:mt-7 sm:mt-6 md:mt-4 lg:mt-8 xlg:mt-10 xxl:mt-12 xxl:gap-10 ">
       {(!session || !session.user.hacker_id) && (
         <div
           onClick={

@@ -60,12 +60,12 @@ function SideBar() {
         }`}
       >
         <div className="flex flex-col items-start">
-          <a href="about-us">
+          <a href="#about-us">
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               About Us
             </button>
           </a>
-          <a href="faqs">
+          <a href="#faqs">
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               FAQs
             </button>
