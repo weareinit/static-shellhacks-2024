@@ -11,18 +11,19 @@ const LandingContent = () => {
         <p className="font-zoonaji text-4xl text-darker_cyan xxs:mt-0 xxs:text-[18px] xsm:mt-3 xsm:text-[26px] sm:mt-3 sm:text-[23px] md:mt-4 md:text-[25px] lg:mt-8 lg:text-[30px] xlg:mt-9 xlg:text-[40px] xxl:mt-10 xxl:text-[60px]">
           Florida&apos;s Largest Hackathon!
         </p>
-        <div className="flex items-center justify-center  xxl:mt-5">
-          <p className="mt-2 font-museo text-lg xxs:text-[15px] md:text-[15px] lg:text-[20px] xlg:text-[20px] xxl:text-[30px]">
+        <div className="flex items-center justify-center gap-2 xxl:mt-5">
+          <p className="mt-[1px] font-museo text-lg xxs:text-[15px] md:text-[15px] lg:text-[20px] xlg:text-[20px] xxl:text-[30px]">
             Powered by
           </p>
-          <div className="relative  bottom-1 mt-2 flex scale-90 xxs:h-[2rem]  xxs:w-[8rem] sm:h-[1.5rem] sm:w-[6rem] md:h-[2rem] md:w-[8rem] lg:h-[3rem] lg:w-[12rem]">
-            <Image
-              priority
-              src="/assets/new/logo/micro_logo.png"
-              alt="Microsoft Logo"
-              layout="fill"
-            />
-          </div>
+          {/* <div className="relative  bottom-1 mt-2 flex scale-90 xxs:h-[2rem]  xxs:w-[8rem] sm:h-[1.5rem] sm:w-[6rem] md:h-[2rem] md:w-[8rem] lg:h-[3rem] lg:w-[12rem]"> */}
+          <Image
+            priority
+            src="/assets/new/logo/micro_logo.png"
+            alt="Microsoft Logo"
+            width={100}
+            height={60}
+          />
+          {/* </div> */}
         </div>
         <div className="font-museoregular">
           <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:mt-3 xlg:text-[20px] xxl:mt-5 xxl:text-[40px]">
