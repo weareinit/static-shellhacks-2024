@@ -62,15 +62,7 @@ export const ethnicityOptions = [
   "Prefer Not to Answer",
 ];
 
-export const gradYearOptions = [
-  "2022",
-  "2023",
-  "2024",
-  "2025",
-  "2026",
-  "2027",
-  "2028",
-];
+export const gradYearOptions = ["2023", "2024", "2025", "2026", "2027", "2028"];
 
 export const majorOptions = [
   "Computer Science",
