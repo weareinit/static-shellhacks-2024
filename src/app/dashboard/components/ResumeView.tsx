@@ -5,7 +5,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { CustomButton } from "./CustomButton";
 import Link from "next/link";
 
-export default function ResumeView({ userId }: { userId: string }) {
+export default function ResumeView({ hackerId }: { hackerId: number }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingResume, setIsUploadingResume] = useState(false);
 
@@ -15,7 +15,7 @@ export default function ResumeView({ userId }: { userId: string }) {
     const file = event.target.files && event.target.files[0];
     if (file) {
       setIsUploadingResume(true);
-      await uploadResume(file, userId);
+      await uploadResume(file, hackerId);
       setIsUploadingResume(false);
     }
   };

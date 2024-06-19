@@ -77,7 +77,7 @@ export default async function DahsboardContent({
       <div className="grid grid-cols-8 gap-4">
         {/* Resume */}
         <div className="col-span-8 lg:col-span-2">
-          <ResumeView userId={sess!.user.id} />
+          <ResumeView hackerId={application.id} />
         </div>
 
         {/* QR Code */}

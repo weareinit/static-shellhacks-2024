@@ -1,6 +1,4 @@
-import { join } from "path";
-
-export const uploadResume = async (file: File, userId: string) => {
+export const uploadResume = async (file: File, hackerId: number) => {
   //Verify the file details
   if (!file) {
     throw new Error("No file provided");
@@ -16,7 +14,7 @@ export const uploadResume = async (file: File, userId: string) => {
   formData.append("resume", file);
 
   const response = await fetch(
-    `/api/hackers/${encodeURIComponent(userId)}/resume`,
+    `/api/hackers/${encodeURIComponent(hackerId)}/resume`,
     {
       method: "PUT",
       body: formData,
