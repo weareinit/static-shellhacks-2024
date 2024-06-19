@@ -7,7 +7,7 @@ import Image, { StaticImageData } from "next/image";
 import DahsboardContent from "./components/DashboardContent";
 import Link from "next/link";
 import { CustomButton } from "./components/CustomButton";
-import { auth } from "@/server/auth";
+import { auth, signIn } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { getHackerApplicationFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
@@ -24,7 +24,7 @@ const Dashboard = async () => {
   const sess = await auth();
 
   if (!sess?.user) {
-    redirect("/api/auth/signin");
+    await signIn();
   }
 
   const hackerAppRaw = await getHackerApplicationFromId(sess!.user.id);
