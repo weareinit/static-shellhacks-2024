@@ -357,6 +357,7 @@ function RegisterForm() {
                 There was an error submitting, please try again later. {error}
               </h2>
             )}
+            <div className="h-20"></div>
           </Form>
         )}
       </Formik>

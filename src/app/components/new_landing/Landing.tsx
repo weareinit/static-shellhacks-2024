@@ -13,7 +13,7 @@ import SideBar from "./new_sections/SideBar";
 const Landing = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
-      {/* <MLHBanner /> */}
+      <MLHBanner />
       <NavBar />
       <SideBar />
       <div id="landing" className="flex w-screen flex-col">
