@@ -22,7 +22,8 @@ function CheckboxInput({
 
   return (
     <div className="flex flex-col">
-      <div className="my-3 flex basis-full flex-col sm:flex-row sm:items-center sm:justify-between">
+      {/* <div className="my-3 flex basis-full flex-col sm:flex-row sm:items-center sm:justify-between"> */}
+      <div className="xl:justify-left my-3 flex flex-row items-center gap-3">
         <Label hasInter={hasInter} className="font-museo font-bold">
           {label}
         </Label>
@@ -36,7 +37,24 @@ function CheckboxInput({
             onClick={() => {
               helpers.setValue(!meta.value);
             }}
-          ></div>
+          >
+            {meta.value ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="white"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m4.5 12.75 6 6 9-13.5"
+                />
+              </svg>
+            ) : null}
+          </div>
         </div>
       </div>
 

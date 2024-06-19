@@ -332,10 +332,10 @@ function RegisterForm() {
               }}
             />
 
-            <div className="flex justify-end">
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="min-w-full rounded-md bg-[#78644F] p-2 hover:bg-[#78644F]/80 sm:min-w-[200px] sm:rounded-lg"
+                className="min-w-full cursor-pointer rounded-md bg-[#78644F] p-2 hover:bg-[#78644F]/80 sm:min-w-[200px] sm:rounded-lg"
               >
                 <div className="flex items-center justify-center gap-2">
                   {isSubmitting && (
