@@ -221,6 +221,7 @@ const SkullLavaSection: React.FC = () => {
       style={{
         position: "relative",
         width: "100%",
+        maxHeight: "40%",
         top: calculateStyles().top,
         height: calculateStyles().height,
       }}
