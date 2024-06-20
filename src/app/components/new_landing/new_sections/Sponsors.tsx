@@ -80,8 +80,71 @@ const Sponsors = () => {
         >
           Sponsored By
         </h1>
-        <p className="m-5 font-museo text-2xl text-white xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px] lg:text-[25px] xxl:text-[30px]">
-          Sponsors to be revealed soon...
+
+        <div className="grid auto-rows-auto grid-cols-2 gap-4 xxs:mt-8 sm:mt-0 sm:grid-cols-3">
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image
+              width={500}
+              height={200}
+              alt="microsoft"
+              src="/assets/sponsors/microsoft.svg"
+              className="object-cover"
+            ></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image
+              width={500}
+              height={200}
+              alt="netflix"
+              src="/assets/sponsors/Netflix 2015 logo.svg"
+              className="object-cover pt-3"
+            ></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image
+              width={500}
+              height={200}
+              alt="waymo"
+              src="/assets/sponsors/waymo.svg"
+              className="object-cover"
+            ></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image
+              width={500}
+              height={200}
+              alt="vanguard"
+              src="/assets/sponsors/vanguard.svg"
+              className="object-cover"
+            ></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image
+              width={500}
+              height={200}
+              alt="google"
+              src="/assets/sponsors/google.svg"
+              className="object-cover"
+            ></Image>
+          </div>
+        </div>
+        <p className="m-5 font-museo text-2xl text-white xxs:mt-7 xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px] lg:mt-16 lg:text-[25px] xxl:text-[30px]">
+          More sponsors to be revealed soon...
+        </p>
+        <h1 className="xss:my-0 font-zoonaji text-[60px] text-pastel_orange xxs:mt-36 xxs:text-[25px] xsm:text-[30px] sm:mb-1 sm:text-[40px] md:text-[50px] lg:mb-5 lg:mt-96 lg:text-[60px] xxl:mb-5 xxl:mt-[100px] xxl:text-[80px]">
+          Want to sponsor us?
+        </h1>
+        <p className=" font-museo text-2xl text-white xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px]  lg:text-[25px] xxl:text-[30px]">
+          Join the roar and reach out to{" "}
+          <a
+            className="underline"
+            href="mailto:init@fiu.edu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            init@fiu.edu
+          </a>
+          !
         </p>
       </div>
     </div>
