@@ -59,7 +59,7 @@ const FileInput = ({
 
   return (
     <div className="max-w-[300px]">
-      <Label className="flex flex-col font-mono font-bold">
+      <Label className="flex flex-col font-museo font-bold">
         {isRequired ? `*${label}` : label}
       </Label>
       <input
