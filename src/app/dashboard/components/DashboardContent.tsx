@@ -94,7 +94,7 @@ export default async function DahsboardContent({
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">
               If you have any questions about the hackathon, please post them in
-              the <i>#shellhacksr</i> channel in Discord, and we'll be in touch
+              the <i>#shellhacks</i> channel in Discord, and we'll be in touch
               as soon as possible. Or if you prefer, you may reach out to an
               organizer privately on Discord or send an email to
               <i>fiu@weareinit.org</i>.
