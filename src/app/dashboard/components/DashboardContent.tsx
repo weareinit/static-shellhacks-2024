@@ -36,7 +36,7 @@ export default async function DahsboardContent({
         </form>
       </div>
 
-      <div className="grid grid-cols-8 gap-8">
+      <div className="grid grid-cols-8 gap-8 lg:ml-8">
         {/* Avatar container */}
         <div className="col-span-8 flex flex-col items-center justify-between lg:col-span-2 lg:items-start">
           <div className="flex flex-col justify-center gap-4">
@@ -65,7 +65,7 @@ export default async function DahsboardContent({
         </div>
 
         {/* User info */}
-        <div className="col-span-8 lg:col-span-6">
+        <div className="col-span-8 lg:col-span-6  ">
           <UserInfo user={applicationWithDiscord} />
         </div>
       </div>
@@ -74,7 +74,7 @@ export default async function DahsboardContent({
         <div className="my-5 w-[90%] border-b border-black"></div>
       </div>
 
-      <div className="grid grid-cols-8 gap-4">
+      <div className="grid grid-cols-8 gap-4 lg:ml-8">
         {/* Resume */}
         <div className="col-span-8 lg:col-span-2">
           <ResumeView hackerId={application.id} />
@@ -94,10 +94,10 @@ export default async function DahsboardContent({
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">
               If you have any questions about the hackathon, please post them in
-              the <i>#ask-an-organizer</i> channel in Discord, and we'll be in
-              touch as soon as possible. Or if you prefer, you may reach out to
-              an organizer privately on Discord or send an email to
-              <i> shellhacks@fiu.weareinit.org</i>.
+              the <i>#shellhacksr</i> channel in Discord, and we'll be in touch
+              as soon as possible. Or if you prefer, you may reach out to an
+              organizer privately on Discord or send an email to
+              <i>fiu@weareinit.org</i>.
             </p>
 
             <div>

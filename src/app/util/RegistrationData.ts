@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
 export const levelsOfStudy = [
-  "Less than Secondary / High School",
   "Secondary / High School",
   "Undergraduate University (2 year - community college or similar)",
   "Undergraduate University (3+ year)",
