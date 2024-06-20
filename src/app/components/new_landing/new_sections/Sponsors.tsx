@@ -105,7 +105,7 @@ const Sponsors = () => {
               width={500}
               height={200}
               alt="waymo"
-              src="/assets/sponsors/waymo.svg"
+              src="/assets/sponsors/Waymo.svg"
               className="object-cover"
             ></Image>
           </div>
@@ -114,7 +114,7 @@ const Sponsors = () => {
               width={500}
               height={200}
               alt="vanguard"
-              src="/assets/sponsors/vanguard.svg"
+              src="/assets/sponsors/Vanguard.svg"
               className="object-cover"
             ></Image>
           </div>
@@ -123,7 +123,7 @@ const Sponsors = () => {
               width={500}
               height={200}
               alt="google"
-              src="/assets/sponsors/google.svg"
+              src="/assets/sponsors/Google.svg"
               className="object-cover"
             ></Image>
           </div>
