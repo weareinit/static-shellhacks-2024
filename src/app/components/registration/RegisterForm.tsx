@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import { Formik, Form, type FormikProps } from "formik";
 
@@ -22,15 +22,21 @@ import ReCAPTCHA from "react-google-recaptcha";
 import schools from "../../../../public/registration_data/schools.json";
 import countries from "../../../../public/registration_data/countries.json";
 import { useRouter } from "next/navigation";
+import Error from "../input/Error";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [fileUploaded, setFileUploaded] = useState<boolean>(false);
+  const [attemptedToApply, setAttemptedToApply] = useState<boolean>(false);
+  const [fileSizeError, setFileSizeError] = useState<boolean>(false);
+  const [fileTypeError, setFileTypeError] = useState<boolean>(false);
 
   const router = useRouter();
 
   const handleSubmit = async (values: ApplicantValues) => {
     if (isSubmitting) return;
+    setAttemptedToApply(true);
     setIsSubmitting(true);
 
     let { fill_in_pronouns, ...body } = values;
@@ -178,7 +184,22 @@ function RegisterForm() {
               name="resume"
               isRequired
               maxSize={1 * 1024 * 1024}
+              setFileUploaded={setFileUploaded}
+              setFileSizeError={setFileSizeError}
+              setFileTypeError={setFileTypeError}
             />
+            {
+              attemptedToApply &&
+              !fileUploaded && !fileSizeError && !fileTypeError && (
+                <Error>Please upload your resume.</Error>
+              )
+            }
+            {fileSizeError && (
+              <Error>File size exceeds the maximum allowed size.</Error>
+            )}
+            {fileTypeError && (
+              <Error>Invalid file type. Please upload a PDF file.</Error>
+            )}
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />
             <CheckboxInput
@@ -332,7 +353,10 @@ function RegisterForm() {
               }}
             />
 
-            <div className="flex justify-center">
+            <div
+              className="flex justify-center"
+              onClick={() => void setAttemptedToApply(true)}
+            >
               <button
                 type="submit"
                 className="min-w-full cursor-pointer rounded-md bg-[#78644F] p-2 hover:bg-[#78644F]/80 sm:min-w-[200px] sm:rounded-lg"
