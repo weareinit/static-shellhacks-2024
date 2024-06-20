@@ -9,12 +9,18 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   isRequired?: boolean;
   maxSize?: number; // Maximum file size in bytes
+  setFileUploaded: (uploaded: boolean) => void; // Function to set file upload status
+  setFileSizeError: (error: boolean) => void; // Function to set file size error
+  setFileTypeError: (error: boolean) => void; // Function to set file type error
 }
 
 const FileInput = ({
   label,
   isRequired,
   maxSize,
+  setFileUploaded,
+  setFileSizeError,
+  setFileTypeError,
   ...props
 }: FileInputProps) => {
   const [field, meta, helpers] = useField(props);
@@ -27,14 +33,28 @@ const FileInput = ({
     if (!file) return;
 
     if (maxSize && file.size > maxSize) {
-      // Check if the file size exceeds the maximum size
-      setValue(null); // Reset the field value
-      e.target.value = ""; // Reset the file input value
-      return; // Do not proceed further
+      setFileUploaded(false);
+      setFileSizeError(true);
+      setFileTypeError(false);
+      setValue(null);
+      e.target.value = "";
+      setFileName(null);
+      return;
+    } else if (file.type !== "application/pdf") {
+      setFileUploaded(false);
+      setFileSizeError(false);
+      setFileTypeError(true);
+      setValue(null);
+      e.target.value = "";
+      setFileName(null);
+      return;
     }
 
     setFileName(file.name);
     setValue(file);
+    setFileUploaded(true);
+    setFileSizeError(false);
+    setFileTypeError(false);
   };
 
   return (
