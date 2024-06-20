@@ -23,13 +23,13 @@ function CheckboxInput({
   return (
     <div className="flex flex-col">
       {/* <div className="my-3 flex basis-full flex-col sm:flex-row sm:items-center sm:justify-between"> */}
-      <div className="xl:justify-left my-3 flex flex-row items-center gap-3">
+      <div className="xl:justify-left my-3 flex w-full flex-col items-start gap-3">
         <Label hasInter={hasInter} className="font-museo font-bold">
           {label}
         </Label>
 
         <input {...field} {...props} type="checkbox" className="sr-only" />
-        <div className="relative sm:mx-5">
+        <div className="relative">
           <div
             className={`h-5 w-5 border border-black ${
               meta.value ? "bg-[#3E3022]" : "bg-white"

@@ -5,14 +5,15 @@ import SkullLavaSection from "./SkullsSection";
 const Organizers = () => {
   return (
     <div className="relative">
-      {/* <Image priority
-        src="/assets/new/background/lava/Lava1.gif"
+      <Image
+        priority
+        src="/assets/new/background/lava/Lava.gif"
         layout="responsive"
         width={1789}
         height={974}
         alt="Lava gif"
-        className="relative z-[-10]"
-      /> */}
+        className="relative z-[-10] xsm:hidden"
+      />
       <Image
         priority
         src="/assets/new/background/lava/Lava1.png"
@@ -20,7 +21,7 @@ const Organizers = () => {
         width={1789}
         height={974}
         alt="Lava background"
-        className="relative z-[-10]"
+        className="relative z-[-10] xxs:hidden xsm:block"
       />
       <Image
         priority
@@ -29,7 +30,7 @@ const Organizers = () => {
         width={1789}
         height={974}
         alt="Lava background"
-        className="relative z-[-10]"
+        className="relative z-[-10] xxs:hidden xsm:block"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-start md:top-[-40px]">
         <div id="empty_space" className="xxs:p-[2.1rem] sm:p-10 md:p-20"></div>
@@ -46,7 +47,7 @@ const Organizers = () => {
             width={617}
             height={136}
             alt="INIT FIU"
-            className="sm:h-[60px] sm:w-[450px] md:h-[70px] md:w-[400px]"
+            className="xss:h-[40px] xxs:mb-10 xxs:w-[200px] sm:mb-0 sm:h-[60px] sm:w-[450px] md:h-[70px] md:w-[400px]"
           />
         </div>
         <SkullLavaSection />
