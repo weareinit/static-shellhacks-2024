@@ -8,7 +8,7 @@ const Challenges = () => {
         Challenges
       </div>
       <h3 className="font-museo text-white xxs:text-[13px] xsm:text-[15px] md:text-[20px] lg:text-[23px] xlg:text-[25px] xxl:text-[30px]">
-        To be revealed in the Hackathon.
+        To be revealed during the Hackathon.
       </h3>
       <Link
         href="https://shellhacks-2023.devpost.com/"
@@ -18,7 +18,7 @@ const Challenges = () => {
       >
         <button
           className="m-0 flex transform cursor-pointer items-center justify-center rounded-[1.5rem] 
-          bg-reddish_grey pb-2 pt-4 text-center font-zoonaji text-2xl text-stone-50 no-underline transition-all duration-200
+          bg-reddish_grey pb-2 pt-4 text-center font-zoonaji text-2xl text-english_walnut no-underline transition-all duration-200
            ease-in-out hover:scale-105 xxs:h-[3rem] xxs:w-[16rem] xxs:rounded-[20px] xxs:text-[16px] xsm:h-[4rem] xsm:w-[18rem] xsm:rounded-[25px] xsm:text-[18px] sm:w-[18rem] md:h-[3rem] md:w-[20rem] lg:h-[4rem] lg:w-[24rem] lg:text-2xl
            xlg:w-[30rem] xlg:text-2xl xxl:h-[7rem] xxl:w-[50rem] xxl:rounded-[3rem] xxl:text-5xl"
         >
