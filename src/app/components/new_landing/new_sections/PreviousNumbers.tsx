@@ -28,7 +28,7 @@ const PreviousNumbers = () => {
     // TODO: Find a way to be able to not have to call top-[-80px] to center it with the ocean bg/sand bg transition
     <div className="relative top-[-80px] z-10  flex flex-col items-center justify-end gap-10 xxs:mt-[10rem] xxs:gap-3 xsm:mt-[10rem] xsm:gap-10 sm:mt-0 sm:gap-8">
       <p className="relative bottom-16 whitespace-nowrap font-museo text-2xl font-extrabold text-darker_cyan xsm:text-4xl sm:text-3xl md:text-5xl lg:text-6xl xlg:text-7xl">
-        Last Years Numbers
+        Last Year&apos;s Numbers
       </p>
       <StatsComponent Number="1200+" Description="HACKERS" />
       <StatsComponent Number="50+" Description="PARTNERS & SPONSORS" />
