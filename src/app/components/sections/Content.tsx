@@ -1,0 +1,83 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useShowRegistrationContext } from "@/app/hooks/ShowRegistrationContext";
+import RegisterModal from "../registration/RegisterModal";
+import Welcome from "./Welcome";
+import AboutUs from "./AboutUs";
+import FAQ from "./FAQ";
+import Navbar from "../navigation/navBar";
+import MobileNav from "../navigation/mobileNav";
+import Schedule from "./Schedule";
+import Sponsors from "./Sponsors";
+import Workshops from "./Workshops";
+import CommunityPartners from "./CommunityPartners";
+import BuildCallout from "./BuildCallout";
+import NetworkCallout from "./NetworkCallout";
+import VideoCallout from "./VideoCallout";
+import Showcase from "./Showcase";
+import BlurBackdrop from "../decorations/BlurBackdrop";
+
+function Content() {
+  const { showRegistration, setShowRegistration, finishedRegistration } =
+    useShowRegistrationContext();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 768);
+      window.addEventListener("resize", handleResize);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (showRegistration && typeof document !== "undefined") {
+      document.body.classList.add("overflow-hidden");
+    } else if (typeof document !== "undefined") {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [showRegistration]);
+
+  return (
+    <main className="z-10 col-span-1 row-start-1 flex min-h-screen flex-col items-center md:col-span-8 md:col-start-3">
+      <div className="pb-4">{isMobile ? <MobileNav /> : <Navbar />}</div>
+      <Welcome />
+      <AboutUs />
+      <BuildCallout />
+      <NetworkCallout />
+      <Workshops />
+      <VideoCallout />
+      <FAQ />
+      {/* <Showcase src="/assets/sponsors/microsoft.svg" alt="Microsoft Logo" heading="Powered By">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </Showcase> */}
+      {/* <Schedule /> */}
+      <Sponsors />
+      <CommunityPartners />
+      {showRegistration && (
+        <RegisterModal
+          toClose={(event) => {
+            event.preventDefault();
+            setShowRegistration(false);
+          }}
+        />
+      )}
+      {/* <BlurBackdrop /> */}
+    </main>
+  );
+}
+
+export default Content;
