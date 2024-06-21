@@ -48,6 +48,10 @@ const skullDataList: SkullData[] = [
     link: "https://www.linkedin.com/in/rayhan-marrero-808123211",
   },
   {
+    name: "Jacob",
+    link: "https://www.linkedin.com/in/jacob-schuster-396947211/",
+  },
+  {
     name: "David U",
     link: "https://www.linkedin.com/in/david-ulloa-785396184/",
   },
