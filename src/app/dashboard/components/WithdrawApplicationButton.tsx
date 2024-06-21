@@ -23,7 +23,7 @@ export default function WithdrawApplicationButton({ id }: { id: number }) {
       className="cursor-pointer font-zoonaji text-2xl text-red-600 underline"
       onClick={handleWithdrawApplication}
     >
-      Withdraw Applicatiion
+      Withdraw Application
     </p>
   );
 }
