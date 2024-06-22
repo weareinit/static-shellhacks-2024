@@ -2,14 +2,18 @@
 
 import FiltersButton from "./ApplicantSearch/FiltersButton";
 import SearchBar from "./ApplicantSearch/SearchBar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useApplicantsInfiniteQuery from "@/app/hooks/useApplicantsInfiniteQuery";
 import ApplicantCell from "./ApplicantSearch/ApplicantCell";
 import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
+import FiltersModal from "./ApplicantSearch/FiltersModal";
+import LoadingSpinner from "@/app/components/misc/LoadingSpinner";
+import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
 
 export default function ApplicantSearchView() {
   const [searchVal, setSearchVal] = useState<string>("");
   const [filters, setFilters] = useState({});
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [selectedApplicants, setSelectedApplicants] = useState<Set<Number>>(
     new Set(),
   );
@@ -28,13 +32,32 @@ export default function ApplicantSearchView() {
     onSuccess: () => setSelectedApplicants(new Set()),
   });
 
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  const fetchMoreApplicants = () => {
+    if (!hasNextPage || isFetching || isFetchingNextPage) return;
+    fetchNextPage();
+  };
+
+  useIntersectionObserver({
+    ref: loadMoreRef,
+    callback: fetchMoreApplicants,
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.1,
+  });
+
   useEffect(() => {
     fetchNextPage();
   }, []);
 
   useEffect(() => {
-    console.log(data);
+    console.log(data, hasNextPage, isFetching, isFetchingNextPage, status);
   }, [data]);
+
+  const toggleFiltersModal = () => {
+    setIsFiltersModalOpen(!isFiltersModalOpen);
+  };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchVal(e.currentTarget.value);
@@ -61,7 +84,7 @@ export default function ApplicantSearchView() {
         <p className="flex-grow font-zoonaji text-2xl font-bold">
           Applicant Search
         </p>
-        <FiltersButton />
+        <FiltersButton handleClicked={toggleFiltersModal} />
         <SearchBar
           value={searchVal}
           onChange={handleSearchChange}
@@ -69,11 +92,20 @@ export default function ApplicantSearchView() {
         />
       </div>
 
+      <FiltersModal
+        isOpen={isFiltersModalOpen}
+        onClose={() => setIsFiltersModalOpen(false)}
+        filters={filters}
+        setFilters={setFilters}
+      />
+
       {/* Applicant rows */}
-      {!data ? (
-        <p>No data</p>
-      ) : isFetching ? (
-        <p>Loading...</p>
+      {error ? (
+        <p>Error: {error?.message}</p>
+      ) : isFetching || !data ? (
+        <div className="flex w-full justify-center">
+          <LoadingSpinner size="large" />
+        </div>
       ) : (
         data.pages.map((page) =>
           page.map((applicant) => (
@@ -89,7 +121,7 @@ export default function ApplicantSearchView() {
       )}
 
       {/* IntersectionObserver element to fetch more from infinite query */}
-      <div></div>
+      <div ref={loadMoreRef} className="min-h-[5px]"></div>
     </div>
   );
 }
