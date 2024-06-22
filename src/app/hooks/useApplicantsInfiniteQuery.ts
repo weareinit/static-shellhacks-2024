@@ -2,7 +2,8 @@ import { ApplicantFilters } from "@/app/schemas/applicantSchemas";
 import { Hacker_Applications } from "@prisma/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-interface ApplicantsInfiniteQueryResponse extends Array<Hacker_Applications> {
+interface ApplicantsInfiniteQueryResponse {
+  data: Hacker_Applications[];
   nextCursor: number;
 }
 

@@ -102,22 +102,30 @@ export default function ApplicantSearchView() {
       {/* Applicant rows */}
       {error ? (
         <p>Error: {error?.message}</p>
-      ) : isFetching || !data ? (
-        <div className="flex w-full justify-center">
-          <LoadingSpinner size="large" />
-        </div>
+      ) : !data ? (
+        <p>No data</p>
       ) : (
-        data.pages.map((page) =>
-          page.map((applicant) => (
-            <ApplicantCell
-              key={applicant.id}
-              applicant={applicant}
-              handleAppStatusChange={appStatusMutation}
-              handleSelectApplicant={() => handleSelectApplicant(applicant.id)}
-              isSelected={selectedApplicants.has(applicant.id)}
-            />
-          )),
-        )
+        <>
+          {data.pages.map((page) =>
+            page.data.map((applicant) => (
+              <ApplicantCell
+                key={applicant.id}
+                applicant={applicant}
+                handleAppStatusChange={appStatusMutation}
+                handleSelectApplicant={() =>
+                  handleSelectApplicant(applicant.id)
+                }
+                isSelected={selectedApplicants.has(applicant.id)}
+              />
+            )),
+          )}
+
+          {isFetching && (
+            <div className="flex w-full justify-center">
+              <LoadingSpinner size="large" />
+            </div>
+          )}
+        </>
       )}
 
       {/* IntersectionObserver element to fetch more from infinite query */}
