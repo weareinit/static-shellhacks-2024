@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import useApplicantsInfiniteQuery from "@/app/hooks/useApplicantsInfiniteQuery";
 import ApplicantCell from "./ApplicantSearch/ApplicantCell";
 import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
+import FiltersModal from "./ApplicantSearch/FiltersModal";
 
 export default function ApplicantSearchView() {
   const [searchVal, setSearchVal] = useState<string>("");
   const [filters, setFilters] = useState({});
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [selectedApplicants, setSelectedApplicants] = useState<Set<Number>>(
     new Set(),
   );
@@ -36,6 +38,10 @@ export default function ApplicantSearchView() {
     console.log(data);
   }, [data]);
 
+  const toggleFiltersModal = () => {
+    setIsFiltersModalOpen(!isFiltersModalOpen);
+  };
+
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchVal(e.currentTarget.value);
   };
@@ -61,13 +67,20 @@ export default function ApplicantSearchView() {
         <p className="flex-grow font-zoonaji text-2xl font-bold">
           Applicant Search
         </p>
-        <FiltersButton />
+        <FiltersButton handleClicked={toggleFiltersModal} />
         <SearchBar
           value={searchVal}
           onChange={handleSearchChange}
           onSearch={handleSearchSubmit}
         />
       </div>
+
+      <FiltersModal
+        isOpen={isFiltersModalOpen}
+        onClose={() => setIsFiltersModalOpen(false)}
+        filters={filters}
+        setFilters={setFilters}
+      />
 
       {/* Applicant rows */}
       {!data ? (
