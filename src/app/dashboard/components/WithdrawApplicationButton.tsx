@@ -2,7 +2,7 @@
 export default function WithdrawApplicationButton({ id }: { id: number }) {
   const handleWithdrawApplication = async () => {
     const confirmation = confirm(
-      "Are you sure you want to withdraw your application?",
+      "Are you sure you want to withdraw your application? This action can't be undone and you won't be able to reapply.",
     );
     if (confirmation) {
       await fetch(`/api/hackers/${id}`, {
