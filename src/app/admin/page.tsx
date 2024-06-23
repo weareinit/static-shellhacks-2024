@@ -22,10 +22,10 @@ const AdminDashboard = async () => {
   }
 
   return (
-    <div className=" w-100 h-screen bg-blue-500">
+    <div className="w-100 h-screen bg-blue-500">
       {/* The dashboard section (and image container) */}
-      <div className="relative flex h-screen justify-center p-2 md:p-12">
-        <div className="absolute inset-0 flex flex-col justify-center">
+      <div className="relative flex justify-center p-2 md:p-12">
+        <div className="absolute inset-0 flex h-screen flex-col justify-center">
           <div className="relative flex-grow">
             <Image
               src="/assets/new/background/sky/Sky 5.svg"
