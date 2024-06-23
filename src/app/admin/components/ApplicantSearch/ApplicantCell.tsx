@@ -54,9 +54,9 @@ export default function ApplicantCell({
   };
 
   return (
-    <div className="my-2 h-fit w-full rounded-md bg-white p-3">
+    <div className="my-2 h-fit w-full rounded-md bg-white p-1 sm:p-2">
       <div className="flex w-full items-center">
-        <div className="mr-4 flex-shrink-0">
+        <div className="mr-4 hidden flex-shrink-0 sm:block">
           <input
             type="checkbox"
             checked={isSelected}
@@ -66,10 +66,10 @@ export default function ApplicantCell({
         </div>
 
         <div
-          className="grid flex-grow grid-cols-8 items-center gap-3 hover:cursor-pointer"
+          className="grid flex-grow grid-cols-8 items-center gap-3 text-sm hover:cursor-pointer sm:text-lg"
           onClick={toggleApplicationDetails}
         >
-          <p className="col-span-2 truncate font-museo">
+          <p className="col-span-4 truncate font-museo sm:col-span-2">
             {applicant.first_name} {applicant.last_name}
           </p>
 
@@ -77,9 +77,11 @@ export default function ApplicantCell({
             {new Date(applicant.created_at!).toLocaleDateString()}
           </p>
 
-          <p className="col-span-3 truncate font-museo">{applicant.school}</p>
+          <p className="col-span-3 hidden truncate font-museo sm:block">
+            {applicant.school}
+          </p>
 
-          <div className="col-span-1 flex items-center justify-between">
+          <div className="col-span-2 flex items-center justify-end sm:col-span-1 sm:gap-2">
             <div
               className="h-4 w-4 rounded-full"
               style={{
@@ -108,7 +110,7 @@ export default function ApplicantCell({
       </div>
 
       {showApplicationDetails && (
-        <div className="flex items-start justify-between gap-4 px-2 py-4 md:px-4">
+        <div className="flex flex-wrap items-start gap-4 px-2 py-4 md:px-4">
           <div className="flex-grow">
             <ApplicantInfo
               applicant={isEditing ? editedCell : applicant}
@@ -116,19 +118,19 @@ export default function ApplicantCell({
               isEditing={isEditing}
             />
           </div>
-          <div className="min-w-[250px]">
-            <div className="flex flex-col items-center justify-around gap-1">
+          <div className="w-full md:w-auto md:min-w-[250px]">
+            <div className="flex flex-row flex-wrap items-center gap-1">
               <Link
                 href={`/api/hackers/${applicant.id}/resume`}
                 target="_blank"
-                className="w-full rounded-md  bg-indigo-500 p-2 text-center font-museo text-white no-underline hover:bg-indigo-600 hover:underline"
+                className="rounded-md  bg-indigo-500 p-2 text-center font-museo text-white no-underline hover:bg-indigo-600 hover:underline"
               >
                 View Resume
               </Link>
 
               <button
                 onClick={toggleEditing}
-                className="w-full rounded-md bg-fuchsia-400 p-2 text-center font-museo text-white no-underline hover:bg-fuchsia-500 hover:underline"
+                className="rounded-md bg-fuchsia-400 p-2 text-center font-museo text-white no-underline hover:bg-fuchsia-500 hover:underline"
               >
                 {applicationUpdateMutation.isPending && isEditing
                   ? "Loading..."
@@ -145,7 +147,7 @@ export default function ApplicantCell({
               ) && (
                 <button
                   onClick={() => setAppStatus("in_wave")}
-                  className="w-full rounded-md bg-green-500 p-2 text-center font-museo text-white no-underline hover:bg-green-600 hover:underline"
+                  className="rounded-md bg-green-500 p-2 text-center font-museo text-white no-underline hover:bg-green-600 hover:underline"
                 >
                   {handleAppStatusChange.isPending
                     ? "Loading..."
@@ -156,7 +158,7 @@ export default function ApplicantCell({
               {applicant.application_status! !== "waitlisted" && (
                 <button
                   onClick={() => setAppStatus("waitlisted")}
-                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                  className="rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
                 >
                   {handleAppStatusChange.isPending ? "Loading..." : "Waitlist"}
                 </button>
@@ -165,7 +167,7 @@ export default function ApplicantCell({
               {["in_wave"].includes(applicant.application_status!) && (
                 <button
                   onClick={() => setAppStatus("registered")}
-                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                  className="rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
                 >
                   {handleAppStatusChange.isPending
                     ? "Loading..."
@@ -178,7 +180,7 @@ export default function ApplicantCell({
               ) && (
                 <button
                   onClick={() => setAppStatus("checked_in")}
-                  className="w-full rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
+                  className="rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline"
                 >
                   {handleAppStatusChange.isPending ? "Loading..." : "Check In"}
                 </button>

@@ -11,7 +11,7 @@ export default async function Statistics() {
     : "No applications yet";
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="grid gap-4 md:grid-cols-2">
       <div>
         <p className="font-zoonaji text-xl font-bold">Statistics</p>
         <p className="text-md font-museo">
@@ -24,7 +24,7 @@ export default async function Statistics() {
           Last Application: {lastRegisteredFormattedData}
         </p>
       </div>
-      <div>
+      <div className="md:text-right">
         <p className="font-zoonaji text-xl font-bold">
           Registrations by Status
         </p>

@@ -80,10 +80,11 @@ export default function ApplicantSearchView() {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="flex items-center justify-between gap-3">
-        <p className="flex-grow font-zoonaji text-2xl font-bold">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+        <p className="flex-grow basis-full font-zoonaji text-2xl font-bold sm:basis-auto">
           Applicant Search
         </p>
+
         <FiltersButton handleClicked={toggleFiltersModal} />
         <SearchBar
           value={searchVal}

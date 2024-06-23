@@ -11,7 +11,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <input
-      className="h-8 w-[250px] flex-shrink-0 rounded-lg border border-black bg-[#E9DBCC] p-3 font-museo focus:ring-2 sm:h-10"
+      className="h-10 flex-grow rounded-lg border border-black bg-[#E9DBCC] p-3 font-museo focus:ring-2 sm:max-w-[250px]"
       type="text"
       placeholder="Search"
       value={value}

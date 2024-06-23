@@ -24,7 +24,7 @@ const AdminDashboard = async () => {
   return (
     <div className=" w-100 h-screen bg-blue-500">
       {/* The dashboard section (and image container) */}
-      <div className="relative flex h-screen justify-center p-12">
+      <div className="relative flex h-screen justify-center p-2 md:p-12">
         <div className="absolute inset-0 flex flex-col justify-center">
           <div className="relative flex-grow">
             <Image
@@ -35,7 +35,7 @@ const AdminDashboard = async () => {
               className="object-cover"
             />
           </div>
-          <div className="relative h-[250px]">
+          <div className="relative hidden h-[250px] sm:block">
             <Image
               src="/assets/new/background/sky/Sky.png"
               layout="fill"
@@ -80,7 +80,7 @@ const AdminDashboard = async () => {
           </div>
 
           {/* Main content */}
-          <div className="mt-5 w-full rounded-lg bg-white bg-opacity-50 p-3">
+          <div className="my-5 w-full rounded-lg bg-white bg-opacity-50 p-2 sm:p-3">
             <ApplicantSearchView />
           </div>
         </div>
