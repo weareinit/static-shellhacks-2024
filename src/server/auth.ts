@@ -98,7 +98,7 @@ export const {
         if (response.status === 404) {
           // User not on server -> refetch for their info
           const userInfoResponse = await fetch(
-            `https://discord.com/api/users/@me`,
+            `https://discord.com/api/users//@me`,
             {
               headers: {
                 Authorization: `Bearer ${access_token}`,
@@ -118,7 +118,7 @@ export const {
           } else {
             const json = await userInfoResponse.json();
             user.admin = false;
-            user.discordUsername = json.user?.username;
+            user.discordUsername = json.username;
           }
         } else {
           const errorText = await response.text();
