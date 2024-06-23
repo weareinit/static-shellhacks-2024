@@ -79,7 +79,7 @@ export const {
       return session;
     },
     signIn: async ({ user, account }) => {
-      console.log("Authorization URL:", account); // Add this line
+      console.log("Authorization URL:", account?.access_token); // Add this line
 
       if (!account) return false;
 
@@ -97,7 +97,12 @@ export const {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Error fetching user roles", response.status, errorText);
-        return false;
+        if (response.status == 404) {
+          console.info("User is not part of the INIT discord server.");
+          user.admin = false; // Assuming default admin status is false if not part of the server
+        } else {
+          return false;
+        }
       }
 
       const json = await response.json();
