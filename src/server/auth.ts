@@ -95,33 +95,32 @@ export const {
       );
 
       if (!response.ok) {
-        if (response.status == 404) {
-          // user not on server -> refetch for their info
-          const response = await fetch("/users/@me", {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-              "Content-Type": "application/json",
+        if (response.status === 404) {
+          // User not on server -> refetch for their info
+          const userInfoResponse = await fetch(
+            `https://discord.com/api/users/@me`,
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+              },
             },
-          });
+          );
 
-          if (!response.ok) {
-            const errorText = await response.text();
+          if (!userInfoResponse.ok) {
+            const errorText = await userInfoResponse.text();
             console.error(
-              "Error fetching user roles",
-              response.status,
+              "Error fetching user info",
+              userInfoResponse.status,
               errorText,
             );
             return false;
-
-            // error fetching user data
           } else {
-            const json = await response.json();
+            const json = await userInfoResponse.json();
             user.admin = false;
             user.discordUsername = json.user?.username;
           }
-        }
-        // other error
-        else {
+        } else {
           const errorText = await response.text();
           console.error(
             "Error fetching user roles",
@@ -130,9 +129,7 @@ export const {
           );
           return false;
         }
-
-        // on server
-      } else if (response.ok) {
+      } else {
         const json = await response.json();
         const roles = new Set(json.roles ?? []);
         user.admin = roles.has(INIT_EBOARD_ROLE);
