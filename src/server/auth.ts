@@ -95,21 +95,49 @@ export const {
       );
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Error fetching user roles", response.status, errorText);
         if (response.status == 404) {
-          console.info("User is not part of the INIT discord server.");
-          user.admin = false; // Assuming default admin status is false if not part of the server
-        } else {
+          // user not on server -> refetch for their info
+          const response = await fetch("/users/@me", {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error(
+              "Error fetching user roles",
+              response.status,
+              errorText,
+            );
+            return false;
+
+            // error fetching user data
+          } else {
+            const json = await response.json();
+            user.admin = false;
+            user.discordUsername = json.user?.username;
+          }
+        }
+        // other error
+        else {
+          const errorText = await response.text();
+          console.error(
+            "Error fetching user roles",
+            response.status,
+            errorText,
+          );
           return false;
         }
+
+        // on server
+      } else if (response.ok) {
+        const json = await response.json();
+        const roles = new Set(json.roles ?? []);
+        user.admin = roles.has(INIT_EBOARD_ROLE);
+        user.discordUsername = json.user?.username;
       }
-
-      const json = await response.json();
-      const roles = new Set(json.roles ?? []);
-
-      user.admin = roles.has(INIT_EBOARD_ROLE);
-      user.discordUsername = json.user?.username;
 
       try {
         await db.user.update({
