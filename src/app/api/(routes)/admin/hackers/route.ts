@@ -34,10 +34,9 @@ export const GET = auth(async (request) => {
         },
       },
     },
+    skip: cursor ? 1 : 0,
     where: {
-      id: {
-        gt: cursor || 0,
-      },
+      ...(cursor && { id: { lte: cursor } }), // cursor-based pagination
       ...(filters.school && { school: filters.school }),
       ...(filters.grad_year && { grad_year: filters.grad_year }),
       ...(filters.application_status != "any" && {
@@ -63,12 +62,12 @@ export const GET = auth(async (request) => {
       }),
     },
     orderBy: {
-      created_at: "desc",
+      id: "desc",
     },
-    take: 20,
+    take: 15,
   });
 
-  const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id;
+  const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id; //the reason im subtracting 1 is because im using 'lte' in the pagination
 
   if (format === "csv") {
     const csvData = await generateApplicantCSV(filteredApplicants);
