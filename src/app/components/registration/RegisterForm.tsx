@@ -22,7 +22,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import schools from "../../../../public/registration_data/schools.json";
 import countries from "../../../../public/registration_data/countries.json";
 import { useRouter } from "next/navigation";
-import Error from "../input/Error";
+import InputError from "../input/Error";
 
 function RegisterForm() {
   const [error, setError] = useState<string>("");
@@ -63,7 +63,7 @@ function RegisterForm() {
       if (!response.ok) {
         const data = await response.json();
         console.log(data);
-        throw new Error(data.error);
+        throw new Error(data.error as string);
       }
     } catch (e: any) {
       setError(e.message);
@@ -188,17 +188,21 @@ function RegisterForm() {
               setFileSizeError={setFileSizeError}
               setFileTypeError={setFileTypeError}
             />
-            {
-              attemptedToApply &&
-              !fileUploaded && !fileSizeError && !fileTypeError && (
-                <Error>Please upload your resume.</Error>
-              )
-            }
+            {attemptedToApply &&
+              !fileUploaded &&
+              !fileSizeError &&
+              !fileTypeError && (
+                <InputError>Please upload your resume.</InputError>
+              )}
             {fileSizeError && (
-              <Error>File size exceeds the maximum allowed size.</Error>
+              <InputError>
+                File size exceeds the maximum allowed size.
+              </InputError>
             )}
             {fileTypeError && (
-              <Error>Invalid file type. Please upload a PDF file.</Error>
+              <InputError>
+                Invalid file type. Please upload a PDF file.
+              </InputError>
             )}
             <TextInput label="Github" name="github" type="text" />
             <TextInput label="LinkedIn" name="linkedin" type="text" />

@@ -49,6 +49,8 @@ export const GET = auth(async (request) => {
     take: 20,
   });
 
+  const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id;
+
   if (format === "csv") {
     const csvData = await generateApplicantCSV(filteredApplicants);
 
@@ -60,7 +62,12 @@ export const GET = auth(async (request) => {
     });
   }
 
-  return NextResponse.json(filteredApplicants);
+  const response = {
+    data: filteredApplicants,
+    nextCursor,
+  };
+
+  return NextResponse.json(response);
 });
 
 /*

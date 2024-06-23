@@ -79,7 +79,7 @@ export const {
       return session;
     },
     signIn: async ({ user, account }) => {
-      console.log("Authorization URL:", account); // Add this line
+      console.log("Authorization URL:", account?.access_token); // Add this line
 
       if (!account) return false;
 
@@ -95,16 +95,46 @@ export const {
       );
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Error fetching user roles", response.status, errorText);
-        return false;
+        if (response.status === 404) {
+          // User not on server -> refetch for their info
+          const userInfoResponse = await fetch(
+            `https://discord.com/api/users//@me`,
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (!userInfoResponse.ok) {
+            const errorText = await userInfoResponse.text();
+            console.error(
+              "Error fetching user info",
+              userInfoResponse.status,
+              errorText,
+            );
+            return false;
+          } else {
+            const json = await userInfoResponse.json();
+            user.admin = false;
+            user.discordUsername = json.username;
+          }
+        } else {
+          const errorText = await response.text();
+          console.error(
+            "Error fetching user roles",
+            response.status,
+            errorText,
+          );
+          return false;
+        }
+      } else {
+        const json = await response.json();
+        const roles = new Set(json.roles ?? []);
+        user.admin = roles.has(INIT_EBOARD_ROLE);
+        user.discordUsername = json.user?.username;
       }
-
-      const json = await response.json();
-      const roles = new Set(json.roles ?? []);
-
-      user.admin = roles.has(INIT_EBOARD_ROLE);
-      user.discordUsername = json.user?.username;
 
       try {
         await db.user.update({

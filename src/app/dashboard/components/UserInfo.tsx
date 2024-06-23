@@ -53,7 +53,7 @@ export default async function UserInfo({
                 </span>
                 {key === "github" || key === "linkedin" ? (
                   <a href={(" " + value) as string}>
-                    {(" " + value) as string}
+                    {(" " + value.split("//")[1]) as string}
                   </a>
                 ) : (
                   <span>{(" " + value) as string}</span>

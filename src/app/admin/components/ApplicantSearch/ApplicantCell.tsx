@@ -115,7 +115,6 @@ export default function ApplicantCell({
               handleEdit={handleEdit}
               isEditing={isEditing}
             />
-            <p>Applicant details</p>
           </div>
           <div className="min-w-[250px]">
             <div className="flex flex-col items-center justify-around gap-1">
