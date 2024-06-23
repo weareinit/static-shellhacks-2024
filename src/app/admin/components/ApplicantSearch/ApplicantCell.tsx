@@ -1,15 +1,14 @@
 import { AppStatusMutationType } from "@/app/hooks/ApplicationStatusMutation";
 import { applicantStatusChangeSchema } from "@/app/schemas/applicantSchemas";
-import { Hacker_Applications } from "@prisma/client";
 import { useState } from "react";
 import { useAppUpdateMutation } from "@/app/hooks/ApplicationUpdateMutation";
 import { APPLICATION_STATUS_COLOR_MAPPING } from "@/app/constants/applicationConstants";
 import ApplicantInfo from "./ApplicantInfo";
 import Link from "next/link";
-import PixelButton from "@/app/components/misc/PixelButton";
+import { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
 
 interface ApplicantCellProps {
-  applicant: Hacker_Applications;
+  applicant: HackerApplicationAdminResponse;
   handleAppStatusChange: AppStatusMutationType;
   handleSelectApplicant: () => void;
   isSelected: boolean;
@@ -23,7 +22,8 @@ export default function ApplicantCell({
 }: ApplicantCellProps) {
   const [showApplicationDetails, setShowApplicationDetails] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedCell, setEditedCell] = useState<Hacker_Applications>(applicant);
+  const [editedCell, setEditedCell] =
+    useState<HackerApplicationAdminResponse>(applicant);
 
   const applicationUpdateMutation = useAppUpdateMutation();
 

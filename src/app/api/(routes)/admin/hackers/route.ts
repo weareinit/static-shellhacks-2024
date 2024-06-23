@@ -7,8 +7,8 @@ import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
 
-export const dynamic = "auto";
-export const revalidate = 60;
+// export const dynamic = "auto";
+// export const revalidate = 60;
 
 export const GET = auth(async (request) => {
   if (!request.auth || !request.auth.user.admin) {
@@ -25,6 +25,15 @@ export const GET = auth(async (request) => {
   const { format, cursor, searchParams, ...filters } = safedata.data;
 
   const filteredApplicants = await db.hacker_Applications.findMany({
+    // relationLoadStrategy: "join",
+    include: {
+      user: {
+        select: {
+          email: true,
+          discordUsername: true,
+        },
+      },
+    },
     where: {
       id: {
         gt: cursor || 0,
@@ -36,15 +45,25 @@ export const GET = auth(async (request) => {
       }),
       ...(searchParams && {
         OR: [
-          { phone_number: { startsWith: searchParams } },
-          { email: { startsWith: searchParams } },
-          { first_name: { startsWith: searchParams } },
-          { last_name: { startsWith: searchParams } },
+          { phone_number: { startsWith: searchParams, mode: "insensitive" } },
+          { email: { startsWith: searchParams, mode: "insensitive" } },
+          { first_name: { startsWith: searchParams, mode: "insensitive" } },
+          { last_name: { startsWith: searchParams, mode: "insensitive" } },
+          {
+            user: {
+              discordUsername: {
+                startsWith: searchParams,
+                mode: "insensitive",
+              },
+            },
+          },
+
+          //{user.discordUsername: {startsWith: searchParams}},
         ],
       }),
     },
     orderBy: {
-      created_at: "asc",
+      created_at: "desc",
     },
     take: 20,
   });

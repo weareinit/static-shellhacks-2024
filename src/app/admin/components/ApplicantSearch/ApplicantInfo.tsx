@@ -1,11 +1,12 @@
-import { Hacker_Applications } from "@prisma/client";
 import ApplicantProperty from "./ApplicantProperty";
+import { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
 
 interface ApplicantInfoProps {
-  applicant: Hacker_Applications;
+  applicant: HackerApplicationAdminResponse;
   isEditing: boolean;
   handleEdit: (fieldName: string, payload: string | number) => void;
 }
+
 export default function ApplicantInfo({
   applicant,
   isEditing,
@@ -118,6 +119,11 @@ export default function ApplicantInfo({
             editing={isEditing}
             handleEdit={(payload: string) => handleEdit("email", payload)}
             propertyValue={applicant.email}
+          />
+          <ApplicantProperty
+            propertyName="Discord"
+            editing={false}
+            propertyValue={applicant.user.discordUsername}
           />
           <ApplicantProperty
             propertyName="Phone Number"
