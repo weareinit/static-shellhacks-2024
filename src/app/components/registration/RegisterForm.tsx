@@ -277,8 +277,8 @@ function RegisterForm() {
             <div className="mt-1 sm:mb-4" />
             <hr className="my-10 h-[1px] bg-black" />
             <p className="mb-3 font-museo text-xl">
-              We are partnered with MLH, the official collegiate hackathon
-              league in the United States. The disclaimers below pertain to this
+              We are partnered with MLH, the official student hackathon league
+              in the United States. The disclaimers below pertain to this
               partnership.
             </p>
 

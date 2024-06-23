@@ -97,7 +97,10 @@ export default async function DahsboardContent({
               the <i>#shellhacks</i> channel in Discord, and we'll be in touch
               as soon as possible. Or if you prefer, you may reach out to an
               organizer privately on Discord or send an email to
-              <i>fiu@weareinit.org</i>.
+              <i>fiu@weareinit.org</i>. Please <b>do not withdraw</b> your
+              application if you entered the wrong info. Reach out to an
+              organizer with your correct information and we will fix it for
+              you.
             </p>
 
             <div>
