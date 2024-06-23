@@ -22,7 +22,7 @@ const AdminDashboard = async () => {
   }
 
   return (
-    <div className="w-100 h-screen bg-blue-500">
+    <div className="w-100 bg-[#89CED8]">
       {/* The dashboard section (and image container) */}
       <div className="relative flex justify-center p-2 md:p-12">
         <div className="absolute inset-0 flex h-screen flex-col justify-center">
@@ -82,26 +82,6 @@ const AdminDashboard = async () => {
           {/* Main content */}
           <div className="my-5 w-full rounded-lg bg-white bg-opacity-50 p-2 sm:p-3">
             <ApplicantSearchView />
-          </div>
-        </div>
-      </div>
-      <div className="relative hidden md:block">
-        <div className="relative h-[200px] overflow-hidden">
-          <Image
-            src="/assets/new/background/beach/Ocean 5.svg"
-            layout="fill"
-            objectFit="cover"
-            alt="Beach"
-            className="object-cover"
-          />
-          <div className="absolute left-[150px] top-1/4 max-w-full">
-            <Image
-              src={`/assets/new/dinosaurs/Manatee.svg`}
-              height={100}
-              width={200}
-              alt="Dino"
-              className="overflow-hidden opacity-20"
-            />
           </div>
         </div>
       </div>
