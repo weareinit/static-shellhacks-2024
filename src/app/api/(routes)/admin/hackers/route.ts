@@ -7,8 +7,8 @@ import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
 
-// export const dynamic = "auto";
-// export const revalidate = 60;
+export const dynamic = "auto";
+export const revalidate = 60;
 
 export const GET = auth(async (request) => {
   if (!request.auth || !request.auth.user.admin) {
