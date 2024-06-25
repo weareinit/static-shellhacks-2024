@@ -92,7 +92,7 @@ const FAQs = () => {
             rel="noopener noreferrer"
             href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
           >
-            <h3 className="z-[20] mb-[50px] font-zoonaji text-[40px] text-white underline underline-offset-1 xxs:text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] xxl:text-[45px]">
+            <h3 className="z-[20] mb-[50px] font-zoonaji text-[40px] text-white underline underline-offset-8 xxs:text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] xxl:text-[45px]">
               MLH&apos;s Code of Conduct
             </h3>
           </Link>
