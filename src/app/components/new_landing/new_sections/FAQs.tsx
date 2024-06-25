@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import FAQSlider from "./FAQSlider";
 import DinoFossiles from "./DinoFossiles";
+import Link from "next/link";
 const FAQs = () => {
   return (
     <div className="relative">
@@ -84,8 +85,17 @@ const FAQs = () => {
             className="z-[20] mt-[50px] xxs:h-[200px] xxs:w-[300px] xsm:h-[300px] xsm:w-[450px] sm:h-[400px] sm:w-[600px] md:h-[400px] md:w-[600px] lg:h-[500px] lg:w-[900px] xlg:h-[600px] xlg:w-[1100px] xxl:h-[800px] xxl:w-[1400px]"
           ></iframe>
         </div>
-        <h1 className="z-[20] mb-[50px] mt-[100px] font-zoonaji text-[60px] text-white xxs:mt-[40px] xxs:text-[25px] xxs:text-[40px] sm:mt-[40px] sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:mt-[300px] xxl:text-[80px]">
+        <h1 className="z-[20] mt-[100px] font-zoonaji text-[60px] text-white xxs:mt-[40px] xxs:text-[40px] sm:mt-[40px] sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:mt-[300px] xxl:text-[80px]">
           FAQs
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+          >
+            <h3 className="z-[20] mb-[50px] font-zoonaji text-[40px] text-white underline underline-offset-1 xxs:text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] xxl:text-[45px]">
+              MLH&apos;s Code of Conduct
+            </h3>
+          </Link>
         </h1>
         <FAQSlider />
         <DinoFossiles />
