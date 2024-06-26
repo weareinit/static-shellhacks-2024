@@ -3,20 +3,24 @@
 import FiltersButton from "./ApplicantSearch/FiltersButton";
 import SearchBar from "./ApplicantSearch/SearchBar";
 import { useEffect, useRef, useState } from "react";
-import useApplicantsInfiniteQuery from "@/app/hooks/useApplicantsInfiniteQuery";
+import useApplicantsInfiniteQuery, {
+  HackerApplicationAdminResponse,
+} from "@/app/hooks/useApplicantsInfiniteQuery";
 import ApplicantCell from "./ApplicantSearch/ApplicantCell";
 import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
 import FiltersModal from "./ApplicantSearch/FiltersModal";
 import LoadingSpinner from "@/app/components/misc/LoadingSpinner";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
+import ApplicantSearchActions from "./ApplicantSearch/ApplicantSearchActions";
+import { ApplicantFilters } from "@/app/schemas/applicantSchemas";
 
 export default function ApplicantSearchView() {
   const [searchVal, setSearchVal] = useState<string>("");
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<ApplicantFilters>({});
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
-  const [selectedApplicants, setSelectedApplicants] = useState<Set<Number>>(
-    new Set(),
-  );
+  const [selectedApplicants, setSelectedApplicants] = useState<
+    Set<HackerApplicationAdminResponse>
+  >(new Set());
 
   const {
     data,
@@ -67,19 +71,29 @@ export default function ApplicantSearchView() {
     console.log(searchVal);
   };
 
-  const handleSelectApplicant = (id: number) => {
-    if (selectedApplicants.has(id)) {
-      selectedApplicants.delete(id);
+  const handleSelectApplicant = (hacker: HackerApplicationAdminResponse) => {
+    if (selectedApplicants.has(hacker)) {
+      selectedApplicants.delete(hacker);
     } else {
-      selectedApplicants.add(id);
+      selectedApplicants.add(hacker);
     }
 
     setSelectedApplicants(new Set(selectedApplicants));
   };
 
+  const resetSelectedApplicants = () => {
+    setSelectedApplicants(new Set());
+  };
+
   return (
     <div className="w-full">
       {/* Header */}
+      <p>Actions</p>
+      <ApplicantSearchActions
+        filteredStatus={filters.application_status}
+        selectedApplicants={selectedApplicants}
+        resetSelectedApplicants={resetSelectedApplicants}
+      />
       <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
         <p className="flex-grow basis-full font-zoonaji text-2xl font-bold sm:basis-auto">
           Applicant Search
@@ -113,10 +127,8 @@ export default function ApplicantSearchView() {
                 key={applicant.id}
                 applicant={applicant}
                 handleAppStatusChange={appStatusMutation}
-                handleSelectApplicant={() =>
-                  handleSelectApplicant(applicant.id)
-                }
-                isSelected={selectedApplicants.has(applicant.id)}
+                handleSelectApplicant={() => handleSelectApplicant(applicant)}
+                isSelected={selectedApplicants.has(applicant)}
               />
             )),
           )}

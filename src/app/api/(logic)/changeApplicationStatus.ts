@@ -29,4 +29,6 @@ export const changeApplicationStatus = async (
       application_status: status,
     },
   });
+
+  console.log(data);
 };
