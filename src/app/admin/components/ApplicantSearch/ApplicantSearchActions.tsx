@@ -1,7 +1,6 @@
 import { adminAcceptWave } from "@/app/api/(logic)/adminAcceptWave";
 import { changeApplicationStatus } from "@/app/api/(logic)/changeApplicationStatus";
 import { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
-import { type application_status_with_any } from "@/app/schemas/applicantSchemas";
 import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
 import { application_status_enums } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
