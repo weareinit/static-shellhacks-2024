@@ -107,7 +107,6 @@ export default function ApplicantCell({ applicant, handleSelectApplicant, isSele
               </button>
 
               <div className="my-2" />
-              {/*TODO: update the other buttons*/}
 
               {["registered", "waitlisted"].includes(applicant.application_status) && (
                 <button onClick={() => setAppStatus("in_wave")} className="rounded-md bg-green-500 p-2 text-center font-museo text-white no-underline hover:bg-green-600 hover:underline">
