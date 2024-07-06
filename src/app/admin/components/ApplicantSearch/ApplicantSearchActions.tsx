@@ -2,6 +2,7 @@ import { adminAcceptWave } from "@/app/api/(logic)/adminAcceptWave";
 import { changeApplicationStatus } from "@/app/api/(logic)/changeApplicationStatus";
 import { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
 import { type application_status_with_any } from "@/app/schemas/applicantSchemas";
+import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
 import { application_status_enums } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -12,19 +13,13 @@ interface ApplicantSearchActionsProps {
   filteredStatus?: string;
 }
 
-export default function ApplicantSearchActions({
-  selectedApplicants,
-  resetSelectedApplicants,
-  filteredStatus,
-}: ApplicantSearchActionsProps) {
+export default function ApplicantSearchActions({ selectedApplicants, resetSelectedApplicants, filteredStatus }: ApplicantSearchActionsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
-  const selectedStatusSet = new Set(
-    Array.from(selectedApplicants).map(
-      (applicant) => applicant.application_status,
-    ),
-  );
+  const selectedStatusSet = new Set(Array.from(selectedApplicants).map((applicant) => applicant.application_status));
+  const canAddToWave =
+    selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.waitlisted, application_status_enums.registered].includes(status as any));
 
   const handleChangeAppStatus = async (status: application_status_enums) => {
     setIsLoading(true);
@@ -50,50 +45,35 @@ export default function ApplicantSearchActions({
 
   const handleDownloadCSV = async () => {
     setIsLoading(true);
-
-    await fetch(`/api/admin/hackers?format=csv`, {});
-
+    await downloadApplicantsCSV();
     setIsLoading(false);
   };
 
   return (
     <div className="w-full">
-      <p className="my-2 text-right font-zoonaji text-xl">Actions:</p>
+      <p className="my-1 font-zoonaji text-xl">Actions:</p>
 
-      <div className="justify-right flex flex-row flex-wrap gap-2">
+      <div className="mb-2 flex flex-row flex-wrap justify-start gap-2">
         {/*Add to wave button */}
-        {selectedStatusSet.size === 1 &&
-          selectedStatusSet.has(application_status_enums.registered) && (
-            <button
-              onClick={() =>
-                handleChangeAppStatus(application_status_enums.in_wave)
-              }
-              className="rounded-md bg-green-500 p-2 text-center font-museo text-white  no-underline hover:bg-green-600  hover:underline"
-              disabled={isLoading}
-            >
-              Add {selectedApplicants.size} to wave
-            </button>
-          )}
+        {canAddToWave && (
+          <button
+            onClick={() => handleChangeAppStatus(application_status_enums.in_wave)}
+            className="rounded-md bg-green-500 p-2 text-center font-museo text-white  no-underline hover:bg-green-600  hover:underline"
+            disabled={isLoading}
+          >
+            Add {selectedApplicants.size} to wave
+          </button>
+        )}
 
         {/* Accept wave button */}
-        {filteredStatus === application_status_enums.in_wave ||
-          (selectedStatusSet.size === 1 &&
-            selectedStatusSet.has(application_status_enums.in_wave) && (
-              <button
-                onClick={handleAcceptWave}
-                disabled={isLoading}
-                className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600  hover:underline"
-              >
-                Accept Wave
-              </button>
-            ))}
+        {filteredStatus === application_status_enums.in_wave && (
+          <button onClick={handleAcceptWave} disabled={isLoading} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600  hover:underline">
+            Accept Wave
+          </button>
+        )}
 
         {/* Download CSV button */}
-        <button
-          onClick={handleDownloadCSV}
-          disabled={isLoading}
-          className="rounded-md bg-purple-500 p-2 text-center font-museo text-white  no-underline hover:bg-purple-600  hover:underline"
-        >
+        <button onClick={handleDownloadCSV} disabled={isLoading} className="rounded-md bg-purple-500 p-2 text-center font-museo text-white  no-underline hover:bg-purple-600  hover:underline">
           Download CSV
         </button>
       </div>

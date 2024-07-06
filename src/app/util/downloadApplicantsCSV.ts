@@ -1,7 +1,5 @@
-export const downloadApplicantsCSV = async (filters: any) => {
-  const params = new URLSearchParams(filters as unknown as Record<string, string>).toString();
-
-  const response = await fetch(`/api/applications?${params}&format=csv`, {
+export const downloadApplicantsCSV = async () => {
+  const response = await fetch(`/api/admin/hackers?format=csv`, {
     method: "GET",
     headers: {
       "Content-Type": "text/csv",
@@ -9,7 +7,7 @@ export const downloadApplicantsCSV = async (filters: any) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error fetching applicant");
+    throw new Error("Error fetching applicant CSV file");
   }
 
   const blob = await response.blob();

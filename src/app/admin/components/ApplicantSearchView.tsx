@@ -3,11 +3,8 @@
 import FiltersButton from "./ApplicantSearch/FiltersButton";
 import SearchBar from "./ApplicantSearch/SearchBar";
 import { useEffect, useRef, useState } from "react";
-import useApplicantsInfiniteQuery, {
-  HackerApplicationAdminResponse,
-} from "@/app/hooks/useApplicantsInfiniteQuery";
+import useApplicantsInfiniteQuery, { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
 import ApplicantCell from "./ApplicantSearch/ApplicantCell";
-import { useAppStatusMutation } from "@/app/hooks/ApplicationStatusMutation";
 import FiltersModal from "./ApplicantSearch/FiltersModal";
 import LoadingSpinner from "@/app/components/misc/LoadingSpinner";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
@@ -18,23 +15,9 @@ export default function ApplicantSearchView() {
   const [searchVal, setSearchVal] = useState<string>("");
   const [filters, setFilters] = useState<ApplicantFilters>({});
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
-  const [selectedApplicants, setSelectedApplicants] = useState<
-    Set<HackerApplicationAdminResponse>
-  >(new Set());
+  const [selectedApplicants, setSelectedApplicants] = useState<Set<HackerApplicationAdminResponse>>(new Set());
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useApplicantsInfiniteQuery({ filters, searchParams: searchVal });
-
-  const appStatusMutation = useAppStatusMutation({
-    onSuccess: () => setSelectedApplicants(new Set()),
-  });
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useApplicantsInfiniteQuery({ filters, searchParams: searchVal });
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -88,31 +71,15 @@ export default function ApplicantSearchView() {
   return (
     <div className="w-full">
       {/* Header */}
-      <p>Actions</p>
-      <ApplicantSearchActions
-        filteredStatus={filters.application_status}
-        selectedApplicants={selectedApplicants}
-        resetSelectedApplicants={resetSelectedApplicants}
-      />
+      <ApplicantSearchActions filteredStatus={filters.application_status} selectedApplicants={selectedApplicants} resetSelectedApplicants={resetSelectedApplicants} />
       <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
-        <p className="flex-grow basis-full font-zoonaji text-2xl font-bold sm:basis-auto">
-          Applicant Search
-        </p>
+        <p className="flex-grow basis-full font-zoonaji text-2xl font-bold sm:basis-auto">Applicant Search</p>
 
         <FiltersButton handleClicked={toggleFiltersModal} />
-        <SearchBar
-          value={searchVal}
-          onChange={handleSearchChange}
-          onSearch={handleSearchSubmit}
-        />
+        <SearchBar value={searchVal} onChange={handleSearchChange} onSearch={handleSearchSubmit} />
       </div>
 
-      <FiltersModal
-        isOpen={isFiltersModalOpen}
-        onClose={() => setIsFiltersModalOpen(false)}
-        filters={filters}
-        setFilters={setFilters}
-      />
+      <FiltersModal isOpen={isFiltersModalOpen} onClose={() => setIsFiltersModalOpen(false)} filters={filters} setFilters={setFilters} />
 
       {/* Applicant rows */}
       {error ? (
@@ -123,13 +90,7 @@ export default function ApplicantSearchView() {
         <>
           {data.pages.map((page) =>
             page.data.map((applicant) => (
-              <ApplicantCell
-                key={applicant.id}
-                applicant={applicant}
-                handleAppStatusChange={appStatusMutation}
-                handleSelectApplicant={() => handleSelectApplicant(applicant)}
-                isSelected={selectedApplicants.has(applicant)}
-              />
+              <ApplicantCell key={applicant.id} applicant={applicant} handleSelectApplicant={() => handleSelectApplicant(applicant)} isSelected={selectedApplicants.has(applicant)} />
             )),
           )}
 
