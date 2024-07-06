@@ -61,20 +61,20 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
             className="rounded-md bg-green-500 p-2 text-center font-museo text-white  no-underline hover:bg-green-600  hover:underline"
             disabled={isLoading}
           >
-            Add {selectedApplicants.size} to wave
+            {isLoading ? "loading..." : `Add ${selectedApplicants.size} to wave`}
           </button>
         )}
 
         {/* Accept wave button */}
         {filteredStatus === application_status_enums.in_wave && (
           <button onClick={handleAcceptWave} disabled={isLoading} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600  hover:underline">
-            Accept Wave
+            {isLoading ? "loading..." : "Accept Wave"}
           </button>
         )}
 
         {/* Download CSV button */}
         <button onClick={handleDownloadCSV} disabled={isLoading} className="rounded-md bg-purple-500 p-2 text-center font-museo text-white  no-underline hover:bg-purple-600  hover:underline">
-          Download CSV
+          {isLoading ? "loading..." : "Download CSV"}
         </button>
       </div>
     </div>
