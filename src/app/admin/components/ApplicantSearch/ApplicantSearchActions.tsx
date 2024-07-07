@@ -2,6 +2,7 @@ import { adminAcceptWave } from "@/app/api/(logic)/adminAcceptWave";
 import { changeApplicationStatus } from "@/app/api/(logic)/changeApplicationStatus";
 import { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
 import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
+import { sendComfirmAttendenceReminderEmail } from "@/app/util/sendConfirmAttendecReminderEmail";
 import { application_status_enums } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -21,6 +22,7 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
     selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.waitlisted, application_status_enums.registered].includes(status as any));
 
   const handleChangeAppStatus = async (status: application_status_enums) => {
+    if (isLoading) return;
     setIsLoading(true);
 
     const ids = Array.from(selectedApplicants).map((applicant) => applicant.id);
@@ -33,6 +35,7 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
   };
 
   const handleAcceptWave = async () => {
+    if (isLoading) return;
     setIsLoading(true);
 
     await adminAcceptWave();
@@ -45,6 +48,14 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
   const handleDownloadCSV = async () => {
     setIsLoading(true);
     await downloadApplicantsCSV();
+    setIsLoading(false);
+  };
+
+  const handleSendReminderEmails = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    await sendComfirmAttendenceReminderEmail();
     setIsLoading(false);
   };
 
@@ -68,6 +79,13 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
         {filteredStatus === application_status_enums.in_wave && (
           <button onClick={handleAcceptWave} disabled={isLoading} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600  hover:underline">
             {isLoading ? "loading..." : "Accept Wave"}
+          </button>
+        )}
+
+        {/* Send reminder email button */}
+        {filteredStatus === application_status_enums.accepted && (
+          <button onClick={handleSendReminderEmails} disabled={isLoading} className="rounded-md bg-orange-500 p-2 text-center font-museo text-white  no-underline hover:bg-orange-600  hover:underline">
+            {isLoading ? "loading..." : "Send Reminder Email"}
           </button>
         )}
 
