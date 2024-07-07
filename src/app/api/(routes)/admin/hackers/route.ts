@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  adminFetchApplicantsSchema,
-  applicantStatusChangeSchema,
-} from "@/app/schemas/applicantSchemas";
+import { adminFetchApplicantsSchema, applicantStatusChangeSchema } from "@/app/schemas/applicantSchemas";
 import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
@@ -75,7 +72,7 @@ export const GET = auth(async (request) => {
     return new NextResponse(csvData, {
       headers: {
         "Content-Type": "text/csv",
-        "Content-Disposition": "attachment; filename=applicants.csv",
+        "Content-Disposition": `attachment; filename=applicants_data_${Date.now()}.csv`,
       },
     });
   }
@@ -91,31 +88,32 @@ export const GET = auth(async (request) => {
 /*
  * Route for an admin to update the status of multiple applicants at once
  * This could be used for adding applicants to the wave, waitlisting, etc.
+ * NOTE: replaced by server action
  */
-export const POST = auth(async (request) => {
-  if (!request.auth || !request.auth.user.admin) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+// export const POST = auth(async (request) => {
+//   if (!request.auth || !request.auth.user.admin) {
+//     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+//   }
 
-  const safedata = applicantStatusChangeSchema.safeParse(request.body);
+//   const safedata = applicantStatusChangeSchema.safeParse(request.body);
 
-  if (!safedata.success) {
-    return new NextResponse(safedata.error.message, { status: 400 });
-  }
+//   if (!safedata.success) {
+//     return new NextResponse(safedata.error.message, { status: 400 });
+//   }
 
-  const { ids, application_status } = safedata.data;
+//   const { ids, application_status } = safedata.data;
 
-  await db.hacker_Applications.updateMany({
-    where: {
-      userId: {
-        //idk if we want userid or hackerid here, we will have to see
-        in: ids,
-      },
-    },
-    data: {
-      application_status,
-    },
-  });
+//   await db.hacker_Applications.updateMany({
+//     where: {
+//       userId: {
+//         //idk if we want userid or hackerid here, we will have to see
+//         in: ids,
+//       },
+//     },
+//     data: {
+//       application_status,
+//     },
+//   });
 
-  return NextResponse.json({ message: "Successfully updated applicants" });
-});
+//   return NextResponse.json({ message: "Successfully updated applicants" });
+// });
