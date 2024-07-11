@@ -21,7 +21,7 @@ const TEMPLATES: CreateTemplateCommandInput[] = [
   {
     Template: {
       TemplateName: `application_accepted_${randomNum}`,
-      SubjectPart: "Conagratulations! - ShellHacks Acceptance",
+      SubjectPart: "Congratulations! - ShellHacks Acceptance",
       HtmlPart: await fetch("http://localhost:3000/email_templates/acceptedTemplate.html").then((res) => res.text()),
     },
   },
