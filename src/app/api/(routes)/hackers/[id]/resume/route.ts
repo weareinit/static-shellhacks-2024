@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { validateCaptcha } from "@/app/util/captcha";
-import {
-  generateSignedResumeUploadUrl,
-  generateSignedResumeUrl,
-  uploadResume,
-} from "@/app/util/aws";
+import { generateSignedResumeUploadUrl, generateSignedResumeUrl, uploadResume } from "@/app/util/aws";
 import { auth } from "@/server/auth";
 
 /*
@@ -78,6 +74,10 @@ export const PUT = auth(async (request, ctx) => {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const res = await uploadResume(resume.resume_path, buffer);
-  return NextResponse.json({ res }, { status: 200 });
+  try {
+    await uploadResume(resume.resume_path, buffer);
+  } catch (e) {
+    return new NextResponse("AWS Error" + e, { status: 500 });
+  }
+  return new NextResponse("Resume uploaded", { status: 200 });
 });
