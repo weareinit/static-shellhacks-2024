@@ -61,7 +61,7 @@ export const GET = auth(async (request) => {
     orderBy: {
       id: "desc",
     },
-    take: 15,
+    take: format === "csv" ? 10000 : 15,
   });
 
   const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id; //the reason im subtracting 1 is because im using 'lte' in the pagination
