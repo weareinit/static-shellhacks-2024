@@ -1,3 +1,4 @@
+"use client";
 export const uploadResume = async (file: File, hackerId: number) => {
   //Verify the file details
   if (!file) {
@@ -13,19 +14,15 @@ export const uploadResume = async (file: File, hackerId: number) => {
   const formData = new FormData();
   formData.append("resume", file);
 
-  const response = await fetch(
-    `/api/hackers/${encodeURIComponent(hackerId)}/resume`,
-    {
-      method: "PUT",
-      body: formData,
-    },
-  );
+  const response = await fetch(`/api/hackers/${encodeURIComponent(hackerId)}/resume`, {
+    method: "PUT",
+    body: formData,
+  });
 
   console.log(response);
 
   if (!response.ok) {
-    throw new Error("Error uploading resume");
+    const text = await response.text();
+    throw new Error(text);
   }
-
-  return await response.json();
 };

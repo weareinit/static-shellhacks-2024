@@ -12,20 +12,11 @@ export const application_statuses = [
   application_status_enums.checked_in,
 ] as const;
 
-export const application_status_with_any = [
-  ...application_statuses,
-  "any",
-] as const;
+export const application_status_with_any = [...application_statuses, "any"] as const;
 
-export const user_changeable_application_statuses = [
-  application_status_enums.confirmed,
-  application_status_enums.withdrawn,
-] as const;
+export const user_changeable_application_statuses = [application_status_enums.confirmed, application_status_enums.withdrawn] as const;
 
-export const sendReminderEmailSchema = z.enum([
-  application_status_enums.accepted,
-  application_status_enums.confirmed,
-]);
+export const sendReminderEmailSchema = z.enum([application_status_enums.accepted, application_status_enums.confirmed]);
 export const sendDiscordEmailSchema = z.object({
   email: z.string().nonempty(),
   discord_id: z.string().nonempty(),
@@ -41,10 +32,7 @@ export const applicantUpdateSchemaBase = z.object({
   resume_path: z.string().optional(),
   phone_number: z
     .string()
-    .regex(
-      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-      "Invalid phone number",
-    )
+    .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number")
     .optional(),
   school: z.string().optional(),
   major: z.string().optional(),
@@ -74,8 +62,7 @@ export const hackerApplicantUpdateSchema = applicantUpdateSchemaBase.extend({
 });
 
 export const applicantStatusChangeSchema = z.object({
-  //event_id: z.string().regex(/^\d+$/).transform(Number),
-  ids: z.array(z.string()),
+  ids: z.array(z.number()),
   application_status: z.enum(application_statuses),
 });
 
@@ -110,12 +97,7 @@ export const newApplicantSchema = z.object({
   level_of_study: z.string(),
   country: z.string().min(1),
   email: z.string().email().toLowerCase(),
-  phone_number: z
-    .string()
-    .regex(
-      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-      "Invalid phone number",
-    ),
+  phone_number: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, "Invalid phone number"),
   resume_path: z.string(),
   github: z.string().url().optional(),
   linkedin: z.string().url().optional(),

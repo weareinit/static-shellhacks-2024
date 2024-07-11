@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  adminFetchApplicantsSchema,
-  applicantStatusChangeSchema,
-} from "@/app/schemas/applicantSchemas";
+import { adminFetchApplicantsSchema, applicantStatusChangeSchema } from "@/app/schemas/applicantSchemas";
 import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
@@ -25,10 +22,18 @@ export const GET = auth(async (request) => {
   const { format, cursor, searchParams, ...filters } = safedata.data;
 
   const filteredApplicants = await db.hacker_Applications.findMany({
-    where: {
-      id: {
-        gt: cursor || 0,
+    // relationLoadStrategy: "join",
+    include: {
+      user: {
+        select: {
+          email: true,
+          discordUsername: true,
+        },
       },
+    },
+    skip: cursor ? 1 : 0,
+    where: {
+      ...(cursor && { id: { lte: cursor } }), // cursor-based pagination
       ...(filters.school && { school: filters.school }),
       ...(filters.grad_year && { grad_year: filters.grad_year }),
       ...(filters.application_status != "any" && {
@@ -36,20 +41,30 @@ export const GET = auth(async (request) => {
       }),
       ...(searchParams && {
         OR: [
-          { phone_number: { startsWith: searchParams } },
-          { email: { startsWith: searchParams } },
-          { first_name: { startsWith: searchParams } },
-          { last_name: { startsWith: searchParams } },
+          { phone_number: { startsWith: searchParams, mode: "insensitive" } },
+          { email: { startsWith: searchParams, mode: "insensitive" } },
+          { first_name: { startsWith: searchParams, mode: "insensitive" } },
+          { last_name: { startsWith: searchParams, mode: "insensitive" } },
+          {
+            user: {
+              discordUsername: {
+                startsWith: searchParams,
+                mode: "insensitive",
+              },
+            },
+          },
+
+          //{user.discordUsername: {startsWith: searchParams}},
         ],
       }),
     },
     orderBy: {
-      created_at: "asc",
+      id: "desc",
     },
-    take: 20,
+    take: 15,
   });
 
-  const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id;
+  const nextCursor = filteredApplicants[filteredApplicants.length - 1]?.id; //the reason im subtracting 1 is because im using 'lte' in the pagination
 
   if (format === "csv") {
     const csvData = await generateApplicantCSV(filteredApplicants);
@@ -57,7 +72,7 @@ export const GET = auth(async (request) => {
     return new NextResponse(csvData, {
       headers: {
         "Content-Type": "text/csv",
-        "Content-Disposition": "attachment; filename=applicants.csv",
+        "Content-Disposition": `attachment; filename=applicants_data_${Date.now()}.csv`,
       },
     });
   }
@@ -73,31 +88,32 @@ export const GET = auth(async (request) => {
 /*
  * Route for an admin to update the status of multiple applicants at once
  * This could be used for adding applicants to the wave, waitlisting, etc.
+ * NOTE: replaced by server action
  */
-export const POST = auth(async (request) => {
-  if (!request.auth || !request.auth.user.admin) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+// export const POST = auth(async (request) => {
+//   if (!request.auth || !request.auth.user.admin) {
+//     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+//   }
 
-  const safedata = applicantStatusChangeSchema.safeParse(request.body);
+//   const safedata = applicantStatusChangeSchema.safeParse(request.body);
 
-  if (!safedata.success) {
-    return new NextResponse(safedata.error.message, { status: 400 });
-  }
+//   if (!safedata.success) {
+//     return new NextResponse(safedata.error.message, { status: 400 });
+//   }
 
-  const { ids, application_status } = safedata.data;
+//   const { ids, application_status } = safedata.data;
 
-  await db.hacker_Applications.updateMany({
-    where: {
-      userId: {
-        //idk if we want userid or hackerid here, we will have to see
-        in: ids,
-      },
-    },
-    data: {
-      application_status,
-    },
-  });
+//   await db.hacker_Applications.updateMany({
+//     where: {
+//       userId: {
+//         //idk if we want userid or hackerid here, we will have to see
+//         in: ids,
+//       },
+//     },
+//     data: {
+//       application_status,
+//     },
+//   });
 
-  return NextResponse.json({ message: "Successfully updated applicants" });
-});
+//   return NextResponse.json({ message: "Successfully updated applicants" });
+// });

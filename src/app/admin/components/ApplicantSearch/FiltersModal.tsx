@@ -148,15 +148,15 @@ export default function FiltersModal({
                 </div>
               </div>
             </div>
-            <div className="flex justify-end border-t border-gray-200 px-4 py-3">
+            <div className="flex flex-wrap justify-center gap-1 border-t border-gray-200 px-4 py-3 sm:justify-end">
               <button
-                className="mr-2 cursor-pointer p-2 font-museo font-bold text-red-500 hover:text-red-500/90"
+                className="cursor-pointer p-2 font-museo font-bold text-red-500 hover:text-red-500/90"
                 onClick={resetFilters}
               >
                 Reset
               </button>
               <button
-                className="min-w-full cursor-pointer rounded-md bg-[#78644F] p-2 font-museo font-bold text-white hover:bg-[#78644F]/90 sm:min-w-[100px] sm:rounded-lg"
+                className="basis-full cursor-pointer rounded-md bg-[#78644F] p-2 font-museo font-bold text-white hover:bg-[#78644F]/90 sm:basis-auto sm:rounded-lg"
                 onClick={onClose}
               >
                 Close

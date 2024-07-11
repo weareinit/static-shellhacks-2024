@@ -4,13 +4,10 @@ import { CustomButton } from "./CustomButton";
 import { dinosaurNames } from "@/app/constants/dinosaurNames";
 import { useState } from "react";
 import ChangeAvatarModal from "./ChangeAvatarModal";
-import { Hacker_Applications } from "@prisma/client";
+import { Hacker_Applications, application_status_enums } from "@prisma/client";
+import ConfirmAttendenceButton from "./ConfirmAttendenceButton";
 
-export default function DashboardAvatar({
-  application,
-}: {
-  application: Hacker_Applications;
-}) {
+export default function DashboardAvatar({ application }: { application: Hacker_Applications }) {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const toggleAvatarModal = () => setIsAvatarModalOpen(!isAvatarModalOpen);
 
@@ -32,21 +29,13 @@ export default function DashboardAvatar({
 
   return (
     <>
-      <Image
-        src={`/assets/new/dinosaurs/${dinosaurNames[application.dinosaur_avatar]}.svg`}
-        alt="Dinosaur Avatar"
-        width={225}
-        height={200}
-        draggable={false}
-      />
+      <Image src={`/assets/new/dinosaurs/${dinosaurNames[application.dinosaur_avatar]}.svg`} alt="Dinosaur Avatar" width={225} height={200} draggable={false} />
       <CustomButton onClick={toggleAvatarModal}>Change Avatar</CustomButton>
 
+      {application.application_status === application_status_enums.accepted && <ConfirmAttendenceButton id={application.id} />}
+
       {/* Modal to change the users avatar */}
-      <ChangeAvatarModal
-        isOpen={isAvatarModalOpen}
-        toggleOpen={toggleAvatarModal}
-        handleDinoChange={handleDinoChange}
-      />
+      <ChangeAvatarModal isOpen={isAvatarModalOpen} toggleOpen={toggleAvatarModal} handleDinoChange={handleDinoChange} />
     </>
   );
 }
