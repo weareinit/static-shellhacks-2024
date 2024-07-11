@@ -1,3 +1,4 @@
+"use client";
 export const uploadResume = async (file: File, hackerId: number) => {
   //Verify the file details
   if (!file) {
@@ -18,9 +19,10 @@ export const uploadResume = async (file: File, hackerId: number) => {
     body: formData,
   });
 
-  // console.log(response);
+  console.log(response);
 
   if (!response.ok) {
-    throw new Error("Server Error: " + response.statusText);
+    const text = await response.text();
+    throw new Error(text);
   }
 };
