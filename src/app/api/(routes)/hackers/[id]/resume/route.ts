@@ -80,9 +80,11 @@ export const PUT = auth(async (request, ctx) => {
       return new NextResponse("Failed to parse form data", { status: 400 });
     }
 
-    const file = formData.get("resume");
+    const file = formData.get("resume") as any; //cast to any instead of File to avoid vercel error described below
 
-    if (!file || !(file instanceof File)) {
+    // if (!file || !(file instanceof File)) {
+    //The above line of code breaks on Vercel, "File is not defined". Probably some node version thing
+    if (!file) {
       return new NextResponse("No file provided or invalid file", {
         status: 400,
       });
