@@ -40,7 +40,7 @@ export const GET = auth(async (request, ctx) => {
  */
 export const PUT = auth(async (request, ctx) => {
   if (!request.auth) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return new NextResponse("Unauthorized", { status: 401 });
   }
 
   if (!ctx.params?.id) {

@@ -20,6 +20,7 @@ export default function ResumeView({ hackerId }: { hackerId: number }) {
         await uploadResume(file, hackerId);
       } catch (error) {
         if (error instanceof Error) {
+          console.log(error);
           setResumeUploadError(error.message);
         } else {
           setResumeUploadError("An unknown error occurred");
