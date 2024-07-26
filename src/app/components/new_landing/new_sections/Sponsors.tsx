@@ -38,6 +38,9 @@ const Sponsors = () => {
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] md:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] sm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10]" />
+
       <div className="absolute inset-0 flex flex-col items-center justify-start">
         <h1
           id="sponsors"
