@@ -1,12 +1,34 @@
+import { application_status_enums } from "@prisma/client";
+import { ApplicantFilters } from "@/app/schemas/applicantSchemas";
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 
-export const getAggregateHackerApplicationStats = async () => {
+export const getAggregateHackerApplicationStats = async (filters: ApplicantFilters) => {
   //   const session = await auth();
   //   if (!session?.user.admin) {
   //     return false;
   //   }
+
+  type FilterConditions = Prisma.Hacker_ApplicationsWhereInput;
+
+  // Construct the filter object for the Prisma query
+  const filterConditions: FilterConditions = {};
+  if (filters.application_status && filters.application_status !== "any") {
+    if (Object.values(application_status_enums).includes(filters.application_status as application_status_enums)) {
+      filterConditions.application_status = filters.application_status as application_status_enums;
+    }
+  }
+  if (filters.grad_year) {
+    filterConditions.grad_year = Number(filters.grad_year);
+  }
+  if (filters.school) {
+    filterConditions.school = {
+      contains: filters.school,
+      mode: "insensitive",
+    };
+  }
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -41,7 +63,12 @@ export const getAggregateHackerApplicationStats = async () => {
     },
   });
 
+  const totalFiltered = await db.hacker_Applications.count({
+    where: filterConditions,
+  });
+
   const data = {
+    totalFiltered,
     totalRegistered,
     registeredByStatus,
     registeredToday,

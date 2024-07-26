@@ -1,19 +1,18 @@
 "use client";
 
-import FiltersButton from "./ApplicantSearch/FiltersButton";
-import SearchBar from "./ApplicantSearch/SearchBar";
-import { useEffect, useRef, useState } from "react";
+import FiltersButton from "./FiltersButton";
+import SearchBar from "./SearchBar";
+import { useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
 import useApplicantsInfiniteQuery, { HackerApplicationAdminResponse } from "@/app/hooks/useApplicantsInfiniteQuery";
-import ApplicantCell from "./ApplicantSearch/ApplicantCell";
-import FiltersModal from "./ApplicantSearch/FiltersModal";
+import ApplicantCell from "./ApplicantCell";
+import FiltersModal from "./FiltersModal";
 import LoadingSpinner from "@/app/components/misc/LoadingSpinner";
 import useIntersectionObserver from "@/app/hooks/useIntersectionObserver";
-import ApplicantSearchActions from "./ApplicantSearch/ApplicantSearchActions";
+import ApplicantSearchActions from "./ApplicantSearchActions";
 import { ApplicantFilters } from "@/app/schemas/applicantSchemas";
 
-export default function ApplicantSearchView() {
+export default function ApplicantSearchView({ filters, setFilters }: { filters: ApplicantFilters; setFilters: Dispatch<SetStateAction<ApplicantFilters>> }) {
   const [searchVal, setSearchVal] = useState<string>("");
-  const [filters, setFilters] = useState<ApplicantFilters>({});
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [selectedApplicants, setSelectedApplicants] = useState<Set<HackerApplicationAdminResponse>>(new Set());
 
