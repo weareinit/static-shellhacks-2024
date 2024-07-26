@@ -73,30 +73,36 @@ const Sponsors = () => {
           Community Partners
         </h1>
 
-        <div className="grid auto-rows-auto grid-cols-2 gap-4 xxs:mt-8 sm:mt-0 sm:grid-cols-3">
+        <div className="mx-10 grid auto-rows-auto grid-cols-2 gap-14 xxs:mt-8 sm:mt-0 sm:grid-cols-3">
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="microsoft" src="/assets/sponsors/INIT.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="init" src="/assets/sponsors/INIT.svg" className="object-contain"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="netflix" src="/assets/sponsors/Venture_Miami.svg" className="object-cover pt-3"></Image>
+            <Image width={500} height={200} alt="init_MDC" src="/assets/sponsors/INIT_MDC.svg" className="object-contain pt-2"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="waymo" src="/assets/sponsors/MLH.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="init_PRO" src="/assets/sponsors/INIT_PRO.svg" className="object-contain"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="vanguard" src="/assets/sponsors/FIU_KFSCIS.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="venture_miami" src="/assets/sponsors/Venture_Miami.svg" className="object-contain pt-3"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="google" src="/assets/sponsors/Lab22c.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="waymo" src="/assets/sponsors/MLH.svg" className="object-contain"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="google" src="/assets/sponsors/FIU_CEC.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="vanguard" src="/assets/sponsors/FIU_KFSCIS.svg" className="object-contain"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="google" src="/assets/sponsors/KnightHacks.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="lab22c" src="/assets/sponsors/Lab22c.svg" className="object-contain"></Image>
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
-            <Image width={500} height={200} alt="google" src="/assets/sponsors/Hackabull.svg" className="object-cover"></Image>
+            <Image width={500} height={200} alt="FIU_CEC" src="/assets/sponsors/FIU_CEC.svg" className="object-contain"></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image width={500} height={200} alt="knighthacks" src="/assets/sponsors/KnightHacks.svg" className="object-contain"></Image>
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image width={500} height={200} alt="hackabull" src="/assets/sponsors/Hackabull.svg" className="object-contain"></Image>
           </div>
         </div>
 
