@@ -2,21 +2,15 @@ import { Hacker_Applications, application_status_enums } from "@prisma/client";
 import UserInfo from "./UserInfo";
 import { CustomButton } from "./CustomButton";
 import { auth, signOut } from "@/server/auth";
-import {
-  APPLICATION_STATUS_COLOR_MAPPING,
-  APPLICATION_STATUS_NAME_MAPPING,
-} from "../../constants/applicationConstants";
+import { APPLICATION_STATUS_COLOR_MAPPING, APPLICATION_STATUS_NAME_MAPPING } from "../../constants/applicationConstants";
 import DashboardSocialButtons from "./DashboardSocialButtons";
 import WithdrawApplicationButton from "./WithdrawApplicationButton";
 import ResumeView from "./ResumeView";
 import DashboardAvatar from "./DashboardAvatar";
 import HackerQRCode from "./HackerQRCode";
+import HackerGuide from "./HackerGuide";
 
-export default async function DahsboardContent({
-  application,
-}: {
-  application: Hacker_Applications;
-}) {
+export default async function DahsboardContent({ application }: { application: Hacker_Applications }) {
   const sess = await auth();
   const applicationWithDiscord = {
     ...application,
@@ -48,17 +42,10 @@ export default async function DahsboardContent({
               Status:{" "}
               <span
                 style={{
-                  color:
-                    APPLICATION_STATUS_COLOR_MAPPING[
-                      application.application_status
-                    ],
+                  color: APPLICATION_STATUS_COLOR_MAPPING[application.application_status],
                 }}
               >
-                {
-                  APPLICATION_STATUS_NAME_MAPPING[
-                    application.application_status
-                  ]
-                }
+                {APPLICATION_STATUS_NAME_MAPPING[application.application_status]}
               </span>
             </p>
           </div>
@@ -81,10 +68,10 @@ export default async function DahsboardContent({
         </div>
 
         {/* QR Code */}
-        {application.application_status ===
-          application_status_enums.confirmed && (
+        {application.application_status === application_status_enums.confirmed && (
           <div className="col-span-8 lg:col-span-2">
             <HackerQRCode hacker_id={sess!.user.id} />
+            <HackerGuide />
           </div>
         )}
 
@@ -93,13 +80,9 @@ export default async function DahsboardContent({
           <div className="flex flex-col items-start gap-2">
             <p className="font-museo text-xl">Contact:</p>
             <p className="text-md font-museo">
-              If you have any questions about the hackathon, please post them in
-              the <i>#shellhacks</i> channel in Discord, and we'll be in touch
-              as soon as possible. Or if you prefer, you may reach out to an
-              organizer privately on Discord or send an email to
-              <i>fiu@weareinit.org</i>. Please <b>do not withdraw</b> your
-              application if you entered the wrong info. Reach out to an
-              organizer with your correct information and we will fix it for
+              If you have any questions about the hackathon, please post them in the <i>#shellhacks</i> channel in Discord, and we'll be in touch as soon as possible. Or if you prefer, you may reach
+              out to an organizer privately on Discord or send an email to
+              <i>fiu@weareinit.org</i>. Please <b>do not withdraw</b> your application if you entered the wrong info. Reach out to an organizer with your correct information and we will fix it for
               you.
             </p>
 
@@ -108,11 +91,8 @@ export default async function DahsboardContent({
               <div className="my-3">
                 <DashboardSocialButtons />
               </div>
-              {application.application_status ===
-              application_status_enums.withdrawn ? (
-                <p className="font-zoonaji text-2xl text-red-600">
-                  You have withdrawn your application
-                </p>
+              {application.application_status === application_status_enums.withdrawn ? (
+                <p className="font-zoonaji text-2xl text-red-600">You have withdrawn your application</p>
               ) : (
                 <WithdrawApplicationButton id={application.id} />
               )}
