@@ -12,7 +12,7 @@ const Sponsors = () => {
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10]" />
-      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden lg:block" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden lg:block xl:hidden" />
 
       <div className="absolute inset-0 flex flex-col items-center justify-start">
         <h1
@@ -26,10 +26,10 @@ const Sponsors = () => {
             <TITLE_SPONSOR />
           </div>
         </div>
-        <div className="mx-10 grid auto-rows-auto xsm:grid-cols-2 place-items-center mb-8 w-3/5 xsm:w-5/6 sm:w-full">
-            <TIER_TWO_SPONSORS />
+        <div className="mx-10 mb-8 grid w-3/5 auto-rows-auto place-items-center xsm:w-5/6 xsm:grid-cols-2 sm:w-full">
+          <TIER_TWO_SPONSORS />
         </div>
-        <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-4 xxs:mt-8 sm:mt-0 xsm:grid-cols-3">
+        <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-4 xxs:mt-8 xsm:grid-cols-3 sm:mt-0">
           <TIER_THREE_SPONSORS />
         </div>
         <p className="m-5 mb-8 font-museo text-2xl text-white xxs:mt-7 xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px] lg:mt-16 lg:text-[25px] xxl:text-[30px]">
@@ -75,7 +75,7 @@ const Sponsors = () => {
           </div>
         </div>
 
-        <h1 className="mb-4 mt-10 font-zoonaji text-xl xsm:text-2xl sm:text-3xl text-pastel_orange min-[350px]:text-xl md:text-5xl lg:text-6xl">Want to sponsor us?</h1>
+        <h1 className="mb-4 mt-10 font-zoonaji text-xl text-pastel_orange min-[350px]:text-xl xsm:text-2xl sm:text-3xl md:text-5xl lg:text-6xl">Want to sponsor us?</h1>
         <p className=" font-museo text-2xl text-white xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px]  lg:text-[25px] xxl:text-[30px]">
           Join the roar and reach out to{" "}
           <a className="underline" href="mailto:init@fiu.edu" target="_blank" rel="noopener noreferrer">
