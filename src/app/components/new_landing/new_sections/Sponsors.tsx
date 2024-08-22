@@ -184,11 +184,17 @@ const TIER_THREE_SPONSORS = () => {
       name: "State Farm",
       image: "/assets/sponsors/State_Farm.svg",
     },
+    {
+      name: "Patient Safe Technology Challenge",
+      image: "/assets/sponsors/PSTC.png",
+      width: 250,
+      height: 150,
+    },
   ];
 
   return SPONSORS.map((sponsor) => (
     <div>
-      <Image width={400} height={150} alt={sponsor.name} src={sponsor.image} />
+      <Image width={sponsor.width ?? 400} height={sponsor.height ?? 150} alt={sponsor.name} src={sponsor.image} />
     </div>
   ));
 };
