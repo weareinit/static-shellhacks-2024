@@ -51,9 +51,13 @@ export default async function UserInfo({
                 <span className="font-bold">
                   {PRETTY_FIELD_MAPPING[key as keyof Hacker_Applications]}:
                 </span>
-                {key === "github" || key === "linkedin" ? (
+                {key === "github" ? (
                   <a href={(" " + value) as string}>
                     {(" " + value.split("//")[1]) as string}
+                  </a>
+                ) : key === "linkedin" ? (
+                  <a href={(" " + value) as string}>
+                    {(" " + value.split("//")[1].slice(4)) as string}
                   </a>
                 ) : (
                   <span>{(" " + value) as string}</span>
