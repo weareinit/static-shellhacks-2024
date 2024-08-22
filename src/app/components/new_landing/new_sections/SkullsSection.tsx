@@ -41,11 +41,11 @@ const skullDataList: SkullData[] = [
     name: "Elizabeth",
     link: "https://www.linkedin.com/in/elizabeth-hechavarria-0601702a9/",
   },
-  { name: "Juan", link: "www.linkedin.com/in/juan-carmona-83707b235" },
+  { name: "Juan", link: "https://www.linkedin.com/in/juan-carmona-83707b235/" },
   { name: "Morgan", link: "https://www.linkedin.com/in/VillanuevaM305" },
   {
     name: "Rayhan",
-    link: "https://www.linkedin.com/in/rayhan-marrero-808123211",
+    link: "https://www.linkedin.com/in/rayhan-m-808123211/",
   },
   {
     name: "Jacob",
@@ -57,7 +57,7 @@ const skullDataList: SkullData[] = [
   },
   {
     name: "Bruna",
-    link: "https://www.linkedin.com/in/bruna-gentil-84923510a/",
+    link: "https://www.linkedin.com/in/bruna-gentil-84923515a/",
   },
   { name: "Nathan", link: "https://www.linkedin.com/in/nathan-lioe-a-tjam/" },
   { name: "Nicolas", link: "http://www.linkedin.com/in/nicolasdevoto96" },
