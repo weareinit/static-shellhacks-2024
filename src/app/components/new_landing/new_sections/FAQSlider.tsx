@@ -13,7 +13,8 @@ const FAQSlider = () => {
   Will transportation be provided?If you're a student at a college/university in Florida, ShellHacks may provide buses if enough students from your school sign up. Help us help you by telling your friends and classmates to sign up, so we can hopefully have a bus for your school!
   How much does it cost?Nothing! That's right, ShellHacks is completely free for all students accepted to the event. We provide everything you need to help you focus on learning the latest technologies, building innovative projects, and networking with top companies- all thanks to the generous donations from our sponsors!
   How can I become a sponsor?Please reach out to our team at init@fiu.edu and we'll get back to you promptly!
-  Why "ShellHacks"?Well, it started off as a joke about what a turtle-themed hackathon would be called. Later on, we actually started thinking about organizing a hackathon, but instead of turtles, we decided to focus on diversity in Miami. Since the city has an abundance of seashells on its beaches, the name stuck! It's also a play on words about computer shells, but that's just to draw attention away from all the turtle puns.`;
+  Why "ShellHacks"?Well, it started off as a joke about what a turtle-themed hackathon would be called. Later on, we actually started thinking about organizing a hackathon, but instead of turtles, we decided to focus on diversity in Miami. Since the city has an abundance of seashells on its beaches, the name stuck! It's also a play on words about computer shells, but that's just to draw attention away from all the turtle puns.
+  Will there be travel reimbursement?Unfortunately due to budget constraints, we are not offering travel reimbursement at this time. We appreciate how excited you are to come to shell this year and hope that you can still make it.`;
 
   const faqs = raw_faqs.split("\n").map((line) => {
     const [Q = "", ...rest] = line.split("?");
