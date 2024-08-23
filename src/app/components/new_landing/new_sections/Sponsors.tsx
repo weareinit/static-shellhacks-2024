@@ -26,13 +26,13 @@ const Sponsors = () => {
             <TITLE_SPONSOR />
           </div>
         </div>
-        <div className="mx-10 mb-8 grid w-3/5 auto-rows-auto place-items-center xsm:w-5/6 xsm:grid-cols-2 sm:w-full">
+        <div className="mx-10 mb-10 grid w-3/5 auto-rows-auto place-items-center xsm:w-5/6 xsm:grid-cols-2 sm:w-4/5">
           <TIER_TWO_SPONSORS />
         </div>
         <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-4 xxs:mt-8 xsm:grid-cols-3 sm:mt-0">
           <TIER_THREE_SPONSORS />
         </div>
-        <p className="m-5 mb-8 font-museo text-2xl text-white xxs:mt-7 xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px] lg:mt-16 lg:text-[25px] xxl:text-[30px]">
+        <p className="m-5 mb-8 font-museo text-2xl text-white xxs:mt-7 xxs:text-[13px] xsm:-mb-8 xsm:text-[15px] sm:mb-8 sm:text-[15px] md:text-[20px] lg:mt-16 lg:text-[25px] xxl:text-[30px]">
           More sponsors to be revealed soon...
         </p>
         <h1
@@ -54,6 +54,9 @@ const Sponsors = () => {
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="venture_miami" src="/assets/sponsors/Venture_Miami.svg" className="object-contain pt-3" />
+          </div>
+          <div className="aspect-content aspect-w-1 aspect-h-1">
+            <Image width={350} height={200} alt="miami_dade_college" src="/assets/sponsors/MDC.svg" className="object-contain pt-3" />
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="waymo" src="/assets/sponsors/MLH.svg" className="object-contain" />
@@ -91,6 +94,7 @@ const Sponsors = () => {
 type SponsorType = {
   name: string;
   image: string;
+  className?: string;
 };
 
 const TITLE_SPONSOR = () => {
@@ -116,19 +120,25 @@ const TIER_TWO_SPONSORS = () => {
     {
       name: "Netflix",
       image: "/assets/sponsors/Netflix.png",
+      className: "-my-8",
     },
     {
       name: "Vanguard",
       image: "/assets/sponsors/Vanguard.svg",
     },
     {
+      name: "FIU ELT",
+      image: "/assets/sponsors/FIU_ELT.svg",
+    },
+    {
       name: "Ford",
       image: "/assets/sponsors/Ford.svg",
+      className: "mt-2",
     },
   ];
 
   return SPONSORS.map((sponsor) => (
-    <div>
+    <div className={`${sponsor.className}`}>
       <Image width={500} height={200} alt={sponsor.name} src={sponsor.image} />
     </div>
   ));
@@ -153,10 +163,6 @@ const TIER_THREE_SPONSORS = () => {
       image: "/assets/sponsors/PSTC.png",
       width: 100,
       height: 150,
-    },
-    {
-      name: "Miami Dade County",
-      image: "/assets/sponsors/MDC.svg",
     },
     {
       name: "Nvidia",
