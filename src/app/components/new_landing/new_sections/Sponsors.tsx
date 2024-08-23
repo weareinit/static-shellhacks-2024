@@ -163,16 +163,8 @@ const TIER_THREE_SPONSORS = () => {
       image: "/assets/sponsors/NVIDIA.svg",
     },
     {
-      name: "Break Through Tech",
-      image: "/assets/sponsors/Breakthrough_Tech.svg",
-    },
-    {
       name: "CodePath",
       image: "/assets/sponsors/CodePath.svg",
-    },
-    {
-      name: "Voyages",
-      image: "/assets/sponsors/VV.png",
     },
     {
       name: "Southwest Airlines",
@@ -181,10 +173,6 @@ const TIER_THREE_SPONSORS = () => {
     {
       name: "State Farm",
       image: "/assets/sponsors/State_Farm.svg",
-    },
-    {
-      name: "Addigy",
-      image: "/assets/sponsors/Addigy.svg",
     },
     {
       name: "Capital One",
