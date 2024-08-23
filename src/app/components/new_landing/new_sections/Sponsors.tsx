@@ -149,8 +149,10 @@ const TIER_THREE_SPONSORS = () => {
       image: "/assets/sponsors/Chevron.svg",
     },
     {
-      name: "Addigy",
-      image: "/assets/sponsors/Addigy.svg",
+      name: "Patient Safety Technology Challenge",
+      image: "/assets/sponsors/PSTC.png",
+      width: 100,
+      height: 150,
     },
     {
       name: "Miami Dade County",
@@ -177,24 +179,22 @@ const TIER_THREE_SPONSORS = () => {
       image: "/assets/sponsors/Southwest.svg",
     },
     {
-      name: "Capital One",
-      image: "/assets/sponsors/Capital_One.svg",
-    },
-    {
       name: "State Farm",
       image: "/assets/sponsors/State_Farm.svg",
     },
-    // {
-    //   name: "Patient Safe Technology Challenge",
-    //   image: "/assets/sponsors/PSTC.png",
-    //   width: 250,
-    //   height: 150,
-    // },
+    {
+      name: "Addigy",
+      image: "/assets/sponsors/Addigy.svg",
+    },
+    {
+      name: "Capital One",
+      image: "/assets/sponsors/Capital_One.svg",
+    },
   ];
 
   return SPONSORS.map((sponsor) => (
     <div>
-      <Image width={400} height={150} alt={sponsor.name} src={sponsor.image} />
+      <Image width={sponsor.width ?? 400} height={sponsor.height ?? 150} alt={sponsor.name} src={sponsor.image} />
     </div>
   ));
 };
