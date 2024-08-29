@@ -1,5 +1,5 @@
 export const ACCEPTED_REMINDER_TEMPLATE = "application_accepted_reminder_672541";
 export const ACCEPTED_TEMPLATE = "application_accepted_672541";
 // export const STATUS_CONFIRMED_REMINDER_TEMPLATE = "acceptedTemplate18a8b61379b"; //TODO: need to update these...
-// export const STATUS_CONFIRMED_TEMPLATE = "acceptedTemplate18a8b61379b";
+// export const STATUS_CONFIRMED_TEMPLATE = "acceptedTemplate18a8b61379b"
 export const APPLICATION_CONFIRMATION_TEMPLATE = "application_confirmation_672541";
