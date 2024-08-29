@@ -5,4 +5,4 @@ The repository for all things ShellHacks. Need to:
 * Use Google Cloud or something simpler
 * Get the domain from namecheap (and UPE email) to INIT email
 * Add unit tests
-* Make open source for other hackathons 
+* Make open source for other hackathons
