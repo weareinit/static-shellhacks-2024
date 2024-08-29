@@ -18,14 +18,20 @@ import { ACCEPTED_REMINDER_TEMPLATE, ACCEPTED_TEMPLATE, APPLICATION_CONFIRMATION
 
 const s3Configuration: S3ClientConfig = {
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: "AKIAQ5O53R674C6PJ2KP",
+    secretAccessKey: "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",
   },
-  region: process.env.AWS_REGION!,
+  region: "us-east-2",
 };
 
 const s3Client = new S3Client(s3Configuration);
-const emailClient = new SESClient({ region: process.env.AWS_REGION! });
+const emailClient = new SESClient({
+  region: "us-east-2",
+  credentials: {
+    accessKeyId: "AKIAQ5O53R674C6PJ2KP",
+    secretAccessKey: "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",
+  },
+});
 
 /*
  * Uploads a resume to the S3 bucket and generates a thumbnail image
