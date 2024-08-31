@@ -3,11 +3,12 @@ import { adminFetchApplicantsSchema, applicantStatusChangeSchema } from "@/app/s
 import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
+import { env } from "@/env";
 
 export const dynamic = "auto";
 export const revalidate = 60;
 
-const HACKERS_API_KEY = process.env.HACKERS_API_KEY;
+const HACKERS_API_KEY = env.HACKERS_API_KEY;
 
 export const GET = auth(async (request) => {
   const authHeader = request.headers.get("Authorization");

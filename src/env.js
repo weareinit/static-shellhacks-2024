@@ -30,6 +30,7 @@ export const env = createEnv({
     ),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
+    HACKERS_API_KEY : z.string(),
   },
 
   /**
@@ -38,7 +39,8 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_NOTION_INTEGRATION_SECRET: z.string(),
+    NEXT_PUBLIC_NOTION_EVENTS_DB: z.string(),
   },
 
   /**
@@ -50,8 +52,12 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    HACKERS_API_KEY: process.env.HACKERS_API_KEY,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    NEXT_PUBLIC_NOTION_EVENTS_DB: process.env.NOTION_EVENTS_DB,
+    NEXT_PUBLIC_NOTION_INTEGRATION_SECRET: process.env.NOTION_INTEGRATION_SECRET,
+
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
