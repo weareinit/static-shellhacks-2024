@@ -5,6 +5,7 @@ import { downloadApplicantsCSV } from "@/app/util/downloadApplicantsCSV";
 import { sendComfirmAttendenceReminderEmail } from "@/app/util/sendConfirmAttendecReminderEmail";
 import { application_status_enums } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ApplicantSearchActionsProps {
@@ -16,6 +17,8 @@ interface ApplicantSearchActionsProps {
 export default function ApplicantSearchActions({ selectedApplicants, resetSelectedApplicants, filteredStatus }: ApplicantSearchActionsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+
+  const router = useRouter()
 
   const selectedStatusSet = new Set(Array.from(selectedApplicants).map((applicant) => applicant.application_status));
   const canAddToWave =
@@ -92,6 +95,9 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
         {/* Download CSV button */}
         <button onClick={handleDownloadCSV} disabled={isLoading} className="rounded-md bg-purple-500 p-2 text-center font-museo text-white  no-underline hover:bg-purple-600  hover:underline">
           {isLoading ? "loading..." : "Download CSV"}
+        </button>
+        <button onClick={() => router.push('/checkin')} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600 hover:underline">
+          Check In
         </button>
       </div>
     </div>
