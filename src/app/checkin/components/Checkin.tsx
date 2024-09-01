@@ -40,7 +40,7 @@ const CheckIn = () => {
 
       const eventsResponse = await fetch(`/api/hackers/${userId}/events`);
       if (!eventsResponse.ok) {
-        const errorMessage = await userResponse.text();
+        const errorMessage = await eventsResponse.text();
         throw new Error(errorMessage ?? "Failed to fetch user events");
       }
       const eventsData = await eventsResponse.json();
