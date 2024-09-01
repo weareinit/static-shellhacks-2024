@@ -31,7 +31,7 @@ const CheckInPage = async () => {
         </div>
         <div className="relative z-10 w-full">
           {/* Header */}
-          <div className="mb-10 grid w-full grid-cols-10 items-start text-center">
+          <div className="mb-4 grid w-full grid-cols-10 items-start text-center">
             <Link href="/admin">
               <CustomButton colorVariant={1} border>
                 <div className="flex items-center justify-center">

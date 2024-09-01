@@ -1,9 +1,9 @@
 "use server";
-import { Prisma } from "@prisma/client";
+import { application_status_enums, Prisma } from "@prisma/client";
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";
 
-const CHECKED_IN_EVENT_ID = "CheckedIn";
+const CHECKED_IN_EVENT_ID = "Check In";
 
 export const checkInUserToEvent = async (userId: string, eventId: string) => {
   try {
@@ -25,6 +25,20 @@ export const checkInUserToEvent = async (userId: string, eventId: string) => {
       },
     });
 
+    console.log(data.event_id);
+
+    if (eventId == CHECKED_IN_EVENT_ID) {
+      await db.hacker_Applications.update({
+        where: {
+          userId: userId,
+        },
+        data: {
+          application_status: application_status_enums.checked_in,
+          check_in_status: true,
+        },
+      });
+    }
+
     return NextResponse.json(data);
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -33,7 +47,6 @@ export const checkInUserToEvent = async (userId: string, eventId: string) => {
       }
     }
 
-    console.error(e);
     return new NextResponse("Error checking in user", { status: 500 });
   }
 };

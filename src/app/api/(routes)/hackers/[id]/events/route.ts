@@ -29,7 +29,7 @@ export const POST = auth(async (request, { params }) => {
 
   const id = params?.id as string;
 
-  const { eventId } = await request.json();
+  const { eventId } = (await request.json()) as { eventId: string };
 
   return await checkInUserToEvent(id, eventId);
 });
