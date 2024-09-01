@@ -23,6 +23,8 @@ export const env = createEnv({
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
     HACKERS_API_KEY: z.string(),
+    NOTION_EVENTS_DB: z.string(),
+    NOTION_INTEGRATION_SECRET: z.string(),
   },
 
   /**
@@ -30,10 +32,7 @@ export const env = createEnv({
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
    */
-  client: {
-    NEXT_PUBLIC_NOTION_INTEGRATION_SECRET: z.string(),
-    NEXT_PUBLIC_NOTION_EVENTS_DB: z.string(),
-  },
+  client: {},
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -47,8 +46,8 @@ export const env = createEnv({
     HACKERS_API_KEY: process.env.HACKERS_API_KEY,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-    NEXT_PUBLIC_NOTION_EVENTS_DB: process.env.NOTION_EVENTS_DB,
-    NEXT_PUBLIC_NOTION_INTEGRATION_SECRET: process.env.NOTION_INTEGRATION_SECRET,
+    NOTION_EVENTS_DB: process.env.NOTION_EVENTS_DB,
+    NOTION_INTEGRATION_SECRET: process.env.NOTION_INTEGRATION_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
