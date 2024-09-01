@@ -1,22 +1,21 @@
-"use client";
+"use server";
 
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../dashboard/components/CustomButton";
-import { useZxing } from "react-zxing";
-import EventsSelection from "../admin/components/EventsSelection";
+import { auth } from "@/server/auth";
+import { redirect } from "next/navigation";
+import CheckIn from "./components/Checkin";
 
-const CheckIn = () => {
-  const [result, setResult] = useState("");
-  const [currentSelection, setCurrentSelection] = useState("Check In");
-  const [checkInOptions, setCheckInOptions] = useState<Map<string, string[]>>(new Map());
+const CheckInPage = async () => {
+  const sess = await auth();
 
-  const { ref } = useZxing({
-    onResult(result) {
-      setResult(result.getText());
-    },
-  });
+  if (!sess?.user) {
+    redirect("/api/auth/signin");
+  } else if (!sess.user.admin) {
+    return <p>Not admin. If you recently received the role, log out and log in again.</p>;
+  }
 
   return (
     <div className="w-100 bg-[#89CED8]">
@@ -45,16 +44,11 @@ const CheckIn = () => {
             </Link>
             <p className="col-span-10 mt-4 font-zoonaji text-4xl text-darker_cyan sm:col-span-8 md:text-5xl lg:text-6xl">Check In</p>
           </div>
-          <EventsSelection currentSelection={currentSelection} setCurrentSelection={setCurrentSelection} checkInOptions={checkInOptions} setCheckInOptions={setCheckInOptions} />
-          <video ref={ref} />
-          <p>
-            <span>Last result:</span>
-            <span>{result}</span>
-          </p>
+          <CheckIn />
         </div>
       </div>
     </div>
   );
 };
 
-export default CheckIn;
+export default CheckInPage;
