@@ -1,5 +1,5 @@
 # Galactus
- 
+
 The repository for all things ShellHacks. Need to:
 * Get rid of vercel (too expensive, just use GH Actions)
 * Use Google Cloud or something simpler
