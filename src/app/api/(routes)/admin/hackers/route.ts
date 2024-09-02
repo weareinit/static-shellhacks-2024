@@ -3,12 +3,18 @@ import { adminFetchApplicantsSchema, applicantStatusChangeSchema } from "@/app/s
 import { db } from "@/server/db";
 import { generateApplicantCSV } from "@/app/util/generateApplicantCSV";
 import { auth } from "@/server/auth";
+import { env } from "@/env";
 
 export const dynamic = "auto";
 export const revalidate = 60;
 
+const HACKERS_API_KEY = env.HACKERS_API_KEY;
+
 export const GET = auth(async (request) => {
-  if (!request.auth || !request.auth.user.admin) {
+  const authHeader = request.headers.get("Authorization");
+  const isValidApiKey = authHeader === `${HACKERS_API_KEY}`;
+
+  if (!isValidApiKey && (!request.auth || !request.auth.user.admin)) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
@@ -28,6 +34,11 @@ export const GET = auth(async (request) => {
         select: {
           email: true,
           discordUsername: true,
+          accounts: {
+            select: {
+              providerAccountId: true,
+            },
+          },
         },
       },
     },
@@ -50,6 +61,15 @@ export const GET = auth(async (request) => {
               discordUsername: {
                 startsWith: searchParams,
                 mode: "insensitive",
+              },
+            },
+          },
+          {
+            user: {
+              accounts: {
+                some: {
+                  providerAccountId: { startsWith: searchParams, mode: "insensitive" },
+                },
               },
             },
           },

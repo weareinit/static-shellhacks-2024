@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@next/font": "13.1.6",
+    "@notionhq/client": "^2.2.15",
     "@prisma/client": "^5.12.0",
     "@t3-oss/env-nextjs": "^0.8.0",
     "@tanstack/react-query": "^5.45.0",

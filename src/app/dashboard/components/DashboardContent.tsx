@@ -68,7 +68,7 @@ export default async function DahsboardContent({ application }: { application: H
         </div>
 
         {/* QR Code */}
-        {application.application_status === application_status_enums.confirmed && (
+        {(application.application_status === application_status_enums.confirmed || application.application_status === application_status_enums.checked_in) && (
           <div className="col-span-8 lg:col-span-2">
             <HackerQRCode hacker_id={sess!.user.id} />
             <HackerGuide />

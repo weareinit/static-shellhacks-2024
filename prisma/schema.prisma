@@ -41,6 +41,16 @@ model Hacker_Applications {
   @@map("hacker_applications")
 }
 
+model EventsTracker {
+  id        Int      @id @default(autoincrement())
+  event_id  String
+  timestamp DateTime @default(now())
+  user_id   String   
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([event_id, user_id])
+}
+
 enum application_status_enums {
   registered
   in_wave
@@ -89,6 +99,7 @@ model User {
   sessions           Session[]
   hackerId           Int? //this ia a bit of a hack to add whether the user has registered to the nextauth session
   hacker_application Hacker_Applications?
+  events_tracker     EventsTracker[]
 }
 
 model VerificationToken {
