@@ -8,13 +8,15 @@ import { useZxing } from "react-zxing";
 import EventsSelection from "../../checkin/components/EventsSelection";
 import { applicantUpdateSchemaBase } from "@/app/schemas/applicantSchemas";
 import { z } from "zod";
+import { EventsArraySchema, type EventsArray, type CheckInPerEvent, EventCheckInStatsSchema } from "@/app/schemas/eventSchemas";
 
 const CheckIn = () => {
   const [result, setResult] = useState("");
   const [currentSelection, setCurrentSelection] = useState<string>("Check In");
   const [currentUser, setCurrentUser] = useState<z.infer<typeof applicantUpdateSchemaBase> | null>(null);
-  // const [userEvents, setUserEvents] = useState<any[]>([]);
+  const [userEvents, setUserEvents] = useState<EventsArray[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
+  const [eventStats, setEventStats] = useState<CheckInPerEvent | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,6 +28,41 @@ const CheckIn = () => {
     },
   });
 
+  const fetchEventCheckins = async (eventId: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/events/checkins");
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage ?? "Failed to fetch event statistics");
+      }
+
+      const data = (await response.json()) as unknown;
+
+      const validatedStats = EventCheckInStatsSchema.parse(data);
+      const eventStats = validatedStats.checkInsPerEvent.find((event) => event.event_id === eventId);
+
+      if (eventStats) {
+        setEventStats(eventStats);
+      } else {
+        setEventStats({ event_id: eventId, checkInCount: 0 });
+      }
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error("Validation error:", err.errors);
+        setError("Received invalid data from the server");
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const fetchUserData = async (userId: string) => {
     setIsLoading(true);
     setError(null);
@@ -35,7 +72,7 @@ const CheckIn = () => {
         const errorMessage = await userResponse.text();
         throw new Error(errorMessage ?? "Failed to fetch user data");
       }
-      const userData = await userResponse.json();
+      const userData = (await userResponse.json()) as unknown;
       setCurrentUser(userData);
 
       const eventsResponse = await fetch(`/api/hackers/${userId}/events`);
@@ -43,14 +80,21 @@ const CheckIn = () => {
         const errorMessage = await eventsResponse.text();
         throw new Error(errorMessage ?? "Failed to fetch user events");
       }
-      const eventsData = await eventsResponse.json();
-      // setUserEvents(eventsData);
+      const eventsData = (await eventsResponse.json()) as unknown;
+
+      setUserEvents(eventsData.events);
     } catch (err) {
       setError(`${(err as Error).message}`);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (currentSelection) {
+      void fetchEventCheckins(currentSelection);
+    }
+  }, [currentSelection]);
 
   const handleCheckIn = async () => {
     if (!currentUser || !currentSelection) return;
@@ -74,11 +118,10 @@ const CheckIn = () => {
 
       setSuccess("Successfully checked in!");
 
-      // Reset current user after successful check-in
       setCurrentUser(null);
-      // setUserEvents([]);
+      setUserEvents([]);
     } catch (err) {
-      setError(`${err.message}`);
+      setError(`${(err as Error).message}`);
     } finally {
       setIsLoading(false);
     }
@@ -93,6 +136,63 @@ const CheckIn = () => {
           <video ref={ref} className="h-full w-full object-cover" />
         </div>
 
+        {eventStats && (
+          <p className="mt-2 font-museo text-darker_cyan">
+            <span>{eventStats.checkInCount} hackers checked in</span>
+          </p>
+        )}
+
+        {currentUser && (
+          <div className="mt-6 w-full rounded-lg border border-gray-200 bg-white px-6 pb-5 shadow-sm">
+            <h3 className="mb-3 mt-6 font-museo text-lg">Hacker:</h3>
+            <h2 className="mb-4 text-sm font-bold">{currentUser.name}</h2>
+            <div className="space-y-2 font-museo text-sm text-gray-700">
+              <p>
+                <span className="font-semibold">Name:</span> {currentUser.first_name} {currentUser.last_name}
+              </p>
+              <p>
+                <span className="font-sm font-semibold">School:</span> {currentUser.school}
+              </p>
+              <p>
+                <span className="font-semibold">Major:</span> {currentUser.major}
+              </p>
+              <p>
+                <span className="font-semibold">Graduation Year:</span> {currentUser.grad_year}
+              </p>
+            </div>
+            {userEvents.length > 0 && (
+              <>
+                <h3 className="mb-3 mt-6 font-museo text-lg">
+                  Events:{" "}
+                  <a target="_blank" href="https://www.notion.so/weareinit/Events-Check-in-bb95444dd469464395880c6e01c1681b?pvs=4" className="pl-1">
+                    <span className="font-sans text-xs font-semibold text-blue-600 underline">See SH-ID Event Name</span>
+                  </a>
+                </h3>
+                <ul className="space-y-2">
+                  <ul className="grid grid-cols-1 gap-4">
+                    {userEvents.map((event) => (
+                      <li key={event.event_id} className="flex items-center justify-between rounded bg-gray-50 p-4 shadow">
+                        <span className="text-sm font-semibold">{event.event_id}</span>
+                        <span className="text-sm text-gray-500">
+                          {new Date(event.timestamp).toLocaleString("en-us", {
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                          })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="fixed bottom-6 left-0 flex w-full flex-col justify-center gap-2 font-museo">
         {isLoading && (
           <div className="mt-2 flex items-center justify-center space-x-2 text-gray-600">
             <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
@@ -113,7 +213,7 @@ const CheckIn = () => {
         )}
 
         {success && (
-          <div className="mt-2 flex items-center justify-center space-x-2 text-green-600">
+          <div className="mt-2 flex items-center justify-center space-x-2">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -121,54 +221,19 @@ const CheckIn = () => {
           </div>
         )}
 
-        {currentUser && (
-          <div className="mt-6 w-full rounded-lg border border-gray-200 bg-white px-6 pb-5 shadow-sm">
-            <h2 className="mb-4 text-sm font-bold">{currentUser.name}</h2>
-            <div className="space-y-2 font-museo text-sm text-gray-700">
-              <p>
-                <span className="font-semibold">Name:</span> {currentUser.first_name} {currentUser.last_name}
-              </p>
-              <p>
-                <span className="font-sm font-semibold">School:</span> {currentUser.school}
-              </p>
-              <p>
-                <span className="font-semibold">Major:</span> {currentUser.major}
-              </p>
-              <p>
-                <span className="font-semibold">Graduation Year:</span> {currentUser.grad_year}
-              </p>
-            </div>
-            {/* {userEvents.length > 0 && (
-              <>
-                <h3 className="mb-3 mt-6 text-xl font-semibold">Events:</h3>
-                <ul className="space-y-2">
-                  <ul className="grid grid-cols-1 gap-4">
-                    {userEvents.map((event) => (
-                      <li key={event.event_id} className="flex items-center justify-between rounded bg-gray-50 p-4 shadow">
-                        <span className="text-sm font-semibold">{event.event_id}</span>
-                        <span className="text-sm text-gray-500">{event.timestamp}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </ul>
-              </>
-            )} */}
-          </div>
-        )}
-      </div>
-
-      <div className="fixed bottom-6 left-0 flex w-full justify-center font-museo">
-        <button
-          title="Check In"
-          className={`
+        <div className="flex items-center justify-center  text-green-600">
+          <button
+            title="Check In"
+            className={`
         rounded-lg px-6 py-3 font-bold text-white shadow-lg transition-all
         ${currentUser ? "bg-green-500 hover:bg-green-600 active:bg-green-700" : "cursor-not-allowed bg-gray-300"}
       `}
-          onClick={handleCheckIn}
-          disabled={!currentUser}
-        >
-          {currentUser ? "Check In" : "Scan QR Code"}
-        </button>
+            onClick={handleCheckIn}
+            disabled={!currentUser}
+          >
+            {currentUser ? "Check In" : "Scan QR Code"}
+          </button>
+        </div>
       </div>
     </div>
   );
