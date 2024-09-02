@@ -60,7 +60,7 @@ const EventsSelection: React.FC<EventsSelectionProps> = ({ currentSelection, set
         const newCheckInOptions = new Map<"Meal" | "Workshop" | "Swag" | "Check In", HackerEvent[]>();
         newCheckInOptions.set("Check In", []); // Add empty array for Check In
         data.results.forEach((event: HackerEvent) => {
-          const eventType = event.properties.Type.select.name as "Meal" | "Workshop" | "Swag";
+          const eventType = !event.properties?.Type?.select?.name ? "Workshop" : (event.properties.Type.select?.name as "Meal" | "Workshop" | "Swag");
           if (!newCheckInOptions.has(eventType)) {
             newCheckInOptions.set(eventType, []);
           }
@@ -68,7 +68,7 @@ const EventsSelection: React.FC<EventsSelectionProps> = ({ currentSelection, set
         });
         setCheckInOptions(newCheckInOptions);
       } catch (error) {
-        setError("Failed to load events. Please try again later.");
+        setError(`Failed to load events. ${error.message} Please try again later.`);
       } finally {
         setIsLoading(false);
       }
