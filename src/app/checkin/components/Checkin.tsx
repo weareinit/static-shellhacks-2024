@@ -126,7 +126,7 @@ const CheckIn = () => {
             <h2 className="mb-4 text-sm font-bold">{currentUser.name}</h2>
             <div className="space-y-2 font-museo text-sm text-gray-700">
               <p>
-                <span className="font-semibold">Name:</span> {currentUser.first_name}
+                <span className="font-semibold">Name:</span> {currentUser.first_name} {currentUser.last_name}
               </p>
               <p>
                 <span className="font-sm font-semibold">School:</span> {currentUser.school}
