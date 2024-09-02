@@ -2,7 +2,7 @@ import { application_status_enums } from "@prisma/client";
 
 export const APPLICATION_STATUS_NAME_MAPPING: Record<string, string> = {
   [application_status_enums.registered]: "Applied",
-  [application_status_enums.in_wave]: "Applied",
+  [application_status_enums.in_wave]: "In Wave",
   [application_status_enums.accepted]: "Accepted",
   [application_status_enums.confirmed]: "Confirmed",
   [application_status_enums.withdrawn]: "Withdrawn",
