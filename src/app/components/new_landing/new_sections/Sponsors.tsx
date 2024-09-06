@@ -81,8 +81,13 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="Knight Foundation" src="/assets/sponsors/KF.svg" className="object-contain" />
           </div>
-          <div className="aspect-content aspect-w-1 aspect-h-1 col-span-2 w-3/5 place-self-center sm:col-span-3">
-            <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" className="m-auto object-contain text-center" />
+          <div className="text-center m-auto gap-10 flex sm:col-span-3 col-span-2 md:gap-20">
+            <div className="col-span-1 relative right-6 sm:right-12">
+              <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" />
+            </div>
+            <div className="col-span-1">
+              <Image width={150} height={150} alt="Miami Tech Works" src="/assets/sponsors/Miami_Tech_Works.svg" />
+            </div>
           </div>
         </div>
 
