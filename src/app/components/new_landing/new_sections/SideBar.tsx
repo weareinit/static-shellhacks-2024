@@ -55,33 +55,32 @@ function SideBar() {
         ></div>
       )}
       <div
-        className={`fixed left-0 top-0 z-[100] h-full w-[75%] max-w-xs bg-nav_bar_brown p-4 transition-transform duration-300 ease-in-out ${
-          isActive ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed left-0 top-0 z-[100] h-full w-[75%] max-w-xs bg-nav_bar_brown p-4 transition-transform duration-300 ease-in-out ${isActive ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col items-start">
-          <a href="#about-us">
+          <a href="#about-us" onClick={() => setActive(!isActive)}>
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               About Us
             </button>
           </a>
-          <a href="#faqs">
+          <a href="#faqs" onClick={() => setActive(!isActive)}>
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               FAQs
             </button>
           </a>
-          <a href="#organizers">
+          <a href="#organizers" onClick={() => setActive(!isActive)}>
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               Organizers
             </button>
           </a>
-          <a href="#sponsors">
+          <a href="#sponsors" onClick={() => setActive(!isActive)}>
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-english_walnut transition ease-in-out hover:-translate-y-1">
               Sponsors
             </button>
           </a>
 
-          <Link href="/dashboard">
+          <Link href="/dashboard" onClick={() => setActive(!isActive)}>
             <button className="mb-4 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1">
               Hacker Dashboard
             </button>
@@ -92,9 +91,9 @@ function SideBar() {
                 session
                   ? openModal
                   : () =>
-                      signIn("discord", {
-                        callbackUrl: "/?show_register=true",
-                      })
+                    signIn("discord", {
+                      callbackUrl: "/?show_register=true",
+                    })
               }
               className="px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1"
             >
