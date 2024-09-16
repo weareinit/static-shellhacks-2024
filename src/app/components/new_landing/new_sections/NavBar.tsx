@@ -1,19 +1,11 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import RegisterModal from "../../registration/RegisterModal";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
 
 function NavBar() {
   const [isActive, setActive] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-
-  const { data: session } = useSession();
 
   const content = (
     <div className="w-full justify-center xxs:hidden sm:flex">
@@ -91,24 +83,6 @@ function NavBar() {
                 Hacker Dashboard
               </button>
             </Link>
-            {(!session || !session.user.hacker_id) && (
-              <button
-                onClick={
-                  session
-                    ? openModal
-                    : () =>
-                        signIn("discord", {
-                          callbackUrl: "/?show_register=true",
-                        })
-                }
-                className="delay-80 px-4 py-2 font-zoonaji text-xl text-darker_cyan underline transition ease-in-out hover:-translate-y-1 
-              xxs:text-sm xsm:text-lg sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
-              >
-                Apply!
-              </button>
-            )}
-
-            {isModalOpen && <RegisterModal toClose={closeModal} />}
           </div>
         </div>
       </div>
