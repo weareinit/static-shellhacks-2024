@@ -1,25 +1,22 @@
 "use server";
 import React from "react";
-import Image, { StaticImageData } from "next/image";
-// import HackerGuide from "@/app/components/sections/HackerGuide";
-// import { useHackerGuideContext } from "@/app/hooks/ShowHackerGuideContext";
+import Image from "next/image";
 
 import DahsboardContent from "./components/DashboardContent";
 import Link from "next/link";
 import { CustomButton } from "./components/CustomButton";
 import { auth, signIn } from "@/server/auth";
-import { redirect } from "next/navigation";
 import { getHackerApplicationFromId } from "../api/(logic)/getUserFromId";
 import { Hacker_Applications } from "@prisma/client";
 import {
-  dinosaurNames,
   underwaterDinosaurNames,
 } from "../constants/dinosaurNames";
+import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
   const randomDino =
     underwaterDinosaurNames[
-      Math.floor(Math.random() * underwaterDinosaurNames.length)
+    Math.floor(Math.random() * underwaterDinosaurNames.length)
     ];
   const sess = await auth();
 
@@ -30,7 +27,7 @@ const Dashboard = async () => {
   const hackerAppRaw = await getHackerApplicationFromId(sess!.user.id);
 
   if (!hackerAppRaw.ok) {
-    return redirect("/?show_register=true");
+    redirect("/")
   }
 
   const application = (await hackerAppRaw.json()) as Hacker_Applications;

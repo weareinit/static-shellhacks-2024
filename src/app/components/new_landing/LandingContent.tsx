@@ -1,8 +1,8 @@
 import Image from "next/image";
-import LandingButtons from "./LandingButtons";
 import { FaDiscord, FaLinkedin } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import Link from "next/link";
+import LandingButtons from "./LandingButtons";
 
 const LandingContent = () => {
   return (
