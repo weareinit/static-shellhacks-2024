@@ -18,11 +18,12 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
-  const router = useRouter()
+  const router = useRouter();
 
   const selectedStatusSet = new Set(Array.from(selectedApplicants).map((applicant) => applicant.application_status));
   const canAddToWave =
     selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.waitlisted, application_status_enums.registered].includes(status as any));
+  const canWaitlist = selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.registered, application_status_enums.withdrawn].includes(status as any));
 
   const handleChangeAppStatus = async (status: application_status_enums) => {
     if (isLoading) return;
@@ -77,6 +78,15 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
             {isLoading ? "loading..." : `Add ${selectedApplicants.size} to wave`}
           </button>
         )}
+        {canWaitlist && (
+          <button
+            onClick={() => handleChangeAppStatus(application_status_enums.waitlisted)}
+            className="rounded-md bg-gray-600 p-2 text-center font-museo text-white  no-underline hover:bg-gray-700  hover:underline"
+            disabled={isLoading}
+          >
+            {isLoading ? "loading..." : `Waitlist ${selectedApplicants.size}`}
+          </button>
+        )}
 
         {/* Accept wave button */}
         {filteredStatus === application_status_enums.in_wave && (
@@ -96,7 +106,7 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
         <button onClick={handleDownloadCSV} disabled={isLoading} className="rounded-md bg-purple-500 p-2 text-center font-museo text-white  no-underline hover:bg-purple-600  hover:underline">
           {isLoading ? "loading..." : "Download CSV"}
         </button>
-        <button onClick={() => router.push('/checkin')} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600 hover:underline">
+        <button onClick={() => router.push("/checkin")} className="rounded-md bg-blue-500 p-2 text-center font-museo text-white  no-underline hover:bg-blue-600 hover:underline">
           Check In
         </button>
       </div>
