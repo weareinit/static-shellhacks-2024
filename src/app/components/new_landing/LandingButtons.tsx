@@ -1,9 +1,18 @@
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
+import RegisterModal from "../registration/RegisterModal";
+import { signOut, useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const LandingButtons = () => {
-  const { data: sess } = useSession()
+  const { data: sess } = useSession();
 
+  const searchParams = useSearchParams();
+  const showRegister = searchParams.get("some_super_secret_param");
+
+  const [isModalOpen, setModalOpen] = useState<boolean>(showRegister === "true");
+
+  const closeModal = () => setModalOpen(false);
   return (
     <div className="flex flex-col items-center gap-5 text-center xxs:mt-7 sm:mt-6 md:mt-4 lg:mt-8 xlg:mt-10 xxl:mt-12 xxl:gap-10 ">
       {
@@ -21,6 +30,7 @@ const LandingButtons = () => {
             </div>
           </Link>
       }
+      {isModalOpen && <RegisterModal toClose={closeModal} />}
       {sess && (
         <div
           onClick={() => signOut({ callbackUrl: "/" })}
@@ -31,8 +41,7 @@ const LandingButtons = () => {
           <p>SIGN OUT</p>
         </div>
       )}
-    </div>
-  );
+    </div>);
 };
 
-export default LandingButtons;
+export default LandingButtons
