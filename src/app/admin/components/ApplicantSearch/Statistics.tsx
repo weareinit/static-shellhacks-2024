@@ -1,6 +1,6 @@
 "use client";
 
-import { APPLICATION_STATUS_NAME_MAPPING } from "@/app/constants/applicationConstants";
+import { APPLICATION_STATUS_NAME_MAPPING, APPLICATION_STATUS_COLOR_MAPPING } from "@/app/constants/applicationConstants";
 import { StatsData } from "../FilteredApplicantSearchView";
 
 const Statistics = ({ stats }: { stats: StatsData | null }) => {
@@ -20,7 +20,7 @@ const Statistics = ({ stats }: { stats: StatsData | null }) => {
           <p className="font-zoonaji text-xl font-bold">Registrations by Status</p>
           {stats.registeredByStatus.map((cntByStatus, index) => {
             return (
-              <p key={index} className="text-md font-museo">
+              <p key={index} className={`text-md font-museo`} style={{ color: APPLICATION_STATUS_COLOR_MAPPING[cntByStatus.application_status] }}>
                 {APPLICATION_STATUS_NAME_MAPPING[cntByStatus.application_status]}: {cntByStatus._count.application_status || 0}
               </p>
             );
