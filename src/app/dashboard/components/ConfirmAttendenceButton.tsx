@@ -17,7 +17,7 @@ export default function ConfirmAttendenceButton({ id }: { id: number }) {
 
   return (
     <button className="cursor-pointer font-zoonaji text-2xl text-blue-500 underline hover:text-blue-600" onClick={handleWithdrawApplication}>
-      {isConfirming ? "Confirming..." : "Confirm Attendence"}
+      {isConfirming ? "Confirming..." : "Confirm Attendance"}
     </button>
   );
 }

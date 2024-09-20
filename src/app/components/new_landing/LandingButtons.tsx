@@ -2,13 +2,17 @@ import Link from "next/link";
 import { useState } from "react";
 import RegisterModal from "../registration/RegisterModal";
 import { signOut, useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 const LandingButtons = () => {
   const { data: sess } = useSession();
 
   const searchParams = useSearchParams();
   const showRegister = searchParams.get("some_super_secret_param");
+
+  if (showRegister === 'true' && !sess) {
+    redirect('/')
+  }
 
   const [isModalOpen, setModalOpen] = useState<boolean>(showRegister === "true");
 
