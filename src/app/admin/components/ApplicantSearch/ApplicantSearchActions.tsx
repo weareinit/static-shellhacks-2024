@@ -22,7 +22,8 @@ export default function ApplicantSearchActions({ selectedApplicants, resetSelect
 
   const selectedStatusSet = new Set(Array.from(selectedApplicants).map((applicant) => applicant.application_status));
   const canAddToWave =
-    selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.waitlisted, application_status_enums.registered].includes(status as any));
+    selectedStatusSet.size > 0 &&
+    Array.from(selectedStatusSet).every((status) => [application_status_enums.waitlisted, application_status_enums.accepted, application_status_enums.registered].includes(status as any));
   const canWaitlist = selectedStatusSet.size > 0 && Array.from(selectedStatusSet).every((status) => [application_status_enums.registered, application_status_enums.withdrawn].includes(status as any));
 
   const handleChangeAppStatus = async (status: application_status_enums) => {
