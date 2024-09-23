@@ -7,13 +7,19 @@ const Sponsors = () => {
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10]" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="3xl:hidden relative z-[-10]" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] sm:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden min-[410px]:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] lg:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden min-[410px]:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] min-[410px]:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden xsm:block sm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] xsm:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden xsm:block lg:hidden" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10]" />
+      <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden min-[1100px]:block" />
       <Image src="/assets/new/background/lava/Stone.png" layout="responsive" width={1789} height={974} alt="Bedrock background" className="relative z-[-10] hidden lg:block min-[1440px]:hidden" />
 
       <div className="absolute inset-0 flex flex-col items-center justify-start">
@@ -44,7 +50,7 @@ const Sponsors = () => {
           Community Partners
         </h1>
 
-        <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-8 xxs:mt-8 sm:mt-0 sm:grid-cols-3">
+        <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-8 xxs:mt-8 sm:mt-0 sm:grid-cols-3 min-[900px]:mb-[50px]">
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="init_MDC" src="/assets/sponsors/INIT_MDC.svg" className="object-contain pt-2" />
           </div>
@@ -72,7 +78,7 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="knighthacks" src="/assets/sponsors/KnightHacks.svg" className="object-contain" />
           </div>
-          <div className="aspect-content aspect-w-1 aspect-h-1">
+          <div className="aspect-content aspect-w-1 aspect-h-1 xsm:scale-[1.2]">
             <Image width={350} height={200} alt="hackabull" src="/assets/sponsors/Hackabull.svg" className="object-contain" />
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
@@ -81,13 +87,32 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="Knight Foundation" src="/assets/sponsors/KF.svg" className="object-contain" />
           </div>
-          <div className="text-center m-auto gap-10 flex sm:col-span-3 col-span-2 md:gap-20">
-            <div className="col-span-1 relative right-6 sm:right-12">
-              <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" />
-            </div>
-            <div className="col-span-1">
-              <Image width={150} height={150} alt="Miami Tech Works" src="/assets/sponsors/Miami_Tech_Works.svg" />
-            </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:-mt-[20px]">
+            <Image width={80} height={150} alt="Magic Miami" src="/assets/sponsors/Magic_Miami.png" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:-mt-[20px]">
+            <Image width={80} height={150} alt="NSBE" src="/assets/sponsors/NSBE.svg" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:my-[30px] min-[1100px]:-mt-[10px]">
+            <Image width={50} height={100} alt="FIU ECO Engineering" src="/assets/sponsors/FIU_Eco_Engineering.svg" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+            <Image width={50} height={100} alt="Open Source" src="/assets/sponsors/Open_Source.svg" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+            <Image width={50} height={100} alt="AIS" src="/assets/sponsors/AIS.svg" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+            <Image width={50} height={100} alt="SEDS" src="/assets/sponsors/SEDS.svg" />
+          </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:mt-6">
+            <Image width={100} height={100} alt="WiCYs" src="/assets/sponsors/WiCYs.svg" />
+          </div>
+          <div className="xsm:scale-[1.1] min-[1100px]:mt-6">
+            <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" />
+          </div>
+          <div className="col-span-2 sm:col-span-1 xsm:scale-[1.3] min-[1100px]:mt-6">
+            <Image width={100} height={150} alt="Miami Tech Works" src="/assets/sponsors/Miami_Tech_Works.svg" />
           </div>
         </div>
 
@@ -183,6 +208,21 @@ const TIER_THREE_SPONSORS = () => {
       className: "md:scale-105",
     },
     {
+      name: "Cafe Cultura",
+      image: "/assets/sponsors/Cafe_Cultura.svg",
+      className: "scale-90"
+    },
+    {
+      name: "Geeks for Geeks",
+      image: "/assets/sponsors/GeeksForGeeks.png",
+      className: "scale-[0.5]"
+    },
+    {
+      name: "Chainguard",
+      image: "/assets/sponsors/Chainguard.png",
+      className: "mb-3 -mt-3"
+    },
+    {
       name: "Chevron",
       image: "/assets/sponsors/Chevron.svg",
       className: "scale-110",
@@ -239,7 +279,7 @@ const TIER_THREE_SPONSORS = () => {
       image: "/assets/sponsors/Snap.svg",
       width: 45,
       height: 100,
-      className: "md:scale-150 sm:scale-125 lg:scale-[1.75]",
+      className: "md:scale-150 sm:scale-[1.5] xsm:scale-[1.2] lg:scale-[1.75]",
     },
     {
       name: "ETH Miami",
@@ -251,7 +291,6 @@ const TIER_THREE_SPONSORS = () => {
     {
       name: "GitHub",
       image: "/assets/sponsors/GitHub.svg",
-      last: true,
       className: "lg:mt-2",
     },
   ];
