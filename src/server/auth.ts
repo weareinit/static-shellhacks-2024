@@ -7,7 +7,7 @@ import { db } from "@/server/db";
 
 const INIT_DISCORD_ID = "245393533391863808";
 //maybe we want to update this with a specific 'shellhacks-only' role in the future
-const INIT_EBOARD_ROLE = "1061212827785900103";
+const INIT_EBOARD_ROLE = "399558426511802368";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
