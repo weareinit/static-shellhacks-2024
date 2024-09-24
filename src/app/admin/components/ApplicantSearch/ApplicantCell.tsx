@@ -126,7 +126,7 @@ export default function ApplicantCell({ applicant, handleSelectApplicant, isSele
                 </button>
               )}
 
-              {["accepted", "confirmed"].includes(applicant.application_status!) && (
+              {["accepted", "confirmed", "waitlisted"].includes(applicant.application_status!) && (
                 <button onClick={() => setAppStatus("checked_in")} className="rounded-md bg-red-500 p-2 text-center font-museo text-white  no-underline hover:bg-red-600  hover:underline">
                   {isSaving ? "Loading..." : "Check In"}
                 </button>
