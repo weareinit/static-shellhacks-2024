@@ -6,3 +6,4 @@ The repository for all things ShellHacks. Need to:
 * Get the domain from namecheap (and UPE email) to INIT email
 * Add unit tests
 * Make open source for other hackathons
+* 
