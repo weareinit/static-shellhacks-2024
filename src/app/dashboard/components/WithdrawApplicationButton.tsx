@@ -8,9 +8,7 @@ export default function WithdrawApplicationButton({ id }: { id: number }) {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
   const handleWithdrawApplication = async () => {
-    const confirmation = confirm(
-      "Are you sure you want to withdraw your application? This action can't be undone and you won't be able to reapply.",
-    );
+    const confirmation = confirm("Are you sure you want to withdraw your application? This action can't be undone and you won't be able to reapply.");
     if (!confirmation) return;
 
     setIsWithdrawing(true);
@@ -21,12 +19,11 @@ export default function WithdrawApplicationButton({ id }: { id: number }) {
   };
 
   return (
-    <button
-      type="submit"
-      className="cursor-pointer font-zoonaji text-2xl text-red-600 underline"
-      onClick={handleWithdrawApplication}
-    >
-      {isWithdrawing ? "Withdrawing..." : "Withdraw Application"}
-    </button>
+    <>
+      <button className="cursor-not-allowed font-zoonaji text-2xl text-gray-400 underline" disabled>
+        {isWithdrawing ? "Withdrawing..." : "Withdraw Application"}
+      </button>
+      <p className="font-museo">We&apos;re no longer accepting withdrawals to prevent miss-clicks!</p>
+    </>
   );
 }
