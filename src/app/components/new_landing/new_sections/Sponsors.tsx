@@ -105,13 +105,16 @@ const Sponsors = () => {
           <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
             <Image width={50} height={100} alt="SEDS" src="/assets/sponsors/SEDS.svg" />
           </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+            <Image width={50} height={100} alt="DSI" src="/assets/sponsors/DSI.svg" />
+          </div>
           <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:mt-6">
             <Image width={100} height={100} alt="WiCYs" src="/assets/sponsors/WiCYs.png" />
           </div>
           <div className="xsm:scale-[1.1] min-[1100px]:mt-6">
             <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" />
           </div>
-          <div className="col-span-2 sm:col-span-1 xsm:scale-[1.3] min-[1100px]:mt-6">
+          <div className="sm:col-span-3 xsm:scale-[1.3] min-[1100px]:mt-6">
             <Image width={100} height={150} alt="Miami Tech Works" src="/assets/sponsors/Miami_Tech_Works.svg" />
           </div>
         </div>
