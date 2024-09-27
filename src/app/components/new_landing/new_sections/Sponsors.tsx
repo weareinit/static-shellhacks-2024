@@ -40,9 +40,6 @@ const Sponsors = () => {
         <div className="mx-10 grid auto-rows-auto grid-cols-2 place-items-center gap-4 xxs:mt-8 xsm:grid-cols-3 sm:mt-0">
           <TIER_THREE_SPONSORS />
         </div>
-        <p className="m-5 mb-8 font-museo text-2xl text-white xxs:mt-7 xxs:text-[13px] xsm:-mb-8 xsm:text-[15px] sm:mb-8 sm:text-[15px] md:text-[20px] lg:mt-16 lg:text-[25px] xxl:text-[30px]">
-          More sponsors to be revealed soon...
-        </p>
         <h1
           id="sponsors"
           className="xss:my-0 mt-32 font-zoonaji text-[60px] text-pastel_orange xxs:text-[25px] xsm:text-[30px] sm:mb-1 sm:text-[40px] md:text-[50px] lg:mb-6 lg:text-[60px] xxl:mb-12 xxl:mt-[100px] xxl:text-[80px]"
@@ -211,21 +208,6 @@ const TIER_THREE_SPONSORS = () => {
       className: "md:scale-105",
     },
     {
-      name: "Cafe Cultura",
-      image: "/assets/sponsors/Cafe_Cultura.svg",
-      className: "scale-90"
-    },
-    {
-      name: "Geeks for Geeks",
-      image: "/assets/sponsors/GeeksForGeeks.png",
-      className: "scale-[0.5]"
-    },
-    {
-      name: "Chainguard",
-      image: "/assets/sponsors/Chainguard.png",
-      className: "mb-3 -mt-3"
-    },
-    {
       name: "Chevron",
       image: "/assets/sponsors/Chevron.svg",
       className: "scale-110",
@@ -285,16 +267,31 @@ const TIER_THREE_SPONSORS = () => {
       className: "md:scale-150 sm:scale-[1.5] xsm:scale-[1.2] lg:scale-[1.75]",
     },
     {
+      name: "GitHub",
+      image: "/assets/sponsors/GitHub.svg",
+      className: "lg:mt-2",
+    },
+    {
+      name: "Cafe Cultura",
+      image: "/assets/sponsors/Cafe_Cultura.svg",
+      className: "scale-[0.6]"
+    },
+    {
+      name: "Geeks for Geeks",
+      image: "/assets/sponsors/GeeksForGeeks.png",
+      className: "scale-[0.3] -my-8"
+    },
+    {
+      name: "Chainguard",
+      image: "/assets/sponsors/Chainguard.png",
+      className: "relative -mb-6 -mt-6 scale-[0.7]"
+    },
+    {
       name: "ETH Miami",
       image: "/assets/sponsors/ETH_Miami.svg",
       width: 100,
       height: 100,
       className: "md:scale-150 sm:scale-150 lg:scale-[2.2]",
-    },
-    {
-      name: "GitHub",
-      image: "/assets/sponsors/GitHub.svg",
-      className: "lg:mt-2",
     },
   ];
 
