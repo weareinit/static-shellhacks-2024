@@ -69,6 +69,9 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="lab22c" src="/assets/sponsors/Lab22c.svg" className="object-contain" />
           </div>
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+            <Image width={350} height={200} alt="WiCS" src="/assets/sponsors/WiCS.svg" />
+          </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="FIU_CEC" src="/assets/sponsors/FIU_CEC.svg" className="object-contain" />
           </div>
@@ -84,13 +87,13 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="Knight Foundation" src="/assets/sponsors/KF.svg" className="object-contain" />
           </div>
-          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:-mt-[20px]">
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:-mt-[20px] min-[1100px]:scale-[1.6]">
             <Image width={80} height={150} alt="Magic Miami" src="/assets/sponsors/Magic_Miami.png" />
           </div>
-          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:-mt-[20px]">
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:-mt-[20px] min-[1100px]:scale-[1.6]">
             <Image width={80} height={150} alt="NSBE" src="/assets/sponsors/NSBE.svg" />
           </div>
-          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:my-[30px] min-[1100px]:-mt-[10px]">
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:my-[30px] min-[1100px]:-mt-[10px] min-[1100px]:scale-[1.6]">
             <Image width={50} height={100} alt="FIU ECO Engineering" src="/assets/sponsors/FIU_Eco_Engineering.svg" />
           </div>
           <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
@@ -105,13 +108,13 @@ const Sponsors = () => {
           <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
             <Image width={50} height={100} alt="DSI" src="/assets/sponsors/DSI.svg" />
           </div>
-          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6] min-[1100px]:mt-6">
+          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:mt-6 min-[1100px]:scale-[1.6]">
             <Image width={100} height={100} alt="WiCYs" src="/assets/sponsors/WiCYs.png" />
           </div>
-          <div className="xsm:scale-[1.1] min-[1100px]:mt-6">
+          <div className="xsm:scale-[1.2] min-[1100px]:mt-6">
             <Image width={250} height={150} alt="SwampHacks" src="/assets/sponsors/SwampHacks.svg" />
           </div>
-          <div className="sm:col-span-3 xsm:scale-[1.3] min-[1100px]:mt-6">
+          <div className="xsm:scale-[1.3]  min-[1100px]:mt-6">
             <Image width={100} height={150} alt="Miami Tech Works" src="/assets/sponsors/Miami_Tech_Works.svg" />
           </div>
         </div>
@@ -274,17 +277,17 @@ const TIER_THREE_SPONSORS = () => {
     {
       name: "Cafe Cultura",
       image: "/assets/sponsors/Cafe_Cultura.svg",
-      className: "scale-[0.6]"
+      className: "scale-[0.6]",
     },
     {
       name: "Geeks for Geeks",
       image: "/assets/sponsors/GeeksForGeeks.png",
-      className: "scale-[0.3] -my-8"
+      className: "scale-[0.3] -my-8",
     },
     {
       name: "Chainguard",
       image: "/assets/sponsors/Chainguard.png",
-      className: "relative -mb-6 -mt-6 scale-[0.7]"
+      className: "relative -mb-6 -mt-6 scale-[0.7]",
     },
     {
       name: "ETH Miami",
