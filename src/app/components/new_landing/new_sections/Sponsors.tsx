@@ -69,7 +69,7 @@ const Sponsors = () => {
           <div className="aspect-content aspect-w-1 aspect-h-1">
             <Image width={350} height={200} alt="lab22c" src="/assets/sponsors/Lab22c.svg" className="object-contain" />
           </div>
-          <div className="col-span-1 xsm:scale-[1.3] min-[1100px]:scale-[1.6]">
+          <div className="col-span-1 scale-[0.6]">
             <Image width={350} height={200} alt="WiCS" src="/assets/sponsors/WiCS.svg" />
           </div>
           <div className="aspect-content aspect-w-1 aspect-h-1">
