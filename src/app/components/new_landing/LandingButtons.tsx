@@ -1,50 +1,9 @@
-import Link from "next/link";
-import { useState } from "react";
-import RegisterModal from "../registration/RegisterModal";
-import { signOut, useSession } from "next-auth/react";
-import { redirect, useSearchParams } from "next/navigation";
-
 const LandingButtons = () => {
-  const { data: sess } = useSession();
-
-  const searchParams = useSearchParams();
-  const showRegister = searchParams.get("some_super_secret_param");
-
-  if (showRegister === 'true' && !sess) {
-    redirect('/')
-  }
-
-  const [isModalOpen, setModalOpen] = useState<boolean>(showRegister === "true");
-
-  const closeModal = () => setModalOpen(false);
   return (
     <div className="flex flex-col items-center gap-5 text-center xxs:mt-7 sm:mt-6 md:mt-4 lg:mt-8 xlg:mt-10 xxl:mt-12 xxl:gap-10 ">
-      {
-        sess && !sess.user.hacker_id ? (
-          <p className="font-zoonaji text-md text-[#000100] text-center mt-5 xsm:text-xl sm:text-3xl">
-            Applications are now officially closed!
-          </p>
-        ) :
-          <Link href="/dashboard">
-            <div
-              className="m-0 flex w-96 transform cursor-pointer items-center justify-center rounded-[1.5rem] bg-stone-50
-       pb-2 pt-4 text-center font-zoonaji text-2xl text-reddish_grey no-underline transition-all  duration-200 ease-in-out  hover:scale-105 xxs:w-[14rem] xxs:rounded-[20px] xxs:text-[18px] xsm:h-[4rem] xsm:w-[18rem] xsm:rounded-[25px] xsm:text-[20px] md:h-[3rem] md:w-[15rem] md:text-xl lg:h-[4rem] lg:w-[20rem] lg:text-2xl xlg:text-2xl xxl:h-[7rem] xxl:w-[45rem] xxl:rounded-[3rem] xxl:text-5xl"
-            >
-              HACKER DASHBOARD
-            </div>
-          </Link>
-      }
-      {isModalOpen && <RegisterModal toClose={closeModal} />}
-      {sess && (
-        <div
-          onClick={() => signOut({ callbackUrl: "/" })}
-          className="cursor-pointer items-center justify-center text-center font-zoonaji text-xl
-          transition-all duration-200 ease-in-out hover:scale-105 lg:h-[4rem] lg:w-[18rem] lg:rounded-[2rem] lg:text-2xl xlg:h-[4rem]  xlg:w-[18rem] 
-          xlg:rounded-[2rem] xlg:text-2xl xxl:h-[7rem] xxl:w-[25rem] xxl:rounded-[3rem] xxl:text-5xl"
-        >
-          <p>SIGN OUT</p>
-        </div>
-      )}
+      <p className="font-zoonaji text-md text-[#000100] text-center mt-5 xsm:text-xl sm:text-3xl">
+        ShellHacks is done! Come back next year!
+      </p>
     </div>);
 };
 

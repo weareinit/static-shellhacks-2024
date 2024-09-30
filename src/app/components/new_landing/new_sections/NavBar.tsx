@@ -75,12 +75,12 @@ function NavBar() {
             </a>
           </div>
           <div className="flex justify-between">
-            <Link href="/dashboard">
+            <Link href="https://shellhacks2024.devpost.com/">
               <button
                 className="delay-80 px-4 py-2 font-zoonaji text-xl text-white transition ease-in-out hover:-translate-y-1 xxs:text-sm 
             xsm:text-lg sm:text-[15px] md:text-base lg:text-[20px] xlg:text-[25px] xxl:text-[30px]"
               >
-                Hacker Dashboard
+                Check out our DevPost!
               </button>
             </Link>
           </div>

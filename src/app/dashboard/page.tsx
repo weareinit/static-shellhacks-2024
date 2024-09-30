@@ -14,6 +14,7 @@ import {
 import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
+  redirect("/")
   const randomDino =
     underwaterDinosaurNames[
     Math.floor(Math.random() * underwaterDinosaurNames.length)

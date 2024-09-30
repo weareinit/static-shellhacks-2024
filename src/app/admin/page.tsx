@@ -7,6 +7,7 @@ import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import FilteredApplicantSearchView from "./components/FilteredApplicantSearchView";
 const AdminDashboard = async () => {
+  redirect("/")
   const sess = await auth();
 
   if (!sess?.user) {
