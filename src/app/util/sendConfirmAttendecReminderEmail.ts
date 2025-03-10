@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 import { db } from "@/server/db";
 import { application_status_enums } from "@prisma/client";
 import { sendAcceptanceEmails } from "./aws";

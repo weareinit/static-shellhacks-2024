@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 
 import { useState } from "react";
 import Image from "next/image";

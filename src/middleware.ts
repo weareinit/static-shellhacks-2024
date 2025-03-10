@@ -1,30 +1,19 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Handle all dynamic routes in production
+// For static export, we'll have a minimal middleware
 export function middleware(request: NextRequest) {
-  // Only handle dynamic routes in production
+  // In production static export, we don't need middleware functionality
   if (process.env.NODE_ENV === "production") {
-    const { pathname } = request.nextUrl;
-
-    // Handle API routes
-    if (pathname.startsWith("/api")) {
-      return new NextResponse(null, { status: 404 });
-    }
-
-    // Handle other dynamic routes
-    if (pathname.includes("[") || pathname.includes("]")) {
-      return new NextResponse(null, { status: 404 });
-    }
+    // Allow the landing page and static assets to be served
+    return NextResponse.next();
   }
 }
 
-// Configure the middleware to run on all routes
+// Configure the middleware to run only on specific routes
 export const config = {
   matcher: [
-    // Match all API routes
-    "/api/:path*",
-    // Match all dynamic routes
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    // Only match routes that are actually needed for the landing page
+    "/((?!_next/static|_next/image|favicon.ico|assets).*)",
   ],
 };

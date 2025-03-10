@@ -8,13 +8,13 @@ import { getAssetPath } from "@/app/util/getAssetPath";
 const FAQs = () => {
   return (
     <div className="relative">
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 1.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] sm:hidden" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] md:hidden" />
-      <Image priority src={getAssetPath("assets/new/background/forest/Dirt 2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] xsm:hidden" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-1.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] sm:hidden" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10]" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] md:hidden" />
+      <Image priority src={getAssetPath("assets/new/background/forest/Dirt-2.png")} layout="responsive" width={1789} height={974} alt="Dirt background" className="relative z-[-10] xsm:hidden" />
       <div className="absolute inset-0 top-[600px] flex w-full flex-col items-center justify-start text-center xxs:top-[200px] sm:top-[250px] md:top-[400px] lg:top-[450px] xlg:top-[500px] xxl:top-[600px]">
         <h1 className="z-10 w-full font-zoonaji text-white xxs:text-[25px] xsm:text-[40px] sm:text-[40px] md:text-[50px] lg:text-[60px] xxl:text-[80px]">The ShellHacks Experience</h1>
         <div>
@@ -38,10 +38,10 @@ const FAQs = () => {
           </Link>
         </h1>
         {/* <div className="absolute inset-0"> */}
-          <DinoFossiles />
-          <FAQSlider />
-        </div>
+        <DinoFossiles />
+        <FAQSlider />
       </div>
+    </div>
     // </div>
   );
 };

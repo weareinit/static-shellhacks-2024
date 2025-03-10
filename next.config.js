@@ -24,6 +24,21 @@ const config = {
   },
   // Required for static export
   trailingSlash: true,
+  // Only include the landing page for static export
+  distDir: process.env.NODE_ENV === "production" ? ".next-static" : ".next",
+  // Exclude all pages except the landing page in production
+  pageExtensions: process.env.NODE_ENV === "production" ? ["landing.tsx", "landing.ts", "landing.jsx", "landing.js"] : ["tsx", "ts", "jsx", "js"],
+  // Ensure static assets are copied
+  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
+  // Configure static file serving
+  webpack: (config, { isServer }) => {
+    // Add rule to handle static assets
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif|svg|webp)$/i,
+      type: "asset/resource",
+    });
+    return config;
+  },
 };
 
 export default config;

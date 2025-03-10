@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 import React from "react";
 import { signIn, signOut } from "@/server/auth";
 
@@ -7,7 +7,7 @@ const Login = () => {
     <div className="flex flex-row justify-center gap-4">
       <form
         action={async () => {
-          "use server";
+          // "use server" - temporarily disabled for static export;
           await signIn("discord");
         }}
       >
@@ -15,7 +15,7 @@ const Login = () => {
       </form>
       <form
         action={async () => {
-          "use server";
+          // "use server" - temporarily disabled for static export;
           await signOut();
         }}
       >

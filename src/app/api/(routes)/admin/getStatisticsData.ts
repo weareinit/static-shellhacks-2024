@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 
 import { getAggregateHackerApplicationStats } from "@/app/api/(logic)/getAggregateHackerApplicationStats";
 import { ApplicantFilters } from "@/app/schemas/applicantSchemas";

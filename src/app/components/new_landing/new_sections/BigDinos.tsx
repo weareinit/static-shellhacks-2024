@@ -10,7 +10,7 @@ const BigDinos = () => {
         <div>
           <Image
             priority
-            src={getAssetPath("assets/new/plants/Tree 2.svg")}
+            src={getAssetPath("assets/new/plants/Tree-2.svg")}
             width={750}
             height={750}
             alt="Tree"
@@ -27,7 +27,7 @@ const BigDinos = () => {
           {/*small */}
           <Image
             priority
-            src={getAssetPath("assets/new/plants/Tree 2.svg")}
+            src={getAssetPath("assets/new/plants/Tree-2.svg")}
             width={500}
             height={500}
             alt="Tree"
@@ -45,7 +45,7 @@ const BigDinos = () => {
         <div>
           <Image
             priority
-            src={getAssetPath("assets/new/plants/Tree 2.svg")}
+            src={getAssetPath("assets/new/plants/Tree-2.svg")}
             width={600}
             height={600}
             alt="Tree"
@@ -55,7 +55,7 @@ const BigDinos = () => {
           {/* small */}
           <Image
             priority
-            src={getAssetPath("assets/new/plants/Tree 2.svg")}
+            src={getAssetPath("assets/new/plants/Tree-2.svg")}
             width={300}
             height={300}
             alt="Tree"

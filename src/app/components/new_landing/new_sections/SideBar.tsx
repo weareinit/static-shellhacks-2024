@@ -31,7 +31,7 @@ function SideBar() {
             setActive(!isActive);
           }}
         >
-          <Image src={getAssetPath("assets/new/logo/Menu Icon.svg")} height={40} width={40} alt="sidebar" />
+          <Image src={getAssetPath("assets/new/logo/Menu-Icon.svg")} height={40} width={40} alt="sidebar" />
         </button>
       </div>
       {isActive && <div id="sidebar-overlay" className="fixed inset-0 z-[90] bg-black bg-opacity-50" onClick={handleOverlayClick}></div>}

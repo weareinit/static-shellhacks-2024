@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";

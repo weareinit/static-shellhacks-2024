@@ -7,7 +7,7 @@ const ForestAssets = () => {
     <div className="absolute inset-0 z-[-8] h-full w-full">
       <Image
         priority
-        src={getAssetPath("assets/new/dinosaurs/Florida Sand Skink.svg")}
+        src={getAssetPath("assets/new/dinosaurs/Florida-Sand-Skink.svg")}
         height={150}
         width={150}
         alt="snake"
@@ -15,7 +15,7 @@ const ForestAssets = () => {
       ></Image>
       <Image
         priority
-        src={getAssetPath("assets/new/plants/Tree 1.svg")}
+        src={getAssetPath("assets/new/plants/Tree-1.svg")}
         height={600}
         width={700}
         alt="tree"
@@ -23,16 +23,16 @@ const ForestAssets = () => {
       ></Image>
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Rock 3.svg")}
+        src={getAssetPath("assets/new/misc/Rock-3.svg")}
         height={100}
         width={100}
         alt="rock"
         className="absolute left-[25%] top-[5%]  z-[-2] xxs:h-[50px]  xxs:w-[50px] xxl:top-0 xxl:h-[12rem] xxl:w-[12rem]"
       ></Image>
-      <Image priority src={getAssetPath("assets/new/plants/Shrub 3.svg")} height={125} width={125} alt="Shrub" className="absolute right-[5%]  top-[5%] z-[-2] xxs:h-[75px] xxs:w-[75px]"></Image>
+      <Image priority src={getAssetPath("assets/new/plants/Shrub-3.svg")} height={125} width={125} alt="Shrub" className="absolute right-[5%]  top-[5%] z-[-2] xxs:h-[75px] xxs:w-[75px]"></Image>
       <Image
         priority
-        src={getAssetPath("assets/new/plants/Shrub 1.svg")}
+        src={getAssetPath("assets/new/plants/Shrub-1.svg")}
         height={250}
         width={250}
         alt="Shrub"
@@ -40,7 +40,7 @@ const ForestAssets = () => {
       ></Image>
       <Image
         priority
-        src={getAssetPath("assets/new/plants/Shrub 4.svg")}
+        src={getAssetPath("assets/new/plants/Shrub-4.svg")}
         height={120}
         width={120}
         alt="Shrub"

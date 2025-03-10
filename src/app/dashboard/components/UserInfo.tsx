@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 import { Hacker_Applications } from ".prisma/client";
 
 interface HackerApplicationWithDiscord extends Hacker_Applications {

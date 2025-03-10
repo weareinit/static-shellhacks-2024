@@ -9,7 +9,7 @@ const SkyAndOcean = () => {
     <div className="relative">
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Fish School.svg")}
+        src={getAssetPath("assets/new/misc/Fish-School.svg")}
         width={100}
         height={115}
         alt="Fish"
@@ -17,7 +17,7 @@ const SkyAndOcean = () => {
       />
       <Image
         priority
-        src={getAssetPath("assets/new/background/sky/Cloud 2.svg")}
+        src={getAssetPath("assets/new/background/sky/Cloud-2.svg")}
         width={400}
         height={500}
         alt="Cloud"
@@ -25,17 +25,17 @@ const SkyAndOcean = () => {
       />
       <Image
         priority
-        src={getAssetPath("assets/new/background/sky/Cloud 2.svg")}
+        src={getAssetPath("assets/new/background/sky/Cloud-2.svg")}
         width={400}
         height={500}
         alt="Cloud"
         className="absolute top-[15%] z-[-5] animate-cloud-slide xxl:h-[550px] xxl:w-[700px]"
       />
-      <Image priority src={getAssetPath("assets/new/background/sky/Sky 0.png")} layout="responsive" width={1789} height={697} alt="Sky background" className="relative z-[-10] md:hidden" />
+      <Image priority src={getAssetPath("assets/new/background/sky/Sky-0.png")} layout="responsive" width={1789} height={697} alt="Sky background" className="relative z-[-10] md:hidden" />
       <Image priority src={getAssetPath("assets/new/background/sky/Sky.png")} layout="responsive" width={1789} height={697} alt="Sky background" className="relative z-[-10]" />
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Shell 2.svg")}
+        src={getAssetPath("assets/new/misc/Shell-2.svg")}
         width={50}
         height={50}
         alt="Shell"
@@ -43,7 +43,7 @@ const SkyAndOcean = () => {
       />
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Shell 1.svg")}
+        src={getAssetPath("assets/new/misc/Shell-1.svg")}
         width={100}
         height={50}
         alt="Shell"

@@ -22,7 +22,7 @@ export default async function DahsboardContent({ application }: { application: H
       <div className="flex justify-end">
         <form
           action={async () => {
-            "use server";
+            // "use server" - temporarily disabled for static export;
             await signOut();
           }}
         >

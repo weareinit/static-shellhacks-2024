@@ -1,4 +1,4 @@
-"use server";
+// "use server" - temporarily disabled for static export;
 import { application_status_enums, Prisma } from "@prisma/client";
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";

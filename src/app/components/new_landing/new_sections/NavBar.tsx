@@ -16,7 +16,7 @@ function NavBar() {
             setActive((isActive) => !isActive);
           }}
         >
-          <Image src={getAssetPath("assets/new/logo/Menu Icon.svg")} height={40} width={40} alt="navbar"></Image>
+          <Image src={getAssetPath("assets/new/logo/Menu-Icon.svg")} height={40} width={40} alt="navbar"></Image>
         </button>
       </div>
       <div

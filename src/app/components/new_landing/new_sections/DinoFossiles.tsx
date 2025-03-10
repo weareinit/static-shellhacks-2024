@@ -7,7 +7,7 @@ const DinoFossiles = () => {
     <div className="absolute z-[-9] h-full w-full">
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Plesiosaurus Skull.svg")}
+        src={getAssetPath("assets/new/misc/Plesiosaurus-Skull.svg")}
         width={358.76}
         height={193.7}
         alt="Plesiosaurus Skulls"
@@ -15,7 +15,7 @@ const DinoFossiles = () => {
       />
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Pterodactyl Skull.svg")}
+        src={getAssetPath("assets/new/misc/Pterodactyl-Skull.svg")}
         width={358.76}
         height={193.7}
         alt="Pterodactyl Skulls"
@@ -23,7 +23,7 @@ const DinoFossiles = () => {
       />
       <Image
         priority
-        src={getAssetPath("assets/new/misc/Fossil Shell.svg")}
+        src={getAssetPath("assets/new/misc/Fossil-Shell.svg")}
         width={120.03}
         height={120.03}
         alt="Fossil Shell"
