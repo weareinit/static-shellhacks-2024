@@ -22,17 +22,8 @@ const config = {
   experimental: {
     disableOptimizedLoading: true,
   },
-  // Exclude API routes from the build
-  trailingSlash: true, // Required for static export
-  // Handle dynamic routes
-  rewrites: async () => {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "/404",
-      },
-    ];
-  },
+  // Required for static export
+  trailingSlash: true,
 };
 
 export default config;

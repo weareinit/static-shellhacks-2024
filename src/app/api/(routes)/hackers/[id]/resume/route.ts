@@ -4,6 +4,18 @@ import { validateCaptcha } from "@/app/util/captcha";
 import { generateSignedResumeUploadUrl, generateSignedResumeUrl, uploadResume } from "@/app/util/aws";
 import { auth } from "@/server/auth";
 
+// Generate static params for build
+export function generateStaticParams() {
+  return [{ id: "placeholder" }];
+}
+
+// Generate metadata
+export function generateMetadata() {
+  return {
+    title: "Hacker Resume API",
+  };
+}
+
 /*
  * Return a signed URL so the hacker (or an admin on behalf of) can view their resume
  */
