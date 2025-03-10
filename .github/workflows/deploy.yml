@@ -52,11 +52,18 @@ jobs:
           NODE_ENV: production
           NEXT_PUBLIC_BASE_PATH: /shellhacks-2024
         run: npm run build:static
+      - name: Fix asset paths
+        run: |
+          find out -type f -name "*.html" -exec sed -i 's|"/shellhacks-2024/|"/shellhacks-2024/|g' {} +
+          find out -type f -name "*.js" -exec sed -i 's|"/shellhacks-2024/|"/shellhacks-2024/|g' {} +
       - name: Copy public assets
         run: |
-          cp -r public/* out/ || true
+          mkdir -p out/static/media
+          cp -r public/* out/static/media/ || true
       - name: List output directory
-        run: ls -la out/
+        run: |
+          echo "Output directory structure:"
+          find out -type f
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

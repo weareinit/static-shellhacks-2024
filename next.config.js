@@ -11,7 +11,7 @@ const config = {
   images: {
     unoptimized: true, // Required for static export
   },
-  basePath: "/shellhacks-2024", // Replace with your repository name
+  basePath: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,12 +29,15 @@ const config = {
   // Exclude all pages except the landing page in production
   pageExtensions: process.env.NODE_ENV === "production" ? ["landing.tsx", "landing.ts", "landing.jsx", "landing.js"] : ["tsx", "ts", "jsx", "js"],
   // Ensure static assets are copied
-  assetPrefix: "/shellhacks-2024/",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024/" : "",
   // Configure static file serving
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|svg|webp|ttf|woff2?)$/i,
       type: "asset/resource",
+      generator: {
+        filename: "static/media/[name][ext]",
+      },
     });
     return config;
   },
