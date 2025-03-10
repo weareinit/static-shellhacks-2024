@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 // import NextAuth from "next-auth";
 
 // import { authOptions } from "@/server/auth";
@@ -6,5 +8,13 @@
 // const handler = NextAuth(authOptions);
 // export { handler as GET, handler as POST };
 
-import { handlers } from "@/server/auth"
-export const { GET, POST } = handlers
+const isProduction = process.env.NODE_ENV === "production";
+
+// Default handlers for production that return 404
+const defaultHandlers = {
+  GET: () => new NextResponse(null, { status: 404 }),
+  POST: () => new NextResponse(null, { status: 404 }),
+};
+
+// Only use auth handlers in development
+export const { GET, POST } = isProduction ? defaultHandlers : await import("@/server/auth").then((m) => m.handlers);

@@ -18,6 +18,12 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Exclude auth routes from static export
+  exportPathMap: async function () {
+    return {
+      "/": { page: "/" },
+    };
+  },
 };
 
 export default config;
