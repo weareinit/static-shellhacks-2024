@@ -43,3 +43,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return <Landing />;
 }
+
+// Only generate the root page statically
+export function generateStaticParams() {
+  return [{}];
+}

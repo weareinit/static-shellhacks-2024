@@ -17,4 +17,9 @@ const defaultHandlers = {
 };
 
 // Only use auth handlers in development
-export const { GET, POST } = isProduction ? defaultHandlers : await import("@/server/auth").then((m) => m.handlers);
+export const { GET, POST } = process.env.NODE_ENV === "production" ? defaultHandlers : await import("@/server/auth").then((m) => m.handlers);
+
+// Prevent static generation of auth routes
+export function generateStaticParams() {
+  return [];
+}
