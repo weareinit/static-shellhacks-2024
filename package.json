@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "build:static": "NODE_ENV=production next build",
+    "build:static": "NODE_ENV=production next build && next export -o out",
     "serve:static": "node scripts/test-static.js",
     "rename-assets": "node scripts/rename-assets.js",
     "db:push": "prisma db push",

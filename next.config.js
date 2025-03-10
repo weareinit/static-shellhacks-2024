@@ -31,10 +31,9 @@ const config = {
   // Ensure static assets are copied
   assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
   // Configure static file serving
-  webpack: (config, { isServer }) => {
-    // Add rule to handle static assets
+  webpack: (config) => {
     config.module.rules.push({
-      test: /\.(png|jpe?g|gif|svg|webp)$/i,
+      test: /\.(png|jpe?g|gif|svg|webp|ttf|woff2?)$/i,
       type: "asset/resource",
     });
     return config;
