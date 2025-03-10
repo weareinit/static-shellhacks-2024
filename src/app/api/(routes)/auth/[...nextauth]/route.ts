@@ -19,7 +19,14 @@ const defaultHandlers = {
 // Only use auth handlers in development
 export const { GET, POST } = process.env.NODE_ENV === "production" ? defaultHandlers : await import("@/server/auth").then((m) => m.handlers);
 
-// Prevent static generation of auth routes
+// Generate static params for required auth routes
 export function generateStaticParams() {
-  return [];
+  return [{ nextauth: ["session"] }, { nextauth: ["signin"] }, { nextauth: ["signout"] }, { nextauth: ["callback"] }, { nextauth: ["credentials"] }];
+}
+
+// Generate metadata
+export function generateMetadata() {
+  return {
+    title: "Authentication",
+  };
 }
