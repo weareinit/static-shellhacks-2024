@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-// Mark route as dynamic
-export const dynamic = "force-dynamic";
+// Static configuration for production builds
+export const dynamic = process.env.NODE_ENV === "production" ? "error" : "force-dynamic";
 
 // Handle all API routes
 export async function GET(request: Request) {
@@ -21,12 +21,17 @@ export async function POST() {
   return new NextResponse(null, { status: 404 });
 }
 
-// Generate empty params to prevent static generation
+// Generate static params for build
 export function generateStaticParams() {
-  return [];
+  return [
+    { path: [] }, // /api
+    { path: ["placeholder"] }, // /api/placeholder
+  ];
 }
 
-// Generate empty metadata to prevent static generation
+// Generate metadata
 export function generateMetadata() {
-  return {};
+  return {
+    title: "API Routes",
+  };
 }

@@ -3,8 +3,8 @@ import { auth } from "@/server/auth";
 import { getUserEventsData } from "@/app/api/(logic)/getUserEventsData";
 import { checkInUserToEvent } from "@/app/api/(logic)/checkInUserToEvent";
 
-// Mark route as dynamic
-export const dynamic = "force-dynamic";
+// Static configuration for production builds
+export const dynamic = process.env.NODE_ENV === "production" ? "error" : "force-dynamic";
 
 // Return 404 in production
 export function GET() {
@@ -15,9 +15,18 @@ export function POST() {
   return new NextResponse(null, { status: 404 });
 }
 
-// Prevent static generation
+// Generate static params for build
 export function generateStaticParams() {
-  return [];
+  // For static export, we need to provide some IDs
+  // These will only be used for static generation
+  return [{ id: "placeholder" }];
+}
+
+// Generate metadata
+export function generateMetadata() {
+  return {
+    title: "Hacker Events API",
+  };
 }
 
 /*

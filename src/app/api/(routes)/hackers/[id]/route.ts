@@ -1,14 +1,23 @@
 import { db } from "@/server/db";
 import { NextResponse } from "next/server";
-import {
-  adminApplicantUpdateSchema,
-  hackerApplicantUpdateSchema,
-} from "@/app/schemas/applicantSchemas";
+import { adminApplicantUpdateSchema, hackerApplicantUpdateSchema } from "@/app/schemas/applicantSchemas";
 import { auth } from "@/server/auth";
 import { getHackerApplicationFromId } from "@/app/api/(logic)/getUserFromId";
 
 export const dynamic = "auto"; //cache
 export const revalidate = 60; //cache
+
+// Generate static params for build
+export function generateStaticParams() {
+  return [{ id: "placeholder" }];
+}
+
+// Generate metadata
+export function generateMetadata() {
+  return {
+    title: "Hacker Profile API",
+  };
+}
 
 /*
  * Route to get an applicant's information. For a hacker, this route is only accessable if they own the id. For an admin, they can get any applicant. This is enforced in the middleware
@@ -19,9 +28,7 @@ export const GET = auth(async (request, { params }) => {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const id = request.auth.user.admin
-    ? (params?.id as string)
-    : request.auth.user.id;
+  const id = request.auth.user.admin ? (params?.id as string) : request.auth.user.id;
 
   return await getHackerApplicationFromId(id);
 });
@@ -39,9 +46,7 @@ export const PUT = auth(async (request, { params }) => {
   const jsonBody = await request.json();
 
   //since admins are allowed to change more fields (eg. application status) than the applicant
-  const safedata = request.auth.user.admin
-    ? adminApplicantUpdateSchema.safeParse(jsonBody)
-    : hackerApplicantUpdateSchema.safeParse(jsonBody);
+  const safedata = request.auth.user.admin ? adminApplicantUpdateSchema.safeParse(jsonBody) : hackerApplicantUpdateSchema.safeParse(jsonBody);
 
   if (!safedata.success) {
     return new NextResponse(safedata.error.message, { status: 400 });
