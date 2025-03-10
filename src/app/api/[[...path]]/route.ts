@@ -3,8 +3,17 @@ import { NextResponse } from "next/server";
 // Mark route as dynamic
 export const dynamic = "force-dynamic";
 
-// Return 404 for all API routes in production
-export async function GET() {
+// Handle all API routes
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const path = url.pathname.replace("/api", "");
+
+  // Handle root path
+  if (!path || path === "/") {
+    return NextResponse.json("Hello World");
+  }
+
+  // Return 404 for all other API routes in production
   return new NextResponse(null, { status: 404 });
 }
 
