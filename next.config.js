@@ -18,6 +18,12 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Disable dynamic routes in production
+  experimental: {
+    disableOptimizedLoading: true,
+  },
+  // Exclude API routes from the build
+  pageExtensions: ["tsx", "ts", "jsx", "js"].filter((ext) => (process.env.NODE_ENV === "production" ? !ext.includes("api") : true)),
 };
 
 export default config;
