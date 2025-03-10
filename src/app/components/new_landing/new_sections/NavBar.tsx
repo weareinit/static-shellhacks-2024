@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getAssetPath } from "@/app/util/getAssetPath";
 
 function NavBar() {
   const [isActive, setActive] = useState(false);
@@ -15,12 +16,7 @@ function NavBar() {
             setActive((isActive) => !isActive);
           }}
         >
-          <Image
-            src="assets/new/logo/Menu Icon.svg"
-            height={40}
-            width={40}
-            alt="navbar"
-          ></Image>
+          <Image src={getAssetPath("assets/new/logo/Menu Icon.svg")} height={40} width={40} alt="navbar"></Image>
         </button>
       </div>
       <div

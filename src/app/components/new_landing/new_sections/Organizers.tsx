@@ -1,22 +1,15 @@
 import Image from "next/image";
 import React from "react";
 import SkullLavaSection from "./SkullsSection";
+import { getAssetPath } from "@/app/util/getAssetPath";
 
 const Organizers = () => {
   return (
     <div className="relative">
+      <Image priority src={getAssetPath("assets/new/background/lava/Lava.gif")} layout="responsive" width={1789} height={974} alt="Lava gif" className="relative z-[-10] xsm:hidden" />
       <Image
         priority
-        src="/assets/new/background/lava/Lava.gif"
-        layout="responsive"
-        width={1789}
-        height={974}
-        alt="Lava gif"
-        className="relative z-[-10] xsm:hidden"
-      />
-      <Image
-        priority
-        src="/assets/new/background/lava/Lava1.png"
+        src={getAssetPath("assets/new/background/lava/Lava1.png")}
         layout="responsive"
         width={1789}
         height={974}
@@ -25,7 +18,7 @@ const Organizers = () => {
       />
       <Image
         priority
-        src="/assets/new/background/lava/Lava2.png"
+        src={getAssetPath("assets/new/background/lava/Lava2.png")}
         layout="responsive"
         width={1789}
         height={974}
@@ -43,7 +36,7 @@ const Organizers = () => {
           </h1>
           <Image
             priority
-            src="/assets/sponsors/INIT_FIU.svg"
+            src={getAssetPath("assets/sponsors/INIT_FIU.svg")}
             width={617}
             height={136}
             alt="INIT FIU"

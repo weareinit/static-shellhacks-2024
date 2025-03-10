@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { getAssetPath } from "@/app/util/getAssetPath";
 
 const BigDinos = () => {
   // TODO: Add responsiveness to palm trees (Dinos already are responsive)
@@ -9,7 +10,7 @@ const BigDinos = () => {
         <div>
           <Image
             priority
-            src="assets/new/plants/Tree 2.svg"
+            src={getAssetPath("assets/new/plants/Tree 2.svg")}
             width={750}
             height={750}
             alt="Tree"
@@ -17,7 +18,7 @@ const BigDinos = () => {
           />
           <Image
             priority
-            src="/assets/new/dinosaurs/Brachiosaurus.svg"
+            src={getAssetPath("assets/new/dinosaurs/Brachiosaurus.svg")}
             width={1063}
             height={1143}
             alt="Dinosaur"
@@ -26,7 +27,7 @@ const BigDinos = () => {
           {/*small */}
           <Image
             priority
-            src="assets/new/plants/Tree 2.svg"
+            src={getAssetPath("assets/new/plants/Tree 2.svg")}
             width={500}
             height={500}
             alt="Tree"
@@ -34,7 +35,7 @@ const BigDinos = () => {
           />
           <Image
             priority
-            src="/assets/new/dinosaurs/Brachiosaurus.svg"
+            src={getAssetPath("assets/new/dinosaurs/Brachiosaurus.svg")}
             width={600}
             height={660}
             alt="Dinosaur"
@@ -44,24 +45,17 @@ const BigDinos = () => {
         <div>
           <Image
             priority
-            src="assets/new/plants/Tree 2.svg"
+            src={getAssetPath("assets/new/plants/Tree 2.svg")}
             width={600}
             height={600}
             alt="Tree"
             className="absolute bottom-[20px] right-[-150px] z-[-3] scale-x-[-1] transform xxs:hidden sm:bottom-[50px] sm:right-[-100px] sm:block sm:w-[400px] md:right-[-100px] md:w-[450px] xxl:h-[75rem] xxl:w-[50rem]"
           />
-          <Image
-            priority
-            src="/assets/new/dinosaurs/Trex_1.svg"
-            width={723}
-            height={844}
-            alt="Dinosaur"
-            className="relative bottom-[20px] z-[-2] xxs:hidden sm:block"
-          />
+          <Image priority src={getAssetPath("assets/new/dinosaurs/Trex_1.svg")} width={723} height={844} alt="Dinosaur" className="relative bottom-[20px] z-[-2] xxs:hidden sm:block" />
           {/* small */}
           <Image
             priority
-            src="assets/new/plants/Tree 2.svg"
+            src={getAssetPath("assets/new/plants/Tree 2.svg")}
             width={300}
             height={300}
             alt="Tree"
@@ -69,7 +63,7 @@ const BigDinos = () => {
           />
           <Image
             priority
-            src="/assets/new/dinosaurs/Trex_1.svg"
+            src={getAssetPath("assets/new/dinosaurs/Trex_1.svg")}
             width={450}
             height={490}
             alt="Dinosaur"

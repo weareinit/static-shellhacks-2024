@@ -12,22 +12,22 @@ body {
 }
 @font-face {
   font-family: "zoonaji";
-  src: url("/fonts/zoonaji.ttf");
+  src: url("../fonts/zoonaji.ttf");
 }
 
 @font-face {
   font-family: "museo";
-  src: url("/fonts/museo.ttf");
+  src: url("../fonts/museo.ttf");
 }
 
 @font-face {
   font-family: "museoregular";
-  src: url("/fonts/museo_regular.ttf");
+  src: url("../fonts/museo_regular.ttf");
 }
 
 @font-face {
   font-family: "museoitalic";
-  src: url("/fonts/museo_italic.ttf");
+  src: url("../fonts/museo_italic.ttf");
 }
 
 @layer base {

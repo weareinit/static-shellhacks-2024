@@ -1,8 +1,11 @@
+"use client";
+
 // https://www.youtube.com/watch?v=q-Y0bnx6Ndw
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import { getAssetPath } from "@/app/util/getAssetPath";
 
 type SkullData = {
   name: string;
@@ -86,10 +89,10 @@ const skullDataList: SkullData[] = [
 ];
 
 const skulls = [
-  "/assets/new/skulls/skull_1.svg",
-  "/assets/new/skulls/skull_2.svg",
-  "/assets/new/skulls/skull_3.svg",
-  "/assets/new/skulls/skull_4.svg",
+  getAssetPath("assets/new/skulls/skull_1.svg"),
+  getAssetPath("assets/new/skulls/skull_2.svg"),
+  getAssetPath("assets/new/skulls/skull_3.svg"),
+  getAssetPath("assets/new/skulls/skull_4.svg"),
 ];
 
 const generateRandomPosition = (data: SkullData): SkullPosition => {
@@ -108,22 +111,8 @@ const getRandomSkull = (): string => {
 };
 
 const skullsSizeRandom = (screenSize: string) => {
-  const minSize =
-    screenSize === "small"
-      ? 20
-      : screenSize === "medium"
-        ? 30
-        : screenSize === "large"
-          ? 40
-          : 50;
-  const maxSize =
-    screenSize === "small"
-      ? 40
-      : screenSize === "medium"
-        ? 50
-        : screenSize === "large"
-          ? 60
-          : 70;
+  const minSize = screenSize === "small" ? 20 : screenSize === "medium" ? 30 : screenSize === "large" ? 40 : 50;
+  const maxSize = screenSize === "small" ? 40 : screenSize === "medium" ? 50 : screenSize === "large" ? 60 : 70;
   return Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize;
 };
 
@@ -157,28 +146,30 @@ const generateUniquePositions = (dataList: SkullData[]): SkullPosition[] => {
 const SkullLavaSection: React.FC = () => {
   const [skullPositions, setSkullPositions] = useState<SkullPosition[]>([]);
   // should be useRef but im tired man, give me a break
+  const [windowWidth, setWindowWidth] = useState(0);
   const [styles, setStyles] = useState({ top: "10%", height: "30vh" });
 
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     const positions = generateUniquePositions(skullDataList);
     setSkullPositions(positions);
   }, []);
 
   const calculateStyles = () => {
     let top, height;
-    if (window.innerWidth >= 1175) {
+    if (windowWidth >= 1175) {
       top = "20%";
       height = "70vh";
-    } else if (window.innerWidth >= 1024) {
+    } else if (windowWidth >= 1024) {
       top = "15%";
       height = "70vh";
-    } else if (window.innerWidth >= 830) {
+    } else if (windowWidth >= 830) {
       top = "18%";
       height = "55vh";
-    } else if (window.innerWidth >= 700) {
+    } else if (windowWidth >= 700) {
       top = "15%";
       height = "43vh";
-    } else if (window.innerWidth >= 600) {
+    } else if (windowWidth >= 600) {
       top = "7%";
       height = "35vh";
     } else {
@@ -189,11 +180,11 @@ const SkullLavaSection: React.FC = () => {
   };
 
   const calculateSize = () => {
-    if (window.innerWidth <= 600) {
+    if (windowWidth <= 600) {
       return 0;
-    } else if (window.innerWidth <= 768) {
+    } else if (windowWidth <= 768) {
       return skullsSizeRandom("small");
-    } else if (window.innerWidth <= 1024) {
+    } else if (windowWidth <= 1024) {
       return skullsSizeRandom("medium");
     } else {
       return skullsSizeRandom("large");
@@ -202,23 +193,14 @@ const SkullLavaSection: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
+      setWindowWidth(window.innerWidth);
       setStyles(calculateStyles());
     };
 
     setStyles(calculateStyles()); // Set initial values on mount
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const positions = generateUniquePositions(skullDataList);
-    setSkullPositions(positions);
-  }, []);
-
-  useEffect(() => {
-    const positions = generateUniquePositions(skullDataList);
-    setSkullPositions(positions);
-  }, []);
+  }, [windowWidth]);
 
   return (
     <div
@@ -237,7 +219,7 @@ const SkullLavaSection: React.FC = () => {
           style={{
             left: pos.left,
             top: pos.top,
-            display: window.innerWidth <= 600 ? "none" : "block",
+            display: windowWidth <= 600 ? "none" : "block",
           }}
         >
           <Image

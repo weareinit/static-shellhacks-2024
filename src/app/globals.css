@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "museo";
+  src: url("../fonts/museo.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "museo-regular";
+  src: url("../fonts/museo_regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "zoonaji";
+  src: url("../fonts/zoonaji.ttf") format("truetype");
+}
+
+/* ... rest of the CSS ... */ 

@@ -10,6 +10,8 @@ import Organizers from "./new_sections/Organizers";
 import Sponsors from "./new_sections/Sponsors";
 import NavBar from "./new_sections/NavBar";
 import SideBar from "./new_sections/SideBar";
+import { getAssetPath } from "@/app/util/getAssetPath";
+
 const Landing = () => {
   return (
     <div className="relative h-screen w-screen overflow-x-hidden">
@@ -32,7 +34,7 @@ const Landing = () => {
       </div>
 
       {/* Bedrock */}
-      <div className="max-w-screen h-[70px] bg-[url('/assets/new/background/lava/bedrock.png')] bg-contain bg-repeat"></div>
+      <div className="max-w-screen h-[70px]" style={{ backgroundImage: `url(${getAssetPath("assets/new/background/lava/bedrock.png")})`, backgroundSize: "contain", backgroundRepeat: "repeat" }}></div>
     </div>
   );
 };

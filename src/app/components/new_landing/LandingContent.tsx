@@ -1,8 +1,10 @@
+import React from "react";
 import Image from "next/image";
 import { FaDiscord, FaLinkedin } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import Link from "next/link";
 import LandingButtons from "./LandingButtons";
+import { getAssetPath } from "@/app/util/getAssetPath";
 
 const LandingContent = () => {
   return (
@@ -27,32 +29,16 @@ const LandingContent = () => {
           <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:mt-3 xlg:text-[20px] xxl:mt-5 xxl:text-[40px]">
             September 27th - 29th, 2024
           </div>
-          <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:text-[20px] xxl:text-[40px]">
-            Florida International University
-          </div>
-          <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:text-[20px] xxl:text-[40px]">
-            Graham Center - Miami, FL
-          </div>
+          <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:text-[20px] xxl:text-[40px]">Florida International University</div>
+          <div className="text-[1.5rem] text-[#000000] xxs:text-[15px] xsm:text-[18px] md:text-[18px] lg:text-[23px] xlg:text-[20px] xxl:text-[40px]">Graham Center - Miami, FL</div>
           <div className="xxs:text-2xsl mt-1 flex justify-center gap-2 text-2xl text-ferra xxs:mt-3 xxs:gap-3 xxs:text-xl xsm:mt-5 xsm:gap-4 xsm:text-3xl sm:mt-4 lg:gap-3 lg:text-[3xl] xlg:gap-3 xlg:text-3xl xxl:gap-4 xxl:text-5xl">
-            <Link
-              href={"https://discord.com/invite/init"}
-              target="_blank"
-              className="cursor-pointer"
-            >
+            <Link href={"https://discord.com/invite/init"} target="_blank" className="cursor-pointer">
               <FaDiscord />
             </Link>
-            <Link
-              href={"https://www.instagram.com/initofficial/"}
-              target="_blank"
-              className="cursor-pointer"
-            >
+            <Link href={"https://www.instagram.com/initofficial/"} target="_blank" className="cursor-pointer">
               <AiFillInstagram />
             </Link>
-            <Link
-              href={"https://www.linkedin.com/company/initofficial/"}
-              target="_blank"
-              className="cursor-pointer"
-            >
+            <Link href={"https://www.linkedin.com/company/initofficial/"} target="_blank" className="cursor-pointer">
               <FaLinkedin />
             </Link>
           </div>
@@ -65,16 +51,9 @@ const LandingContent = () => {
       }
       <div className="mt-7 flex justify-center">
         <div className="xlg:1xl relative bottom-3 h-11 w-11 xxl:text-2xl">
-          <Image
-            priority
-            src="/assets/new/animation/scroll_for_more.gif"
-            alt="scroll for more"
-            fill
-          />
+          <Image priority src={getAssetPath("assets/new/animation/scroll_for_more.gif")} alt="scroll for more" fill />
         </div>
-        <p className="xlg:text-1xl md:text-md font-museoregular xxs:text-[14px] xxl:text-2xl">
-          scroll for more!
-        </p>
+        <p className="xlg:text-1xl md:text-md font-museoregular xxs:text-[14px] xxl:text-2xl">scroll for more!</p>
       </div>
     </>
   );
