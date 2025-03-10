@@ -25,11 +25,11 @@ const config = {
   // Required for static export
   trailingSlash: true,
   // Only include the landing page for static export
-  distDir: process.env.NODE_ENV === "production" ? "out" : ".next",
+  distDir: "out",
   // Exclude all pages except the landing page in production
   pageExtensions: process.env.NODE_ENV === "production" ? ["landing.tsx", "landing.ts", "landing.jsx", "landing.js"] : ["tsx", "ts", "jsx", "js"],
   // Ensure static assets are copied
-  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
+  assetPrefix: "/shellhacks-2024/",
   // Configure static file serving
   webpack: (config) => {
     config.module.rules.push({

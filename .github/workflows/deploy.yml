@@ -50,7 +50,11 @@ jobs:
         env:
           SKIP_ENV_VALIDATION: 1
           NODE_ENV: production
+          NEXT_PUBLIC_BASE_PATH: /shellhacks-2024
         run: npm run build:static
+      - name: Copy public assets
+        run: |
+          cp -r public/* out/ || true
       - name: List output directory
         run: ls -la out/
       - name: Upload artifact
