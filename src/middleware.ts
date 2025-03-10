@@ -1,15 +1,30 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// This function can be marked `async` if using `await` inside
+// Handle all dynamic routes in production
 export function middleware(request: NextRequest) {
-  // Only handle API routes in production
-  if (process.env.NODE_ENV === "production" && request.nextUrl.pathname.startsWith("/api")) {
-    return new NextResponse(null, { status: 404 });
+  // Only handle dynamic routes in production
+  if (process.env.NODE_ENV === "production") {
+    const { pathname } = request.nextUrl;
+
+    // Handle API routes
+    if (pathname.startsWith("/api")) {
+      return new NextResponse(null, { status: 404 });
+    }
+
+    // Handle other dynamic routes
+    if (pathname.includes("[") || pathname.includes("]")) {
+      return new NextResponse(null, { status: 404 });
+    }
   }
 }
 
-// Configure the middleware to run on API routes
+// Configure the middleware to run on all routes
 export const config = {
-  matcher: "/api/:path*",
+  matcher: [
+    // Match all API routes
+    "/api/:path*",
+    // Match all dynamic routes
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 };

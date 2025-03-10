@@ -23,7 +23,16 @@ const config = {
     disableOptimizedLoading: true,
   },
   // Exclude API routes from the build
-  pageExtensions: ["tsx", "ts", "jsx", "js"].filter((ext) => (process.env.NODE_ENV === "production" ? !ext.includes("api") : true)),
+  trailingSlash: true, // Required for static export
+  // Handle dynamic routes
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "/404",
+      },
+    ];
+  },
 };
 
 export default config;
