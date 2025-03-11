@@ -52,22 +52,33 @@ jobs:
           NODE_ENV: production
           NEXT_PUBLIC_BASE_PATH: /shellhacks-2024
         run: npm run build:static
-      - name: Fix asset paths
+      - name: Prepare deployment directory
         run: |
-          find out -type f -name "*.html" -exec sed -i 's|"/shellhacks-2024/|"/shellhacks-2024/|g' {} +
-          find out -type f -name "*.js" -exec sed -i 's|"/shellhacks-2024/|"/shellhacks-2024/|g' {} +
-      - name: Copy public assets
-        run: |
-          mkdir -p out/static/media
-          cp -r public/* out/static/media/ || true
-      - name: List output directory
-        run: |
-          echo "Output directory structure:"
-          find out -type f
+          # Create deployment directory
+          mkdir -p deploy/shellhacks-2024
+          
+          # Move the build output to the correct location
+          mv out/* deploy/shellhacks-2024/
+          
+          # Create necessary directories
+          mkdir -p deploy/shellhacks-2024/_next
+          mkdir -p deploy/shellhacks-2024/static/media
+          
+          # Copy static assets to the correct locations
+          if [ -d "deploy/shellhacks-2024/static" ]; then
+            cp -r deploy/shellhacks-2024/static/* deploy/shellhacks-2024/_next/static/ || true
+          fi
+          
+          # Copy public assets
+          cp -r public/* deploy/shellhacks-2024/static/media/ || true
+          
+          # List the final structure
+          echo "Final deployment structure:"
+          find deploy -type f
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./deploy
 
   # Deployment job
   deploy:

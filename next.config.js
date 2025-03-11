@@ -29,14 +29,19 @@ const config = {
   // Exclude all pages except the landing page in production
   pageExtensions: process.env.NODE_ENV === "production" ? ["landing.tsx", "landing.ts", "landing.jsx", "landing.js"] : ["tsx", "ts", "jsx", "js"],
   // Ensure static assets are copied
-  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024/" : "",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
   // Configure static file serving
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|svg|webp|ttf|woff2?)$/i,
       type: "asset/resource",
       generator: {
-        filename: "static/media/[name][ext]",
+        filename: (pathData) => {
+          // Remove 'src' from the path if it exists
+          const relativePath = pathData.filename.replace(/^src\//, "");
+          return `static/media/${relativePath}`;
+        },
+        publicPath: process.env.NODE_ENV === "production" ? "/shellhacks-2024/_next/" : "/_next/",
       },
     });
     return config;
