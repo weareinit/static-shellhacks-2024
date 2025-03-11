@@ -2,12 +2,12 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Deploy Next.js site to Pages
+name: Deploy to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["gh-pages"]
+    branches: [gh-pages]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -35,50 +35,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'npm'
+          cache: npm
       - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          static_site_generator: next
+        uses: actions/configure-pages@v4
       - name: Install dependencies
         run: npm ci
       - name: Rename assets
-        run: npm run rename-assets
-      - name: Build with Next.js (Static Export)
+        run: node scripts/rename-assets.js
+      - name: Build with Next.js
         env:
-          SKIP_ENV_VALIDATION: 1
-          NODE_ENV: production
           NEXT_PUBLIC_BASE_PATH: /shell-24
         run: npm run build:static
       - name: Prepare deployment directory
         run: |
-          # Create deployment directory structure
-          mkdir -p deploy
-          
-          # Move the build output to the root of deploy
-          mv out/* deploy/
-          
-          # Create necessary directories
-          mkdir -p deploy/_next/static
-          mkdir -p deploy/static/media
-          
-          # Copy static assets to the correct locations
-          if [ -d "deploy/static" ]; then
-            cp -r deploy/static/* deploy/_next/static/ || true
-          fi
-          
-          # Copy public assets
-          cp -r public/* deploy/static/media/ || true
-          
-          # List the final structure
-          echo "Final deployment structure:"
-          find deploy -type f
+          mkdir -p deploy/shell-24
+          mv out/* deploy/shell-24/
+          mkdir -p deploy/shell-24/_next/static
+          mkdir -p deploy/shell-24/static/media
+          cp -r out/_next/static/* deploy/shell-24/_next/static/
+          cp -r out/static/media/* deploy/shell-24/static/media/
+          ls -la deploy/shell-24
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./deploy
+          path: deploy
 
   # Deployment job
   deploy:
