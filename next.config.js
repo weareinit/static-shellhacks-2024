@@ -11,7 +11,7 @@ const config = {
   images: {
     unoptimized: true, // Required for static export
   },
-  basePath: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
+  basePath: process.env.NODE_ENV === "production" ? "/shell-24" : "",
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -29,7 +29,7 @@ const config = {
   // Exclude all pages except the landing page in production
   pageExtensions: process.env.NODE_ENV === "production" ? ["landing.tsx", "landing.ts", "landing.jsx", "landing.js"] : ["tsx", "ts", "jsx", "js"],
   // Ensure static assets are copied
-  assetPrefix: process.env.NODE_ENV === "production" ? "/shellhacks-2024" : "",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/shell-24" : "",
   // Configure static file serving
   webpack: (config) => {
     config.module.rules.push({
@@ -41,7 +41,7 @@ const config = {
           const relativePath = pathData.filename.replace(/^src\//, "");
           return `static/media/${relativePath}`;
         },
-        publicPath: process.env.NODE_ENV === "production" ? "/shellhacks-2024/_next/" : "/_next/",
+        publicPath: process.env.NODE_ENV === "production" ? "/shell-24/_next/" : "/_next/",
       },
     });
     return config;

@@ -50,27 +50,27 @@ jobs:
         env:
           SKIP_ENV_VALIDATION: 1
           NODE_ENV: production
-          NEXT_PUBLIC_BASE_PATH: /shellhacks-2024
+          NEXT_PUBLIC_BASE_PATH: /shell-24
         run: npm run build:static
       - name: Prepare deployment directory
         run: |
-          # Create deployment directory
-          mkdir -p deploy/shellhacks-2024
+          # Create deployment directory structure
+          mkdir -p deploy
           
-          # Move the build output to the correct location
-          mv out/* deploy/shellhacks-2024/
+          # Move the build output to the root of deploy
+          mv out/* deploy/
           
           # Create necessary directories
-          mkdir -p deploy/shellhacks-2024/_next
-          mkdir -p deploy/shellhacks-2024/static/media
+          mkdir -p deploy/_next/static
+          mkdir -p deploy/static/media
           
           # Copy static assets to the correct locations
-          if [ -d "deploy/shellhacks-2024/static" ]; then
-            cp -r deploy/shellhacks-2024/static/* deploy/shellhacks-2024/_next/static/ || true
+          if [ -d "deploy/static" ]; then
+            cp -r deploy/static/* deploy/_next/static/ || true
           fi
           
           # Copy public assets
-          cp -r public/* deploy/shellhacks-2024/static/media/ || true
+          cp -r public/* deploy/static/media/ || true
           
           # List the final structure
           echo "Final deployment structure:"
