@@ -7,7 +7,7 @@ name: Deploy to GitHub Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: [gh-pages]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,43 +38,19 @@ jobs:
           cache: npm
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          static_site_generator: next
       - name: Install dependencies
         run: npm ci
-      - name: Rename assets
-        run: node scripts/rename-assets.js
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_BASE_PATH: /shell-24
           NODE_ENV: production
         run: npm run build:static
-      - name: Prepare deployment directory
-        run: |
-          # Create base deployment directory
-          mkdir -p deploy/shell-24
-          
-          # Create all required directories first
-          mkdir -p deploy/shell-24/_next
-          mkdir -p deploy/shell-24/assets
-          mkdir -p deploy/shell-24/images
-          mkdir -p deploy/shell-24/fonts
-          
-          # Copy the main files
-          cp out/*.html deploy/shell-24/
-          cp out/*.svg deploy/shell-24/
-          cp out/favicon.png deploy/shell-24/
-          
-          # Copy directories with static assets
-          cp -r out/_next/* deploy/shell-24/_next/
-          cp -r out/assets/* deploy/shell-24/assets/
-          cp -r out/images/* deploy/shell-24/images/
-          cp -r out/fonts/* deploy/shell-24/fonts/
-          
-          echo "Deployment directory structure:"
-          ls -la deploy/shell-24
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: deploy
+          path: out
 
   # Deployment job
   deploy:
