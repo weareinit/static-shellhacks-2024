@@ -147,8 +147,8 @@ const Sponsors = () => {
         <h1 className="mb-4 mt-10 font-zoonaji text-xl text-pastel_orange min-[350px]:text-xl xsm:text-2xl sm:text-3xl md:text-5xl lg:text-6xl">Want to sponsor us?</h1>
         <p className=" font-museo text-2xl text-white xxs:text-[13px] xsm:text-[15px] sm:text-[15px] md:text-[20px]  lg:text-[25px] xxl:text-[30px]">
           Join the roar and reach out to{" "}
-          <a className="underline" href="mailto:init@fiu.edu" target="_blank" rel="noopener noreferrer">
-            init@fiu.edu
+          <a className="underline" href="mailto:industry@weareinit.org" target="_blank" rel="noopener noreferrer">
+            industry@weareinit.org
           </a>
           !
         </p>
